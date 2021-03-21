@@ -1,329 +1,318 @@
+extern crate num;
+#[macro_use]
+extern crate num_derive;
+
+mod bitboard;
+mod common;
+mod moves;
+
+use bitboard::{Bitboard, BitboardExt};
+use common::*;
+use moves::{bishop_attacks, rook_attacks, black_pawn_attacks, white_pawn_attacks, king_attacks};
 use std::fmt;
+use std::ops::{BitOr, BitAnd, BitXor};
 
-#[derive(Copy, Clone)]
-enum Piece {
-    WhitePawn=0,
-    WhiteRook=1,
-    WhiteKnight=2,
-    WhiteBishop=3,
-    WhiteQueen=4,
-    WhiteKing=5,
-    BlackPawn=6,
-    BlackRook=7,
-    BlackKnight=8,
-    BlackBishop=9,
-    BlackQueen=10,
-    BlackKing=11,
-    Marker=12,
+#[derive(Copy, Clone, FromPrimitive)]
+pub enum Piece {
+    WhitePawn = 0,
+    WhiteRook = 1,
+    WhiteKnight = 2,
+    WhiteBishop = 3,
+    WhiteQueen = 4,
+    WhiteKing = 5,
+    BlackPawn = 6,
+    BlackRook = 7,
+    BlackKnight = 8,
+    BlackBishop = 9,
+    BlackQueen = 10,
+    BlackKing = 11,
+    Marker = 12,
     NoPiece,
-}
-
-enum Scope {
-    All=0,
-    White=1,
-    Black=2,
-}
-
-enum Direction {
-    N=0,
-    NE=1,
-    E=2,
-    SE=3,
-    S=4,
-    SW=5,
-    W=6,
-    NW=7,
-}
-
-
-
-impl Scope {
-    fn to_range(self: &Scope) -> (u8, u8) {
-        match self {
-            Scope::All => (0, 12),
-            Scope::White => (0, 6),
-            Scope::Black => (6, 12),
-        }
-    }
-}
-
-fn from_int(i: u8) -> Piece {
-    match i {
-        0 => Piece::WhitePawn,
-        1 => Piece::WhiteRook,
-        2 => Piece::WhiteKnight,
-        3 => Piece::WhiteBishop,
-        4 => Piece::WhiteQueen,
-        5 => Piece::WhiteKing,
-        6 => Piece::BlackPawn,
-        7 => Piece::BlackRook,
-        8 => Piece::BlackKnight,
-        9 => Piece::BlackBishop,
-        10 => Piece::BlackQueen,
-        11 => Piece::BlackKing,
-        12 => Piece::Marker,
-        _ => Piece::NoPiece
-    }
 }
 
 impl fmt::Debug for Piece {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let piece = match self {
-            Piece::WhitePawn => "♙",
-            Piece::BlackPawn => "♟︎",
-            Piece::WhiteRook => "♖",
-            Piece::BlackRook => "♜",
-            Piece::WhiteKnight => "♘",
-            Piece::BlackKnight => "♞",
-            Piece::WhiteBishop => "♗",
-            Piece::BlackBishop => "♝",
-            Piece::WhiteQueen => "♕",
-            Piece::BlackQueen => "♛",
-            Piece::WhiteKing => "♔",
-            Piece::BlackKing => "♚",
-            Piece::Marker => "*",
-            _ => " ",
-        };
-        f.write_str(piece)
+        let pieces = [
+            "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", " ",
+        ];
+        f.write_str(pieces[*self as usize])
+    }
+}
+
+impl Piece {
+    fn is_black(self: &Piece) -> bool {
+        match self {
+            Piece::BlackPawn => true,
+            Piece::BlackRook => true,
+            Piece::BlackKnight => true,
+            Piece::BlackBishop => true,
+            Piece::BlackQueen => true,
+            Piece::BlackKing => true,
+            _ => false,
+        }
+    }
+
+    fn is_white(self: &Piece) -> bool {
+        match self {
+            Piece::WhitePawn => true,
+            Piece::WhiteRook => true,
+            Piece::WhiteKnight => true,
+            Piece::WhiteBishop => true,
+            Piece::WhiteQueen => true,
+            Piece::WhiteKing => true,
+            _ => false,
+        }
+    }
+}
+
+fn print_board(parts: Vec<(u8, u8, Piece)>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    let coords: Vec<(u8, u8)> = parts.clone().into_iter().map(|a| (a.0, a.1)).collect();
+    write!(f, "    a   b   c   d   e   f   g   h  \n")?;
+    write!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n")?;
+    for i in 0..8 {
+        write!(f, "{} ", i)?;
+        for j in 0..8 {
+            if coords.contains(&(i, j)) {
+                let index = coords.iter().position(|r| r == &(i, j)).unwrap();
+                write!(f, "│ {:?} ", parts[index].2)?;
+            } else {
+                write!(f, "│   ")?;
+            }
+        }
+
+        if i != 7 {
+            write!(f, "│\n  ├───┼───┼───┼───┼───┼───┼───┼───┤\n")?;
+        }
+    }
+    write!(f, "│\n  └───┴───┴───┴───┴───┴───┴───┴───┘\n")?;
+    f.write_str("")
+}
+
+enum Scope {
+    All = 0,
+    White = 1,
+    Black = 2,
+}
+
+impl Scope {
+    fn to_range(self: &Scope) -> std::ops::Range<usize> {
+        match self {
+            Scope::All => 0..12,
+            Scope::White => 0..6,
+            Scope::Black => 6..12,
+        }
+    }
+}
+enum Direction {
+    N = 0,
+    NE = 1,
+    E = 2,
+    SE = 3,
+    S = 4,
+    SW = 5,
+    W = 6,
+    NW = 7,
+}
+
+#[derive(Clone)]
+pub struct Move {
+    mov: u64,
+}
+
+impl Move {
+    pub fn new(x: u64) -> Move {
+        Move { mov: x }
+    }
+
+    pub fn shift(self: &Move, x: i8) -> Move {
+        if x > 0 {
+            Move::new(self.mov << x)
+        } else {
+            Move::new(self.mov >> -x)
+        }
+    }
+}
+
+impl BitOr for Move {
+    type Output = Self;
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self {
+            mov: self.mov | rhs.mov,
+        }
+    }
+}
+
+impl BitAnd for Move {
+    type Output = Self;
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self {
+            mov: self.mov & rhs.mov,
+        }
+    }
+}
+
+impl BitXor for Move {
+    type Output = Self;
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self {
+            mov: self.mov ^ rhs.mov,
+        }
     }
 }
 
 
+impl fmt::Debug for Move {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        print_board(
+            (0..64)
+                .filter(|x| self.mov >> x & 1 == 1)
+                .map(|x| (x >> 3, x & 0x7, Piece::Marker))
+                .collect(),
+            f,
+        )
+    }
+}
 
 #[derive(Default)]
 struct Board {
     pieces: [u64; 13],
 }
 
-
-fn flood_south(gen: u64, pro: u64) -> u64 {
-    let mut gen = gen;
-    let mut flood = 0;
-
-    while gen > 0 {
-      flood |= gen;
-      gen = (gen >> 8) & pro;
+impl fmt::Debug for Board {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let pieces = self.into_iter().collect();
+        print_board(pieces, f)
     }
-    flood
-
 }
 
-fn flood_north(gen: u64, pro: u64) -> u64 {
-    let mut gen = gen;
-    let mut flood = 0;
+impl<'a> IntoIterator for &'a Board {
+    type Item = (u8, u8, Piece);
+    type IntoIter = BoardIterator<'a>;
 
-    while gen > 0 {
-      flood |= gen;
-      gen = (gen << 8) & pro;
-   }
-   flood
+    fn into_iter(self) -> Self::IntoIter {
+        BoardIterator {
+            board: self,
+            index: 0,
+        }
+    }
 }
 
-fn flood_east(gen: u64, pro: u64) -> u64 {
-    let mut gen = gen;
-    let mut flood = 0;
-
-    while gen > 0 {
-      flood |= gen;
-      gen = (gen >> 1) & pro;
-   }
-   flood
+pub struct BoardIterator<'a> {
+    board: &'a Board,
+    index: u32,
 }
 
-fn flood_west(gen: u64, pro: u64) -> u64 {
-    let mut gen = gen;
-    let mut flood = 0;
+impl<'a> Iterator for BoardIterator<'a> {
+    type Item = (u8, u8, Piece);
 
-    while gen > 0 {
-      flood |= gen;
-      gen = (gen << 1) & pro;
-   }
-   flood
+    fn next(&mut self) -> Option<(u8, u8, Piece)> {
+        while (self.index as u64) < (64 as u64) * (13 as u64) {
+            let pieces_index: u8 = (self.index / 64) as u8;
+            let board_index: u8 = (self.index % 64) as u8;
+
+            self.index += 1;
+            let rank = board_index / 8;
+            let file = board_index % 8;
+            if (self.board.pieces[pieces_index as usize] >> board_index) & 1 == 1 {
+                return Some((
+                    rank,
+                    file,
+                    num::FromPrimitive::from_u8(pieces_index).unwrap(),
+                ));
+            }
+        }
+
+        return None;
+    }
 }
 
 impl Board {
-    fn start(self: &mut Board) {
-        /*
-        for i in 0..8 {
-            self.set(&Piece::WhitePawn, (1,i));
-        }
-        for i in 0..8 {
-            self.set(&Piece::BlackPawn, (6,i));
-        }
-
-        self.set(&Piece::WhiteRook, (0,0));
-        self.set(&Piece::WhiteRook, (0,7));
-        self.set(&Piece::BlackRook, (7,0));
-        self.set(&Piece::BlackRook, (7,7));
-        self.set(&Piece::WhiteKnight, (0,1));
-        self.set(&Piece::WhiteKnight, (0,6));
-        self.set(&Piece::BlackKnight, (7,1));
-        self.set(&Piece::BlackKnight, (7,6));
-        self.set(&Piece::WhiteBishop, (0,2));
-        self.set(&Piece::WhiteBishop, (0,5));
-        self.set(&Piece::BlackBishop, (7,2));
-        self.set(&Piece::BlackBishop, (7,5));
-        self.set(&Piece::WhiteQueen, (0,4));
-        self.set(&Piece::BlackQueen, (7,4));
-        self.set(&Piece::WhiteKing, (0,3));
-        self.set(&Piece::BlackKing, (7,3));
-        */
-        
-        self.set(&Piece::WhiteRook, (3,3));
-        self.set(&Piece::BlackRook, (3,0));
-        self.set(&Piece::BlackRook, (3,7));
-        self.set(&Piece::BlackRook, (7,3));
-        self.set(&Piece::BlackRook, (0,3));
-
-        /*
-        for mov in self.generate_valid_moves(&Piece::BlackPawn, (6,1)) {
-            self.set(&Piece::Marker, mov);
-        }
-        */
-
-        for mov in self.generate_moves(&Scope::White) {
-            let (x,y, piece) = mov;
-            self.set(&Piece::Marker, (x,y));
-        }
-
-
+    fn new() -> Board {
+        Board::read_fen("8/8/8/8/8/8/8/8".to_string())
     }
-    
+
+    fn read_fen(fen: String) -> Board {
+        let vec = ['p', 'r', 'n', 'b', 'q', 'k', 'P', 'R', 'N', 'B', 'Q', 'K'];
+
+        let mut board = Board {
+            ..Default::default()
+        };
+
+        let mut rank: u8 = 0;
+        let mut file: u8 = 0;
+
+        for c in fen.chars() {
+            let pos = vec.iter().position(|&r| r == c);
+
+            match (pos, c) {
+                (Some(o), _) => {
+                    let piece: Piece = num::FromPrimitive::from_usize(o).unwrap();
+                    board.set(&piece, (file, rank));
+                    rank += 1;
+                }
+                (_, '/') => {
+                    rank = 0;
+                    file += 1;
+                }
+                (_, ' ') => break,
+                (_, '0'..='9') => rank += c.to_digit(10).unwrap() as u8,
+                _ => (),
+            };
+        }
+
+        board
+    }
+
     fn set(self: &mut Board, piece: &Piece, coords: (u8, u8)) {
         let (x, y) = coords;
-        let index = 8*x + y;
+        let index = 8 * x + y;
         let piece_index = *piece as u8;
         self.pieces[piece_index as usize] |= 1 << index;
     }
 
     fn clear(self: &mut Board, coords: (u8, u8)) {
         let (x, y) = coords;
-        let index = 8*x + y;
+        let index = 8 * x + y;
 
         for i in 0..12 {
             self.pieces[i] &= !(1 << index);
         }
     }
 
+    fn scoped(self: &Board, scope: &Scope) -> Board {
+        let mut board = Board::new();
+        for i in scope.to_range() {
+            board.pieces[i] = self.pieces[i];
+        }
+        board
+    }
+
     fn occupied(self: &Board, scope: &Scope) -> u64 {
         let mut occupancy: u64 = 0;
 
-        let (start, end) = scope.to_range();
-
-        for i in start..end {
+        for i in scope.to_range() {
             occupancy |= self.pieces[i as usize];
         }
         occupancy
     }
 
-
-    fn flood(self: &Board, piece: (u8,u8), dir: &Direction) -> u64 {
-        let free = !self.occupied(&Scope::All);
-        let (x, y) = piece;
-        let index = 8*x + y;
-
-        let mut gen : u64 = 1 << index;
-        let start = gen;
-
-        println!("{:#x}", self.occupied(&Scope::All));
-        println!("{:#x}", free);
-        let gen = match dir {
-            Direction::N => flood_north(gen, free),
-            Direction::E => flood_east(gen, free),
-            Direction::S => flood_south(gen, free),
-            Direction::W => flood_west(gen, free),
-            _ => panic!(),
-        };
-
-        println!("gen {:#x}", gen);
-        gen ^ start
-    }
-
     fn check_occupancy(self: &Board, point: (u8, u8), scope: &Scope) -> bool {
         let occupancy = self.occupied(scope);
-        let (x,y) = point;
-        let index = 8*x + y;
-        
+        let (x, y) = point;
+        let index = 8 * x + y;
+
         return ((occupancy >> index) & 1) == 1;
     }
-    
-    fn generate_white_rook_moves(self: &Board, src: (u8, u8)) -> Vec<(u8, u8)> {
-        let (x,y) = src;
-        let mut moves: Vec<(u8, u8)> = Vec::new();
 
-        let mut f = self.flood(src, &Direction::N);
-        f |= self.flood(src, &Direction::E);
-        f |= self.flood(src, &Direction::S);
-        f |= self.flood(src, &Direction::W);
+    fn get_pieces(self: &mut Board, scope: &Scope) -> Vec<(u8, u8, Piece)> {
+        let mut pieces: Vec<(u8, u8, Piece)> = Vec::new();
 
-        for i in 0..64 {
-            if ((f >> i) & 1) == 1 {
-                moves.push((i / 8, i%8));
-            }
-        }
-
-        moves
-
-        
-    } 
-
-    fn generate_white_pawn_moves(self: &Board, src: (u8, u8)) -> Vec<(u8, u8)> {
-        let (x, y) = src; 
-        let mut moves : Vec<(u8, u8)> = Vec::new();
-
-        if x == 1 {
-            if ! self.check_occupancy((3,y), &Scope::White) {
-                moves.push((3,y));
-            }
-        }
-        
-        if x < 7 {
-            if ! self.check_occupancy((3,y), &Scope::White) {
-                moves.push((x+1, y));
-            }
-        }
-
-        return moves;
-    }
-
-    fn generate_black_pawn_moves(self: &Board, src: (u8, u8)) -> Vec<(u8, u8)> {
-        let (x, y) = src; 
-        let mut moves : Vec<(u8, u8)> = Vec::new();
-
-        if x == 6 {
-            if ! self.check_occupancy((3,y), &Scope::Black) {
-                moves.push((4,y));
-            }
-        }
-        
-        if x > 0 {
-            if ! self.check_occupancy((3,y), &Scope::Black) {
-                moves.push((x-1, y));
-            }
-        }
-
-        return moves;
-    }
-
-    fn generate_valid_moves(self: &mut Board, piece: &Piece, src: (u8, u8)) -> Vec<(u8, u8)> {
-        match piece {
-            Piece::WhitePawn => self.generate_white_pawn_moves(src),
-            Piece::BlackPawn => self.generate_black_pawn_moves(src),
-            Piece::WhiteRook => self.generate_white_rook_moves(src),
-            _ => Vec::new(),
-        }
-    }
-    
-    fn get_pieces(self: &mut Board, scope: &Scope) -> Vec<(u8,u8, Piece)> {
-        let mut pieces: Vec<(u8,u8,Piece)> = Vec::new(); 
-        let (start, end) = scope.to_range();
-
-        for i in start .. end {
+        for i in scope.to_range() {
             for x in 0..8 {
                 for y in 0..8 {
-                    let index = 8*x + y;
+                    let index = 8 * x + y;
                     if (self.pieces[i as usize] >> index) & 1 == 1 {
-                        pieces.push((x,y,from_int(i)));
+                        pieces.push((x, y, num::FromPrimitive::from_usize(i).unwrap()));
                     }
                 }
             }
@@ -332,60 +321,107 @@ impl Board {
         pieces
     }
 
-    fn generate_moves(self: &mut Board, scope: &Scope) -> Vec<(u8,u8,Piece)> {
-        let mut moves : Vec<(u8,u8,Piece)> = Vec::new();
-        let pieces = self.get_pieces(scope);
-        for (x,y,piece) in pieces {
-            let movs = &mut self.generate_valid_moves(&piece, (x,y));
-            for (x,y) in movs {
-                moves.push((*x,*y,piece)) ;
-            }
-        }
-
-        moves
-    }
-
     fn move_piece(self: &mut Board, piece: &Piece, src: (u8, u8), dst: (u8, u8)) {
         self.clear(src);
         self.set(piece, dst);
     }
 
-    fn piece_at(self: &Board, x:u8, y:u8) -> Piece { 
-        let index = 8*x + y; 
-        
+    fn piece_at(self: &Board, x: u8, y: u8) -> Piece {
+        let index = 8 * x + y;
+
         for piece_index in 0..13 {
             let bit = (self.pieces[piece_index] >> index) & 1;
             if bit == 1 {
-                return from_int(piece_index as u8);
+                return num::FromPrimitive::from_usize(piece_index).unwrap();
             }
         }
         return Piece::NoPiece;
     }
-}
 
-impl fmt::Debug for Board {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "┌───┬───┬───┬───┬───┬───┬───┬───┐\n");
-        for i in 0..8 {
-            for j in 0..8 {
-                let piece = self.piece_at(i, j);
-                write!(f, "│ {:?} ", piece);
-            }
-            
-            if i != 7 {
-                write!(f, "│\n├───┼───┼───┼───┼───┼───┼───┼───┤\n");
-            }
+    fn attack(self: &Board, piece: (u8, u8, Piece), scope: &Scope) -> Move {
+        let (x, y, piece) = piece;
+        let index = 8 * x + y;
+        
+        println!("piece is white: {}", piece.is_white());
+        let occupied = Move::new(if piece.is_white() {
+            self.occupied(&Scope::White)
         }
-        write!(f, "│\n└───┴───┴───┴───┴───┴───┴───┴───┘\n");
-        f.write_str("")
+        else {
+            self.occupied(&Scope::Black)
+        });
+
+        let mut mov = match piece {
+            Piece::BlackRook | Piece::WhiteRook => {
+                rook_attacks(index, !self.occupied(scope))
+            }
+            Piece::BlackBishop | Piece::WhiteBishop => {
+                bishop_attacks(index, !self.occupied(scope))
+            }
+            Piece::BlackQueen | Piece::WhiteQueen => {
+                bishop_attacks(index, !self.occupied(scope))
+                    | rook_attacks(index, !self.occupied(scope))
+            }
+            Piece::BlackKing | Piece::WhiteKing => {
+                king_attacks(index, !self.occupied(scope))
+            }
+            Piece::BlackPawn => {
+                black_pawn_attacks(index, !self.occupied(scope))
+            }
+            Piece::WhitePawn => {
+                white_pawn_attacks(index, !self.occupied(scope))
+            }
+            _ => {
+                Move::new(1)
+                //panic!(),
+            }
+        };
+
+        println!("occupied {}", occupied.mov);
+        mov.clone() ^ (mov.clone() & occupied)
+    }
+
+    fn generate_moves(self: &Board, scope: &Scope) -> Vec<Move> {
+        let board = self.scoped(scope);
+        let mut v = Vec::new();
+
+        for piece in board.into_iter() {
+            v.push(board.attack(piece, scope));
+        }
+        v
     }
 }
 
-fn main() {
-    let mut board = Board {
-        ..Default::default() 
-    };
+fn generate_knigh_moves() -> Vec<Move> {
+    let mut vec : Vec<Move> = Vec::new();
 
-    board.start();
+    let notA = 0x7F7F7F7F7F7F7F7F;
+    let notH = 0xFEFEFEFEFEFEFEFE;
+
+    for i in 0..64 {
+        let mut mov = 0;
+        let fill = 1 << i;
+        mov |= fill.shift_p(N, notA).shift_p(E, notH).shift_p(E, notH);
+        mov |= fill.shift_p(N, notA).shift_p(W, notA).shift_p(W, notA);
+        mov |= fill.shift_p(N, notA).shift_p(N, notA).shift_p(E, notH);
+        mov |= fill.shift_p(N, notA).shift_p(N, notA).shift_p(W, notA);
+        mov |= fill.shift_p(S, notH).shift_p(E, notH).shift_p(E, notH);
+        mov |= fill.shift_p(S, notH).shift_p(W, notA).shift_p(W, notA);
+        mov |= fill.shift_p(S, notH).shift_p(S, notH).shift_p(E, notH);
+        mov |= fill.shift_p(S, notH).shift_p(S, notH).shift_p(W, notA);
+        vec.push(Move::new(mov));
+    }
+
+    vec
+}
+
+fn main() {
+    //let board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string());
+    //
+    //let board = Board::read_fen("8/8/8/3q4/8/8/3Q4/8".to_string());
+    let board = Board::read_fen("8/4p3/8/8/8/8/4P3/8".to_string());
     println!("{:?}", board);
+
+    println!("{:?}", board.generate_moves(&Scope::All));
+
+    println!("{:?}", generate_knigh_moves());
 }
