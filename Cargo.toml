@@ -20,3 +20,7 @@ path = "bin/uci.rs"
 [[bin]]
 name = "test"
 path = "bin/test.rs"
+
+[[bin]]
+name = "cli"
+path = "bin/cli.rs"
