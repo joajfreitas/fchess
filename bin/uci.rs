@@ -75,7 +75,7 @@ fn main() -> io::Result<()> {
                 println!("cmd: {}", cmd);
                 let sp = cmd.split(":");
                 let mov = sp.collect::<Vec<&str>>()[1];
-                board = board.apply_algebraic_notation(mov.to_string());
+                board = board.apply_algebraic_notation(mov.to_string()).unwrap();
                 println!("board {:?}", board);
             }
             else if cmd.starts_with("go") {
