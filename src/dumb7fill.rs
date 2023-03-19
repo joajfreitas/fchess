@@ -58,9 +58,9 @@ pub fn black_pawn_attacks(
     friendlies: u64,
     enemy: u64,
 ) -> MoveSet {
-    let mov = board.black_pawn_moves[(8 * from.0 + from.1) as usize].clone();
+    let mov = board.black_pawn_moves[(8 * from.0 + from.1) as usize];
     let mov = mov & !friendlies;
-    let attack = board.black_pawn_attacks[(8 * from.0 + from.1) as usize].clone();
+    let attack = board.black_pawn_attacks[(8 * from.0 + from.1) as usize];
     let attacks = attack & enemy;
     MoveSet::new(piece, from, mov | attacks)
 }
@@ -72,9 +72,9 @@ pub fn white_pawn_attacks(
     friendlies: u64,
     enemy: u64,
 ) -> MoveSet {
-    let mov = board.white_pawn_moves[(8 * from.0 + from.1) as usize].clone();
+    let mov = board.white_pawn_moves[(8 * from.0 + from.1) as usize];
     let mov = mov & !friendlies & !enemy;
-    let attack = board.white_pawn_attacks[(8 * from.0 + from.1) as usize].clone();
+    let attack = board.white_pawn_attacks[(8 * from.0 + from.1) as usize];
     let attacks = attack & enemy;
     MoveSet::new(piece, from, mov | attacks)
 }
@@ -95,6 +95,6 @@ pub fn knight_attacks(board: &Board, piece: PieceType, from: (u8, u8), free: u64
     MoveSet::new(
         piece,
         from,
-        board.knight_moves[(8 * from.0 + from.1) as usize].clone() & free,
+        board.knight_moves[(8 * from.0 + from.1) as usize] & free,
     )
 }
