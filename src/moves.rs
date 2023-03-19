@@ -1,27 +1,43 @@
 use std::fmt;
-use std::ops::{BitOr, BitAnd, BitXor};
+use std::ops::{BitAnd, BitOr, BitXor, Not};
 
-use crate::dumb7fill::{bishop_attacks, rook_attacks, black_pawn_attacks, white_pawn_attacks, king_attacks, knight_attacks};
-use crate::common::*;
 use crate::bitboard::{Bitboard, BitboardExt};
-use crate::piece::{PieceType, Piece};
-
+use crate::common::*;
+use crate::dumb7fill::{
+    bishop_attacks, black_pawn_attacks, king_attacks, knight_attacks, rook_attacks,
+    white_pawn_attacks,
+};
+use crate::piece::{Piece, PieceType};
 
 pub enum Side {
     White,
     Black,
 }
 
+impl Not for Side {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            Side::White => Side::Black,
+            Side::Black => Side::White,
+        }
+    }
+}
 
 fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-    let coords: Vec<(u8, u8)> = pieces.clone().into_iter().map(|piece| (piece.x, piece.y)).collect();
+    let coords: Vec<(u8, u8)> = pieces
+        .clone()
+        .into_iter()
+        .map(|piece| (piece.x, piece.y))
+        .collect();
     write!(f, "    a   b   c   d   e   f   g   h  \n")?;
     write!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n")?;
     for i in 0..8 {
-        write!(f, "{} ", 8-i)?;
+        write!(f, "{} ", 8 - i)?;
         for j in 0..8 {
-            if coords.contains(&(7-i, j)) {
-                let index = coords.iter().position(|r| r == &(7-i, j)).unwrap();
+            if coords.contains(&(7 - i, j)) {
+                let index = coords.iter().position(|r| r == &(7 - i, j)).unwrap();
                 write!(f, "│ {:?} ", pieces[index].piece_type)?;
             } else {
                 write!(f, "│   ")?;
@@ -41,7 +57,6 @@ pub enum Scope {
     White = 1,
     Black = 2,
 }
-
 
 impl Scope {
     fn to_range(self: &Scope) -> std::ops::Range<usize> {
@@ -69,11 +84,11 @@ pub struct MoveSet {
 }
 
 impl MoveSet {
-    pub fn new(piece: PieceType, src: (u8,u8), x: u64) -> MoveSet {
-        MoveSet { 
+    pub fn new(piece: PieceType, src: (u8, u8), x: u64) -> MoveSet {
+        MoveSet {
             src: src,
             piece: piece,
-            mov: x 
+            mov: x,
         }
     }
 
@@ -86,10 +101,9 @@ impl MoveSet {
     }
 
     pub fn contains(self: &Self, mov: &Move) -> bool {
-        let index = (mov.dst.0 * 8)  + mov.dst.1;
+        let index = (mov.dst.0 * 8) + mov.dst.1;
         (self.mov >> index) & 1 == 1
     }
-
 }
 
 #[derive(Clone)]
@@ -113,8 +127,7 @@ impl Move {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
             None
-        }
-        else if mov.len() == 4 {
+        } else if mov.len() == 4 {
             let src_rank = (mov[1] as u8) - ('1' as u8);
             let src_file = (mov[0] as u8) - ('a' as u8);
             let dst_rank = (mov[3] as u8) - ('1' as u8);
@@ -122,25 +135,22 @@ impl Move {
 
             let mov = Move {
                 src: (src_rank, src_file),
-                dst : (dst_rank, dst_file),
+                dst: (dst_rank, dst_file),
             };
             Some(mov)
-        }
-        else {
+        } else {
             None
         }
     }
 }
 
-
-
 pub fn algebraic(mov: Move) -> String {
-    let dst_rank = (mov.dst.1 + ('a' as u8)) as char; 
+    let dst_rank = (mov.dst.1 + ('a' as u8)) as char;
     let dst_file = (mov.dst.0 + ('1' as u8)) as char;
     let src_rank = (mov.src.1 + ('a' as u8)) as char;
     let src_file = (mov.src.0 + ('1' as u8)) as char;
 
-    format!("{}{}{}{}",src_rank, src_file, dst_rank, dst_file)
+    format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
 }
 
 impl<'a> IntoIterator for &'a MoveSet {
@@ -169,14 +179,13 @@ impl<'a> Iterator for MoveIterator<'a> {
             if (self.mov.mov >> i) & 1 == 1 {
                 return Some(Move {
                     src: self.mov.src,
-                    dst: (i/8, i%8),
+                    dst: (i / 8, i % 8),
                 });
             }
         }
         return None;
     }
 }
-
 
 impl BitOr for MoveSet {
     type Output = Self;
@@ -211,14 +220,13 @@ impl BitXor for MoveSet {
     }
 }
 
-
 impl fmt::Debug for MoveSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut v = (0..64)
-                .filter(|x| self.mov >> x & 1 == 1)
-                .map(|x| Piece::new(x >> 3, x & 0x7, PieceType::Marker))
-                .collect::<Vec<Piece>>();
-        v.push(Piece::new(self.src.0, self.src.1, PieceType::Marker));
+            .filter(|x| self.mov >> x & 1 == 1)
+            .map(|x| Piece::new(x >> 3, x & 0x7, PieceType::Marker))
+            .collect::<Vec<Piece>>();
+        v.push(Piece::new(self.src.0, self.src.1, PieceType::SourceMarker));
 
         print_board(v, f)
     }
@@ -270,11 +278,7 @@ impl<'a> Iterator for BoardIterator<'a> {
             let rank = board_index / 8;
             let file = board_index % 8;
             if (self.board.pieces[pieces_index as usize] >> board_index) & 1 == 1 {
-                return Some(Piece::new(
-                    rank,
-                    file,
-                    self.board.piece_at(rank, file)?,
-                ));
+                return Some(Piece::new(rank, file, self.board.piece_at(rank, file)?));
             }
         }
 
@@ -308,7 +312,7 @@ impl Board {
             match (pos, c) {
                 (Some(o), _) => {
                     let piece: PieceType = num::FromPrimitive::from_usize(o).unwrap();
-                    board.set(&piece, (7-file, rank));
+                    board.set(&piece, (7 - file, rank));
                     rank += 1;
                 }
                 (_, '/') => {
@@ -330,7 +334,7 @@ impl Board {
         let piece_index = *piece as u8;
         self.pieces[piece_index as usize] |= 1 << index;
     }
-    
+
     /*
     fn clear(self: &mut Board, coords: (u8, u8)) {
         let (x, y) = coords;
@@ -341,7 +345,6 @@ impl Board {
         }
     }
     */
-    
 
     // Create board with scope
     fn scoped(self: &Board, scope: &Scope) -> Board {
@@ -409,52 +412,46 @@ impl Board {
         let piece_type = self.piece_at(x, y)?;
         if piece_type.is_white() {
             Some(Scope::White)
-        }
-        else {
+        } else {
             Some(Scope::Black)
         }
-
     }
 
     fn attack(self: &Board, piece: &Piece, scope: &Scope) -> MoveSet {
         let x = piece.x;
         let y = piece.y;
-        
+
         let occupied = self.occupied(scope);
         let enemy = self.occupied(&scope.reverse());
-        
+
         let piece = self.piece_at(x, y).unwrap();
 
         let mov = match piece {
             PieceType::BlackRook | PieceType::WhiteRook => {
-                rook_attacks(piece, (x,y), !(occupied | enemy))
+                rook_attacks(piece, (x, y), !(occupied | enemy))
             }
             PieceType::BlackBishop | PieceType::WhiteBishop => {
-                bishop_attacks(piece, (x,y), !(occupied | enemy))
+                bishop_attacks(piece, (x, y), !(occupied | enemy))
             }
             PieceType::BlackQueen | PieceType::WhiteQueen => {
-                bishop_attacks(piece, (x,y), !(occupied | enemy))
-                    | rook_attacks(piece, (x,y), !(occupied | enemy))
+                bishop_attacks(piece, (x, y), !(occupied | enemy))
+                    | rook_attacks(piece, (x, y), !(occupied | enemy))
             }
             PieceType::BlackKing | PieceType::WhiteKing => {
-                king_attacks(piece, (x,y), !self.occupied(scope))
+                king_attacks(piece, (x, y), !self.occupied(scope))
             }
-            PieceType::BlackPawn => {
-                black_pawn_attacks(self, piece, (x,y), occupied, enemy)
-            }
-            PieceType::WhitePawn => {
-                white_pawn_attacks(self, piece, (x,y), occupied, enemy)
-            }
+            PieceType::BlackPawn => black_pawn_attacks(self, piece, (x, y), occupied, enemy),
+            PieceType::WhitePawn => white_pawn_attacks(self, piece, (x, y), occupied, enemy),
             PieceType::BlackKnight | PieceType::WhiteKnight => {
-                knight_attacks(self, piece, (x,y), !self.occupied(scope))
+                knight_attacks(self, piece, (x, y), !self.occupied(scope))
             }
             _ => {
-                MoveSet::new(piece, (x,y), 1)
+                MoveSet::new(piece, (x, y), 1)
                 //panic!(),
             }
         };
-        
-        // all except 
+
+        // all except
         let m = mov.mov ^ (mov.mov & occupied);
         MoveSet::new(mov.piece, mov.src, m)
     }
@@ -471,20 +468,28 @@ impl Board {
         v
     }
 
-    pub fn generate_moves_for_piece(self: &Board, scope: &Scope, piece: (u8, u8)) -> Option<MoveSet> {
-        Some(self.attack(&Piece::new(piece.0, piece.1, self.piece_at(piece.0, piece.1)?), scope))
+    pub fn generate_moves_for_piece(
+        self: &Board,
+        scope: &Scope,
+        piece: (u8, u8),
+    ) -> Option<MoveSet> {
+        Some(self.attack(
+            &Piece::new(piece.0, piece.1, self.piece_at(piece.0, piece.1)?),
+            scope,
+        ))
     }
 
     pub fn apply(self: &Board, mov: Move) -> Option<Board> {
         let mut result = self.clone();
-        
+
         let (src_rank, src_file) = mov.src;
         let (dst_rank, dst_file) = mov.dst;
-        
+
         //let piece_index = mov.piece as usize;
         let piece_index = self.piece_at(mov.src.0, mov.src.1).unwrap() as usize;
 
-        let possible_moves = self.generate_moves_for_piece(&self.scope_at(mov.src.0, mov.src.1)?, mov.src)?;
+        let possible_moves =
+            self.generate_moves_for_piece(&self.scope_at(mov.src.0, mov.src.1)?, mov.src)?;
 
         if !possible_moves.contains(&mov) {
             return None;
@@ -492,11 +497,10 @@ impl Board {
 
         for i in Scope::All.to_range() {
             if i == piece_index {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8*src_rank + src_file));
-                result.pieces[i] |= 1 << (8*dst_rank + dst_file);
-            }
-            else {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8*dst_rank + dst_file));
+                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8 * src_rank + src_file));
+                result.pieces[i] |= 1 << (8 * dst_rank + dst_file);
+            } else {
+                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8 * dst_rank + dst_file));
             }
         }
         Some(result.clone())
@@ -507,8 +511,7 @@ impl Board {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
             panic!();
-        }
-        else if mov.len() == 4 {
+        } else if mov.len() == 4 {
             let src_rank = (mov[1] as u8) - ('1' as u8);
             let src_file = (mov[0] as u8) - ('a' as u8);
             let dst_rank = (mov[3] as u8) - ('1' as u8);
@@ -516,20 +519,21 @@ impl Board {
 
             let mov = Move {
                 src: (src_rank, src_file),
-                dst : (dst_rank, dst_file),
+                dst: (dst_rank, dst_file),
             };
             Some(board.apply(mov)?)
-        }
-        else {
+        } else {
             None
         }
     }
-    
+
     // evaled from the point of view of white
     fn eval(self: &Board) -> f32 {
-        let pieces_values: [f32; 14] = [1.0, 5.0, 3.0, 3.0, 9.0, 100.0, -1.0, -5.0, -3.0, -3.0, -9.0, -100.0, 0.0, 0.0];
-        
-        let mut s : f32 = 0.0;
+        let pieces_values: [f32; 14] = [
+            1.0, 5.0, 3.0, 3.0, 9.0, 100.0, -1.0, -5.0, -3.0, -3.0, -9.0, -100.0, 0.0, 0.0,
+        ];
+
+        let mut s: f32 = 0.0;
         for i in Scope::All.to_range() {
             s += (self.pieces[i].count_ones() as f32) * pieces_values[i];
         }
@@ -537,7 +541,7 @@ impl Board {
         if s > 100.0 {
             s = 100.0;
         }
-        
+
         s
     }
 
@@ -552,51 +556,54 @@ impl Board {
 
         return false;
     }
-    
-    fn min_max(self: &Board, scope: Scope, depth: u8) -> Option<f32> {
+
+    fn min_max(self: &Board, scope: Scope, depth: u8) -> Option<(f32, u32)> {
         //let mut best = None;
         let mut score = -500.0;
+        let mut evals = 1;
 
         if depth == 0 || self.checkmate() {
-            return Some(self.eval());
+            return Some((self.eval(), evals));
         }
-
 
         for piece in self.generate_moves(&scope) {
             for mov in piece.into_iter() {
                 let b = self.apply(mov.clone())?;
-                let sc = b.min_max(scope.reverse(), depth-1);
-                if sc.unwrap() > score {
-                    score = sc.unwrap();
-                    //best = Some(mov);
+                let sc = b.min_max(scope.reverse(), depth - 1);
+                if sc.unwrap().0 > score {
+                    score = sc.unwrap().0;
                 }
+                evals += sc.unwrap().1;
             }
         }
 
-        return Some(score);
+        return Some((score, evals));
     }
 
     pub fn best_move(self: &Board, scope: Scope) -> Option<Move> {
         let mut best = None;
         let mut score = -500.0;
+
+        let mut evals = 0;
         for piece in self.generate_moves(&scope) {
             for mov in piece.into_iter() {
                 let b = self.apply(mov.clone())?;
-                let sc = b.min_max(scope.reverse(), 3);
-                if score < sc.unwrap() {
+                let (sc, min_max_evals) = b.min_max(scope.reverse(), 3).unwrap();
+                if score < sc {
                     best = Some(mov);
-                    score = sc.unwrap();
+                    score = sc;
                 }
+                evals += min_max_evals;
             }
         }
 
-        //println!("score: {}", score);
+        println!("evaluations: {}", evals);
         return best;
     }
 }
 
 fn generate_knigh_moves() -> Vec<u64> {
-    let mut vec : Vec<u64> = Vec::new();
+    let mut vec: Vec<u64> = Vec::new();
 
     let not_a = 0x7F7F7F7F7F7F7F7F;
     let not_h = 0xFEFEFEFEFEFEFEFE;
@@ -624,7 +631,7 @@ fn generate_white_pawn_moves() -> Vec<u64> {
     for i in 0..64 {
         let mut mov = 0;
         let mut fill: Bitboard = 1 << i;
-        if i/8 == 1 {
+        if i / 8 == 1 {
             fill = fill.shift(N);
             mov |= fill;
         }
@@ -642,7 +649,7 @@ fn generate_black_pawn_moves() -> Vec<u64> {
     for i in 0..64 {
         let mut mov = 0;
         let mut fill: Bitboard = 1 << i;
-        if i/8 == 6 {
+        if i / 8 == 6 {
             fill = fill.shift(S);
             mov |= fill;
         }
