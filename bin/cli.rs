@@ -1,6 +1,3 @@
-use std::io;
-use std::io::prelude::*;
-
 use rustyline::{Editor, Result};
 
 use fchess::moves::{algebraic, Board, Move, Scope, Side};
@@ -45,5 +42,4 @@ fn main() -> Result<()> {
 
         side = !side;
     }
-    Ok(())
 }

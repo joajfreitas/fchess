@@ -19,7 +19,6 @@ pub enum PieceType {
     NoPiece,
 }
 
-
 impl fmt::Debug for PieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
@@ -31,27 +30,27 @@ impl fmt::Debug for PieceType {
 
 impl PieceType {
     pub fn is_black(self: &PieceType) -> bool {
-        match self {
-            PieceType::BlackPawn => true,
-            PieceType::BlackRook => true,
-            PieceType::BlackKnight => true,
-            PieceType::BlackBishop => true,
-            PieceType::BlackQueen => true,
-            PieceType::BlackKing => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            PieceType::BlackPawn
+                | PieceType::BlackRook
+                | PieceType::BlackKnight
+                | PieceType::BlackBishop
+                | PieceType::BlackQueen
+                | PieceType::BlackKing
+        )
     }
-    
+
     pub fn is_white(self: &PieceType) -> bool {
-        match self {
-            PieceType::WhitePawn => true,
-            PieceType::WhiteRook => true,
-            PieceType::WhiteKnight => true,
-            PieceType::WhiteBishop => true,
-            PieceType::WhiteQueen => true,
-            PieceType::WhiteKing => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            PieceType::WhitePawn
+                | PieceType::WhiteRook
+                | PieceType::WhiteKnight
+                | PieceType::WhiteBishop
+                | PieceType::WhiteQueen
+                | PieceType::WhiteKing
+        )
     }
 }
 
@@ -63,11 +62,7 @@ pub struct Piece {
 }
 
 impl Piece {
-    pub fn new(x:u8, y:u8, piece_type: PieceType) -> Piece {
-        Piece {
-            x,
-            y,
-            piece_type : piece_type,
-        }
+    pub fn new(x: u8, y: u8, piece_type: PieceType) -> Piece {
+        Piece { x, y, piece_type }
     }
 }
