@@ -1,44 +1,49 @@
-use std::io::prelude::*;
 use std::io;
+use std::io::prelude::*;
 
-use fchess::moves::{Board, Scope, algebraic, Side, Move};
+use rustyline::{Editor, Result};
 
-fn main() -> io::Result<()> {
-    let mut board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string());
+use fchess::moves::{algebraic, Board, Move, Scope, Side};
+
+fn main() -> Result<()> {
+    let mut rl = Editor::<()>::new()?;
+    if rl.load_history(".fchess_history").is_err() {
+        println!("No previous history");
+    }
+
+    let mut board =
+        Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string());
     println!("{:?}", board);
-    
-    let mut user_input = String::new();
-    let stdin = io::stdin();
 
     let mut side = Side::White;
 
-    
     loop {
         let mov: Move = Move::from_algebraic_notation(&match side {
             Side::White => {
-                let mut user_input = String::new();
-                stdin.read_line(&mut user_input);
-                println!("{:?}", user_input.chars());
-                user_input[.. user_input.len()-1].to_string()
-            },
-            Side::Black => {
-                algebraic(board.best_move(Scope::Black).unwrap())
-
+                let line = rl.readline("> ");
+                match line {
+                    Ok(line) => {
+                        rl.add_history_entry(line.as_str());
+                        rl.save_history(".fchess_history").unwrap();
+                        line
+                    }
+                    Err(err) => {
+                        println!("Error: {:?}", err);
+                        return Err(err);
+                    }
+                }
             }
-        }).unwrap();
-        
-        println!("{:?}", mov);
+            Side::Black => algebraic(board.best_move(Scope::Black).unwrap()),
+        })
+        .unwrap();
+
         board = match board.apply(mov) {
             Some(board) => board,
             None => continue,
         };
         println!("{:?}", board);
 
-        side = match side {
-            Side::White => Side::Black,
-            Side::Black => Side::White,
-        };
-
+        side = !side;
     }
     Ok(())
 }

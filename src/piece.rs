@@ -15,6 +15,7 @@ pub enum PieceType {
     BlackQueen = 10,
     BlackKing = 11,
     Marker = 12,
+    SourceMarker = 13,
     NoPiece,
 }
 
@@ -22,7 +23,7 @@ pub enum PieceType {
 impl fmt::Debug for PieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
-            "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", " ",
+            "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", "+", " ",
         ];
         f.write_str(pieces[*self as usize])
     }
