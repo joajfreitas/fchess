@@ -5,8 +5,8 @@ extern crate num_derive;
 pub mod bitboard;
 pub mod common;
 pub mod dumb7fill;
-pub mod piece;
 pub mod moves;
+pub mod piece;
 
 #[cfg(test)]
 mod tests {
@@ -27,7 +27,9 @@ mod tests {
     fn test_rook_move() {
         let board = Board::read_fen("8/3r4/8/8/8/8/8 w KQkq - 2 3".to_string());
         println!("{:?}", board);
-        let mov = board.generate_moves_for_piece(&Scope::Black, (6,3)).unwrap();
+        let mov = board
+            .generate_moves_for_piece(&Scope::Black, (6, 3))
+            .unwrap();
         println!("{:?}", mov);
         let moves = create_mov_from_coords(vec![
             (3, 7),

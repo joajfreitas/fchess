@@ -31,8 +31,8 @@ fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         .into_iter()
         .map(|piece| (piece.x, piece.y))
         .collect();
-    write!(f, "    a   b   c   d   e   f   g   h  \n")?;
-    write!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n")?;
+    writeln!(f, "    a   b   c   d   e   f   g   h  ")?;
+    writeln!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐")?;
     for i in 0..8 {
         write!(f, "{} ", 8 - i)?;
         for j in 0..8 {
@@ -85,11 +85,7 @@ pub struct MoveSet {
 
 impl MoveSet {
     pub fn new(piece: PieceType, src: (u8, u8), x: u64) -> MoveSet {
-        MoveSet {
-            src: src,
-            piece: piece,
-            mov: x,
-        }
+        MoveSet { src, piece, mov: x }
     }
 
     pub fn shift(self: &MoveSet, x: i8) -> MoveSet {
@@ -100,7 +96,7 @@ impl MoveSet {
         }
     }
 
-    pub fn contains(self: &Self, mov: &Move) -> bool {
+    pub fn contains(&self, mov: &Move) -> bool {
         let index = (mov.dst.0 * 8) + mov.dst.1;
         (self.mov >> index) & 1 == 1
     }
@@ -114,9 +110,10 @@ pub struct Move {
 
 impl fmt::Debug for Move {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut v: Vec<Piece> = Vec::new();
-        v.push(Piece::new(self.src.0, self.src.1, PieceType::Marker));
-        v.push(Piece::new(self.dst.0, self.dst.1, PieceType::Marker));
+        let v = vec![
+            Piece::new(self.src.0, self.src.1, PieceType::Marker),
+            Piece::new(self.dst.0, self.dst.1, PieceType::Marker),
+        ];
 
         print_board(v, f)
     }
@@ -128,10 +125,10 @@ impl Move {
         if mov.len() == 2 {
             None
         } else if mov.len() == 4 {
-            let src_rank = (mov[1] as u8) - ('1' as u8);
-            let src_file = (mov[0] as u8) - ('a' as u8);
-            let dst_rank = (mov[3] as u8) - ('1' as u8);
-            let dst_file = (mov[2] as u8) - ('a' as u8);
+            let src_rank = (mov[1] as u8) - b'1';
+            let src_file = (mov[0] as u8) - b'a';
+            let dst_rank = (mov[3] as u8) - b'1';
+            let dst_file = (mov[2] as u8) - b'a';
 
             let mov = Move {
                 src: (src_rank, src_file),
@@ -145,10 +142,10 @@ impl Move {
 }
 
 pub fn algebraic(mov: Move) -> String {
-    let dst_rank = (mov.dst.1 + ('a' as u8)) as char;
-    let dst_file = (mov.dst.0 + ('1' as u8)) as char;
-    let src_rank = (mov.src.1 + ('a' as u8)) as char;
-    let src_file = (mov.src.0 + ('1' as u8)) as char;
+    let dst_rank = (mov.dst.1 + b'a') as char;
+    let dst_file = (mov.dst.0 + b'1') as char;
+    let src_rank = (mov.src.1 + b'a') as char;
+    let src_file = (mov.src.0 + b'1') as char;
 
     format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
 }
@@ -183,7 +180,7 @@ impl<'a> Iterator for MoveIterator<'a> {
                 });
             }
         }
-        return None;
+        None
     }
 }
 
@@ -270,7 +267,7 @@ impl<'a> Iterator for BoardIterator<'a> {
     type Item = Piece;
 
     fn next(&mut self) -> Option<Piece> {
-        while (self.index as u64) < (64 as u64) * (13 as u64) {
+        while (self.index as u64) < 64_u64 * 13_u64 {
             let pieces_index: u8 = (self.index / 64) as u8;
             let board_index: u8 = (self.index % 64) as u8;
 
@@ -282,7 +279,7 @@ impl<'a> Iterator for BoardIterator<'a> {
             }
         }
 
-        return None;
+        None
     }
 }
 
@@ -359,7 +356,7 @@ impl Board {
         let mut occupancy: u64 = 0;
 
         for i in scope.to_range() {
-            occupancy |= self.pieces[i as usize];
+            occupancy |= self.pieces[i];
         }
         occupancy
     }
@@ -402,10 +399,10 @@ impl Board {
         for piece_index in 0..13 {
             let bit = (self.pieces[piece_index] >> index) & 1;
             if bit == 1 {
-                return Some(num::FromPrimitive::from_usize(piece_index)?);
+                return num::FromPrimitive::from_usize(piece_index);
             }
         }
-        return Some(PieceType::NoPiece);
+        Some(PieceType::NoPiece)
     }
 
     fn scope_at(self: &Board, x: u8, y: u8) -> Option<Scope> {
@@ -503,7 +500,7 @@ impl Board {
                 result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8 * dst_rank + dst_file));
             }
         }
-        Some(result.clone())
+        Some(result)
     }
 
     pub fn apply_algebraic_notation(self: &Board, mov: String) -> Option<Board> {
@@ -512,10 +509,10 @@ impl Board {
         if mov.len() == 2 {
             panic!();
         } else if mov.len() == 4 {
-            let src_rank = (mov[1] as u8) - ('1' as u8);
-            let src_file = (mov[0] as u8) - ('a' as u8);
-            let dst_rank = (mov[3] as u8) - ('1' as u8);
-            let dst_file = (mov[2] as u8) - ('a' as u8);
+            let src_rank = (mov[1] as u8) - b'1';
+            let src_file = (mov[0] as u8) - b'a';
+            let dst_rank = (mov[3] as u8) - b'1';
+            let dst_file = (mov[2] as u8) - b'a';
 
             let mov = Move {
                 src: (src_rank, src_file),
@@ -554,7 +551,7 @@ impl Board {
             return true;
         }
 
-        return false;
+        false
     }
 
     fn min_max(self: &Board, scope: Scope, depth: u8) -> Option<(f32, u32)> {
@@ -577,7 +574,7 @@ impl Board {
             }
         }
 
-        return Some((score, evals));
+        Some((score, evals))
     }
 
     pub fn best_move(self: &Board, scope: Scope) -> Option<Move> {
@@ -598,7 +595,7 @@ impl Board {
         }
 
         println!("evaluations: {}", evals);
-        return best;
+        best
     }
 }
 
@@ -666,7 +663,7 @@ fn generate_white_pawn_attacks() -> Vec<u64> {
 
     for i in 0..64 {
         let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
+        let fill: Bitboard = 1 << i;
         mov |= fill.shift(NE) & 0xFEFEFEFEFEFEFEFE;
         mov |= fill.shift(NW) & 0x7F7F7F7F7F7F7F7F;
 
@@ -681,7 +678,7 @@ fn generate_black_pawn_attacks() -> Vec<u64> {
 
     for i in 0..64 {
         let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
+        let fill: Bitboard = 1 << i;
         mov |= fill.shift(SE) & 0xFEFEFEFEFEFEFEFE;
         mov |= fill.shift(SW) & 0x7F7F7F7F7F7F7F7F;
 
