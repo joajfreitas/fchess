@@ -6,7 +6,8 @@ use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
-use fchess::moves::{algebraic, Board, Scope};
+use fchess::board::Board;
+use fchess::moves::{algebraic, Scope};
 
 fn main() -> io::Result<()> {
     let (tx, rx): (Sender<String>, Receiver<String>) = mpsc::channel();
