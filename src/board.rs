@@ -7,6 +7,7 @@ use crate::moves::{
     generate_white_pawn_attacks, generate_white_pawn_moves, Move, MoveSet, Scope,
 };
 use crate::piece::{Piece, PieceType};
+use crate::square::Square;
 use std::fmt;
 
 #[derive(Default, Clone)]
@@ -20,19 +21,22 @@ pub struct Board {
 }
 
 pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-    let coords: Vec<(u8, u8)> = pieces
+    let coords: Vec<Square> = pieces
         .clone()
         .into_iter()
-        .map(|piece| (piece.x, piece.y))
+        .map(|piece| (piece.get_square()))
         .collect();
     writeln!(f, "    a   b   c   d   e   f   g   h  ")?;
     writeln!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐")?;
     for i in 0..8 {
         write!(f, "{} ", 8 - i)?;
         for j in 0..8 {
-            if coords.contains(&(7 - i, j)) {
-                let index = coords.iter().position(|r| r == &(7 - i, j)).unwrap();
-                write!(f, "│ {:?} ", pieces[index].piece_type)?;
+            if coords.contains(&Square::from_rank_file(7 - i, j)) {
+                let index = coords
+                    .iter()
+                    .position(|r| *r == Square::from_rank_file(7 - i, j))
+                    .unwrap();
+                write!(f, "│ {:?} ", pieces[index].get_type())?;
             } else {
                 write!(f, "│   ")?;
             }
@@ -79,10 +83,11 @@ impl<'a> Iterator for BoardIterator<'a> {
             let board_index: u8 = (self.index % 64) as u8;
 
             self.index += 1;
-            let rank = board_index / 8;
-            let file = board_index % 8;
             if (self.board.pieces[pieces_index as usize] >> board_index) & 1 == 1 {
-                return Some(Piece::new(rank, file, self.board.piece_at(rank, file)?));
+                return Some(Piece::new(
+                    Square::from_index(board_index),
+                    self.board.piece_at(Square::from_index(board_index))?,
+                ));
             }
         }
 
@@ -116,7 +121,7 @@ impl Board {
             match (pos, c) {
                 (Some(o), _) => {
                     let piece: PieceType = num::FromPrimitive::from_usize(o).unwrap();
-                    board.set(&piece, (7 - file, rank));
+                    board.set(&piece, Square::from_rank_file(7 - file, rank));
                     rank += 1;
                 }
                 (_, '/') => {
@@ -132,11 +137,8 @@ impl Board {
         board
     }
 
-    pub fn set(self: &mut Board, piece: &PieceType, coords: (u8, u8)) {
-        let (x, y) = coords;
-        let index = 8 * x + y;
-        let piece_index = *piece as u8;
-        self.pieces[piece_index as usize] |= 1 << index;
+    pub fn set(self: &mut Board, piece: &PieceType, square: Square) {
+        self.pieces[*piece as u8 as usize] |= 1 << square.get_index();
     }
 
     /*
@@ -200,11 +202,9 @@ impl Board {
         self.set(piece, dst);
     }*/
 
-    fn piece_at(self: &Board, x: u8, y: u8) -> Option<PieceType> {
-        let index = 8 * x + y;
-
+    fn piece_at(self: &Board, square: Square) -> Option<PieceType> {
         for piece_index in 0..13 {
-            let bit = (self.pieces[piece_index] >> index) & 1;
+            let bit = (self.pieces[piece_index] >> square.get_index()) & 1;
             if bit == 1 {
                 return num::FromPrimitive::from_usize(piece_index);
             }
@@ -212,8 +212,8 @@ impl Board {
         Some(PieceType::NoPiece)
     }
 
-    fn scope_at(self: &Board, x: u8, y: u8) -> Option<Scope> {
-        let piece_type = self.piece_at(x, y)?;
+    fn scope_at(self: &Board, square: Square) -> Option<Scope> {
+        let piece_type = self.piece_at(square)?;
         if piece_type.is_white() {
             Some(Scope::White)
         } else {
@@ -222,42 +222,41 @@ impl Board {
     }
 
     fn attack(self: &Board, piece: &Piece, scope: &Scope) -> MoveSet {
-        let x = piece.x;
-        let y = piece.y;
+        let square = piece.get_square();
 
         let occupied = self.occupied(scope);
         let enemy = self.occupied(&scope.reverse());
 
-        let piece = self.piece_at(x, y).unwrap();
+        let piece = self.piece_at(square).unwrap();
 
         let mov = match piece {
             PieceType::BlackRook | PieceType::WhiteRook => {
-                rook_attacks(piece, (x, y), !(occupied | enemy))
+                rook_attacks(piece, square, !(occupied | enemy))
             }
             PieceType::BlackBishop | PieceType::WhiteBishop => {
-                bishop_attacks(piece, (x, y), !(occupied | enemy))
+                bishop_attacks(piece, square, !(occupied | enemy))
             }
             PieceType::BlackQueen | PieceType::WhiteQueen => {
-                bishop_attacks(piece, (x, y), !(occupied | enemy))
-                    | rook_attacks(piece, (x, y), !(occupied | enemy))
+                bishop_attacks(piece, square, !(occupied | enemy))
+                    | rook_attacks(piece, square, !(occupied | enemy))
             }
             PieceType::BlackKing | PieceType::WhiteKing => {
-                king_attacks(piece, (x, y), !self.occupied(scope))
+                king_attacks(piece, square, !self.occupied(scope))
             }
-            PieceType::BlackPawn => black_pawn_attacks(self, piece, (x, y), occupied, enemy),
-            PieceType::WhitePawn => white_pawn_attacks(self, piece, (x, y), occupied, enemy),
+            PieceType::BlackPawn => black_pawn_attacks(self, piece, square, occupied, enemy),
+            PieceType::WhitePawn => white_pawn_attacks(self, piece, square, occupied, enemy),
             PieceType::BlackKnight | PieceType::WhiteKnight => {
-                knight_attacks(self, piece, (x, y), !self.occupied(scope))
+                knight_attacks(self, piece, square, !self.occupied(scope))
             }
             _ => {
-                MoveSet::new(piece, (x, y), 1)
+                MoveSet::new(square, piece, 1)
                 //panic!(),
             }
         };
 
         // all except
         let m = mov.mov ^ (mov.mov & occupied);
-        MoveSet::new(mov.piece, mov.src, m)
+        MoveSet::new(mov.src, mov.piece, m)
     }
 
     pub fn generate_moves(self: &Board, scope: &Scope) -> Vec<MoveSet> {
@@ -275,25 +274,19 @@ impl Board {
     pub fn generate_moves_for_piece(
         self: &Board,
         scope: &Scope,
-        piece: (u8, u8),
+        square: Square,
     ) -> Option<MoveSet> {
-        Some(self.attack(
-            &Piece::new(piece.0, piece.1, self.piece_at(piece.0, piece.1)?),
-            scope,
-        ))
+        Some(self.attack(&Piece::new(square, self.piece_at(square)?), scope))
     }
 
     pub fn apply(self: &Board, mov: Move) -> Option<Board> {
         let mut result = self.clone();
 
-        let (src_rank, src_file) = mov.src;
-        let (dst_rank, dst_file) = mov.dst;
-
         //let piece_index = mov.piece as usize;
-        let piece_index = self.piece_at(mov.src.0, mov.src.1).unwrap() as usize;
+        let piece_index = self.piece_at(mov.get_src()).unwrap() as usize;
 
         let possible_moves =
-            self.generate_moves_for_piece(&self.scope_at(mov.src.0, mov.src.1)?, mov.src)?;
+            self.generate_moves_for_piece(&self.scope_at(mov.get_src())?, mov.get_src())?;
 
         if !possible_moves.contains(&mov) {
             return None;
@@ -301,10 +294,10 @@ impl Board {
 
         for i in Scope::All.to_range() {
             if i == piece_index {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8 * src_rank + src_file));
-                result.pieces[i] |= 1 << (8 * dst_rank + dst_file);
+                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_src().get_index());
+                result.pieces[i] |= 1 << mov.get_dst().get_index();
             } else {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << (8 * dst_rank + dst_file));
+                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_dst().get_index());
             }
         }
         Some(result)
@@ -321,10 +314,10 @@ impl Board {
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            let mov = Move {
-                src: (src_rank, src_file),
-                dst: (dst_rank, dst_file),
-            };
+            let mov = Move::new(
+                Square::from_rank_file(src_rank, src_file),
+                Square::from_rank_file(dst_rank, dst_file),
+            );
             Some(board.apply(mov)?)
         } else {
             None

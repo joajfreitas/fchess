@@ -6,7 +6,7 @@ use fchess::moves::Side;
 use fchess::piece::{Piece, PieceType};
 
 fn typing_cast(piece: &Piece) -> u8 {
-    match piece.piece_type {
+    match piece.get_type() {
         PieceType::BlackPawn => 0,
         PieceType::WhitePawn => 1,
         PieceType::BlackKnight => 2,
@@ -810,7 +810,8 @@ fn zobryst_hash(board: &Board, turn: &Side) -> u64 {
 
     let mut piece_hash = 0;
     for piece in board {
-        piece_hash ^= zobryst_table[(64 * typing_cast(&piece) + 8 * piece.y + piece.x) as usize];
+        piece_hash ^=
+            zobryst_table[(64 * typing_cast(&piece) + piece.get_square().get_index()) as usize];
     }
 
     println!("piece: {:x}", piece_hash);

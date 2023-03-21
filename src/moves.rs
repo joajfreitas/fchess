@@ -5,6 +5,7 @@ use crate::bitboard::{Bitboard, BitboardExt};
 use crate::board::print_board;
 use crate::common::*;
 use crate::piece::{Piece, PieceType};
+use crate::square::Square;
 
 pub enum Side {
     White,
@@ -48,41 +49,40 @@ impl Scope {
 
 #[derive(Clone)]
 pub struct MoveSet {
-    pub src: (u8, u8),
+    pub src: Square,
     pub piece: PieceType,
     pub mov: u64,
 }
 
 impl MoveSet {
-    pub fn new(piece: PieceType, src: (u8, u8), x: u64) -> MoveSet {
+    pub fn new(src: Square, piece: PieceType, x: u64) -> MoveSet {
         MoveSet { src, piece, mov: x }
     }
 
     pub fn shift(self: &MoveSet, x: i8) -> MoveSet {
         if x > 0 {
-            MoveSet::new(self.piece, self.src, self.mov << x)
+            MoveSet::new(self.src, self.piece, self.mov << x)
         } else {
-            MoveSet::new(self.piece, self.src, self.mov >> -x)
+            MoveSet::new(self.src, self.piece, self.mov >> -x)
         }
     }
 
     pub fn contains(&self, mov: &Move) -> bool {
-        let index = (mov.dst.0 * 8) + mov.dst.1;
-        (self.mov >> index) & 1 == 1
+        (self.mov >> mov.dst.get_index()) & 1 == 1
     }
 }
 
 #[derive(Clone)]
 pub struct Move {
-    pub src: (u8, u8),
-    pub dst: (u8, u8),
+    src: Square,
+    dst: Square,
 }
 
 impl fmt::Debug for Move {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let v = vec![
-            Piece::new(self.src.0, self.src.1, PieceType::Marker),
-            Piece::new(self.dst.0, self.dst.1, PieceType::Marker),
+            Piece::new(self.src, PieceType::Marker),
+            Piece::new(self.dst, PieceType::Marker),
         ];
 
         print_board(v, f)
@@ -90,6 +90,16 @@ impl fmt::Debug for Move {
 }
 
 impl Move {
+    pub fn new(src: Square, dst: Square) -> Move {
+        Move { src, dst }
+    }
+    pub fn get_src(&self) -> Square {
+        self.src
+    }
+    pub fn get_dst(&self) -> Square {
+        self.dst
+    }
+
     pub fn from_algebraic_notation(mov: &str) -> Option<Move> {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
@@ -101,8 +111,8 @@ impl Move {
             let dst_file = (mov[2] as u8) - b'a';
 
             let mov = Move {
-                src: (src_rank, src_file),
-                dst: (dst_rank, dst_file),
+                src: Square::from_rank_file(src_rank, src_file),
+                dst: Square::from_rank_file(dst_rank, dst_file),
             };
             Some(mov)
         } else {
@@ -112,10 +122,10 @@ impl Move {
 }
 
 pub fn algebraic(mov: Move) -> String {
-    let dst_rank = (mov.dst.1 + b'a') as char;
-    let dst_file = (mov.dst.0 + b'1') as char;
-    let src_rank = (mov.src.1 + b'a') as char;
-    let src_file = (mov.src.0 + b'1') as char;
+    let dst_rank = (mov.dst.get_file() + b'a') as char;
+    let dst_file = (mov.dst.get_rank() + b'1') as char;
+    let src_rank = (mov.src.get_file() + b'a') as char;
+    let src_file = (mov.src.get_rank() + b'1') as char;
 
     format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
 }
@@ -146,7 +156,7 @@ impl<'a> Iterator for MoveIterator<'a> {
             if (self.mov.mov >> i) & 1 == 1 {
                 return Some(Move {
                     src: self.mov.src,
-                    dst: (i / 8, i % 8),
+                    dst: Square::from_index(i),
                 });
             }
         }
@@ -191,9 +201,9 @@ impl fmt::Debug for MoveSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut v = (0..64)
             .filter(|x| self.mov >> x & 1 == 1)
-            .map(|x| Piece::new(x >> 3, x & 0x7, PieceType::Marker))
+            .map(|x| Piece::new(Square::from_index(x), PieceType::Marker))
             .collect::<Vec<Piece>>();
-        v.push(Piece::new(self.src.0, self.src.1, PieceType::SourceMarker));
+        v.push(Piece::new(self.src, PieceType::SourceMarker));
 
         print_board(v, f)
     }
