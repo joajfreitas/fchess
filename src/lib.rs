@@ -54,6 +54,7 @@ mod tests {
         assert_eq!(mov.mov, moves);
     }
 
+    #[test]
     fn test_rook_move_with_friend() {
         let board = Board::read_fen("3R4/3r4/8/8/3q4/8/8 w KQkq - 2 3".to_string());
         for piece in board.generate_moves(&Scope::Black) {
@@ -170,7 +171,6 @@ mod tests {
         board.set(&PieceType::BlackKnight, Square::from_algebraic("a5"));
         board.set(&PieceType::BlackKnight, Square::from_algebraic("b5"));
 
-        println!("{:?}", board);
         for piece in board.generate_moves(&Scope::White) {
             if piece.piece == PieceType::WhitePawn {
                 assert_eq!(piece.mov.count_ones(), 1);

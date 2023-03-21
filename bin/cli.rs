@@ -1,7 +1,7 @@
 use rustyline::{Editor, Result};
 
 use fchess::board::Board;
-use fchess::moves::{algebraic, Move, Scope, Side};
+use fchess::moves::{Move, Scope, Side};
 
 fn main() -> Result<()> {
     let mut rl = Editor::<()>::new()?;
@@ -16,7 +16,7 @@ fn main() -> Result<()> {
     let mut side = Side::White;
 
     loop {
-        let mov: Move = Move::from_algebraic_notation(&match side {
+        let mov: Move = Move::from_algebraic(&match side {
             Side::White => {
                 let line = rl.readline("> ");
                 match line {
@@ -31,7 +31,7 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => algebraic(board.best_move(Scope::Black).unwrap()),
+            Side::Black => board.best_move(Scope::Black).unwrap().to_algebraic(),
         })
         .unwrap();
 

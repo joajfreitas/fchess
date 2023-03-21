@@ -7,7 +7,7 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use fchess::board::Board;
-use fchess::moves::{algebraic, Scope};
+use fchess::moves::Scope;
 
 fn main() -> io::Result<()> {
     let (tx, rx): (Sender<String>, Receiver<String>) = mpsc::channel();
@@ -86,7 +86,7 @@ fn main() -> io::Result<()> {
                 println!("start: {:?}", board);
                 println!(
                     "bestmove {}",
-                    algebraic(board.best_move(Scope::White).unwrap())
+                    board.best_move(Scope::White).unwrap().to_algebraic()
                 );
             }
         }
