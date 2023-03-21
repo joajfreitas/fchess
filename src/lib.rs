@@ -3,6 +3,7 @@ extern crate num;
 extern crate num_derive;
 
 pub mod bitboard;
+pub mod board;
 pub mod common;
 pub mod dumb7fill;
 pub mod moves;

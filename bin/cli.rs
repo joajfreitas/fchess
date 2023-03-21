@@ -1,6 +1,7 @@
 use rustyline::{Editor, Result};
 
-use fchess::moves::{algebraic, Board, Move, Scope, Side};
+use fchess::board::Board;
+use fchess::moves::{algebraic, Move, Scope, Side};
 
 fn main() -> Result<()> {
     let mut rl = Editor::<()>::new()?;

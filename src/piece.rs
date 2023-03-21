@@ -54,7 +54,7 @@ impl PieceType {
     }
 }
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Piece {
     pub x: u8,
     pub y: u8,

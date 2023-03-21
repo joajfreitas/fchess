@@ -1,6 +1,7 @@
 use crate::bitboard::{Bitboard, BitboardExt};
+use crate::board::Board;
 use crate::common::*;
-use crate::moves::{Board, MoveSet};
+use crate::moves::MoveSet;
 use crate::piece::PieceType;
 
 pub fn dumb7fill(fill: Bitboard, free: Bitboard, shift: i8) -> Bitboard {
