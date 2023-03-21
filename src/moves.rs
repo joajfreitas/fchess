@@ -100,7 +100,7 @@ impl Move {
         self.dst
     }
 
-    pub fn from_algebraic_notation(mov: &str) -> Option<Move> {
+    pub fn from_algebraic(mov: &str) -> Option<Move> {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
             None
@@ -119,15 +119,15 @@ impl Move {
             None
         }
     }
-}
 
-pub fn algebraic(mov: Move) -> String {
-    let dst_rank = (mov.dst.get_file() + b'a') as char;
-    let dst_file = (mov.dst.get_rank() + b'1') as char;
-    let src_rank = (mov.src.get_file() + b'a') as char;
-    let src_file = (mov.src.get_rank() + b'1') as char;
+    pub fn to_algebraic(&self) -> String {
+        let dst_rank = (self.dst.get_file() + b'a') as char;
+        let dst_file = (self.dst.get_rank() + b'1') as char;
+        let src_rank = (self.src.get_file() + b'a') as char;
+        let src_file = (self.src.get_rank() + b'1') as char;
 
-    format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
+        format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
+    }
 }
 
 impl<'a> IntoIterator for &'a MoveSet {
