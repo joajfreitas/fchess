@@ -3,6 +3,7 @@ use crate::board::Board;
 use crate::common::*;
 use crate::moves::MoveSet;
 use crate::piece::PieceType;
+use crate::square::Square;
 
 pub fn dumb7fill(fill: Bitboard, free: Bitboard, shift: i8) -> Bitboard {
     let mut flood = 0;
@@ -26,9 +27,8 @@ pub fn dumb7fill(fill: Bitboard, free: Bitboard, shift: i8) -> Bitboard {
     flood
 }
 
-pub fn bishop_attacks(piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
-    let (rank, file) = from;
-    let fill = 1 << (8 * rank + file);
+pub fn bishop_attacks(piece: PieceType, from: Square, free: u64) -> MoveSet {
+    let fill = 1 << from.get_index();
     let mut targets = 0;
 
     targets |= dumb7fill(fill, free & 0xFEFEFEFEFEFEFEFE, NE).shift_p(NE, 0xFEFEFEFEFEFEFEFE);
@@ -36,12 +36,11 @@ pub fn bishop_attacks(piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
     targets |= dumb7fill(fill, free & 0x7F7F7F7F7F7F7F7F, SW).shift_p(SW, 0x7F7F7F7F7F7F7F7F);
     targets |= dumb7fill(fill, free & 0x7F7F7F7F7F7F7F7F, NW).shift_p(NW, 0x7F7F7F7F7F7F7F7F);
 
-    MoveSet::new(piece, from, targets)
+    MoveSet::new(from, piece, targets)
 }
 
-pub fn rook_attacks(piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
-    let (rank, file) = from;
-    let fill = 1 << (8 * rank + file);
+pub fn rook_attacks(piece: PieceType, from: Square, free: u64) -> MoveSet {
+    let fill = 1 << from.get_index();
     let mut targets = 0;
 
     targets |= dumb7fill(fill, free, N).shift(N);
@@ -49,53 +48,52 @@ pub fn rook_attacks(piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
     targets |= dumb7fill(fill, free & 0x7F7F7F7F7F7F7F7F, W).shift_p(W, 0x7F7F7F7F7F7F7F7F);
     targets |= dumb7fill(fill, free, S).shift(S);
 
-    MoveSet::new(piece, from, targets)
+    MoveSet::new(from, piece, targets)
 }
 
 pub fn black_pawn_attacks(
     board: &Board,
     piece: PieceType,
-    from: (u8, u8),
+    from: Square,
     friendlies: u64,
     enemy: u64,
 ) -> MoveSet {
-    let mov = board.black_pawn_moves[(8 * from.0 + from.1) as usize];
+    let mov = board.black_pawn_moves[from.get_index() as usize];
     let mov = mov & !friendlies;
-    let attack = board.black_pawn_attacks[(8 * from.0 + from.1) as usize];
+    let attack = board.black_pawn_attacks[from.get_index() as usize];
     let attacks = attack & enemy;
-    MoveSet::new(piece, from, mov | attacks)
+    MoveSet::new(from, piece, mov | attacks)
 }
 
 pub fn white_pawn_attacks(
     board: &Board,
     piece: PieceType,
-    from: (u8, u8),
+    from: Square,
     friendlies: u64,
     enemy: u64,
 ) -> MoveSet {
-    let mov = board.white_pawn_moves[(8 * from.0 + from.1) as usize];
+    let mov = board.white_pawn_moves[from.get_index() as usize];
     let mov = mov & !friendlies & !enemy;
-    let attack = board.white_pawn_attacks[(8 * from.0 + from.1) as usize];
+    let attack = board.white_pawn_attacks[from.get_index() as usize];
     let attacks = attack & enemy;
-    MoveSet::new(piece, from, mov | attacks)
+    MoveSet::new(from, piece, mov | attacks)
 }
 
-pub fn king_attacks(piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
-    let (rank, file) = from;
-    let fill = 1 << (8 * rank + file);
+pub fn king_attacks(piece: PieceType, from: Square, free: u64) -> MoveSet {
+    let fill = 1 << from.get_index();
     let mut flood = fill;
     flood |= fill.shift(N) & 0x7F7F7F7F7F7F7F7F & free;
     flood |= fill.shift(E) & 0xFEFEFEFEFEFEFEFE & free;
     flood |= fill.shift(S) & 0xFEFEFEFEFEFEFEFE & free;
     flood |= fill.shift(W) & 0x7F7F7F7F7F7F7F7F & free;
 
-    MoveSet::new(piece, from, flood)
+    MoveSet::new(from, piece, flood)
 }
 
-pub fn knight_attacks(board: &Board, piece: PieceType, from: (u8, u8), free: u64) -> MoveSet {
+pub fn knight_attacks(board: &Board, piece: PieceType, from: Square, free: u64) -> MoveSet {
     MoveSet::new(
-        piece,
         from,
-        board.knight_moves[(8 * from.0 + from.1) as usize] & free,
+        piece,
+        board.knight_moves[(from.get_index()) as usize] & free,
     )
 }
