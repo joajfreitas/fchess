@@ -1,6 +1,7 @@
 use std::io;
 
-use fchess::moves::{Board, Scope};
+use fchess::board::Board;
+use fchess::moves::Scope;
 
 fn main() -> io::Result<()> {
     //let board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1".to_string());
