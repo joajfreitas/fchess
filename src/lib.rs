@@ -4,6 +4,7 @@ extern crate num_derive;
 
 pub mod bitboard;
 pub mod board;
+pub mod book;
 pub mod common;
 pub mod dumb7fill;
 pub mod moves;
@@ -29,7 +30,7 @@ mod tests {
 
     #[test]
     fn test_rook_move() {
-        let board = Board::read_fen("8/3r4/8/8/8/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/3r4/8/8/8/8/8 w KQkq - 2 3");
         println!("{:?}", board);
         let mov = board
             .generate_moves_for_piece(&Scope::Black, Square::from_rank_file(6, 3))
@@ -56,7 +57,7 @@ mod tests {
 
     #[test]
     fn test_rook_move_with_friend() {
-        let board = Board::read_fen("3R4/3r4/8/8/3q4/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("3R4/3r4/8/8/3q4/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackRook {
                 assert_eq!(piece.mov.count_ones(), 10);
@@ -66,7 +67,7 @@ mod tests {
 
     #[test]
     fn test_bishop_move() {
-        let board = Board::read_fen("8/3b4/8/8/8/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/3b4/8/8/8/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackBishop {
                 assert_eq!(piece.mov.count_ones(), 9);
@@ -76,7 +77,7 @@ mod tests {
 
     #[test]
     fn test_bishop_move_with_enemy() {
-        let board = Board::read_fen("8/3b4/4B3/8/8/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/3b4/4B3/8/8/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackBishop {
                 assert_eq!(piece.mov.count_ones(), 6);
@@ -86,7 +87,7 @@ mod tests {
 
     #[test]
     fn test_bishop_move_with_friend() {
-        let board = Board::read_fen("8/3b4/2r1B3/8/8/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/3b4/2r1B3/8/8/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackBishop {
                 assert_eq!(piece.mov.count_ones(), 3);
@@ -96,7 +97,7 @@ mod tests {
 
     #[test]
     fn test_knight_move() {
-        let board = Board::read_fen("8/8/8/3n4/8/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/8/8/3n4/8/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackKnight {
                 assert_eq!(piece.mov.count_ones(), 8);
@@ -106,7 +107,7 @@ mod tests {
 
     #[test]
     fn test_knight_move_with_enemy() {
-        let board = Board::read_fen("8/8/8/3n4/1N6/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/8/8/3n4/1N6/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackKnight {
                 assert_eq!(piece.mov.count_ones(), 8);
@@ -116,7 +117,7 @@ mod tests {
 
     #[test]
     fn test_knight_move_with_friend() {
-        let board = Board::read_fen("8/8/8/3n4/1b6/8/8 w KQkq - 2 3".to_string());
+        let board = Board::read_fen("8/8/8/3n4/1b6/8/8 w KQkq - 2 3");
         for piece in board.generate_moves(&Scope::Black) {
             if piece.piece == PieceType::BlackKnight {
                 assert_eq!(piece.mov.count_ones(), 7);
