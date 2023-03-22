@@ -1,5 +1,7 @@
 use std::fmt;
 
+use crate::square::Square;
+
 #[derive(Copy, Clone, FromPrimitive, PartialEq)]
 pub enum PieceType {
     WhitePawn = 0,
@@ -54,15 +56,22 @@ impl PieceType {
     }
 }
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Piece {
-    pub x: u8,
-    pub y: u8,
-    pub piece_type: PieceType,
+    square: Square,
+    piece_type: PieceType,
 }
 
 impl Piece {
-    pub fn new(x: u8, y: u8, piece_type: PieceType) -> Piece {
-        Piece { x, y, piece_type }
+    pub fn new(square: Square, piece_type: PieceType) -> Piece {
+        Piece { square, piece_type }
+    }
+
+    pub fn get_square(&self) -> Square {
+        self.square
+    }
+
+    pub fn get_type(&self) -> PieceType {
+        self.piece_type
     }
 }

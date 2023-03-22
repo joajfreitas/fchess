@@ -25,3 +25,7 @@ path = "bin/test.rs"
 [[bin]]
 name = "cli"
 path = "bin/cli.rs"
+
+[[bin]]
+name = "book"
+path = "bin/book.rs"
