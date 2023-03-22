@@ -1,16 +1,23 @@
 use rustyline::{Editor, Result};
+use std::env;
 
 use fchess::board::Board;
+use fchess::book::Book;
 use fchess::moves::{Move, Scope, Side};
 
 fn main() -> Result<()> {
+    let args: Vec<String> = env::args().collect();
+
     let mut rl = Editor::<()>::new()?;
     if rl.load_history(".fchess_history").is_err() {
         println!("No previous history");
     }
 
-    let mut board =
-        Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string());
+    let book_filename = args.get(1).unwrap();
+
+    let book = Book::from_filename(book_filename);
+
+    let mut board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
     println!("{:?}", board);
 
     let mut side = Side::White;
@@ -31,7 +38,11 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => board.best_move(Scope::Black).unwrap().to_algebraic(),
+            Side::Black => match dbg!(book.get_best_move(&board, &Side::Black)) {
+                Some(mov) => mov,
+                _ => board.best_move(Scope::Black).unwrap(),
+            }
+            .to_algebraic(),
         })
         .unwrap();
 
