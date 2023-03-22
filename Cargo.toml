@@ -29,3 +29,7 @@ path = "bin/cli.rs"
 [[bin]]
 name = "book"
 path = "bin/book.rs"
+
+[[bin]]
+name = "fen_diagram"
+path = "bin/fen_diagram.rs"
