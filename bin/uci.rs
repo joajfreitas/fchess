@@ -65,15 +65,13 @@ fn main() -> io::Result<()> {
     });
 
     let engine_thread = thread::spawn(move || {
-        let mut board = Board::read_fen(
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string(),
-        );
+        let mut board =
+            Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
         loop {
             let cmd = rx.recv().unwrap();
             if cmd == "startpos" {
-                board = Board::read_fen(
-                    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string(),
-                );
+                board =
+                    Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
             } else if cmd.starts_with("move") {
                 println!("cmd: {}", cmd);
                 let sp = cmd.split(':');

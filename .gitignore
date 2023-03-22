@@ -1,1 +1,3 @@
 /target
+.fchess_history
+Cargo.lock

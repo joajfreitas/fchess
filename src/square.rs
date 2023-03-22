@@ -1,4 +1,6 @@
-#[derive(Copy, Clone, Debug, PartialEq)]
+use std::fmt;
+
+#[derive(Copy, Clone, PartialEq)]
 pub struct Square {
     square: u8,
 }
@@ -27,7 +29,11 @@ impl Square {
     }
 
     pub fn to_algebraic(&self) -> String {
-        "a1".to_string()
+        format!(
+            "{}{}",
+            (self.get_file() + b'a') as char,
+            (self.get_rank() + b'1') as char
+        )
     }
 
     pub fn get_rank(&self) -> u8 {
@@ -49,5 +55,11 @@ impl Square {
 
     pub fn get_index(&self) -> u8 {
         self.square
+    }
+}
+
+impl fmt::Debug for Square {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.to_algebraic())
     }
 }
