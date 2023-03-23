@@ -1,9 +1,10 @@
 use rustyline::{Editor, Result};
 use std::env;
 
-use fchess::board::Board;
+use fchess::board::{Board, Side};
 use fchess::book::Book;
-use fchess::moves::{Move, Scope, Side};
+use fchess::moves::Move;
+use fchess::solver::Solver;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -16,9 +17,9 @@ fn main() -> Result<()> {
     let book_filename = args.get(1).unwrap();
 
     let book = Book::from_filename(book_filename);
-
-    let mut board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
-    println!("{:?}", board);
+    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+    let solver = Solver::new();
+    println!("{}", board);
 
     let mut side = Side::White;
 
@@ -38,9 +39,15 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => match dbg!(book.get_best_move(&board, &Side::Black)) {
-                Some(mov) => mov,
-                _ => board.best_move(Scope::Black).unwrap(),
+            Side::Black => match book.get_best_move(&board, &Side::Black) {
+                Some(mov) => {
+                    println!("Book move");
+                    mov
+                }
+                _ => {
+                    println!("Search move");
+                    solver.best_move(&board).unwrap()
+                }
             }
             .to_algebraic(),
         })
@@ -50,7 +57,7 @@ fn main() -> Result<()> {
             Some(board) => board,
             None => continue,
         };
-        println!("{:?}", board);
+        println!("{}", board);
 
         side = !side;
     }

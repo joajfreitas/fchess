@@ -1,8 +1,8 @@
 use std::fmt;
 use std::fs;
 
-use crate::board::Board;
-use crate::moves::{Move, Side};
+use crate::board::{Board, Side};
+use crate::moves::Move;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -77,7 +77,7 @@ impl Book {
 
     fn binary_search(&self, key: u64) -> usize {
         let mut lo: usize = 0;
-        let mut hi: usize = dbg!(self.0.len());
+        let mut hi: usize = self.0.len();
         while lo < hi {
             let mid = (lo + hi) / 2;
             let entry = self.0[mid];

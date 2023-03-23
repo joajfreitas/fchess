@@ -7,7 +7,7 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use fchess::board::Board;
-use fchess::moves::Scope;
+use fchess::solver::Solver;
 
 fn main() -> io::Result<()> {
     let (tx, rx): (Sender<String>, Receiver<String>) = mpsc::channel();
@@ -66,12 +66,13 @@ fn main() -> io::Result<()> {
 
     let engine_thread = thread::spawn(move || {
         let mut board =
-            Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+        let solver = Solver::new();
         loop {
             let cmd = rx.recv().unwrap();
             if cmd == "startpos" {
                 board =
-                    Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+                    Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
             } else if cmd.starts_with("move") {
                 println!("cmd: {}", cmd);
                 let sp = cmd.split(':');
@@ -84,7 +85,7 @@ fn main() -> io::Result<()> {
                 println!("start: {:?}", board);
                 println!(
                     "bestmove {}",
-                    board.best_move(Scope::White).unwrap().to_algebraic()
+                    solver.best_move(&board).unwrap().to_algebraic()
                 );
             }
         }

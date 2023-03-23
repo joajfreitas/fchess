@@ -9,5 +9,5 @@ fn main() {
         Err(err) => println!("{:?}", err),
     };
 
-    println!("{:?}", Board::read_fen(&input));
+    println!("{:?}", Board::from_fen(&input));
 }
