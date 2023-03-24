@@ -13,6 +13,8 @@ num-traits = "0.2"
 rustyline = "10.1.1"
 regex = "1"
 
+[dev-dependencies]
+rstest = "0.17.0"
 
 [[bin]]
 name = "uci"

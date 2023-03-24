@@ -11,22 +11,25 @@ use crate::piece::{Piece, PieceType};
 use crate::side::Side;
 use crate::square::Square;
 
-impl Not for Side {
-    type Output = Self;
-
-    fn not(self) -> Self::Output {
-        match self {
-            Side::White => Side::Black,
-            Side::Black => Side::White,
-        }
-    }
-}
-
 #[derive(Clone, Copy, Debug)]
 pub enum Scope {
     All = 0,
     White = 1,
     Black = 2,
+    None = 3,
+}
+
+impl Not for Scope {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            Scope::White => Scope::Black,
+            Scope::Black => Scope::White,
+            Scope::All => Scope::None,
+            Scope::None => Scope::All,
+        }
+    }
 }
 
 impl Scope {
@@ -35,6 +38,7 @@ impl Scope {
             Scope::All => 0..12,
             Scope::White => 0..6,
             Scope::Black => 6..12,
+            Scope::None => 0..0,
         }
     }
 
@@ -137,10 +141,10 @@ impl Move {
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            let mov = Move {
-                src: Square::from_rank_file(src_rank, src_file),
-                dst: Square::from_rank_file(dst_rank, dst_file),
-            };
+            let mov = Move::new(
+                Square::from_rank_file(src_rank, src_file),
+                Square::from_rank_file(dst_rank, dst_file),
+            );
             Some(mov)
         } else {
             None
@@ -181,10 +185,7 @@ impl<'a> Iterator for MoveIterator<'a> {
         for i in self.index..64 {
             self.index += 1;
             if (self.mov.mov >> i) & 1 == 1 {
-                return Some(Move {
-                    src: self.mov.src,
-                    dst: Square::from_index(i),
-                });
+                return Some(Move::new(self.mov.src, Square::from_index(i)));
             }
         }
         None
@@ -353,7 +354,7 @@ impl MoveGenerator {
 
     pub fn generate_moves(&self, board: &Board) -> Vec<MoveSet> {
         let turn = Scope::from(board.get_turn());
-        let board = board.scoped(&turn);
+        let board = board.scoped(turn);
 
         println!("{:?}", board);
 
@@ -368,11 +369,10 @@ impl MoveGenerator {
     }
 
     pub fn attack(&self, board: &Board, piece: &Piece) -> MoveSet {
-        println!("{:?} {:?}", piece, &Scope::from(board.get_turn()));
         let square = piece.get_square();
 
-        let occupied = board.occupied(&Scope::from(board.get_turn()));
-        let enemy = board.occupied(&Scope::from(board.get_turn()).reverse());
+        let occupied = board.occupied(Scope::from(board.get_turn()));
+        let enemy = board.occupied(Scope::from(board.get_turn()).reverse());
 
         let piece = board.piece_at(square).unwrap();
 
@@ -390,14 +390,14 @@ impl MoveGenerator {
             PieceType::BlackKing | PieceType::WhiteKing => self.king_attacks(
                 piece,
                 square,
-                !board.occupied(&Scope::from(board.get_turn())),
+                !board.occupied(Scope::from(board.get_turn())),
             ),
             PieceType::BlackPawn => self.black_pawn_attacks(piece, square, occupied, enemy),
             PieceType::WhitePawn => self.white_pawn_attacks(piece, square, occupied, enemy),
             PieceType::BlackKnight | PieceType::WhiteKnight => self.knight_attacks(
                 piece,
                 square,
-                !board.occupied(&Scope::from(board.get_turn())),
+                !board.occupied(Scope::from(board.get_turn())),
             ),
             _ => {
                 MoveSet::new(square, piece, 1)
@@ -480,3 +480,6 @@ impl MoveGenerator {
         MoveSet::new(from, piece, flood)
     }
 }
+
+#[cfg(test)]
+mod tests {}

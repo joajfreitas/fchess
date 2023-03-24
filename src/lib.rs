@@ -32,7 +32,6 @@ mod tests {
 
     #[test]
     fn test_rook_move() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -50,6 +49,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/3r4/8/8/8/8/8 w KQkq - 2 3");
 
         let move_generator = MoveGenerator::new();
@@ -79,7 +80,6 @@ mod tests {
 
     #[test]
     fn test_rok_move_with_friend() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │ ♜ │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -97,6 +97,7 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
 
         let board = Board::from_fen("3R4/3r4/8/8/3q4/8/8 w KQkq - 2 3");
 
@@ -110,7 +111,6 @@ mod tests {
 
     #[test]
     fn test_bishop_move() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -128,6 +128,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/3b4/8/8/8/8/8 w KQkq - 2 3");
 
         let move_generator = MoveGenerator::new();
@@ -140,7 +142,6 @@ mod tests {
 
     #[test]
     fn test_bishop_move_with_enemy() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -158,6 +159,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/3b4/4B3/8/8/8/8 w KQkq - 2 3");
         let move_generator = MoveGenerator::new();
         for piece in move_generator.generate_moves(&board) {
@@ -169,7 +172,6 @@ mod tests {
 
     #[test]
     fn test_bishop_move_with_friend() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -187,6 +189,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/3b4/2r1B3/8/8/8/8 w KQkq - 2 3");
 
         let move_generator = MoveGenerator::new();
@@ -199,7 +203,6 @@ mod tests {
 
     #[test]
     fn test_knight_move() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -217,6 +220,7 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
 
         let board = Board::from_fen("8/8/8/3n4/8/8/8 w KQkq - 2 3");
         let move_generator = MoveGenerator::new();
@@ -229,7 +233,6 @@ mod tests {
 
     #[test]
     fn test_knight_move_with_enemy() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -247,6 +250,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/8/8/3n4/1N6/8/8 w KQkq - 2 3");
 
         let move_generator = MoveGenerator::new();
@@ -259,7 +264,6 @@ mod tests {
 
     #[test]
     fn test_knight_move_with_friend() {
-        //     a   b   c   d   e   f   g   h
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -277,6 +281,8 @@ mod tests {
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
         // 1 │   │   │   │   │   │   │   │   │
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
         let board = Board::from_fen("8/8/8/3n4/1b6/8/8 w KQkq - 2 3");
         let move_generator = MoveGenerator::new();
         for piece in move_generator.generate_moves(&board) {
@@ -289,7 +295,7 @@ mod tests {
     #[test]
     fn test_pawn_move() {
         let mut board = Board::new();
-        board.set(&PieceType::WhitePawn, Square::from_rank_file(3, 3));
+        board.set_piece(Square::from_rank_file(3, 3), PieceType::WhitePawn);
         let move_generator = MoveGenerator::new();
         for mov in move_generator.generate_moves(&board) {
             if mov.piece == PieceType::WhitePawn {
@@ -300,8 +306,8 @@ mod tests {
     #[test]
     fn test_pawn_move_with_friend() {
         let mut board = Board::new();
-        board.set(&PieceType::WhitePawn, Square::from_rank_file(3, 3));
-        board.set(&PieceType::WhiteKnight, Square::from_rank_file(4, 3));
+        board.set_piece(Square::from_rank_file(3, 3), PieceType::WhitePawn);
+        board.set_piece(Square::from_rank_file(4, 3), PieceType::WhiteKnight);
         let move_generator = MoveGenerator::new();
         for piece in move_generator.generate_moves(&board) {
             if piece.piece == PieceType::WhitePawn {
@@ -332,23 +338,23 @@ mod tests {
     #[test]
     fn test_pawn_move_with_enemy_edges() {
         let mut board = Board::new();
-        board.set(&PieceType::WhitePawn, Square::from_algebraic("h4").unwrap());
-        board.set(&PieceType::WhitePawn, Square::from_algebraic("a4").unwrap());
-        board.set(
-            &PieceType::BlackKnight,
+        board.set_piece(Square::from_algebraic("h4").unwrap(), PieceType::WhitePawn);
+        board.set_piece(Square::from_algebraic("a4").unwrap(), PieceType::WhitePawn);
+        board.set_piece(
             Square::from_algebraic("g5").unwrap(),
+            PieceType::BlackKnight,
         );
-        board.set(
-            &PieceType::BlackKnight,
+        board.set_piece(
             Square::from_algebraic("h5").unwrap(),
+            PieceType::BlackKnight,
         );
-        board.set(
-            &PieceType::BlackKnight,
+        board.set_piece(
             Square::from_algebraic("a5").unwrap(),
+            PieceType::BlackKnight,
         );
-        board.set(
-            &PieceType::BlackKnight,
+        board.set_piece(
             Square::from_algebraic("b5").unwrap(),
+            PieceType::BlackKnight,
         );
 
         let move_generator = MoveGenerator::new();

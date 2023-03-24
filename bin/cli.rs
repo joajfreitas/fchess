@@ -18,14 +18,12 @@ fn main() -> Result<()> {
     let book_filename = args.get(1).unwrap();
 
     let book = Book::from_filename(book_filename);
-    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
     let solver = Solver::new();
     println!("{}", board);
 
-    let mut side = Side::White;
-
     loop {
-        let mov: Move = Move::from_algebraic(&match side {
+        let mov: Move = Move::from_algebraic(&match board.get_turn() {
             Side::White => {
                 let line = rl.readline("> ");
                 match line {
@@ -40,7 +38,7 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => match book.get_best_move(&board) {
+            Side::Black => dbg!(match book.get_best_move(&board) {
                 Some(mov) => {
                     println!("Book move");
                     mov
@@ -50,7 +48,7 @@ fn main() -> Result<()> {
                     solver.best_move(&board).unwrap()
                 }
             }
-            .to_algebraic(),
+            .to_algebraic()),
         })
         .unwrap();
 
@@ -59,7 +57,5 @@ fn main() -> Result<()> {
             None => continue,
         };
         println!("{}", board);
-
-        side = !side;
     }
 }

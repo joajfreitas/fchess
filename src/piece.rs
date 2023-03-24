@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::square::Square;
 
-#[derive(Copy, Clone, FromPrimitive, PartialEq)]
+#[derive(Copy, Clone, FromPrimitive, PartialEq, Debug)]
 pub enum PieceType {
     WhitePawn = 0,
     WhiteRook = 1,
@@ -21,7 +21,7 @@ pub enum PieceType {
     NoPiece,
 }
 
-impl fmt::Debug for PieceType {
+impl fmt::Display for PieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
             "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", "+", " ",

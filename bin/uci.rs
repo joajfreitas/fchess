@@ -7,6 +7,7 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use fchess::board::Board;
+use fchess::moves::Move;
 use fchess::solver::Solver;
 
 fn main() -> io::Result<()> {
@@ -77,7 +78,9 @@ fn main() -> io::Result<()> {
                 println!("cmd: {}", cmd);
                 let sp = cmd.split(':');
                 let mov = sp.collect::<Vec<&str>>()[1];
-                board = board.apply_algebraic_notation(mov.to_string()).unwrap();
+                board = board
+                    .apply(Move::from_full_algebraic(mov).unwrap())
+                    .unwrap();
                 println!("board {:?}", board);
             } else if cmd.starts_with("go") {
                 let info = "info_currmove 1";

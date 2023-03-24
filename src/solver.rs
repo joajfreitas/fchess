@@ -40,7 +40,8 @@ impl Solver {
         let mut evals = 1;
 
         if depth == 0 || board.checkmate() {
-            return Some((board.eval(), evals));
+            //return Some(board.eval(), evals));
+            return Some((1.0, evals));
         }
 
         for piece in self.move_generator.generate_moves(board) {
