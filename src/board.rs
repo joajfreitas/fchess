@@ -6,14 +6,8 @@ use crate::bitwise;
 
 use crate::moves::{Move, Scope};
 use crate::piece::{Piece, PieceType};
+use crate::side::Side;
 use crate::square::Square;
-
-#[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
-pub enum Side {
-    #[default]
-    White,
-    Black,
-}
 
 #[derive(Default, Clone, Eq, PartialEq, Debug)]
 pub struct Board {

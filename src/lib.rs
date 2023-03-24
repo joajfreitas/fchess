@@ -10,6 +10,7 @@ pub mod common;
 pub mod dumb7fill;
 pub mod moves;
 pub mod piece;
+pub mod side;
 pub mod solver;
 pub mod square;
 

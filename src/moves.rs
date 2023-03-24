@@ -4,10 +4,11 @@ use std::ops::{BitAnd, BitOr, BitXor, Not};
 
 use crate::bitboard::{Bitboard, BitboardExt};
 use crate::board::print_board;
-use crate::board::{Board, Side};
+use crate::board::Board;
 use crate::common::*;
 use crate::dumb7fill::dumb7fill;
 use crate::piece::{Piece, PieceType};
+use crate::side::Side;
 use crate::square::Square;
 
 impl Not for Side {

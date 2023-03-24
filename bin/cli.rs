@@ -1,9 +1,10 @@
 use rustyline::{Editor, Result};
 use std::env;
 
-use fchess::board::{Board, Side};
+use fchess::board::Board;
 use fchess::book::Book;
 use fchess::moves::Move;
+use fchess::side::Side;
 use fchess::solver::Solver;
 
 fn main() -> Result<()> {
@@ -39,7 +40,7 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => match book.get_best_move(&board, &Side::Black) {
+            Side::Black => match book.get_best_move(&board) {
                 Some(mov) => {
                     println!("Book move");
                     mov

@@ -1,8 +1,9 @@
 use std::fmt;
 use std::fs;
 
-use crate::board::{Board, Side};
+use crate::board::Board;
 use crate::moves::Move;
+use crate::side::Side;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -107,8 +108,8 @@ impl Book {
         entries
     }
 
-    pub fn get_best_move(&self, board: &Board, turn: &Side) -> Option<Move> {
-        let all_entries = self.find_all(board, turn);
+    pub fn get_best_move(&self, board: &Board) -> Option<Move> {
+        let all_entries = self.find_all(board, &board.get_turn());
         let best_entry = all_entries.iter().max_by_key(|entry| entry.get_weight())?;
 
         Some(Move::new(best_entry.get_from(), best_entry.get_to()))
