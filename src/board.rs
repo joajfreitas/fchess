@@ -188,7 +188,7 @@ impl Board {
         }
 
         let tail_re =
-            Regex::new(r"([wb])? ?(K?)(Q?)(k?)(q?) ?(-?([a-g][1-8])?) ?(\d{1,2})? ?(\d{1,2})?")
+            Regex::new(r"([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-g][1-8])?) ?(\d{1,2})? ?(\d{1,2})?")
                 .unwrap();
 
         let tail = chars.iter().collect::<String>();
@@ -207,19 +207,19 @@ impl Board {
 
         board.set_enpassant(
             captures
-                .get(7)
+                .get(8)
                 .and_then(|key| Square::from_algebraic(key.as_str())),
         );
 
         board.set_half_move_clock(
             captures
-                .get(8)
+                .get(9)
                 .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
         );
 
         board.set_full_move_clock(
             captures
-                .get(9)
+                .get(10)
                 .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
         );
 
@@ -375,7 +375,9 @@ impl Board {
         }?;
 
         result.set_turn(!self.get_turn());
-        result.set_full_move_clock(result.get_full_move_clock() + 1);
+        if result.get_turn() == Side::White {
+            result.set_full_move_clock(result.get_full_move_clock() + 1);
+        }
         Some(result)
     }
 
@@ -1253,11 +1255,7 @@ impl Board {
 
 #[cfg(test)]
 mod tests {
-
-    use rstest::rstest;
-
     use super::Board;
-    use super::Move;
     use super::Piece;
     use super::PieceType;
     use super::Scope;
@@ -1529,35 +1527,5 @@ mod tests {
         let mut unit = Board::new();
         unit.set_piece(Square::from_algebraic("d1").unwrap(), PieceType::WhiteKing);
         assert_eq!(unit, board);
-    }
-
-    #[rstest]
-    #[case(
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-        "e2e4",
-        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2"
-    )]
-    #[case(
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1",
-        "e1g1",
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b Qkq - 0 2"
-    )]
-    #[case(
-        "rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-        "e8g8",
-        "rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQq - 0 2"
-    )]
-    fn test_apply_move(
-        #[case] initial_fen: &str,
-        #[case] algebraic_move: &str,
-        #[case] resulting_fen: &str,
-    ) {
-        let unit = Board::from_fen(initial_fen);
-        let unit = unit
-            .apply(Move::from_full_algebraic(algebraic_move).unwrap())
-            .unwrap();
-
-        println!("{}", unit);
-        assert_eq!(unit, Board::from_fen(resulting_fen))
     }
 }

@@ -60,7 +60,7 @@ impl From<Side> for Scope {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MoveSet {
     pub src: Square,
     pub piece: PieceType,
@@ -85,13 +85,13 @@ impl MoveSet {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Move {
     src: Square,
     dst: Square,
 }
 
-impl fmt::Debug for Move {
+impl fmt::Display for Move {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let v = vec![
             Piece::new(self.src, PieceType::Marker),
@@ -121,6 +121,67 @@ impl Move {
                 Square::from_rank_file(src_rank, src_file),
                 Square::from_rank_file(dst_rank, dst_file),
             ))
+        }
+    }
+
+    fn san_match_type(letter: char, piece_type: PieceType) -> bool {
+        match (letter, piece_type) {
+            ('P', PieceType::WhitePawn) => true,
+            ('P', PieceType::BlackPawn) => true,
+            ('R', PieceType::WhiteRook) => true,
+            ('R', PieceType::BlackRook) => true,
+            ('N', PieceType::WhiteKnight) => true,
+            ('N', PieceType::BlackKnight) => true,
+            ('B', PieceType::WhiteBishop) => true,
+            ('B', PieceType::BlackBishop) => true,
+            ('Q', PieceType::WhiteQueen) => true,
+            ('Q', PieceType::BlackQueen) => true,
+            ('K', PieceType::WhiteKing) => true,
+            ('K', PieceType::BlackKing) => true,
+            _ => false,
+        }
+    }
+    pub fn from_san(algebra: &str, board: &Board) -> Option<Move> {
+        let mov: Vec<char> = algebra.chars().collect();
+        let move_generator = MoveGenerator::new();
+        if mov.len() == 2 {
+            let dst_rank = (mov[1] as u8) - b'1';
+            let dst_file = (mov[0] as u8) - b'a';
+
+            let dst = Square::from_rank_file(dst_rank, dst_file);
+
+            let moves = move_generator.generate_moves(board);
+
+            let mut resulting_move: Option<Move> = None;
+            for moveset in moves {
+                for mov in moveset.into_iter() {
+                    if mov.dst == dst {
+                        resulting_move = Some(mov);
+                    }
+                }
+            }
+
+            resulting_move
+        } else if mov.len() == 3 {
+            let piece_type = mov[0];
+            let dst_rank = (mov[2] as u8) - b'1';
+            let dst_file = (mov[1] as u8) - b'a';
+
+            let dst = Square::from_rank_file(dst_rank, dst_file);
+
+            let moves = move_generator.generate_moves(board);
+
+            let mut resulting_move: Option<Move> = None;
+            for moveset in moves {
+                for mov in moveset.into_iter() {
+                    if mov.dst == dst && Move::san_match_type(piece_type, moveset.piece) {
+                        resulting_move = Some(mov);
+                    }
+                }
+            }
+            resulting_move
+        } else {
+            None
         }
     }
 
@@ -225,7 +286,7 @@ impl BitXor for MoveSet {
     }
 }
 
-impl fmt::Debug for MoveSet {
+impl fmt::Display for MoveSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut v = (0..64)
             .filter(|x| self.mov >> x & 1 == 1)
@@ -354,13 +415,11 @@ impl MoveGenerator {
 
     pub fn generate_moves(&self, board: &Board) -> Vec<MoveSet> {
         let turn = Scope::from(board.get_turn());
-        let board = board.scoped(turn);
+        let scoped_board = board.scoped(turn);
 
-        println!("{:?}", board);
-
-        board
+        scoped_board
             .into_iter()
-            .map(|piece| self.attack(&board, &piece))
+            .map(|piece| self.attack(board, &piece))
             .collect::<Vec<MoveSet>>()
     }
 
@@ -372,7 +431,7 @@ impl MoveGenerator {
         let square = piece.get_square();
 
         let occupied = board.occupied(Scope::from(board.get_turn()));
-        let enemy = board.occupied(Scope::from(board.get_turn()).reverse());
+        let enemy = board.occupied(Scope::from(!board.get_turn()));
 
         let piece = board.piece_at(square).unwrap();
 

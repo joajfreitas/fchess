@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::square::Square;
 
-#[derive(Copy, Clone, FromPrimitive, PartialEq, Debug)]
+#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug)]
 pub enum PieceType {
     WhitePawn = 0,
     WhiteRook = 1,
