@@ -41,8 +41,10 @@ struct SuitResult {
 }
 
 struct TestResult {
+    starting_board: Board,
     expected_board: Board,
     result_board: Board,
+    mov: Move,
     result: bool,
 }
 
@@ -68,10 +70,17 @@ impl SuitResult {
 }
 
 impl TestResult {
-    pub fn new(expected_board: &Board, result_board: &Board) -> TestResult {
+    pub fn new(
+        starting_board: &Board,
+        expected_board: &Board,
+        result_board: &Board,
+        mov: Move,
+    ) -> TestResult {
         TestResult {
+            starting_board: starting_board.clone(),
             expected_board: expected_board.clone(),
             result_board: result_board.clone(),
+            mov: mov,
             result: TestResult::check(expected_board, result_board),
         }
     }
@@ -92,7 +101,6 @@ fn main() -> Result<()> {
     for testcase in test_suit.testcases {
         let start_board = Board::from_fen(&testcase.start.fen);
         for expected in testcase.expected {
-            println!("=============================================");
             let mov = Move::from_san(&expected.mov, &start_board);
             match mov {
                 Some(mov) => {
@@ -102,7 +110,8 @@ fn main() -> Result<()> {
                     } else {
                         let resulting_board = resulting_board.unwrap();
                         let expected_board = Board::from_fen(&expected.fen);
-                        let test_result = TestResult::new(&expected_board, &resulting_board);
+                        let test_result =
+                            TestResult::new(&start_board, &expected_board, &resulting_board, mov);
                         testsuit_results.push_test(test_result);
                     }
                 }
@@ -115,6 +124,15 @@ fn main() -> Result<()> {
         }
     }
 
+    for test_case in testsuit_results.tests {
+        if !test_case.result {
+            println!("====================================");
+            println!("{}", test_case.starting_board);
+            println!("{:?}", test_case.mov);
+            println!("expected:\n{}", test_case.expected_board);
+            println!("resulting:\n{}", test_case.result_board);
+        }
+    }
     println!(
         "{}/{}",
         testsuit_results.successful_tests, testsuit_results.total_tests

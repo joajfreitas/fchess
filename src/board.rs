@@ -374,13 +374,34 @@ impl Board {
             }
             board.apply_single_move(castle.1)
         } else {
-            self.apply_single_move(mov)
+            self.apply_single_move(mov.clone())
         }?;
 
         result.set_turn(!self.get_turn());
         if result.get_turn() == Side::White {
             result.set_full_move_clock(result.get_full_move_clock() + 1);
         }
+
+        let moved_piece = self.piece_at(mov.get_src()).unwrap();
+        let target_piece = self.piece_at(mov.get_dst()).unwrap();
+
+        let halfmove_clock_reset = match (moved_piece, target_piece) {
+            (PieceType::WhitePawn, _) => true,
+            (PieceType::BlackPawn, _) => true,
+            (_, PieceType::WhitePawn) => true,
+            (_, PieceType::BlackPawn) => true,
+            _ => false,
+        };
+        if halfmove_clock_reset {
+            result.set_half_move_clock(0);
+        } else {
+            result.set_half_move_clock(self.get_half_move_clock() + 1);
+        }
+
+        if self.get_enpassant().is_some() {
+            result.set_enpassant(None);
+        }
+
         Some(result)
     }
 
