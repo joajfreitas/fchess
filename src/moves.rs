@@ -144,6 +144,7 @@ impl Move {
     pub fn from_san(algebra: &str, board: &Board) -> Option<Move> {
         let mov: Vec<char> = algebra.chars().collect();
         let move_generator = MoveGenerator::new();
+
         if mov.len() == 2 {
             let dst_rank = (mov[1] as u8) - b'1';
             let dst_file = (mov[0] as u8) - b'a';
@@ -174,11 +175,29 @@ impl Move {
             let mut resulting_move: Option<Move> = None;
             for moveset in moves {
                 for mov in moveset.into_iter() {
-                    if mov.dst == dst && Move::san_match_type(piece_type, moveset.piece) {
+                    if Move::san_match_type(piece_type, moveset.piece) && mov.dst == dst {
                         resulting_move = Some(mov);
                     }
                 }
             }
+            resulting_move
+        } else if mov.len() == 4 {
+            assert!(mov[1] == 'x');
+            let src_file = (mov[0] as u8) - b'a';
+            let dst_rank = (mov[3] as u8) - b'1';
+            let dst_file = (mov[2] as u8) - b'a';
+            let dst = Square::from_rank_file(dst_rank, dst_file);
+            let moves = move_generator.generate_moves(board);
+
+            let mut resulting_move: Option<Move> = None;
+            for moveset in moves {
+                for mov in moveset.into_iter() {
+                    if mov.dst == dst && mov.get_src().get_file() == src_file {
+                        resulting_move = Some(mov);
+                    }
+                }
+            }
+
             resulting_move
         } else {
             None
@@ -451,8 +470,12 @@ impl MoveGenerator {
                 square,
                 !board.occupied(Scope::from(board.get_turn())),
             ),
-            PieceType::BlackPawn => self.black_pawn_attacks(piece, square, occupied, enemy),
-            PieceType::WhitePawn => self.white_pawn_attacks(piece, square, occupied, enemy),
+            PieceType::BlackPawn => {
+                self.black_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
+            }
+            PieceType::WhitePawn => {
+                self.white_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
+            }
             PieceType::BlackKnight | PieceType::WhiteKnight => self.knight_attacks(
                 piece,
                 square,
@@ -475,7 +498,12 @@ impl MoveGenerator {
         from: Square,
         friendlies: u64,
         enemy: u64,
+        enpassant: Option<Square>,
     ) -> MoveSet {
+        let mut enemy = enemy;
+        if enpassant.is_some() {
+            enemy |= 1 << enpassant.unwrap().get_index()
+        }
         let mov = self.black_pawn_moves[from.get_index() as usize];
         let mov = mov & !friendlies;
         let attack = self.black_pawn_attacks[from.get_index() as usize];
@@ -489,7 +517,12 @@ impl MoveGenerator {
         from: Square,
         friendlies: u64,
         enemy: u64,
+        enpassant: Option<Square>,
     ) -> MoveSet {
+        let mut enemy = enemy;
+        if enpassant.is_some() {
+            enemy |= 1 << enpassant.unwrap().get_index();
+        }
         let mov = self.white_pawn_moves[from.get_index() as usize];
         let mov = mov & !friendlies & !enemy;
         let attack = self.white_pawn_attacks[from.get_index() as usize];
@@ -535,6 +568,10 @@ impl MoveGenerator {
         flood |= fill.shift(E) & 0xFEFEFEFEFEFEFEFE & free;
         flood |= fill.shift(S) & 0xFEFEFEFEFEFEFEFE & free;
         flood |= fill.shift(W) & 0x7F7F7F7F7F7F7F7F & free;
+        flood |= fill.shift(NE) & 0xFEFEFEFEFEFEFEFE & free;
+        flood |= fill.shift(SE) & 0xFEFEFEFEFEFEFEFE & free;
+        flood |= fill.shift(SW) & 0x7F7F7F7F7F7F7F7F & free;
+        flood |= fill.shift(NW) & 0x7F7F7F7F7F7F7F7F & free;
 
         MoveSet::new(from, piece, flood)
     }

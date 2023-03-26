@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Result;
 
 use fchess::board::Board;
-use fchess::moves::{Move, MoveGenerator};
+use fchess::moves::Move;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct StartCondition {
@@ -33,15 +33,51 @@ struct TestSuit {
     testcases: Vec<TestCase>,
 }
 
-fn check_result(mov: &str, resulting_board: &Board, expected_board: &Board) {
-    if resulting_board == expected_board {
-        println!("passed")
-    } else {
-        println!("{}", mov);
-        println!("{}", resulting_board);
-        println!("{:?}", resulting_board);
-        println!("{}", expected_board);
-        println!("{:?}", expected_board);
+struct SuitResult {
+    total_tests: u32,
+    failed_tests: u32,
+    successful_tests: u32,
+    tests: Vec<TestResult>,
+}
+
+struct TestResult {
+    expected_board: Board,
+    result_board: Board,
+    result: bool,
+}
+
+impl SuitResult {
+    fn new() -> SuitResult {
+        SuitResult {
+            total_tests: 0,
+            failed_tests: 0,
+            successful_tests: 0,
+            tests: Vec::new(),
+        }
+    }
+
+    fn push_test(&mut self, test_result: TestResult) {
+        self.total_tests += 1;
+        if test_result.result {
+            self.successful_tests += 1;
+        } else {
+            self.failed_tests += 1;
+        }
+        self.tests.push(test_result)
+    }
+}
+
+impl TestResult {
+    pub fn new(expected_board: &Board, result_board: &Board) -> TestResult {
+        TestResult {
+            expected_board: expected_board.clone(),
+            result_board: result_board.clone(),
+            result: TestResult::check(expected_board, result_board),
+        }
+    }
+
+    pub fn check(expected_board: &Board, result_board: &Board) -> bool {
+        expected_board == result_board
     }
 }
 
@@ -51,23 +87,37 @@ fn main() -> Result<()> {
         fs::read_to_string(args.get(1).unwrap()).expect("Should have been able to read the file");
     let test_suit: TestSuit = serde_json::from_str(&contents)?;
 
+    let mut testsuit_results = SuitResult::new();
+
     for testcase in test_suit.testcases {
         let start_board = Board::from_fen(&testcase.start.fen);
         for expected in testcase.expected {
+            println!("=============================================");
             let mov = Move::from_san(&expected.mov, &start_board);
-            let result = match mov {
+            match mov {
                 Some(mov) => {
-                    let resulting_board = start_board.apply(mov).unwrap();
-                    let expected_board = Board::from_fen(&expected.fen);
-                    //dbg!(resulting_board) == dbg!(expected_board)
-                    check_result(&expected.mov, &resulting_board, &expected_board);
+                    let resulting_board = start_board.apply(mov.clone());
+                    if resulting_board.is_none() {
+                        println!("Failed to apply move to board {}", mov);
+                    } else {
+                        let resulting_board = resulting_board.unwrap();
+                        let expected_board = Board::from_fen(&expected.fen);
+                        let test_result = TestResult::new(&expected_board, &resulting_board);
+                        testsuit_results.push_test(test_result);
+                    }
                 }
                 None => {
-                    println!("Cannot decode san move");
+                    println!("Failed to parse move {}", &expected.mov);
+                    println!("{}", start_board);
                     continue;
                 }
             };
         }
     }
+
+    println!(
+        "{}/{}",
+        testsuit_results.successful_tests, testsuit_results.total_tests
+    );
     Ok(())
 }

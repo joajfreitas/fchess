@@ -134,6 +134,9 @@ impl Board {
         self.enpassant = square;
     }
 
+    pub fn get_enpassant(&self) -> Option<Square> {
+        self.enpassant
+    }
     pub fn get_half_move_clock(&self) -> u8 {
         self.half_move_clock
     }
@@ -207,19 +210,19 @@ impl Board {
 
         board.set_enpassant(
             captures
-                .get(8)
+                .get(7)
                 .and_then(|key| Square::from_algebraic(key.as_str())),
         );
 
         board.set_half_move_clock(
             captures
-                .get(9)
+                .get(8)
                 .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
         );
 
         board.set_full_move_clock(
             captures
-                .get(10)
+                .get(9)
                 .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
         );
 
@@ -1467,7 +1470,7 @@ mod tests {
     #[test]
     fn test_read_fen_with_half_move_clock() {
         assert_eq!(
-            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - 10 0"),
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 10 0"),
             BoardBuilder::new()
                 .with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
                 .with_half_move_clock(10)
