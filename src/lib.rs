@@ -346,7 +346,7 @@ mod tests {
 
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1",
         "e1g1",
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b Qkq - 0 1"
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b Qkq - 1 1"
     )]
     #[case(
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
@@ -370,7 +370,7 @@ mod tests {
 
         "rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
         "e8g8",
-        "rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQq - 0 1"
+        "rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQq - 1 1"
     )]
     fn test_apply_move(
         #[case] initial_fen: &str,

@@ -125,22 +125,22 @@ impl Move {
     }
 
     fn san_match_type(letter: char, piece_type: PieceType) -> bool {
-        match (letter, piece_type) {
-            ('P', PieceType::WhitePawn) => true,
-            ('P', PieceType::BlackPawn) => true,
-            ('R', PieceType::WhiteRook) => true,
-            ('R', PieceType::BlackRook) => true,
-            ('N', PieceType::WhiteKnight) => true,
-            ('N', PieceType::BlackKnight) => true,
-            ('B', PieceType::WhiteBishop) => true,
-            ('B', PieceType::BlackBishop) => true,
-            ('Q', PieceType::WhiteQueen) => true,
-            ('Q', PieceType::BlackQueen) => true,
-            ('K', PieceType::WhiteKing) => true,
-            ('K', PieceType::BlackKing) => true,
-            _ => false,
-        }
+        let piece = (letter, piece_type);
+
+        matches!(piece, ('P', PieceType::WhitePawn))
+            | matches!(piece, ('P', PieceType::BlackPawn))
+            | matches!(piece, ('R', PieceType::WhiteRook))
+            | matches!(piece, ('R', PieceType::BlackRook))
+            | matches!(piece, ('N', PieceType::WhiteKnight))
+            | matches!(piece, ('N', PieceType::BlackKnight))
+            | matches!(piece, ('B', PieceType::WhiteBishop))
+            | matches!(piece, ('B', PieceType::BlackBishop))
+            | matches!(piece, ('Q', PieceType::WhiteQueen))
+            | matches!(piece, ('Q', PieceType::BlackQueen))
+            | matches!(piece, ('K', PieceType::WhiteKing))
+            | matches!(piece, ('K', PieceType::BlackKing))
     }
+
     pub fn from_san(algebra: &str, board: &Board) -> Option<Move> {
         let mov: Vec<char> = algebra.chars().collect();
         let move_generator = MoveGenerator::new();
@@ -501,8 +501,8 @@ impl MoveGenerator {
         enpassant: Option<Square>,
     ) -> MoveSet {
         let mut enemy = enemy;
-        if enpassant.is_some() {
-            enemy |= 1 << enpassant.unwrap().get_index()
+        if let Some(enpassant) = enpassant {
+            enemy |= 1 << enpassant.get_index()
         }
         let mov = self.black_pawn_moves[from.get_index() as usize];
         let mov = mov & !friendlies;
@@ -520,8 +520,8 @@ impl MoveGenerator {
         enpassant: Option<Square>,
     ) -> MoveSet {
         let mut enemy = enemy;
-        if enpassant.is_some() {
-            enemy |= 1 << enpassant.unwrap().get_index();
+        if let Some(enpassant) = enpassant {
+            enemy |= 1 << enpassant.get_index();
         }
         let mov = self.white_pawn_moves[from.get_index() as usize];
         let mov = mov & !friendlies & !enemy;

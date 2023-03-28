@@ -80,7 +80,7 @@ impl TestResult {
             starting_board: starting_board.clone(),
             expected_board: expected_board.clone(),
             result_board: result_board.clone(),
-            mov: mov,
+            mov,
             result: TestResult::check(expected_board, result_board),
         }
     }
@@ -105,14 +105,14 @@ fn main() -> Result<()> {
             match mov {
                 Some(mov) => {
                     let resulting_board = start_board.apply(mov.clone());
-                    if resulting_board.is_none() {
-                        println!("Failed to apply move to board {}", mov);
-                    } else {
-                        let resulting_board = resulting_board.unwrap();
+                    if let Some(resulting_board) = resulting_board {
+                        let resulting_board = resulting_board;
                         let expected_board = Board::from_fen(&expected.fen);
                         let test_result =
                             TestResult::new(&start_board, &expected_board, &resulting_board, mov);
                         testsuit_results.push_test(test_result);
+                    } else {
+                        println!("Failed to apply move to board {}", mov);
                     }
                 }
                 None => {

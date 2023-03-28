@@ -385,13 +385,13 @@ impl Board {
         let moved_piece = self.piece_at(mov.get_src()).unwrap();
         let target_piece = self.piece_at(mov.get_dst()).unwrap();
 
-        let halfmove_clock_reset = match (moved_piece, target_piece) {
-            (PieceType::WhitePawn, _) => true,
-            (PieceType::BlackPawn, _) => true,
-            (_, PieceType::WhitePawn) => true,
-            (_, PieceType::BlackPawn) => true,
-            _ => false,
-        };
+        let mov = (moved_piece, target_piece);
+
+        let halfmove_clock_reset = matches!(mov, (PieceType::WhitePawn, _))
+            | matches!(mov, (PieceType::BlackPawn, _))
+            | matches!(mov, (_, PieceType::WhitePawn))
+            | matches!(mov, (_, PieceType::BlackPawn));
+
         if halfmove_clock_reset {
             result.set_half_move_clock(0);
         } else {
