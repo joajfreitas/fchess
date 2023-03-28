@@ -137,5 +137,5 @@ fn main() -> Result<()> {
         "{}/{}",
         testsuit_results.successful_tests, testsuit_results.total_tests
     );
-    Ok(())
+    std::process::exit(testsuit_results.failed_tests as i32);
 }

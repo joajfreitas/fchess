@@ -91,6 +91,7 @@
     },
     {
       "start": {
+        "description": "Standard starting position.",
         "fen": "8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7"
       },
       "expected": [
