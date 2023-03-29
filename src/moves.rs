@@ -89,6 +89,7 @@ impl MoveSet {
 pub struct Move {
     src: Square,
     dst: Square,
+    target: Option<Square>,
 }
 
 impl fmt::Display for Move {
@@ -104,7 +105,24 @@ impl fmt::Display for Move {
 
 impl Move {
     pub fn new(src: Square, dst: Square) -> Move {
-        Move { src, dst }
+        Move {
+            src,
+            dst,
+            target: None,
+        }
+    }
+
+    pub fn get_src(&self) -> Square {
+        self.src
+    }
+    pub fn get_dst(&self) -> Square {
+        self.dst
+    }
+    pub fn get_target(&self) -> Option<Square> {
+        self.target
+    }
+    pub fn set_target(&mut self, target: Option<Square>) {
+        self.target = target
     }
 
     pub fn from_full_algebraic(algebra: &str) -> Option<Move> {
@@ -202,13 +220,6 @@ impl Move {
         } else {
             None
         }
-    }
-
-    pub fn get_src(&self) -> Square {
-        self.src
-    }
-    pub fn get_dst(&self) -> Square {
-        self.dst
     }
 
     pub fn from_algebraic(mov: &str) -> Option<Move> {

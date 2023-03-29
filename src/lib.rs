@@ -322,7 +322,7 @@ mod tests {
 
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
         "e2e4",
-        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
     )]
     #[case(
          //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
@@ -383,5 +383,72 @@ mod tests {
             .unwrap();
 
         assert_eq!(unit, Board::from_fen(resulting_fen))
+    }
+
+    #[test]
+    fn test_enpassant_move() {
+        //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        // 8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 7 │ ♙ │ ♙ │ ♙ │   │ ♙ │ ♙ │ ♙ │ ♙ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 6 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 5 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 4 │   │   │   │ ♙ │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 3 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 2 │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │
+        //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
+        let board = Board::from_fen("rnbqkbnr/ppp1pppp/8/8/3p4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        // apply enpassant move
+        let result = board
+            .apply(Move::from_full_algebraic("e2e4").unwrap())
+            .unwrap();
+
+        // check enpassant target square is set
+        assert_eq!(
+            result,
+            Board::from_fen("rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1")
+        );
+
+        // apply capture during enpassant
+        let result = result
+            .apply(Move::from_full_algebraic("d4e3").unwrap())
+            .unwrap();
+
+        //  ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        //8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //7 │ ♙ │ ♙ │ ♙ │   │ ♙ │ ♙ │ ♙ │ ♙ │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //6 │   │   │   │   │   │   │   │   │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //5 │   │   │   │   │   │   │   │   │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //4 │   │   │   │   │   │   │   │   │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //3 │   │   │   │   │ ♙ │   │   │   │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //2 │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │   │ ♟︎ │ ♟︎ │ ♟︎ │
+        //  ├───┼───┼───┼───┼───┼───┼───┼───┤
+        //1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │
+        //  └───┴───┴───┴───┴───┴───┴───┴───┘
+        //    a   b   c   d   e   f   g   h
+
+        // check that pawn is enpassant captured
+        //
+        println!("{}", result);
+        assert_eq!(
+            result,
+            Board::from_fen("rnbqkbnr/ppp1pppp/8/8/8/4p3/PPPP1PPP/RNBQKBNR w KQkq - 0 2")
+        );
     }
 }

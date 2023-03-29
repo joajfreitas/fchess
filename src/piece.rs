@@ -1,4 +1,5 @@
 use std::fmt;
+use std::ops::Not;
 
 use crate::square::Square;
 
@@ -53,6 +54,28 @@ impl PieceType {
                 | PieceType::WhiteQueen
                 | PieceType::WhiteKing
         )
+    }
+}
+
+impl Not for PieceType {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            PieceType::WhitePawn => PieceType::BlackPawn,
+            PieceType::WhiteRook => PieceType::BlackRook,
+            PieceType::WhiteKnight => PieceType::BlackKnight,
+            PieceType::WhiteBishop => PieceType::BlackBishop,
+            PieceType::WhiteQueen => PieceType::BlackQueen,
+            PieceType::WhiteKing => PieceType::BlackKing,
+            PieceType::BlackPawn => PieceType::WhitePawn,
+            PieceType::BlackRook => PieceType::WhiteRook,
+            PieceType::BlackKnight => PieceType::WhiteKnight,
+            PieceType::BlackBishop => PieceType::WhiteBishop,
+            PieceType::BlackQueen => PieceType::WhiteQueen,
+            PieceType::BlackKing => PieceType::WhiteKing,
+            _ => self,
+        }
     }
 }
 

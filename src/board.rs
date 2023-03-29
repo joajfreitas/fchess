@@ -229,17 +229,6 @@ impl Board {
         board
     }
 
-    /*
-    fn clear(self: &mut Board, coords: (u8, u8)) {
-        let (x, y) = coords;
-        let index = 8 * x + y;
-
-        for i in 0..12 {
-            self.pieces[i] &= !(1 << index);
-        }
-    }
-    */
-
     // Create board with scope
     pub fn scoped(self: &Board, scope: Scope) -> Board {
         let mut board = self.clone();
@@ -258,38 +247,6 @@ impl Board {
         occupancy
     }
 
-    /*
-    fn check_occupancy(self: &Board, point: (u8, u8), scope: &Scope) -> bool {
-        let occupancy = self.occupied(scope);
-        let (x, y) = point;
-        let index = 8 * x + y;
-
-        return ((occupancy >> index) & 1) == 1;
-    }
-    */
-
-    /*fn get_pieces(self: &mut Board, scope: &Scope) -> Vec<(u8, u8, Piece)> {
-        let mut pieces: Vec<(u8, u8, Piece)> = Vec::new();
-
-        for i in scope.to_range() {
-            for x in 0..8 {
-                for y in 0..8 {
-                    let index = 8 * x + y;
-                    if (self.pieces[i as usize] >> index) & 1 == 1 {
-                        pieces.push((x, y, num::FromPrimitive::from_usize(i).unwrap()));
-                    }
-                }
-            }
-        }
-
-        pieces
-    }*/
-
-    /*fn move_piece(self: &mut Board, piece: &Piece, src: (u8, u8), dst: (u8, u8)) {
-        self.clear(src);
-        self.set(piece, dst);
-    }*/
-
     pub fn piece_at(self: &Board, square: Square) -> Option<PieceType> {
         for piece_index in 0..13 {
             let bit = (self.pieces[piece_index] >> square.get_index()) & 1;
@@ -304,15 +261,6 @@ impl Board {
         self.pieces[piece_type as usize] =
             bitwise::enable_bit(self.pieces[piece_type as usize], square.get_index());
     }
-
-    //fn scope_at(self: &Board, square: Square) -> Option<Scope> {
-    //    let piece_type = self.piece_at(square)?;
-    //    if piece_type.is_white() {
-    //        Some(Scope::White)
-    //    } else {
-    //        Some(Scope::Black)
-    //    }
-    //}
 
     fn is_castle(&self, mov: Move) -> Option<(Move, Move, Castling)> {
         let piece_type = self.piece_at(mov.get_src())?;
@@ -376,6 +324,46 @@ impl Board {
         } else {
             self.apply_single_move(mov.clone())
         }?;
+
+        result.set_enpassant(None);
+
+        let piece_type = self.piece_at(mov.get_src()).unwrap();
+
+        if piece_type == PieceType::WhitePawn {
+            if mov.get_dst().get_rank() - mov.get_src().get_rank() == 2 {
+                result.set_enpassant(Some(Square::from_rank_file(
+                    mov.get_src().get_rank() + 1,
+                    mov.get_src().get_file(),
+                )));
+            }
+        } else if piece_type == PieceType::BlackPawn {
+            if mov.get_src().get_rank() - mov.get_dst().get_rank() == 2 {
+                result.set_enpassant(Some(Square::from_rank_file(
+                    mov.get_dst().get_rank() + 1,
+                    mov.get_dst().get_file(),
+                )));
+            }
+        }
+
+        if Some(mov.get_dst()) == self.get_enpassant() {
+            let clear_square = if piece_type == PieceType::BlackPawn {
+                Some(Square::from_rank_file(
+                    mov.get_dst().get_rank() + 1,
+                    mov.get_dst().get_file(),
+                ))
+            } else if piece_type == PieceType::WhitePawn {
+                Some(Square::from_rank_file(
+                    mov.get_dst().get_rank() - 1,
+                    mov.get_dst().get_file(),
+                ))
+            } else {
+                None
+            };
+
+            if let Some(clear_square) = clear_square {
+                result.pieces[!piece_type as usize] &= !(1 << clear_square.get_index());
+            }
+        }
 
         result.set_turn(!self.get_turn());
         if result.get_turn() == Side::White {
