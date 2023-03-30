@@ -120,7 +120,7 @@
           "fen": "8/ppp3p1/8/8/3p4/8/1pppQ1K1/brk4n b - - 12 7"
         },
         {
-          "move": "Qd1+",
+          "move": "Qd1",
           "fen": "8/ppp3p1/8/8/3p4/8/1ppp2K1/brkQ3n b - - 12 7"
         },
         {
@@ -128,7 +128,7 @@
           "fen": "8/ppp3p1/8/8/3p4/8/1ppp1QK1/brk4n b - - 12 7"
         },
         {
-          "move": "Qf1+",
+          "move": "Qf1",
           "fen": "8/ppp3p1/8/8/3p4/8/1ppp2K1/brk2Q1n b - - 12 7"
         },
         {

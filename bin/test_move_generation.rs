@@ -99,8 +99,10 @@ fn main() -> Result<()> {
     let mut testsuit_results = SuitResult::new();
 
     for testcase in test_suit.testcases {
+        println!("{:?}", testcase.start);
         let start_board = Board::from_fen(&testcase.start.fen);
         for expected in testcase.expected {
+            println!("{:?}", expected);
             let mov = Move::from_san(&expected.mov, &start_board);
             match mov {
                 Some(mov) => {

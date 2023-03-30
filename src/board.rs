@@ -336,13 +336,13 @@ impl Board {
                     mov.get_src().get_file(),
                 )));
             }
-        } else if piece_type == PieceType::BlackPawn {
-            if mov.get_src().get_rank() - mov.get_dst().get_rank() == 2 {
-                result.set_enpassant(Some(Square::from_rank_file(
-                    mov.get_dst().get_rank() + 1,
-                    mov.get_dst().get_file(),
-                )));
-            }
+        } else if piece_type == PieceType::BlackPawn
+            && mov.get_src().get_rank() - mov.get_dst().get_rank() == 2
+        {
+            result.set_enpassant(Some(Square::from_rank_file(
+                mov.get_dst().get_rank() + 1,
+                mov.get_dst().get_file(),
+            )));
         }
 
         if Some(mov.get_dst()) == self.get_enpassant() {
