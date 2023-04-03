@@ -44,6 +44,7 @@ struct TestResult {
     starting_board: Board,
     expected_board: Board,
     result_board: Board,
+    original_move: String,
     mov: Move,
     result: bool,
 }
@@ -74,12 +75,14 @@ impl TestResult {
         starting_board: &Board,
         expected_board: &Board,
         result_board: &Board,
+        original_move: &str,
         mov: Move,
     ) -> TestResult {
         TestResult {
             starting_board: starting_board.clone(),
             expected_board: expected_board.clone(),
             result_board: result_board.clone(),
+            original_move: original_move.to_string(),
             mov,
             result: TestResult::check(expected_board, result_board),
         }
@@ -99,19 +102,22 @@ fn main() -> Result<()> {
     let mut testsuit_results = SuitResult::new();
 
     for testcase in test_suit.testcases {
-        println!("{:?}", testcase.start);
         let start_board = Board::from_fen(&testcase.start.fen);
         for expected in testcase.expected {
-            println!("{:?}", expected);
-            let mov = Move::from_san(&expected.mov, &start_board);
+            let mov = Move::from_algebraic(&expected.mov);
             match mov {
                 Some(mov) => {
                     let resulting_board = start_board.apply(mov.clone());
                     if let Some(resulting_board) = resulting_board {
                         let resulting_board = resulting_board;
                         let expected_board = Board::from_fen(&expected.fen);
-                        let test_result =
-                            TestResult::new(&start_board, &expected_board, &resulting_board, mov);
+                        let test_result = TestResult::new(
+                            &start_board,
+                            &expected_board,
+                            &resulting_board,
+                            &expected.mov,
+                            mov,
+                        );
                         testsuit_results.push_test(test_result);
                     } else {
                         println!("Failed to apply move to board {}", mov);
@@ -130,9 +136,13 @@ fn main() -> Result<()> {
         if !test_case.result {
             println!("====================================");
             println!("{}", test_case.starting_board);
+            println!("{:?}", test_case.starting_board);
+            println!("{}", test_case.original_move);
             println!("{:?}", test_case.mov);
             println!("expected:\n{}", test_case.expected_board);
+            println!("expected:\n{:?}", test_case.expected_board);
             println!("resulting:\n{}", test_case.result_board);
+            println!("resulting:\n{:?}", test_case.result_board);
         }
     }
     println!(

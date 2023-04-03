@@ -200,7 +200,9 @@ impl Move {
             }
             resulting_move
         } else if mov.len() == 4 {
-            assert!(mov[1] == 'x');
+            if mov[1] != 'x' {
+                return None;
+            }
             let src_file = (mov[0] as u8) - b'a';
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';

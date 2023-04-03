@@ -191,7 +191,7 @@ impl Board {
         }
 
         let tail_re =
-            Regex::new(r"([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-g][1-8])?) ?(\d{1,2})? ?(\d{1,2})?")
+            Regex::new(r"([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-h][1-8])?) ?(\d{1,2})? ?(\d{1,2})?")
                 .unwrap();
 
         let tail = chars.iter().collect::<String>();
@@ -325,6 +325,21 @@ impl Board {
             self.apply_single_move(mov.clone())
         }?;
 
+        match (mov.get_src().get_rank(), mov.get_src().get_file()) {
+            (0, 0) => result.set_castling_white_long(false),
+            (0, 7) => result.set_castling_white_short(false),
+            (7, 0) => result.set_castling_black_long(false),
+            (7, 7) => result.set_castling_black_short(false),
+            (0, 4) => {
+                result.set_castling_white_long(false);
+                result.set_castling_white_short(false);
+            }
+            (7, 4) => {
+                result.set_castling_black_long(false);
+                result.set_castling_black_short(false);
+            }
+            _ => {}
+        }
         result.set_enpassant(None);
 
         let piece_type = self.piece_at(mov.get_src()).unwrap();
@@ -378,7 +393,8 @@ impl Board {
         let halfmove_clock_reset = matches!(mov, (PieceType::WhitePawn, _))
             | matches!(mov, (PieceType::BlackPawn, _))
             | matches!(mov, (_, PieceType::WhitePawn))
-            | matches!(mov, (_, PieceType::BlackPawn));
+            | matches!(mov, (_, PieceType::BlackPawn))
+            | (target_piece != PieceType::NoPiece);
 
         if halfmove_clock_reset {
             result.set_half_move_clock(0);
