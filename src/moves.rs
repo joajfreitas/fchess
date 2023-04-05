@@ -85,7 +85,7 @@ impl MoveSet {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Move {
     src: Square,
     dst: Square,
@@ -577,9 +577,9 @@ impl MoveGenerator {
     pub fn king_attacks(&self, piece: PieceType, from: Square, free: u64) -> MoveSet {
         let fill = 1 << from.get_index();
         let mut flood = fill;
-        flood |= fill.shift(N) & 0x7F7F7F7F7F7F7F7F & free;
+        flood |= fill.shift(N) & free;
         flood |= fill.shift(E) & 0xFEFEFEFEFEFEFEFE & free;
-        flood |= fill.shift(S) & 0xFEFEFEFEFEFEFEFE & free;
+        flood |= fill.shift(S) & free;
         flood |= fill.shift(W) & 0x7F7F7F7F7F7F7F7F & free;
         flood |= fill.shift(NE) & 0xFEFEFEFEFEFEFEFE & free;
         flood |= fill.shift(SE) & 0xFEFEFEFEFEFEFEFE & free;
@@ -591,4 +591,31 @@ impl MoveGenerator {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use crate::square::Square;
+
+    use super::Board;
+    use super::Move;
+    use super::MoveGenerator;
+
+    #[test]
+    fn test_king_move() {
+        let move_generator = MoveGenerator::new();
+        let board = Board::from_fen("8/K7/8/8/8/8/8/8");
+        let origin = Square::from_algebraic("a7").unwrap();
+        let moveset = move_generator
+            .generate_moves_for_piece(&board, origin)
+            .unwrap();
+
+        assert_eq!(
+            moveset.into_iter().collect::<Vec<Move>>(),
+            vec![
+                Move::new(origin, Square::from_algebraic("a6").unwrap()),
+                Move::new(origin, Square::from_algebraic("b6").unwrap()),
+                Move::new(origin, Square::from_algebraic("b7").unwrap()),
+                Move::new(origin, Square::from_algebraic("a8").unwrap()),
+                Move::new(origin, Square::from_algebraic("b8").unwrap()),
+            ]
+        )
+    }
+}
