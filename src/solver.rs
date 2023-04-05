@@ -1,5 +1,6 @@
 use crate::board::Board;
-use crate::moves::{Move, MoveGenerator};
+use crate::move_generator::MoveGenerator;
+use crate::moves::Move;
 
 #[derive(Clone, Copy, Debug, Default)]
 pub struct Solver {
