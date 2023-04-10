@@ -8,29 +8,13 @@ use fchess::board::Board;
 use fchess::moves::Move;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct StartCondition {
-    description: String,
-    fen: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct ExpectedCondition {
-    #[serde(alias = "move")]
-    mov: String,
-    fen: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 struct TestCase {
-    start: StartCondition,
-    expected: Vec<ExpectedCondition>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct TestSuit {
+    id: String,
     description: String,
-    #[serde(alias = "testCases")]
-    testcases: Vec<TestCase>,
+    start_fen: String,
+    expected_fen: String,
+    san: String,
+    lan: String,
 }
 
 struct SuitResult {
@@ -97,38 +81,33 @@ fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
     let contents =
         fs::read_to_string(args.get(1).unwrap()).expect("Should have been able to read the file");
-    let test_suit: TestSuit = serde_json::from_str(&contents)?;
+    let testsuit: Vec<TestCase> = serde_yaml::from_str(&contents).unwrap();
 
     let mut testsuit_results = SuitResult::new();
 
-    for testcase in test_suit.testcases {
-        let start_board = Board::from_fen(&testcase.start.fen);
-        for expected in testcase.expected {
-            let mov = Move::from_algebraic(&expected.mov);
-            match mov {
-                Some(mov) => {
-                    let resulting_board = start_board.apply(mov.clone());
-                    if let Some(resulting_board) = resulting_board {
-                        let resulting_board = resulting_board;
-                        let expected_board = Board::from_fen(&expected.fen);
-                        let test_result = TestResult::new(
-                            &start_board,
-                            &expected_board,
-                            &resulting_board,
-                            &expected.mov,
-                            mov,
-                        );
-                        testsuit_results.push_test(test_result);
-                    } else {
-                        println!("Failed to apply move to board {}", mov);
-                    }
-                }
-                None => {
-                    println!("Failed to parse move {}", &expected.mov);
-                    println!("{}", start_board);
-                    continue;
-                }
-            };
+    for testcase in testsuit {
+        let board = Board::from_fen(&testcase.start_fen);
+        let mov = Move::from_algebraic(&testcase.lan);
+        if mov.is_none() {
+            println!("Failed to parse move {}", &testcase.lan);
+            println!("{}", board);
+            continue;
+        }
+        let mov = mov.unwrap();
+        let resulting_board = board.apply(mov.clone());
+        if let Some(resulting_board) = resulting_board {
+            let resulting_board = resulting_board;
+            let expected_board = Board::from_fen(&testcase.expected_fen);
+            let test_result = TestResult::new(
+                &board,
+                &expected_board,
+                &resulting_board,
+                &testcase.lan,
+                mov,
+            );
+            testsuit_results.push_test(test_result);
+        } else {
+            println!("Failed to apply move to board {}", mov);
         }
     }
 

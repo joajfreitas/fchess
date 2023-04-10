@@ -304,6 +304,7 @@ impl Board {
         }
 
         result.pieces[piece_type] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_src().get_index());
+
         result.pieces[piece_type] |= 1 << mov.get_dst().get_index();
 
         Some(result)
@@ -324,6 +325,12 @@ impl Board {
         } else {
             self.apply_single_move(mov.clone())
         }?;
+
+        if mov.get_promotion().is_some() {
+            let piece_type = self.piece_at(mov.get_src()).unwrap() as usize;
+            result.pieces[piece_type] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_dst().get_index());
+            result.pieces[mov.get_promotion().unwrap() as usize] |= 1 << mov.get_dst().get_index();
+        }
 
         match (mov.get_src().get_rank(), mov.get_src().get_file()) {
             (0, 0) => result.set_castling_white_long(false),

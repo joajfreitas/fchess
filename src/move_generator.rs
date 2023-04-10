@@ -14,18 +14,19 @@ pub fn generate_knight_moves() -> Vec<u64> {
 
     let not_a = 0x7F7F7F7F7F7F7F7F;
     let not_h = 0xFEFEFEFEFEFEFEFE;
+    let all = 0xFFFFFFFFFFFFFFFF;
 
     for i in 0..64 {
         let mut mov = 0;
         let fill: Bitboard = 1 << i;
-        mov |= fill.shift_p(N, not_a).shift_p(E, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(N, not_a).shift_p(W, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(N, not_a).shift_p(N, not_a).shift_p(E, not_h);
-        mov |= fill.shift_p(N, not_a).shift_p(N, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(S, not_h).shift_p(E, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(S, not_h).shift_p(W, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(S, not_h).shift_p(S, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(S, not_h).shift_p(S, not_h).shift_p(W, not_a);
+        mov |= fill.shift_p(N, all).shift_p(E, not_h).shift_p(E, not_h);
+        mov |= fill.shift_p(N, all).shift_p(W, not_a).shift_p(W, not_a);
+        mov |= fill.shift_p(N, all).shift_p(N, all).shift_p(E, not_h);
+        mov |= fill.shift_p(N, all).shift_p(N, all).shift_p(W, not_a);
+        mov |= fill.shift_p(S, all).shift_p(E, not_h).shift_p(E, not_h);
+        mov |= fill.shift_p(S, all).shift_p(W, not_a).shift_p(W, not_a);
+        mov |= fill.shift_p(S, all).shift_p(S, all).shift_p(E, not_h);
+        mov |= fill.shift_p(S, all).shift_p(S, all).shift_p(W, not_a);
         vec.push(mov);
     }
 

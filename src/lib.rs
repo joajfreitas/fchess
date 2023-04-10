@@ -21,9 +21,9 @@ mod tests {
     use rstest::rstest;
 
     use super::board::Board;
+    use super::move_generator::MoveGenerator;
     use super::moves::Move;
-    use super::moves::MoveGenerator;
-    use super::moves::MoveSet;
+    use super::moveset::MoveSet;
     use super::piece::PieceType;
     use super::square::Square;
 
@@ -280,6 +280,26 @@ mod tests {
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
+    #[case("N7/8/8/8/8/8/8/8"
+           , ("a8", PieceType::WhiteKnight), vec!["b6", "c7"])]
+    //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+    // 8 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 7 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 6 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 5 │ ♘ │ ♘ │   │   │   │   │ ♘ │ ♘ │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 4 │ ♟︎ │   │   │   │   │   │   │ ♟︎ │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 3 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 2 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 1 │   │   │   │   │   │   │   │   │
+    //   └───┴───┴───┴───┴───┴───┴───┴───┘
+    //     a   b   c   d   e   f   g   h
     #[case("8/8/8/nn4nn/P6P/8/8/8", ("a4", PieceType::WhitePawn), vec!["b5"])]
     fn test_generate_move_for_piece(
         #[case] initial_fen: &str,
@@ -374,6 +394,7 @@ mod tests {
         "e8g8",
         "rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQ - 1 1"
     )]
+    #[case("8/3P4/8/8/8/8/3p4/8", "d7d8Q", "3Q4/8/8/8/8/8/3p4/8 b")]
     fn test_apply_move(
         #[case] initial_fen: &str,
         #[case] algebraic_move: &str,
