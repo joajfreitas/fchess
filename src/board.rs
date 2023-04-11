@@ -1,24 +1,30 @@
-use crate::dumb7fill::{
-    bishop_attacks, black_pawn_attacks, king_attacks, knight_attacks, rook_attacks,
-    white_pawn_attacks,
-};
-use crate::moves::Side;
-use crate::moves::{
-    generate_black_pawn_attacks, generate_black_pawn_moves, generate_knight_moves,
-    generate_white_pawn_attacks, generate_white_pawn_moves, Move, MoveSet, Scope,
-};
-use crate::piece::{Piece, PieceType};
-use crate::square::Square;
+use regex::Regex;
+use std::collections::VecDeque;
 use std::fmt;
 
-#[derive(Default, Clone)]
+use crate::bitwise;
+
+use crate::moves::{Move, Scope};
+use crate::piece::{Piece, PieceType};
+use crate::side::Side;
+use crate::square::Square;
+
+#[derive(Clone, Eq, PartialEq, Debug)]
+enum Castling {
+    WhiteShort,
+    WhiteLong,
+    BlackShort,
+    BlackLong,
+}
+
+#[derive(Default, Clone, Eq, PartialEq, Debug)]
 pub struct Board {
     pieces: [u64; 13],
-    pub knight_moves: Vec<u64>,
-    pub black_pawn_moves: Vec<u64>,
-    pub white_pawn_moves: Vec<u64>,
-    pub black_pawn_attacks: Vec<u64>,
-    pub white_pawn_attacks: Vec<u64>,
+    turn: Side, // who should play next
+    castling_rights: u8,
+    enpassant: Option<Square>,
+    half_move_clock: u8,
+    full_move_clock: u8,
 }
 
 pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -27,7 +33,6 @@ pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Resul
         .into_iter()
         .map(|piece| (piece.get_square()))
         .collect();
-    writeln!(f, "    a   b   c   d   e   f   g   h  ")?;
     writeln!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐")?;
     for i in 0..8 {
         write!(f, "{} ", 8 - i)?;
@@ -37,7 +42,7 @@ pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Resul
                     .iter()
                     .position(|r| *r == Square::from_rank_file(7 - i, j))
                     .unwrap();
-                write!(f, "│ {:?} ", pieces[index].get_type())?;
+                write!(f, "│ {} ", pieces[index].get_type())?;
             } else {
                 write!(f, "│   ")?;
             }
@@ -48,10 +53,11 @@ pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Resul
         }
     }
     write!(f, "│\n  └───┴───┴───┴───┴───┴───┴───┴───┘\n")?;
+    writeln!(f, "    a   b   c   d   e   f   g   h  ")?;
     f.write_str("")
 }
 
-impl fmt::Debug for Board {
+impl fmt::Display for Board {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let pieces = self.into_iter().collect();
         print_board(pieces, f)
@@ -98,31 +104,80 @@ impl<'a> Iterator for BoardIterator<'a> {
 
 impl Board {
     pub fn new() -> Board {
-        Board::read_fen("8/8/8/8/8/8/8/8")
+        Board {
+            ..Default::default()
+        }
     }
 
-    pub fn read_fen(fen: &str) -> Board {
+    pub fn get_turn(&self) -> Side {
+        self.turn
+    }
+
+    pub fn set_turn(&mut self, turn: Side) {
+        self.turn = turn
+    }
+
+    pub fn set_castling_white_short(&mut self, enabled: bool) {
+        self.castling_rights = bitwise::set_bit(self.castling_rights, 0, enabled as u8);
+    }
+    pub fn set_castling_white_long(&mut self, enabled: bool) {
+        self.castling_rights = bitwise::set_bit(self.castling_rights, 1, enabled as u8);
+    }
+    pub fn set_castling_black_short(&mut self, enabled: bool) {
+        self.castling_rights = bitwise::set_bit(self.castling_rights, 2, enabled as u8);
+    }
+    pub fn set_castling_black_long(&mut self, enabled: bool) {
+        self.castling_rights = bitwise::set_bit(self.castling_rights, 3, enabled as u8);
+    }
+
+    pub fn set_enpassant(&mut self, square: Option<Square>) {
+        self.enpassant = square;
+    }
+
+    pub fn get_enpassant(&self) -> Option<Square> {
+        self.enpassant
+    }
+    pub fn get_half_move_clock(&self) -> u8 {
+        self.half_move_clock
+    }
+
+    pub fn set_half_move_clock(&mut self, half_move_clock: u8) {
+        self.half_move_clock = half_move_clock;
+    }
+
+    pub fn get_full_move_clock(&self) -> u8 {
+        self.full_move_clock
+    }
+    pub fn set_full_move_clock(&mut self, full_move_clock: u8) {
+        self.full_move_clock = full_move_clock;
+    }
+
+    pub fn from_basic_board() -> Board {
+        Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    }
+    pub fn from_fen(fen: &str) -> Board {
         let vec = ['P', 'R', 'N', 'B', 'Q', 'K', 'p', 'r', 'n', 'b', 'q', 'k'];
 
         let mut board = Board {
-            knight_moves: generate_knight_moves(),
-            white_pawn_moves: generate_white_pawn_moves(),
-            black_pawn_moves: generate_black_pawn_moves(),
-            white_pawn_attacks: generate_white_pawn_attacks(),
-            black_pawn_attacks: generate_black_pawn_attacks(),
             ..Default::default()
         };
 
         let mut rank: u8 = 0;
         let mut file: u8 = 0;
 
-        for c in fen.chars() {
+        let mut chars = fen.chars().collect::<VecDeque<char>>();
+        loop {
+            if chars.is_empty() {
+                break;
+            }
+
+            let c = chars.pop_front().unwrap();
             let pos = vec.iter().position(|&r| r == c);
 
             match (pos, c) {
                 (Some(o), _) => {
                     let piece: PieceType = num::FromPrimitive::from_usize(o).unwrap();
-                    board.set(&piece, Square::from_rank_file(7 - file, rank));
+                    board.set_piece(Square::from_rank_file(7 - file, rank), piece);
                     rank += 1;
                 }
                 (_, '/') => {
@@ -131,38 +186,59 @@ impl Board {
                 }
                 (_, ' ') => break,
                 (_, '0'..='9') => rank += c.to_digit(10).unwrap() as u8,
-                _ => (),
-            };
+                _ => continue,
+            }
         }
+
+        let tail_re =
+            Regex::new(r"([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-h][1-8])?) ?(\d{1,2})? ?(\d{1,2})?")
+                .unwrap();
+
+        let tail = chars.iter().collect::<String>();
+        let captures = tail_re.captures(&tail).unwrap();
+
+        board.set_turn(match captures.get(1).map(|side| side.as_str()) {
+            None | Some("w") => Side::White,
+            Some("b") => Side::Black,
+            _ => Side::White,
+        });
+
+        board.set_castling_white_short(captures.get(2).map_or(false, |key| key.as_str() == "K"));
+        board.set_castling_white_long(captures.get(3).map_or(false, |key| key.as_str() == "Q"));
+        board.set_castling_black_short(captures.get(4).map_or(false, |key| key.as_str() == "k"));
+        board.set_castling_black_long(captures.get(5).map_or(false, |key| key.as_str() == "q"));
+
+        board.set_enpassant(
+            captures
+                .get(7)
+                .and_then(|key| Square::from_algebraic(key.as_str())),
+        );
+
+        board.set_half_move_clock(
+            captures
+                .get(8)
+                .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
+        );
+
+        board.set_full_move_clock(
+            captures
+                .get(9)
+                .map_or(0, |key| key.as_str().parse::<u8>().unwrap()),
+        );
 
         board
     }
-
-    pub fn set(self: &mut Board, piece: &PieceType, square: Square) {
-        self.pieces[*piece as u8 as usize] |= 1 << square.get_index();
-    }
-
-    /*
-    fn clear(self: &mut Board, coords: (u8, u8)) {
-        let (x, y) = coords;
-        let index = 8 * x + y;
-
-        for i in 0..12 {
-            self.pieces[i] &= !(1 << index);
-        }
-    }
-    */
 
     // Create board with scope
-    fn scoped(self: &Board, scope: &Scope) -> Board {
-        let mut board = Board::new();
-        for i in scope.to_range() {
-            board.pieces[i] = self.pieces[i];
+    pub fn scoped(self: &Board, scope: Scope) -> Board {
+        let mut board = self.clone();
+        for i in (!scope).to_range() {
+            board.pieces[i] = 0;
         }
         board
     }
 
-    fn occupied(self: &Board, scope: &Scope) -> u64 {
+    pub fn occupied(self: &Board, scope: Scope) -> u64 {
         let mut occupancy: u64 = 0;
 
         for i in scope.to_range() {
@@ -171,39 +247,7 @@ impl Board {
         occupancy
     }
 
-    /*
-    fn check_occupancy(self: &Board, point: (u8, u8), scope: &Scope) -> bool {
-        let occupancy = self.occupied(scope);
-        let (x, y) = point;
-        let index = 8 * x + y;
-
-        return ((occupancy >> index) & 1) == 1;
-    }
-    */
-
-    /*fn get_pieces(self: &mut Board, scope: &Scope) -> Vec<(u8, u8, Piece)> {
-        let mut pieces: Vec<(u8, u8, Piece)> = Vec::new();
-
-        for i in scope.to_range() {
-            for x in 0..8 {
-                for y in 0..8 {
-                    let index = 8 * x + y;
-                    if (self.pieces[i as usize] >> index) & 1 == 1 {
-                        pieces.push((x, y, num::FromPrimitive::from_usize(i).unwrap()));
-                    }
-                }
-            }
-        }
-
-        pieces
-    }*/
-
-    /*fn move_piece(self: &mut Board, piece: &Piece, src: (u8, u8), dst: (u8, u8)) {
-        self.clear(src);
-        self.set(piece, dst);
-    }*/
-
-    fn piece_at(self: &Board, square: Square) -> Option<PieceType> {
+    pub fn piece_at(self: &Board, square: Square) -> Option<PieceType> {
         for piece_index in 0..13 {
             let bit = (self.pieces[piece_index] >> square.get_index()) & 1;
             if bit == 1 {
@@ -213,137 +257,204 @@ impl Board {
         Some(PieceType::NoPiece)
     }
 
-    fn scope_at(self: &Board, square: Square) -> Option<Scope> {
-        let piece_type = self.piece_at(square)?;
-        if piece_type.is_white() {
-            Some(Scope::White)
-        } else {
-            Some(Scope::Black)
+    pub fn set_piece(&mut self, square: Square, piece_type: PieceType) {
+        self.pieces[piece_type as usize] =
+            bitwise::enable_bit(self.pieces[piece_type as usize], square.get_index());
+    }
+
+    fn is_castle(&self, mov: Move) -> Option<(Move, Move, Castling)> {
+        let piece_type = self.piece_at(mov.get_src())?;
+        let src_rank = mov.get_src().get_rank();
+        let src_file = mov.get_src().get_file();
+        let dst_rank = mov.get_dst().get_rank();
+        let dst_file = mov.get_dst().get_file();
+
+        match ((src_rank, src_file), (dst_rank, dst_file), piece_type) {
+            ((0, 4), (0, 2), PieceType::WhiteKing) => Some((
+                mov,
+                Move::new(Square::from_rank_file(0, 0), Square::from_rank_file(0, 3)),
+                Castling::WhiteLong,
+            )),
+            ((0, 4), (0, 6), PieceType::WhiteKing) => Some((
+                mov,
+                Move::new(Square::from_rank_file(0, 7), Square::from_rank_file(0, 5)),
+                Castling::WhiteShort,
+            )),
+            ((7, 4), (7, 2), PieceType::BlackKing) => Some((
+                mov,
+                Move::new(Square::from_rank_file(7, 0), Square::from_rank_file(7, 3)),
+                Castling::BlackLong,
+            )),
+            ((7, 4), (7, 6), PieceType::BlackKing) => Some((
+                mov,
+                Move::new(Square::from_rank_file(7, 7), Square::from_rank_file(7, 5)),
+                Castling::BlackShort,
+            )),
+            _ => None,
         }
     }
 
-    fn attack(self: &Board, piece: &Piece, scope: &Scope) -> MoveSet {
-        let square = piece.get_square();
-
-        let occupied = self.occupied(scope);
-        let enemy = self.occupied(&scope.reverse());
-
-        let piece = self.piece_at(square).unwrap();
-
-        let mov = match piece {
-            PieceType::BlackRook | PieceType::WhiteRook => {
-                rook_attacks(piece, square, !(occupied | enemy))
-            }
-            PieceType::BlackBishop | PieceType::WhiteBishop => {
-                bishop_attacks(piece, square, !(occupied | enemy))
-            }
-            PieceType::BlackQueen | PieceType::WhiteQueen => {
-                bishop_attacks(piece, square, !(occupied | enemy))
-                    | rook_attacks(piece, square, !(occupied | enemy))
-            }
-            PieceType::BlackKing | PieceType::WhiteKing => {
-                king_attacks(piece, square, !self.occupied(scope))
-            }
-            PieceType::BlackPawn => black_pawn_attacks(self, piece, square, occupied, enemy),
-            PieceType::WhitePawn => white_pawn_attacks(self, piece, square, occupied, enemy),
-            PieceType::BlackKnight | PieceType::WhiteKnight => {
-                knight_attacks(self, piece, square, !self.occupied(scope))
-            }
-            _ => {
-                MoveSet::new(square, piece, 1)
-                //panic!(),
-            }
-        };
-
-        // all except
-        let m = mov.mov ^ (mov.mov & occupied);
-        MoveSet::new(mov.src, mov.piece, m)
-    }
-
-    pub fn generate_moves(self: &Board, scope: &Scope) -> Vec<MoveSet> {
-        let board = self.scoped(scope);
-        //let board = self;
-        let mut v = Vec::new();
-
-        for piece in board.into_iter() {
-            let attack = self.attack(&piece, scope);
-            v.push(attack);
-        }
-        v
-    }
-
-    pub fn generate_moves_for_piece(
-        self: &Board,
-        scope: &Scope,
-        square: Square,
-    ) -> Option<MoveSet> {
-        Some(self.attack(&Piece::new(square, self.piece_at(square)?), scope))
-    }
-
-    pub fn apply(self: &Board, mov: Move) -> Option<Board> {
+    fn apply_single_move(self: &Board, mov: Move) -> Option<Board> {
         let mut result = self.clone();
 
-        //let piece_index = mov.piece as usize;
-        let piece_index = self.piece_at(mov.get_src()).unwrap() as usize;
-
-        let possible_moves =
-            self.generate_moves_for_piece(&self.scope_at(mov.get_src())?, mov.get_src())?;
-
-        if !possible_moves.contains(&mov) {
-            return None;
-        }
+        let piece_type = self.piece_at(mov.get_src()).unwrap() as usize;
 
         for i in Scope::All.to_range() {
-            if i == piece_index {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_src().get_index());
-                result.pieces[i] |= 1 << mov.get_dst().get_index();
-            } else {
-                result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_dst().get_index());
-            }
+            result.pieces[i] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_dst().get_index());
         }
+
+        result.pieces[piece_type] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_src().get_index());
+
+        result.pieces[piece_type] |= 1 << mov.get_dst().get_index();
+
         Some(result)
     }
 
-    pub fn apply_algebraic_notation(self: &Board, mov: String) -> Option<Board> {
-        let board = self.clone();
-        let mov: Vec<char> = mov.chars().collect();
-        if mov.len() == 2 {
-            panic!();
-        } else if mov.len() == 4 {
-            let src_rank = (mov[1] as u8) - b'1';
-            let src_file = (mov[0] as u8) - b'a';
-            let dst_rank = (mov[3] as u8) - b'1';
-            let dst_file = (mov[2] as u8) - b'a';
-
-            let mov = Move::new(
-                Square::from_rank_file(src_rank, src_file),
-                Square::from_rank_file(dst_rank, dst_file),
-            );
-            Some(board.apply(mov)?)
+    pub fn apply(self: &Board, mov: Move) -> Option<Board> {
+        let castle = self.is_castle(mov.clone());
+        let mut result = if castle.is_some() {
+            let castle = castle.unwrap();
+            let mut board = self.apply_single_move(castle.0)?;
+            match castle.2 {
+                Castling::WhiteShort => board.set_castling_white_short(false),
+                Castling::WhiteLong => board.set_castling_white_long(false),
+                Castling::BlackShort => board.set_castling_black_short(false),
+                Castling::BlackLong => board.set_castling_black_long(false),
+            }
+            board.apply_single_move(castle.1)
         } else {
-            None
+            self.apply_single_move(mov.clone())
+        }?;
+
+        if mov.get_promotion().is_some() {
+            let piece_type = self.piece_at(mov.get_src()).unwrap() as usize;
+            result.pieces[piece_type] &= 0xFFFFFFFFFFFFFFFF ^ (1 << mov.get_dst().get_index());
+            result.pieces[mov.get_promotion().unwrap() as usize] |= 1 << mov.get_dst().get_index();
         }
+
+        match (mov.get_src().get_rank(), mov.get_src().get_file()) {
+            (0, 0) => result.set_castling_white_long(false),
+            (0, 7) => result.set_castling_white_short(false),
+            (7, 0) => result.set_castling_black_long(false),
+            (7, 7) => result.set_castling_black_short(false),
+            (0, 4) => {
+                result.set_castling_white_long(false);
+                result.set_castling_white_short(false);
+            }
+            (7, 4) => {
+                result.set_castling_black_long(false);
+                result.set_castling_black_short(false);
+            }
+            _ => {}
+        }
+        result.set_enpassant(None);
+
+        let piece_type = self.piece_at(mov.get_src()).unwrap();
+
+        if piece_type == PieceType::WhitePawn {
+            if mov.get_dst().get_rank() - mov.get_src().get_rank() == 2 {
+                result.set_enpassant(Some(Square::from_rank_file(
+                    mov.get_src().get_rank() + 1,
+                    mov.get_src().get_file(),
+                )));
+            }
+        } else if piece_type == PieceType::BlackPawn
+            && mov.get_src().get_rank() - mov.get_dst().get_rank() == 2
+        {
+            result.set_enpassant(Some(Square::from_rank_file(
+                mov.get_dst().get_rank() + 1,
+                mov.get_dst().get_file(),
+            )));
+        }
+
+        if Some(mov.get_dst()) == self.get_enpassant() {
+            let clear_square = if piece_type == PieceType::BlackPawn {
+                Some(Square::from_rank_file(
+                    mov.get_dst().get_rank() + 1,
+                    mov.get_dst().get_file(),
+                ))
+            } else if piece_type == PieceType::WhitePawn {
+                Some(Square::from_rank_file(
+                    mov.get_dst().get_rank() - 1,
+                    mov.get_dst().get_file(),
+                ))
+            } else {
+                None
+            };
+
+            if let Some(clear_square) = clear_square {
+                result.pieces[!piece_type as usize] &= !(1 << clear_square.get_index());
+            }
+        }
+
+        result.set_turn(!self.get_turn());
+        if result.get_turn() == Side::White {
+            result.set_full_move_clock(result.get_full_move_clock() + 1);
+        }
+
+        let moved_piece = self.piece_at(mov.get_src()).unwrap();
+        let target_piece = self.piece_at(mov.get_dst()).unwrap();
+
+        let mov = (moved_piece, target_piece);
+
+        let halfmove_clock_reset = matches!(mov, (PieceType::WhitePawn, _))
+            | matches!(mov, (PieceType::BlackPawn, _))
+            | matches!(mov, (_, PieceType::WhitePawn))
+            | matches!(mov, (_, PieceType::BlackPawn))
+            | (target_piece != PieceType::NoPiece);
+
+        if halfmove_clock_reset {
+            result.set_half_move_clock(0);
+        } else {
+            result.set_half_move_clock(self.get_half_move_clock() + 1);
+        }
+
+        if self.get_enpassant().is_some() {
+            result.set_enpassant(None);
+        }
+
+        Some(result)
     }
 
-    // evaled from the point of view of white
-    fn eval(self: &Board) -> f32 {
-        let pieces_values: [f32; 14] = [
-            1.0, 5.0, 3.0, 3.0, 9.0, 100.0, -1.0, -5.0, -3.0, -3.0, -9.0, -100.0, 0.0, 0.0,
-        ];
+    //pub fn apply_algebraic_notation(self: &Board, mov: String) -> Option<Board> {
+    //    let board = self.clone();
+    //    let mov: Vec<char> = mov.chars().collect();
+    //    if mov.len() == 2 {
+    //        panic!();
+    //    } else if mov.len() == 4 {
+    //        let src_rank = (mov[1] as u8) - b'1';
+    //        let src_file = (mov[0] as u8) - b'a';
+    //        let dst_rank = (mov[3] as u8) - b'1';
+    //        let dst_file = (mov[2] as u8) - b'a';
 
-        let mut s: f32 = 0.0;
-        for i in Scope::All.to_range() {
-            s += (self.pieces[i].count_ones() as f32) * pieces_values[i];
-        }
+    //        let mov = Move::new(
+    //            Square::from_rank_file(src_rank, src_file),
+    //            Square::from_rank_file(dst_rank, dst_file),
+    //        );
+    //        Some(board.apply(mov)?)
+    //    } else {
+    //        None
+    //    }
+    //}
 
-        if s > 100.0 {
-            s = 100.0;
-        }
+    //pub fn eval(self: &Board) -> f32 {
+    //    let pieces_values: [f32; 14] = [
+    //        1.0, 5.0, 3.0, 3.0, 9.0, 100.0, -1.0, -5.0, -3.0, -3.0, -9.0, -100.0, 0.0, 0.0,
+    //    ];
 
-        s
-    }
+    //    let mut s: f32 = 0.0;
+    //    for i in Scope::All.to_range() {
+    //        s += (self.pieces[i].count_ones() as f32) * pieces_values[i];
+    //    }
 
-    fn checkmate(self: &Board) -> bool {
+    //    if s > 100.0 {
+    //        s = 100.0;
+    //    }
+
+    //    s
+    //}
+
+    pub fn checkmate(self: &Board) -> bool {
         if self.pieces[PieceType::WhiteKing as usize] == 0 {
             return true;
         }
@@ -353,50 +464,6 @@ impl Board {
         }
 
         false
-    }
-
-    fn min_max(self: &Board, scope: Scope, depth: u8) -> Option<(f32, u32)> {
-        //let mut best = None;
-        let mut score = -500.0;
-        let mut evals = 1;
-
-        if depth == 0 || self.checkmate() {
-            return Some((self.eval(), evals));
-        }
-
-        for piece in self.generate_moves(&scope) {
-            for mov in piece.into_iter() {
-                let b = self.apply(mov.clone())?;
-                let sc = b.min_max(scope.reverse(), depth - 1);
-                if sc.unwrap().0 > score {
-                    score = sc.unwrap().0;
-                }
-                evals += sc.unwrap().1;
-            }
-        }
-
-        Some((score, evals))
-    }
-
-    pub fn best_move(self: &Board, scope: Scope) -> Option<Move> {
-        let mut best = None;
-        let mut score = -500.0;
-
-        let mut evals = 0;
-        for piece in self.generate_moves(&scope) {
-            for mov in piece.into_iter() {
-                let b = self.apply(mov.clone())?;
-                let (sc, min_max_evals) = b.min_max(scope.reverse(), 3).unwrap();
-                if score < sc {
-                    best = Some(mov);
-                    score = sc;
-                }
-                evals += min_max_evals;
-            }
-        }
-
-        println!("evaluations: {}", evals);
-        best
     }
 
     pub fn zobryst_hash(&self, turn: &Side) -> u64 {
@@ -1218,5 +1285,282 @@ impl Board {
             Side::Black => 0,
         };
         piece_hash ^ castle_hash ^ side_hash ^ enpassant_hash
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Board;
+    use super::Piece;
+    use super::PieceType;
+    use super::Scope;
+    use super::Side;
+    use super::Square;
+
+    #[derive(Default)]
+    struct BoardBuilder {
+        board: Board,
+    }
+
+    impl BoardBuilder {
+        fn new() -> BoardBuilder {
+            BoardBuilder {
+                ..Default::default()
+            }
+        }
+
+        fn with_piece(mut self, coord: &str, piece_type: PieceType) -> BoardBuilder {
+            self.board
+                .set_piece(Square::from_algebraic(&coord).unwrap(), piece_type);
+
+            self
+        }
+
+        fn with_fen(mut self, fen: &str) -> BoardBuilder {
+            self.board = Board::from_fen(&fen);
+            self
+        }
+
+        fn with_turn(mut self, side: Side) -> BoardBuilder {
+            self.board.set_turn(side);
+            self
+        }
+
+        fn with_castling_white_short(mut self, enabled: bool) -> BoardBuilder {
+            self.board.set_castling_white_short(enabled);
+            self
+        }
+        fn with_castling_white_long(mut self, enabled: bool) -> BoardBuilder {
+            self.board.set_castling_white_long(enabled);
+            self
+        }
+        fn with_castling_black_short(mut self, enabled: bool) -> BoardBuilder {
+            self.board.set_castling_black_short(enabled);
+            self
+        }
+        fn with_castling_black_long(mut self, enabled: bool) -> BoardBuilder {
+            self.board.set_castling_black_long(enabled);
+            self
+        }
+        fn with_enpassant(mut self, enpassant: Option<Square>) -> BoardBuilder {
+            self.board.set_enpassant(enpassant);
+            self
+        }
+        fn with_half_move_clock(mut self, half_move_clock: u8) -> BoardBuilder {
+            self.board.set_half_move_clock(half_move_clock);
+            self
+        }
+        fn with_full_move_clock(mut self, full_move_clock: u8) -> BoardBuilder {
+            self.board.set_full_move_clock(full_move_clock);
+            self
+        }
+        fn build(self) -> Board {
+            self.board
+        }
+    }
+
+    #[test]
+    fn test_board_iterator() {
+        //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        // 8 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 7 │   │   │   │   │ ♙ │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 6 │   │   │   │ ♖ │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 5 │ ♛ │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 4 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 3 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 2 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 1 │   │   │   │   │   │   │   │   │
+        //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
+        let board = Board::from_fen("8/4p3/3r4/Q7/8/8/8/8");
+        assert_eq!(
+            board.into_iter().collect::<Vec<Piece>>(),
+            vec![
+                Piece::new(Square::from_algebraic("a5").unwrap(), PieceType::WhiteQueen),
+                Piece::new(Square::from_algebraic("e7").unwrap(), PieceType::BlackPawn),
+                Piece::new(Square::from_algebraic("d6").unwrap(), PieceType::BlackRook),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_read_simple_fen() {
+        assert_eq!(Board::from_fen("8/8/8/8/8/8/8/8"), Board::new());
+    }
+
+    #[test]
+    fn test_read_starting_position_fen() {
+        //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+        // 8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 7 │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 6 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 5 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 4 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 3 │   │   │   │   │   │   │   │   │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 2 │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │ ♟︎ │
+        //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+        // 1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │
+        //   └───┴───┴───┴───┴───┴───┴───┴───┘
+        //     a   b   c   d   e   f   g   h
+
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"),
+            BoardBuilder::new()
+                .with_piece("a1", PieceType::WhiteRook)
+                .with_piece("b1", PieceType::WhiteKnight)
+                .with_piece("c1", PieceType::WhiteBishop)
+                .with_piece("d1", PieceType::WhiteQueen)
+                .with_piece("e1", PieceType::WhiteKing)
+                .with_piece("f1", PieceType::WhiteBishop)
+                .with_piece("g1", PieceType::WhiteKnight)
+                .with_piece("h1", PieceType::WhiteRook)
+                .with_piece("a2", PieceType::WhitePawn)
+                .with_piece("b2", PieceType::WhitePawn)
+                .with_piece("c2", PieceType::WhitePawn)
+                .with_piece("d2", PieceType::WhitePawn)
+                .with_piece("e2", PieceType::WhitePawn)
+                .with_piece("f2", PieceType::WhitePawn)
+                .with_piece("g2", PieceType::WhitePawn)
+                .with_piece("h2", PieceType::WhitePawn)
+                .with_piece("a7", PieceType::BlackPawn)
+                .with_piece("b7", PieceType::BlackPawn)
+                .with_piece("c7", PieceType::BlackPawn)
+                .with_piece("d7", PieceType::BlackPawn)
+                .with_piece("e7", PieceType::BlackPawn)
+                .with_piece("f7", PieceType::BlackPawn)
+                .with_piece("g7", PieceType::BlackPawn)
+                .with_piece("h7", PieceType::BlackPawn)
+                .with_piece("a8", PieceType::BlackRook)
+                .with_piece("b8", PieceType::BlackKnight)
+                .with_piece("c8", PieceType::BlackBishop)
+                .with_piece("d8", PieceType::BlackQueen)
+                .with_piece("e8", PieceType::BlackKing)
+                .with_piece("f8", PieceType::BlackBishop)
+                .with_piece("g8", PieceType::BlackKnight)
+                .with_piece("h8", PieceType::BlackRook)
+                .build()
+        );
+    }
+
+    #[test]
+    fn test_read_fen_with_black_turn() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR")
+                .with_turn(Side::Black)
+                .build()
+        )
+    }
+    #[test]
+    fn test_read_fen_with_castling_rights_white() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQ"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR")
+                .with_castling_white_short(true)
+                .with_castling_white_long(true)
+                .build()
+        )
+    }
+    #[test]
+    fn test_read_fen_with_castling_rights_black() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w kq"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR")
+                .with_castling_black_short(true)
+                .with_castling_black_long(true)
+                .build()
+        )
+    }
+    #[test]
+    fn test_read_fen_with_enpassant() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w e3 0 0"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR")
+                .with_enpassant(Some(Square::from_algebraic("e3").unwrap()))
+                .build()
+        )
+    }
+
+    #[test]
+    fn test_read_fen_with_half_move_clock() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 10 0"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+                .with_half_move_clock(10)
+                .build()
+        )
+    }
+    #[test]
+    fn test_read_fen_with_full_move_clock() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - 0 10"),
+            BoardBuilder::new()
+                .with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+                .with_full_move_clock(10)
+                .build()
+        )
+    }
+
+    #[test]
+    fn test_board_scoped() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+                .scoped(Scope::White),
+            Board::from_fen("8/8/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        )
+    }
+
+    #[test]
+    fn test_board_occupied_white() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+                .occupied(Scope::White),
+            0x000000000000FFFF
+        )
+    }
+    #[test]
+    fn test_board_occupied_all() {
+        assert_eq!(
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+                .occupied(Scope::All),
+            0xFFFF00000000FFFF
+        )
+    }
+
+    #[test]
+    fn test_board_piece_at() {
+        let board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+        assert_eq!(
+            Some(PieceType::WhiteRook),
+            board.piece_at(Square::from_algebraic("a1").unwrap()),
+        )
+    }
+
+    #[test]
+    fn test_board_set_piece() {
+        let board = Board::from_fen("8/8/8/8/8/8/8/3K4");
+        let mut unit = Board::new();
+        unit.set_piece(Square::from_algebraic("d1").unwrap(), PieceType::WhiteKing);
+        assert_eq!(unit, board);
     }
 }

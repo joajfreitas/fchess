@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct Square {
     square: u8,
 }
@@ -16,15 +16,15 @@ impl Square {
         Square { square }
     }
 
-    pub fn from_algebraic(mov: &str) -> Square {
+    pub fn from_algebraic(mov: &str) -> Option<Square> {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
             let src_rank = (mov[1] as u8) - b'1';
             let src_file = (mov[0] as u8) - b'a';
 
-            Square::from_rank_file(src_rank, src_file)
+            Some(Square::from_rank_file(src_rank, src_file))
         } else {
-            panic!();
+            None
         }
     }
 

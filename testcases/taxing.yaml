@@ -1,0 +1,2862 @@
+- id: 810ebf8a696747268a9beea07cc2e626
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/Bp1Q4/k1NN1KB1 b - - 0 1
+  san: Bxa2
+  lan: b1a2
+- id: bd8f066c07064987b341b68ee520aaf5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/ppBQ4/k1NN1KB1 b - - 1 1
+  san: Bc2
+  lan: b1c2
+- id: cd156d5ce2884ceb99f3deaefdcb4ffe
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q2B1Q2/pp1Q4/k1NN1KB1 b - - 1 1
+  san: Bd3
+  lan: b1d3
+- id: 61649fb6d60444f68f99af2d6904595b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q1B2Q/Q4Q2/pp1Q4/k1NN1KB1 b - - 1 1
+  san: Be4
+  lan: b1e4
+- id: 0512a0ea56084b138dc5288f6397a6f6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4QB2/2Q4Q/Q4Q2/pp1Q4/k1NN1KB1 b - - 1 1
+  san: Bf5
+  lan: b1f5
+- id: 4d361ca8e3534d77827a51fb4f6f0314
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/Np1Q4/kB1N1KB1 b - - 0 1
+  san: Nxa2
+  lan: c1a2
+- id: e207e71469c84d209476064185ca6317
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1QN3/kB1N1KB1 b - - 1 1
+  san: Ne2
+  lan: c1e2
+- id: 81865637551746dbb821ef83aa9d5bd2
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/QN3Q2/pp1Q4/kB1N1KB1 b - - 1 1
+  san: Nb3
+  lan: c1b3
+- id: b723471d0a1c4b2a9eabd1f6605b5c21
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q2N1Q2/pp1Q4/kB1N1KB1 b - - 1 1
+  san: Nd3
+  lan: c1d3
+- id: e14cd1fba9864c58b6468fc3f25e51ef
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pN1Q4/kBN2KB1 b - - 0 1
+  san: Nxb2
+  lan: d1b2
+- id: 146223373a804973bf2d04749f2818c0
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q1N2/kBN2KB1 b - - 1 1
+  san: Nf2
+  lan: d1f2
+- id: a9f437bc4b9849159f192c68a855b2de
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q1N2Q2/pp1Q4/kBN2KB1 b - - 1 1
+  san: Nc3
+  lan: d1c3
+- id: 2bd68b27b15142d7925c6451fea9b227
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q3NQ2/pp1Q4/kBN2KB1 b - - 1 1
+  san: Ne3
+  lan: d1e3
+- id: 1d37a8d64abd49969ceb90aec9628fd8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNNK1B1 b - - 1 1
+  san: Ke1
+  lan: f1e1
+- id: 9d364f60dbca40439c1598048d1681c7
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1QK3/kBNN2B1 b - - 1 1
+  san: Ke2
+  lan: f1e2
+- id: 8f253930d35749438ea62a3fdcfb71af
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q1K2/kBNN2B1 b - - 1 1
+  san: Kf2
+  lan: f1f2
+- id: 0e403b7b9df742948ae2b197e174b007
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q2K1/kBNN2B1 b - - 1 1
+  san: Kg2
+  lan: f1g2
+- id: bf33bf13fbc04eaaa3e037e8959b7101
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q1B2/kBNN1K2 b - - 1 1
+  san: Bf2
+  lan: g1f2
+- id: b656e4ad57ee4eacbab3990d4ed68689
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q3BQ2/pp1Q4/kBNN1K2 b - - 1 1
+  san: Be3
+  lan: g1e3
+- id: 72347d7e00224f60809f5e199eabd2ca
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2QB3Q/Q4Q2/pp1Q4/kBNN1K2 b - - 1 1
+  san: Bd4
+  lan: g1d4
+- id: 3fd25bedf2fc418da7ae3af04fd763e1
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/2B1Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1K2 b - - 1 1
+  san: Bc5
+  lan: g1c5
+- id: 82783696aeea4a17a270a0468a244afd
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q3B/kBNN1K2 b - - 1 1
+  san: Bh2
+  lan: g1h2
+- id: 2e03977d2c1e4c8d8188c09c601b38b8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp6/kBNNQKB1 b - - 1 1
+  san: Qde1
+  lan: d2e1
+- id: 94cd6c4817b4421f937d974ce8a3c7f6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/ppQ5/kBNN1KB1 b - - 1 1
+  san: Qdc2
+  lan: d2c2
+- id: edf06c00e7bd4173bc2468c08630a1b6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pQ6/kBNN1KB1 b - - 0 1
+  san: Qdxb2
+  lan: d2b2
+- id: b469b24b814c4ceb99cdd7795524bf86
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp2Q3/kBNN1KB1 b - - 1 1
+  san: Qde2
+  lan: d2e2
+- id: 655c9cb4bc0e40038d3938fd0eaf5aaa
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp3Q2/kBNN1KB1 b - - 1 1
+  san: Qdf2
+  lan: d2f2
+- id: 2b3e783af09e4d83bfd72fab5c4bb3ea
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp4Q1/kBNN1KB1 b - - 1 1
+  san: Qdg2
+  lan: d2g2
+- id: cfa6cdf70aaf4a3d85c984999f678efe
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp5Q/kBNN1KB1 b - - 1 1
+  san: Qdh2
+  lan: d2h2
+- id: 5adef3bc84d74922bdcdc65ed163ce1d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q1Q2Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qdc3
+  lan: d2c3
+- id: 095628dd354a4bb297ad3bcb7a623bea
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/1QQ4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qdb4
+  lan: d2b4
+- id: 25e2425cf94242c48928fafb8637d4d0
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/Q3Q3/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qda5
+  lan: d2a5
+- id: 73a5fd269d8849eea5c6226e6106f4d6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q2Q1Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Q2d3
+  lan: d2d3
+- id: 98a352b5e880478cbc794aefbfd390d7
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2QQ3Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Q2d4
+  lan: d2d4
+- id: 195dd3f386024536ab82252a9a76c2cc
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/3QQ3/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Q2d5
+  lan: d2d5
+- id: 4e98deb59a004babaacdfcd24e9f98b5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q1Q2Q1/4Q3/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Q2d6
+  lan: d2d6
+- id: ef66e0c68ccc49fbb8c60daa6650cd7c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q3QQ2/pp6/kBNN1KB1 b - - 1 1
+  san: Qde3
+  lan: d2e3
+- id: 72f6108c29fe45aaa649e5651fdf7fee
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q2Q1Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qdf4
+  lan: d2f4
+- id: 1d223368ca844b389cf682703523d8db
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q1Q1/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qdg5
+  lan: d2g5
+- id: ed927c0e879d41b9aa4f43358e8332c9
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4QQ/4Q3/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1
+  san: Qdh6
+  lan: d2h6
+- id: 431bcd9f19324c0e9c7eec11085e3689
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/5Q2/Qp1Q4/kBNN1KB1 b - - 0 1
+  san: Qaxa2
+  lan: a3a2
+- id: f3ff4f3023034658ba659786f6cc6ff1
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/5Q2/pQ1Q4/kBNN1KB1 b - - 0 1
+  san: Qaxb2
+  lan: a3b2
+- id: 3eae783b5e854bd2ab7c6568a7334cf6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/1Q3Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qab3
+  lan: a3b3
+- id: 676ce36c840a4bc985c085acebda37dd
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/2Q2Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qac3
+  lan: a3c3
+- id: 130b0673ed5a4798a283b26b5b44b8f8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/3Q1Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qad3
+  lan: a3d3
+- id: 464809acf92d4af18ad66e7ab8e3fb28
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/4QQ2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qae3
+  lan: a3e3
+- id: 76898f8f943a484aa4debdbbb85e2734
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/Q1Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qaa4
+  lan: a3a4
+- id: faee6d5ac94c4788b407e08c434dfcea
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/Q3Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qaa5
+  lan: a3a5
+- id: ad3bd8b283aa46e6a6f8a16e9bfaeff5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/QQ4Q1/4Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qaa6
+  lan: a3a6
+- id: 2be99e8ae52c4d028145966376405ad3
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/Q2Q4/1Q4Q1/4Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qaa7
+  lan: a3a7
+- id: 7efe3039467d4d71aa8d59bc8bde7506
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/1QQ4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qab4
+  lan: a3b4
+- id: 832c4d40c7e1437ca188a55fb1855630
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/2Q1Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qac5
+  lan: a3c5
+- id: caa78e470be24e538597e03f7579663e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q1Q2Q1/4Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qad6
+  lan: a3d6
+- id: e67c5f7b40654de08e7ec90017bb108f
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3QQ3/1Q4Q1/4Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qae7
+  lan: a3e7
+- id: 986c11780a98475585d8dd727e977064
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R4Q1R/3Q4/1Q4Q1/4Q3/2Q4Q/5Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qaf8
+  lan: a3f8
+- id: 471cebacc08d4d51abd3a09876a70e79
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1QQ3/kBNN1KB1 b - - 1 1
+  san: Qfe2
+  lan: f3e2
+- id: dafa47294c3d448b8354c4b113316d0e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q1Q2/kBNN1KB1 b - - 1 1
+  san: Qff2
+  lan: f3f2
+- id: 3f74de8d75ef412b8612378cb1fb37b1
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q2Q1/kBNN1KB1 b - - 1 1
+  san: Qfg2
+  lan: f3g2
+- id: 84518379d5de47519647d96a0964f56d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KBQ b - - 1 1
+  san: Qfh1
+  lan: f3h1
+- id: 654451955c89432c898d21f51efbe781
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q3Q3/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfe3
+  lan: f3e3
+- id: c9f1b39f25b046c69990f6f66899b47f
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q2Q4/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfd3
+  lan: f3d3
+- id: 1a8dd229392241298f51aebd011d603e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q1Q5/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfc3
+  lan: f3c3
+- id: 700e19f8b57442df853181042324550d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/QQ6/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfb3
+  lan: f3b3
+- id: 0883d4cb2b55444f85c60d96fb9e88f5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q5Q1/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfg3
+  lan: f3g3
+- id: fc1062645ef445c3875edb11abb73eec
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q6Q/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfh3
+  lan: f3h3
+- id: b7251089631e4f8687ddbd0998b19911
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q1Q2Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfe4
+  lan: f3e4
+- id: ceb69c3b184b4898aafb784cca1f01a8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/3QQ3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfd5
+  lan: f3d5
+- id: b40bf4285aab437a9f0b222440bf9c78
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1QQ3Q1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfc6
+  lan: f3c6
+- id: 9dc5144abb5047a6a67e29981a74de95
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/1Q1Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfb7
+  lan: f3b7
+- id: 23b76b715ff441d883123255b580fde6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q2Q1Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qff4
+  lan: f3f4
+- id: fa041ab6ff5d43178c3e2ad38b7f2be4
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4QQ2/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qff5
+  lan: f3f5
+- id: 982ccc0dc7d74ebba9792e42a7021328
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q3QQ1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qff6
+  lan: f3f6
+- id: 046d7a56dc2448109e300600ba2fe4a8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q1Q2/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qff7
+  lan: f3f7
+- id: da55d7ccf9a045aaa6606e0ca53f4648
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R4Q1R/3Q4/1Q4Q1/4Q3/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qff8
+  lan: f3f8
+- id: a1b0afd770134640893c97477513a01c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q3QQ/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfg4
+  lan: f3g4
+- id: 7d7dc8ab98e04430be7598d5b44d18fb
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q2Q/2Q4Q/Q7/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qfh5
+  lan: f3h5
+- id: 3371938e9b004b6dbbe97477f23d027e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/QQ3Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcb3
+  lan: c4b3
+- id: 37140a8eb5bf4bdf93ffa6c45b059139
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/Qp1Q4/kBNN1KB1 b - - 0 1
+  san: Qcxa2
+  lan: c4a2
+- id: 84ed5b37b37d4121a87aef0d41e1f522
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/Q1Q2Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcc3
+  lan: c4c3
+- id: c85cecf578db472f8ac6aa84ee15e225
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/ppQQ4/kBNN1KB1 b - - 1 1
+  san: Qcc2
+  lan: c4c2
+- id: 8510b5a657974b428820b5d80fdafa41
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/Q2Q1Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcd3
+  lan: c4d3
+- id: e98e470803ce4b1db0f21f5914046fb6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/pp1QQ3/kBNN1KB1 b - - 1 1
+  san: Qce2
+  lan: c4e2
+- id: e67a7476b3c24f8dbe9215e692ddcab2
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/1Q5Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcb4
+  lan: c4b4
+- id: 1552ae4ce1e6481f863ccb1198d3a301
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/Q6Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qca4
+  lan: c4a4
+- id: 6dd7c6a63d8c45379084c626cd7f5210
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/3Q3Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcd4
+  lan: c4d4
+- id: 83f014fcc92d45f9b9386963db093100
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/4Q2Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qce4
+  lan: c4e4
+- id: 9414725ccff649a296c9181a087f6a87
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/5Q1Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcf4
+  lan: c4f4
+- id: 0ecbbcbc37fc44fb838bb2cd2d0ebf57
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/6QQ/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcg4
+  lan: c4g4
+- id: 2dab9fffa0bd4ccdba3bd3bd561c5965
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/1Q2Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcb5
+  lan: c4b5
+- id: ff8024d6a59548e98d45ee4941c4a32b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/QQ4Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qca6
+  lan: c4a6
+- id: dd8cb117e0154af585dbf8f9d6e72647
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/2Q1Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcc5
+  lan: c4c5
+- id: bcbf7cdd47364a02a4304fea95595fe3
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1QQ3Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcc6
+  lan: c4c6
+- id: 1a1d843abf044df093c40bf90210700b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/2QQ4/1Q4Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcc7
+  lan: c4c7
+- id: d9704d34e1634a65b415fe9d35734c71
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R1Q4R/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcc8
+  lan: c4c8
+- id: 96c07949dd564ae5a3bb76d79bed922e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/3QQ3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcd5
+  lan: c4d5
+- id: a3a1e8a01a234e9f9d059a1083196a90
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q2Q1Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qce6
+  lan: c4e6
+- id: 4c0c591594a44d6ab3bebc6bf29ee91a
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q1Q2/1Q4Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcf7
+  lan: c4f7
+- id: f7705854c91d4b95841fe302484ee904
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R5QR/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qcg8
+  lan: c4g8
+- id: 6377565f77124535a69cabf4e8f900d6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4QQ1/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhg3
+  lan: h4g3
+- id: f48f6e31693d4ff199de666d909727c4
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q1Q2/kBNN1KB1 b - - 1 1
+  san: Qhf2
+  lan: h4f2
+- id: 3bae5991644b4b4caed42983ab10a1b2
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q4/kBNNQKB1 b - - 1 1
+  san: Qhe1
+  lan: h4e1
+- id: a5c8834b1d7b4b83ad874ebe6a840ff5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q1Q/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhh3
+  lan: h4h3
+- id: bbb55baec9f849fcab7ba52218c20e4b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q3Q/kBNN1KB1 b - - 1 1
+  san: Qhh2
+  lan: h4h2
+- id: 858ed7ae2ca54a4593ec57de8a79b4b5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KBQ b - - 1 1
+  san: Qhh1
+  lan: h4h1
+- id: 4c9c4e2748fc4fbb8658b8a6a421ed31
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q3Q1/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhg4
+  lan: h4g4
+- id: ae76dfbda2c04f2fa878adc89980bb71
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q2Q2/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhf4
+  lan: h4f4
+- id: 708af533f3934ce98fd640531e26ed80
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2Q1Q3/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhe4
+  lan: h4e4
+- id: f0d9cdbb24a3485e8af6a1b6bb1bc556
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q3/2QQ4/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhd4
+  lan: h4d4
+- id: a12040d86262417ba1bd63dd3fdb8e19
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q1Q1/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhg5
+  lan: h4g5
+- id: 0d35ce341c114dd7ad03bfe8be4f0533
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q3QQ1/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhf6
+  lan: h4f6
+- id: f266b72a60544d759df4fcccf171421f
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3QQ3/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhe7
+  lan: h4e7
+- id: c002ed45a70943768c599f670b6c2715
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R2Q3R/3Q4/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhd8
+  lan: h4d8
+- id: 52c5e34188e54eb79fcd6e3791fc345d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/4Q2Q/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhh5
+  lan: h4h5
+- id: 7710c42b9a494e50a701719d3b0c7e9b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4QQ/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhh6
+  lan: h4h6
+- id: 5b7f415118084110b18b75a7fe729434
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q3Q/1Q4Q1/4Q3/2Q5/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qhh7
+  lan: h4h7
+- id: 161777f112b247e7a1e8600c1dd1eb52
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2QQ3Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qed4
+  lan: e5d4
+- id: 97000467b58742ca8abec6cf29e94eea
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q1Q2Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qec3
+  lan: e5c3
+- id: ea2b8977b10e44d5988453ba3234f692
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pQ1Q4/kBNN1KB1 b - - 0 1
+  san: Qexb2
+  lan: e5b2
+- id: d7bd5523f6c14bafafb30ac2fe6baaee
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q1Q2Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qee4
+  lan: e5e4
+- id: a311fc84bcbb45f5b4e16538748279a3
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q3QQ2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qee3
+  lan: e5e3
+- id: 871ae4225176413598ca4983a8f0b63d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pp1QQ3/kBNN1KB1 b - - 1 1
+  san: Qee2
+  lan: e5e2
+- id: 078cf5479c22423bba112cecf34df9b6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNNQKB1 b - - 1 1
+  san: Qee1
+  lan: e5e1
+- id: 91aa30f936ad4010bf527f4d984d0d91
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q2Q1Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qef4
+  lan: e5f4
+- id: 03bd407d96124dee9038ff9acafa9e95
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q4QQ1/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeg3
+  lan: e5g3
+- id: 507be6f975354b31be932058704d292b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q3Q/kBNN1KB1 b - - 1 1
+  san: Qeh2
+  lan: e5h2
+- id: ac3978a7186849eb800a5fd649005150
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/3Q4/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qed5
+  lan: e5d5
+- id: c7c7ca18227c4e9a80cde3f5a7d8d467
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/2Q5/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qec5
+  lan: e5c5
+- id: f1c8d15d026542d790e294cb2272e425
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/1Q6/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeb5
+  lan: e5b5
+- id: 336feeaf4db3488999921836b0a6dfb2
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/Q7/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qea5
+  lan: e5a5
+- id: aee3a19e5275482ab96544a504ced633
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/5Q2/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qef5
+  lan: e5f5
+- id: bf92bea7790b45e0a33df7d2c680f725
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/6Q1/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeg5
+  lan: e5g5
+- id: 9f6de607ff654524bee4b2ed6735284d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q4Q1/7Q/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeh5
+  lan: e5h5
+- id: 064ad4a38753425c9186402a68d325ec
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q1Q2Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qed6
+  lan: e5d6
+- id: 8738e2ecfe2642c0aef2a74fb5ee7c36
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/2QQ4/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qec7
+  lan: e5c7
+- id: 3d8be4e86cfd4ea493c2d29002e1a659
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: RQ5R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeb8
+  lan: e5b8
+- id: 2c7ac1b74edc45fc9536af1760da386e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q2Q1Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qee6
+  lan: e5e6
+- id: 55db99182f884516abf06b2640561f87
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3QQ3/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qee7
+  lan: e5e7
+- id: 78a8603e1db04166b947a10d10f107e6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R3Q2R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qee8
+  lan: e5e8
+- id: 8f1b1375449a4d3c8b7e104b73fcbb3d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q3QQ1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qef6
+  lan: e5f6
+- id: 6ca6c917dc5a47b2a12143940d7f8230
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q2Q1/1Q4Q1/8/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qeg7
+  lan: e5g7
+- id: 0acdaeb8798c4711906702cba5b2c5ae
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/Q3Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qba5
+  lan: b6a5
+- id: 737c162ad87249b0a0c6ca91f66fe8ec
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/1Q2Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbb5
+  lan: b6b5
+- id: d54de24511fc44c3a687d27881afa3fd
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/1QQ4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbb4
+  lan: b6b4
+- id: ae749e29e0a844caae83aa34b9c11c94
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/2Q4Q/QQ3Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbb3
+  lan: b6b3
+- id: 1b4e2311790c4eab9f3fa41f0414362f
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/2Q4Q/Q4Q2/pQ1Q4/kBNN1KB1 b - - 0 1
+  san: Qbxb2
+  lan: b6b2
+- id: b8bffa23bf0d41b1a47f7a65238463f7
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/2Q1Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbc5
+  lan: b6c5
+- id: ce0243e437054e6fbb299131b4cdfae2
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/2QQ3Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbd4
+  lan: b6d4
+- id: 99ff5001f60e471ab535ef2ad9126a72
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/2Q4Q/Q3QQ2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbe3
+  lan: b6e3
+- id: fbd416d5f8864fb4940d57a3fd4aa32e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q1Q2/kBNN1KB1 b - - 1 1
+  san: Qbf2
+  lan: b6f2
+- id: 9606f081b88e4ae5a33424ebeff6d605
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/Q5Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qba6
+  lan: b6a6
+- id: 836b6f8ac8c8435f90136ab7471cc168
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/2Q3Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbc6
+  lan: b6c6
+- id: 4902bb366c2d47658dae5dd6d1fbff36
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/3Q2Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbd6
+  lan: b6d6
+- id: 8907df1f7db543509e6d620a300c3362
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/4Q1Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbe6
+  lan: b6e6
+- id: a1fb299b680342eca2d5989ea2729e5e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/5QQ1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbf6
+  lan: b6f6
+- id: 4a81aeeb8df341f2bc5c4312756151b6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/Q2Q4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qba7
+  lan: b6a7
+- id: 46b08d344cd44f0cb428dc1d98189cbe
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/1Q1Q4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbb7
+  lan: b6b7
+- id: dc60d50a916b41fca2632cc682b290bf
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: RQ5R/3Q4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbb8
+  lan: b6b8
+- id: 27bf89d299764c49873db2f04c01bbf8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/2QQ4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbc7
+  lan: b6c7
+- id: 9dad831846754fb198272afebb1e745f
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R2Q3R/3Q4/6Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qbd8
+  lan: b6d8
+- id: f877e85afa674a8186e859c284eeeafd
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4QQ2/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgf5
+  lan: g6f5
+- id: f6443de9ba3e46fcb96ce1732d5f9132
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q1Q2Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qge4
+  lan: g6e4
+- id: c719911125204a06905be7a505a681bc
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q4Q/Q2Q1Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgd3
+  lan: g6d3
+- id: 39f9b53615a348c5ad59a13816f988a0
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q4Q/Q4Q2/ppQQ4/kBNN1KB1 b - - 1 1
+  san: Qgc2
+  lan: g6c2
+- id: 311679dffbd64e5992371ece8cf70152
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q1Q1/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgg5
+  lan: g6g5
+- id: 71111d7a77034f6db71c42bb15a962a6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q3QQ/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgg4
+  lan: g6g4
+- id: 0b2de64cf06e405aa8f93153d6386ef6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q4Q/Q4QQ1/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgg3
+  lan: g6g3
+- id: f42d68cf16244397bb3a834b8c21a3f9
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q2Q1/kBNN1KB1 b - - 1 1
+  san: Qgg2
+  lan: g6g2
+- id: a197c8344e094253a57b13532a7a479c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q6/4Q2Q/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgh5
+  lan: g6h5
+- id: c16c3b7ec9d34098881facf130ffd423
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q3Q2/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgf6
+  lan: g6f6
+- id: 33cbd142b3604cef8d6413d72c919ee5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q2Q3/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qge6
+  lan: g6e6
+- id: 397a3840d0304e9eb3dfe70a1308d15c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q1Q4/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgd6
+  lan: g6d6
+- id: e35e781d297c433da0c0a098479ce2ac
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1QQ5/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgc6
+  lan: g6c6
+- id: 501ba056f20d4d40914b1a649414937c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q4/1Q5Q/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgh6
+  lan: g6h6
+- id: e245d16808c943c597ba8e381dfd6768
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q1Q2/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgf7
+  lan: g6f7
+- id: 3c196b08c6f84ab881eb448a7a6b342a
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R3Q2R/3Q4/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qge8
+  lan: g6e8
+- id: d9ef3042303a459f81853958e4b0f125
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q2Q1/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgg7
+  lan: g6g7
+- id: 7d7d2beeca7f4a308e017da1120c6407
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R5QR/3Q4/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgg8
+  lan: g6g8
+- id: f9258af08e34495db524af527ece529b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/3Q3Q/1Q6/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qgh7
+  lan: g6h7
+- id: ed9456d8dd3546c3ac4b304505868c51
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1QQ3Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdc6
+  lan: d7c6
+- id: 6c94a87adf5d45a9819dca60396d06ea
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/1Q2Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdb5
+  lan: d7b5
+- id: 5c88279d50484903aeb3465bdb892a92
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4Q3/Q1Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qda4
+  lan: d7a4
+- id: b150a26b34394100bc8da8f9a2dc1d99
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q1Q2Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Q7d6
+  lan: d7d6
+- id: 6c948fbd6d394044906ca27617f518cb
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/3QQ3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Q7d5
+  lan: d7d5
+- id: 7671c60b0a7a4332a782c489474efce7
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4Q3/2QQ3Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Q7d4
+  lan: d7d4
+- id: d398ec3137ea4cdcba1dc3edb4464935
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4Q3/2Q4Q/Q2Q1Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Q7d3
+  lan: d7d3
+- id: 1c1438c9a1a741b5820d8c050b194eab
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q2Q1Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qde6
+  lan: d7e6
+- id: 8b0858de79b2401fa13b7ce99d6099c9
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4QQ2/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdf5
+  lan: d7f5
+- id: 66ad01925c97406ab16cf2f2182f8ed8
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4Q3/2Q3QQ/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdg4
+  lan: d7g4
+- id: 250c0d0870e54f8888ddb372e0e01c08
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/8/1Q4Q1/4Q3/2Q4Q/Q4Q1Q/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdh3
+  lan: d7h3
+- id: a7a7e8c5aaa542eb837238bb2ce1fca3
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/2Q5/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdc7
+  lan: d7c7
+- id: 194c93a4b0fc47d8a45a3d971d43e59b
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/1Q6/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdb7
+  lan: d7b7
+- id: 15cc7a94c995461282f8e42c9a74efb6
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/Q7/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qda7
+  lan: d7a7
+- id: 9f0d19c0a66247b38ef174e1f5db8da0
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/4Q3/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qde7
+  lan: d7e7
+- id: 3b478e5f4f1e4fedb973109777815427
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/5Q2/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdf7
+  lan: d7f7
+- id: 553fcbcf517e47e588a04ee6825cc291
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/6Q1/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdg7
+  lan: d7g7
+- id: 51bf732f985e4f0684d75d4d8bf051a4
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R6R/7Q/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdh7
+  lan: d7h7
+- id: 276efa7eacaa4fd8bf8d839f6c3cb20d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R1Q4R/8/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdc8
+  lan: d7c8
+- id: c05cf80b1ff74bf0aac0342c4eecbac4
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R2Q3R/8/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qdd8
+  lan: d7d8
+- id: 7f67585bc385492aae392152833dae1c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R3Q2R/8/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Qde8
+  lan: d7e8
+- id: 0ffb94701342487fadd539160a97059d
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 7R/R2Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Ra7
+  lan: a8a7
+- id: 0147bb68a1cf4d01ade796a3e04ecaa9
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 7R/3Q4/RQ4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Ra6
+  lan: a8a6
+- id: ec0076a1b8384f378534caa6c45249e5
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 7R/3Q4/1Q4Q1/R3Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Ra5
+  lan: a8a5
+- id: a4fe88bed8384d2ba8ab6c7e2a33ff57
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 7R/3Q4/1Q4Q1/4Q3/R1Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Ra4
+  lan: a8a4
+- id: 43fcf793ff984ac88011bee6963166ae
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 1R5R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rab8
+  lan: a8b8
+- id: 8a18e096a24a4bf5906a7f3fa1c06957
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 2R4R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rac8
+  lan: a8c8
+- id: 588084dd6a6844249d6150ee1d135c1e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 3R3R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rad8
+  lan: a8d8
+- id: d65a3716fa694046b025578e71fa7423
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 4R2R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rae8
+  lan: a8e8
+- id: d75f586a0a154ae1a95e5cb90897f166
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 5R1R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Raf8
+  lan: a8f8
+- id: af7e8fad5119402d9eb5d72c3854f19e
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: 6RR/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rag8
+  lan: a8g8
+- id: d91b2c0a1932458a8bc88fdede19d55c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R7/3Q3R/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rh7
+  lan: h8h7
+- id: 7e3f47d8c91f4a078534aa150a3f7426
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R7/3Q4/1Q4QR/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rh6
+  lan: h8h6
+- id: 3b40275fcdbb45a4b7bb943eaa7071da
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R7/3Q4/1Q4Q1/4Q2R/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rh5
+  lan: h8h5
+- id: 4c9340b4664242be9d6a4b8d0def00a9
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R5R1/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhg8
+  lan: h8g8
+- id: ddc7d9d9954b4a25b7b283d2b6392986
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R4R2/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhf8
+  lan: h8f8
+- id: 95780d7195d946d893ec7dc0fcb27c26
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R3R3/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhe8
+  lan: h8e8
+- id: 90bf3ffdcb734b10850f434552bde93c
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R2R4/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhd8
+  lan: h8d8
+- id: 3847af65edda479d8bad562829493bfc
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: R1R5/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhc8
+  lan: h8c8
+- id: cdf75df4d0ba4cb380fcc833b055ee20
+  description: A position generating a very large number of possible moves.
+  start_fen: R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 w - - 0 1
+  expected_fen: RR6/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1Q4/kBNN1KB1 b - - 1 1
+  san: Rhb8
+  lan: h8b8
+- id: 7cf701d4d6e54111bbdad108520241ed
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KBB/7B b - - 1 1
+  san: Bh2
+  lan: g1h2
+- id: 04f4ccfac458435fadb26be70ae7d39e
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/6B1/4K1BB b - - 1 1
+  san: Ke1
+  lan: f2e1
+- id: af0aaf6a49824b6aa71eb72677e89cd8
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/6B1/5KBB b - - 1 1
+  san: Kf1
+  lan: f2f1
+- id: 97d2c9fafe664f38ae79d05220f95adf
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/4K1B1/6BB b - - 1 1
+  san: Ke2
+  lan: f2e2
+- id: 2a2a91784a774a2687ec7c42db654471
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B2KB2/6B1/6BB b - - 1 1
+  san: Ke3
+  lan: f2e3
+- id: 7f80e5fb78bd42e2afe5775e625ce4e1
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3BK1/6B1/6BB b - - 1 1
+  san: Kg3
+  lan: f2g3
+- id: 5d8a3f8ea23b4e218759029fdb7839ef
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5K2/5BBB b - - 1 1
+  san: Bf1
+  lan: g2f1
+- id: a7a8695c21d846ce9357223e146b5b9a
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B3B1B/5K2/6BB b - - 1 1
+  san: Bh3
+  lan: g2h3
+- id: 888a19c3f88f4f90ab0e2a92eedec59a
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/5B2/B4KB1/6BB b - - 1 1
+  san: Ba2
+  lan: b3a2
+- id: 4dfdf5a3322447e6a32c1cf0af750272
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/5B2/2B2KB1/6BB b - - 1 1
+  san: Bbc2
+  lan: b3c2
+- id: a92b92c676394200b22a66e24d29b08e
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/5B2/5KB1/3B2BB b - - 1 1
+  san: Bbd1
+  lan: b3d1
+- id: e0897ad4eb404753a53c24e00f63695d
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/B3B3/5B2/5KB1/6BB b - - 1 1
+  san: Bba4
+  lan: b3a4
+- id: 7ad933c895764e55b014fb87369ff58c
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/2B1B3/5B2/5KB1/6BB b - - 1 1
+  san: Bbc4
+  lan: b3c4
+- id: b3502abd4bd848aabc5b5dc20579da84
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B6/4BKB1/6BB b - - 1 1
+  san: Be2
+  lan: f3e2
+- id: 63f36ee12f9f444a86642fe2bb11b13c
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B3/1B6/5KB1/3B2BB b - - 1 1
+  san: Bfd1
+  lan: f3d1
+- id: 03dd9f248b7f4208b06e705569e18a2d
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/4B1B1/1B6/5KB1/6BB b - - 1 1
+  san: Bg4
+  lan: f3g4
+- id: 7262412a7a2d4a44a75a4fd6bcd8105d
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B3B/4B3/1B6/5KB1/6BB b - - 1 1
+  san: Bh5
+  lan: f3h5
+- id: 10da19cf3e564ce697591eb58f31495b
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/8/1B1B1B2/5KB1/6BB b - - 1 1
+  san: Bd3
+  lan: e4d3
+- id: 77656c00336c485fb73559ae1ca54b9d
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/8/1B3B2/2B2KB1/6BB b - - 1 1
+  san: Bec2
+  lan: e4c2
+- id: 802a1abac31542f89ee4a36a71119c46
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B4/8/1B3B2/5KB1/1B4BB b - - 1 1
+  san: Bb1
+  lan: e4b1
+- id: ab9208b3cb304f91ba3004f2695b0609
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/3B1B2/8/1B3B2/5KB1/6BB b - - 1 1
+  san: Bf5
+  lan: e4f5
+- id: f66243d2e1624b19a6a2e1942f0b3d20
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B3B1/3B4/8/1B3B2/5KB1/6BB b - - 1 1
+  san: Bg6
+  lan: e4g6
+- id: e7813e4ede8e48c4a70beadeab5979b9
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B5B/2B5/3B4/8/1B3B2/5KB1/6BB b - - 1 1
+  san: Bh7
+  lan: e4h7
+- id: d8596aad757d4cb08d2900b632f7d0b9
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B5/8/2B1B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bdc4
+  lan: d5c4
+- id: eb56abde18744c33b746302ae1f35faf
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/2B1B3/8/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Be6
+  lan: d5e6
+- id: 6ff08fb1547640bea2cc08afb646835d
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B3B2/2B5/8/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bf7
+  lan: d5f7
+- id: 1e575c20372c45ea8e0166d5f7fc431c
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k2B1/1B6/2B5/8/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bg8
+  lan: d5g8
+- id: b9e9ca73d8624fa8976a1d459279183f
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/8/1B1B4/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bb5
+  lan: c6b5
+- id: c98efc727b42442e811d078c63d74a51
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B6/8/3B4/B3B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bca4
+  lan: c6a4
+- id: 66ab06b649ae45d4a46a442b5fa15f08
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/1B1B4/8/3B4/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bd7
+  lan: c6d7
+- id: ddf59fccd0ba4f148c4355c571fef1ad
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2kB3/1B6/8/3B4/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Be8
+  lan: c6e8
+- id: dc929087c12a45068ce33dd44ac0f40e
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B2k4/8/B1B5/3B4/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Ba6
+  lan: b7a6
+- id: e457c06cc6f64934a38ba69a4da5c3cb
+  description: The maximum number of bishops, mostly white.
+  start_fen: B2k4/1B6/2B5/3B4/4B3/1B3B2/5KB1/6BB w - - 0 1
+  expected_fen: B1Bk4/8/2B5/3B4/4B3/1B3B2/5KB1/6BB b - - 1 1
+  san: Bc8
+  lan: b7c8
+- id: 36ad2e11e8ce41d69e108fef4d591ed4
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/8/4K3 b - - 1 1
+  san: Ke1
+  lan: f2e1
+- id: 874a8b7cca074b0e8683e4f4505b9798
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/8/5K2 b - - 1 1
+  san: Kf1
+  lan: f2f1
+- id: 0943fc46a67740a78c78a6747b4b519c
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/8/6K1 b - - 1 1
+  san: Kg1
+  lan: f2g1
+- id: 78550c67b0ea469eb4b320e5272114aa
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/4K3/8 b - - 1 1
+  san: Ke2
+  lan: f2e2
+- id: 5ac3947fc1154057ab7d5ebe077d05e0
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/6K1/8 b - - 1 1
+  san: Kg2
+  lan: f2g2
+- id: 754fa7be14a2473eaaf288379317449e
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B3K3/8/8 b - - 1 1
+  san: Ke3
+  lan: f2e3
+- id: 45d0c2bcd1d54908aeda273ed1962b94
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B4K2/8/8 b - - 1 1
+  san: Kf3
+  lan: f2f3
+- id: f95e6bbb85484886b51c14f5bddb9b64
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B5K1/8/8 b - - 1 1
+  san: Kg3
+  lan: f2g3
+- id: d983bf19fc5b49e2ac2055744c648f5b
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/8/1B3K2/8 b - - 1 1
+  san: Bb2
+  lan: a3b2
+- id: 73e1d99d344b45529e9304fc4acd3fcd
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/8/5K2/2B5 b - - 1 1
+  san: Bc1
+  lan: a3c1
+- id: e4ebe3b7f00945d8a71d136b4c1fea44
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/8/B1B5/5K2/8 b - - 1 1
+  san: Bc3
+  lan: b4c3
+- id: 9010eecce57e420d9e2cb5c26a148a17
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/8/B7/3B1K2/8 b - - 1 1
+  san: Bd2
+  lan: b4d2
+- id: c863945fb2314ecaacb265585d173fd5
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B4B/8/B7/5K2/4B3 b - - 1 1
+  san: Be1
+  lan: b4e1
+- id: 969d1e6db442413ab64fa8c5c5bd2c30
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B6B/1B1B4/B7/5K2/8 b - - 1 1
+  san: Bd4
+  lan: c5d4
+- id: d8436379dac34c3ba04c5924d533a749
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B6B/1B6/B3B3/5K2/8 b - - 1 1
+  san: Be3
+  lan: c5e3
+- id: d6fc651654304f209a530421f0b60ed5
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B5/1B4B1/B7/5K2/8 b - - 1 1
+  san: Bg4
+  lan: h5g4
+- id: 1e39d8a1048746bf97622296d49a06cd
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B5/1B6/B4B2/5K2/8 b - - 1 1
+  san: Bf3
+  lan: h5f3
+- id: d44fc80517c148b698c32f12ddefbd1c
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B5/1B6/B7/4BK2/8 b - - 1 1
+  san: Be2
+  lan: h5e2
+- id: 63093724553b41faba50d8b47e1b1a16
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B4/B1B5/1B6/B7/5K2/3B4 b - - 1 1
+  san: Bd1
+  lan: h5d1
+- id: 9ca7cff5da194e8e97cb63167d62efca
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B1B2B1/B1B5/1B6/B7/5K2/8 b - - 1 1
+  san: Bg6
+  lan: h5g6
+- id: e0a37eab97c347138302f5f052e56bbf
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B2B2/1B1B4/B1B5/1B6/B7/5K2/8 b - - 1 1
+  san: Bf7
+  lan: h5f7
+- id: eded5ac37b7a44019152634ff3479be0
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk1B3/B1B5/1B1B4/B1B5/1B6/B7/5K2/8 b - - 1 1
+  san: Be8
+  lan: h5e8
+- id: 6f3aaf2b1b9a4402b09cb1097617f885
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B6/B1B1B2B/1B6/B7/5K2/8 b - - 1 1
+  san: Be5
+  lan: d6e5
+- id: 6cc120099ad04cb9811ef1edb7f176de
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B6/B1B4B/1B3B2/B7/5K2/8 b - - 1 1
+  san: Bf4
+  lan: d6f4
+- id: 43bfafba2cdc4766a403119c811f1afe
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B6/B1B4B/1B6/B5B1/5K2/8 b - - 1 1
+  san: Bg3
+  lan: d6g3
+- id: 5a56aeb0be3043288ac76f1ba06f2663
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B5/1B6/B1B4B/1B6/B7/5K1B/8 b - - 1 1
+  san: Bh2
+  lan: d6h2
+- id: 56281f3e0f0f49199b17973ea99daced
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk5/B1B1B3/1B6/B1B4B/1B6/B7/5K2/8 b - - 1 1
+  san: Be7
+  lan: d6e7
+- id: cf6154fe8e0645e5a64d8674670426f5
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1Bk2B2/B1B5/1B6/B1B4B/1B6/B7/5K2/8 b - - 1 1
+  san: Bf8
+  lan: d6f8
+- id: f64537a40d6d430b8e76456a48e3e889
+  description: The maximum number of bishops, mostly black, but not many moves.
+  start_fen: 1Bk5/B1B5/1B1B4/B1B4B/1B6/B7/5K2/8 w - - 0 1
+  expected_fen: 1BkB4/B7/1B1B4/B1B4B/1B6/B7/5K2/8 b - - 1 1
+  san: Bd8
+  lan: c7d8
+- id: ce7bcaab05a14e79b1ce040551e80a97
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/2K5/1B6/8/8/8 b - - 1 1
+  san: Bb4
+  lan: a5b4
+- id: 9836cc0d10cb43f9b7461528417f6730
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/2K5/8/2B5/8/8 b - - 1 1
+  san: Bc3
+  lan: a5c3
+- id: 4ef9ac6cb813479c8b0fd565b6706016
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/2K5/8/8/3B4/8 b - - 1 1
+  san: Bd2
+  lan: a5d2
+- id: 5c08cd43b837445e9ba4f15e270681ee
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/2K5/8/8/8/4B3 b - - 1 1
+  san: Be1
+  lan: a5e1
+- id: 5c87729b2d4d47b7887594df700c2655
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/B7/1K6/8/8/8 b - - 1 1
+  san: Kb4
+  lan: c5b4
+- id: 86f708bca3b74fb39a2e687ca56afa30
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/B7/2K5/8/8/8 b - - 1 1
+  san: Kc4
+  lan: c5c4
+- id: 096a3fd0a1254b538e22b15c1104e13b
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/B7/3K4/8/8/8 b - - 1 1
+  san: Kd4
+  lan: c5d4
+- id: e537e1b32481490e89f6b7fa03f57d32
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/BK6/8/8/8/8 b - - 1 1
+  san: Kb5
+  lan: c5b5
+- id: 6818f18bedfc49c38a4e0933fa3c47c4
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBB4k/B2K4/8/8/8/8 b - - 1 1
+  san: Kd5
+  lan: c5d5
+- id: 2623201dbc6c44aeabac571062c38fad
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BBBK3k/B7/8/8/8/8 b - - 1 1
+  san: Kd6
+  lan: c5d6
+- id: b082dfac0ec84e78850c74774b7f0b4b
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/1BB4k/BBK5/8/8/8/8 b - - 1 1
+  san: Bab5
+  lan: a6b5
+- id: adbde70f8892407dbae52a839b09120c
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/1BB4k/B1K5/2B5/8/8/8 b - - 1 1
+  san: Bc4
+  lan: a6c4
+- id: 91af28ae56184659a0b8456ca86c408b
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/1BB4k/B1K5/8/3B4/8/8 b - - 1 1
+  san: Bd3
+  lan: a6d3
+- id: d6ca617c8b6049f49fb74a6c15182bc7
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/1BB4k/B1K5/8/8/4B3/8 b - - 1 1
+  san: Be2
+  lan: a6e2
+- id: cfb7a60e14fb47209d0c2b926cf71326
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/1BB4k/B1K5/8/8/8/5B2 b - - 1 1
+  san: Bf1
+  lan: a6f1
+- id: 86a68bca5ca04a9c86891ac7b79eee3c
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/BBK5/8/8/8/8 b - - 1 1
+  san: Bcb5
+  lan: c6b5
+- id: 336f45c6e0df412fa6bf925b072ea269
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1K5/B7/8/8/8 b - - 1 1
+  san: Ba4
+  lan: c6a4
+- id: 47befa4d170d4a22a20d89447be0fa52
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1KB4/8/8/8/8 b - - 1 1
+  san: Bd5
+  lan: c6d5
+- id: 8528515685c548b588a0bc93f341f953
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1K5/4B3/8/8/8 b - - 1 1
+  san: Be4
+  lan: c6e4
+- id: b9fa1f6ee76b411cbde337c4458326f1
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1K5/8/5B2/8/8 b - - 1 1
+  san: Bf3
+  lan: c6f3
+- id: a2117e81da8c4b0c825a3f5aa6f4e611
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1K5/8/8/6B1/8 b - - 1 1
+  san: Bg2
+  lan: c6g2
+- id: 3efecf98ef1e413fbc66042012cdb2e0
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBB5/BB5k/B1K5/8/8/8/7B b - - 1 1
+  san: Bh1
+  lan: c6h1
+- id: 332b2d62b2594221a3ebb21be71a2d63
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BBBB4/BB5k/B1K5/8/8/8/8 b - - 1 1
+  san: B6d7
+  lan: c6d7
+- id: afc6013a7bb54956bd0d9761554eb1e7
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB1B3/BBB5/BB5k/B1K5/8/8/8/8 b - - 1 1
+  san: Be8
+  lan: c6e8
+- id: 35af10d51d1141e4a2956397dd5af854
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BB6/BBBB3k/B1K5/8/8/8/8 b - - 1 1
+  san: Bd6
+  lan: c7d6
+- id: 38e4531fa5594effb02e94cba34ade08
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BB6/BBB4k/B1K1B3/8/8/8/8 b - - 1 1
+  san: Be5
+  lan: c7e5
+- id: eaa3a30114124f37a2b85bba557a737a
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BB6/BBB4k/B1K5/5B2/8/8/8 b - - 1 1
+  san: Bf4
+  lan: c7f4
+- id: 02e0c204937c42d8bd678c3ec36582b1
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BB6/BBB4k/B1K5/8/6B1/8/8 b - - 1 1
+  san: Bg3
+  lan: c7g3
+- id: ef544f7db3134901a421a559aceb8a71
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBB5/BB6/BBB4k/B1K5/8/8/7B/8 b - - 1 1
+  san: Bh2
+  lan: c7h2
+- id: e3e06c4db07b42888c12f7035af66ff3
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BBBB4/BB6/BBB4k/B1K5/8/8/8/8 b - - 1 1
+  san: Bd8
+  lan: c7d8
+- id: f2790a6414b749a0a275f18cee4a912c
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BB6/BBBB4/BBB4k/B1K5/8/8/8/8 b - - 1 1
+  san: B8d7
+  lan: c8d7
+- id: fdf5e024a8f74f2d8b53c2ca99e121c7
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BB6/BBB5/BBB1B2k/B1K5/8/8/8/8 b - - 1 1
+  san: Be6
+  lan: c8e6
+- id: ee66da8c438d44d384b882c2b7a8df0e
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BB6/BBB5/BBB4k/B1K2B2/8/8/8/8 b - - 1 1
+  san: Bf5
+  lan: c8f5
+- id: ac746b058d4240d2826d8474b1467475
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BB6/BBB5/BBB4k/B1K5/6B1/8/8/8 b - - 1 1
+  san: Bg4
+  lan: c8g4
+- id: 0eeff08894284917a5b54f003d1d5b7b
+  description: The maximum number of bishops, mixed color, but few moves.
+  start_fen: BBB5/BBB5/BBB4k/B1K5/8/8/8/8 w - - 0 1
+  expected_fen: BB6/BBB5/BBB4k/B1K5/8/7B/8/8 b - - 1 1
+  san: Bh3
+  lan: c8h3
+- id: bda3ec0ec0144fda9aed64c614ccfb78
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/8/p3Pp1r/PpK4p/6pP/6P1/8 b - - 1 1
+  san: Kc4
+  lan: c5c4
+- id: 782628f9de924e17a7ca191fffa4cbc1
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/8/p3Pp1r/Pp1K3p/6pP/6P1/8 b - - 1 1
+  san: Kd4
+  lan: c5d4
+- id: 003ba6b85a6e4c0e906bd99507a734ad
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/8/pK2Pp1r/Pp5p/6pP/6P1/8 b - - 1 1
+  san: Kb5
+  lan: c5b5
+- id: 28df8800698744db9cfbf532d8cc6d99
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/8/p2KPp1r/Pp5p/6pP/6P1/8 b - - 1 1
+  san: Kd5
+  lan: c5d5
+- id: b4bf60862db14d9180ffc41a903468a0
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/1K6/p3Pp1r/Pp5p/6pP/6P1/8 b - - 1 1
+  san: Kb6
+  lan: c5b6
+- id: 527c70a60e1a4c81b5e6b3a3b08f0772
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/2K5/p3Pp1r/Pp5p/6pP/6P1/8 b - - 1 1
+  san: Kc6
+  lan: c5c6
+- id: 07ff513db04948ac8e9c759e81c593fe
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/3K4/p3Pp1r/Pp5p/6pP/6P1/8 b - - 1 1
+  san: Kd6
+  lan: c5d6
+- id: 4ad3028fd00246a9b162b80d7dce2d71
+  description: White can't en passant capture because that would put them into check.
+  start_fen: 4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1
+  expected_fen: 4k3/8/4P3/p1K2p1r/Pp5p/6pP/6P1/8 b - - 0 1
+  san: e6
+  lan: e5e6
+- id: 8e4e2a00430e4db890da8510d7d67b56
+  description: Black can't en passant capture because that would put them into check.
+  start_fen: 8/8/8/p7/PR1Ppk1p/6pP/6P1/2K5 b - d3 0 1
+  expected_fen: 8/8/8/p7/PR1P1k1p/4p1pP/6P1/2K5 w - - 0 2
+  san: e3
+  lan: e4e3
+- id: 63ff922c2d4243aaa0f38eccfce0390d
+  description: Black can't en passant capture because that would put them into check.
+  start_fen: 8/8/8/p7/PR1Ppk1p/6pP/6P1/2K5 b - d3 0 1
+  expected_fen: 8/8/8/p7/PR1Pp2p/4k1pP/6P1/2K5 w - - 1 2
+  san: Ke3
+  lan: f4e3
+- id: b440b7acd97149bd8d6f822bb6784122
+  description: Black can't en passant capture because that would put them into check.
+  start_fen: 8/8/8/p7/PR1Ppk1p/6pP/6P1/2K5 b - d3 0 1
+  expected_fen: 8/8/8/p4k2/PR1Pp2p/6pP/6P1/2K5 w - - 1 2
+  san: Kf5
+  lan: f4f5
+- id: be44bb2208b148829aa77ad884cc1755
+  description: Black can't en passant capture because that would put them into check.
+  start_fen: 8/8/8/p7/PR1Ppk1p/6pP/6P1/2K5 b - d3 0 1
+  expected_fen: 8/8/8/p5k1/PR1Pp2p/6pP/6P1/2K5 w - - 1 2
+  san: Kg5
+  lan: f4g5
+- id: db496c4e231b491b8592259123388de5
+  description: Black can't en passant capture because that would put them into check.
+  start_fen: 8/8/8/p7/PR1Ppk1p/6pP/6P1/2K5 b - d3 0 1
+  expected_fen: 8/8/8/8/Pp1Ppk1p/6pP/6P1/2K5 w - - 0 2
+  san: axb4
+  lan: a5b4
+- id: 06ad7dc908c343e6b7a6eadf52e1ddd6
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P1k2/8/2n3P1/2K4n w - - 1 2
+  san: Nc2
+  lan: a1c2
+- id: 83a505a773e04f26b9e85dda63a11a71
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P1k2/1n6/6P1/2K4n w - - 1 2
+  san: Nb3
+  lan: a1b3
+- id: d0669a442968440e9da31f8b583df455
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P1k2/8/5nP1/n1K5 w - - 1 2
+  san: Nf2
+  lan: h1f2
+- id: a30ae83dcfa3499b9c1df7cf536463a3
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P1k2/6n1/6P1/n1K5 w - - 1 2
+  san: Ng3
+  lan: h1g3
+- id: fbd54fdf3a154353b7adbf871ce94ee0
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P4/4k3/6P1/n1K4n w - - 1 2
+  san: Ke3
+  lan: f4e3
+- id: 3da230eec5194837a59e8079e65e6723
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P4/6k1/6P1/n1K4n w - - 1 2
+  san: Kg3
+  lan: f4g3
+- id: f9424cb76c754e9299a1d19870223773
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2Pk3/8/6P1/n1K4n w - - 1 2
+  san: Ke4
+  lan: f4e4
+- id: c83f37613ae6499b9b3d3b4539f364e1
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/8/P2P2k1/8/6P1/n1K4n w - - 1 2
+  san: Kg4
+  lan: f4g4
+- id: 2e68fad54a0242dcbcc85338403cd28d
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/5k2/P2P4/8/6P1/n1K4n w - - 1 2
+  san: Kf5
+  lan: f4f5
+- id: 17313415133d4a1fb037064e2652660e
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnnn/8/8/6k1/P2P4/8/6P1/n1K4n w - - 1 2
+  san: Kg5
+  lan: f4g5
+- id: af207007ebb44578ad71adbe088a52dc
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: 1nnnnnnn/8/1n6/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nab6
+  lan: a8b6
+- id: 0c15db24be674d858f876db2f5d5ec51
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: 1nnnnnnn/2n5/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nac7
+  lan: a8c7
+- id: 52c3c3995b9741fe8448142e0e003d3f
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: n1nnnnnn/8/n7/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Na6
+  lan: b8a6
+- id: d9e05775d499470598212ebb4c28ed92
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: n1nnnnnn/8/2n5/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nbc6
+  lan: b8c6
+- id: 049f15e8929a4c62b6d2c1074748843c
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: n1nnnnnn/3n4/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nbd7
+  lan: b8d7
+- id: 0a898ea158064ed08d4114e239b23863
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nn1nnnnn/8/1n6/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ncb6
+  lan: c8b6
+- id: 04b8f601b14c427fb9d99772f4d5d245
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nn1nnnnn/8/3n4/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ncd6
+  lan: c8d6
+- id: f91f150abb8c489cb997bfdee9d5c227
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nn1nnnnn/n7/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Na7
+  lan: c8a7
+- id: dffabeb9d5974b95bb3d416e13496bd7
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nn1nnnnn/4n3/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nce7
+  lan: c8e7
+- id: 4af729b007ca45b98653ca6db343ed15
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnn1nnnn/8/2n5/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ndc6
+  lan: d8c6
+- id: ef27a837cc5f4192b47fe2cdfb708dec
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnn1nnnn/8/4n3/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nde6
+  lan: d8e6
+- id: 40aa763c856c41ecbd2e1132f4d29487
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnn1nnnn/1n6/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nb7
+  lan: d8b7
+- id: b88b7788d42842bbbb685521146eb025
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnn1nnnn/5n2/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ndf7
+  lan: d8f7
+- id: b6a01811f2324b7db09375981dd6da47
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnn1nnn/8/3n4/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ned6
+  lan: e8d6
+- id: 19506b088b4642a8a841eb88890bb9c4
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnn1nnn/8/5n2/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nef6
+  lan: e8f6
+- id: f6af6f689cd0434ca78ac81130622472
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnn1nnn/2n5/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nec7
+  lan: e8c7
+- id: 788becbae7c443c4977e5d588f771cde
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnn1nnn/6n1/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ng7
+  lan: e8g7
+- id: 239a04a523764b969049b9826eb808f6
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnn1nn/8/4n3/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nfe6
+  lan: f8e6
+- id: 4bb4a0f8c2e6430ea9ed07dc83b5900c
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnn1nn/8/6n1/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nfg6
+  lan: f8g6
+- id: 0b7828762fc143d58cf005ef94f19db6
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnn1nn/3n4/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nfd7
+  lan: f8d7
+- id: 447f3363558c47fe926d5a0eda9b2af2
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnn1nn/7n/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nh7
+  lan: f8h7
+- id: 528b56e7a9b14ab199c5d229d9ff87d0
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnn1n/8/5n2/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Ngf6
+  lan: g8f6
+- id: 1c40f35895914713a0187d0cfac0d7ae
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnn1n/8/7n/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nh6
+  lan: g8h6
+- id: 73d6aa9568144017acf1a7e79bc5ccc4
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnn1n/4n3/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nge7
+  lan: g8e7
+- id: 0f5be18802564824ab425e2da440aa40
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnn1/8/6n1/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nhg6
+  lan: h8g6
+- id: e31a36533f63430592802b8f6ca03df0
+  description: Black with maximal knights, attacking many off-the-board squares.
+  start_fen: nnnnnnnn/8/8/8/P2P1k2/8/6P1/n1K4n b - - 0 1
+  expected_fen: nnnnnnn1/5n2/8/8/P2P1k2/8/6P1/n1K4n w - - 1 2
+  san: Nhf7
+  lan: h8f7
+- id: 18cd22a7b22b43a1bdd4b9ebd5ea21a4
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/2n3P1/1nnnnnnn w - - 1 2
+  san: Nac2
+  lan: a1c2
+- id: fa752a8611a549f793ae64db0cf93a6e
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/1n6/6P1/1nnnnnnn w - - 1 2
+  san: Nab3
+  lan: a1b3
+- id: d790c84e8b034d64bf599a1c5f7cbe9e
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/3n2P1/n1nnnnnn w - - 1 2
+  san: Nbd2
+  lan: b1d2
+- id: f8fddab66f904ba8ba310d9dfa1d1df3
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/n7/6P1/n1nnnnnn w - - 1 2
+  san: Na3
+  lan: b1a3
+- id: e0c86d93b89d4901afe1db3e9955188d
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/2n5/6P1/n1nnnnnn w - - 1 2
+  san: Nbc3
+  lan: b1c3
+- id: aad2a32086e6487bbc2d3a78e9640863
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/n5P1/nn1nnnnn w - - 1 2
+  san: Na2
+  lan: c1a2
+- id: 5fda1f33e65c4dcbb1d01d8dee112b70
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/4n1P1/nn1nnnnn w - - 1 2
+  san: Nce2
+  lan: c1e2
+- id: 2919f9367b8944318f2538f73d0a1276
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/1n6/6P1/nn1nnnnn w - - 1 2
+  san: Ncb3
+  lan: c1b3
+- id: ea8f51d10a644abab1d22e99cb3eb902
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/3n4/6P1/nn1nnnnn w - - 1 2
+  san: Ncd3
+  lan: c1d3
+- id: 0b7b454dcc8945d385de7fbb6631d4a0
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/1n4P1/nnn1nnnn w - - 1 2
+  san: Nb2
+  lan: d1b2
+- id: 5435f053c00147e08b53ddbf47212db4
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/5nP1/nnn1nnnn w - - 1 2
+  san: Ndf2
+  lan: d1f2
+- id: 4c861e532c6845988379c0bc75ee2d68
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/2n5/6P1/nnn1nnnn w - - 1 2
+  san: Ndc3
+  lan: d1c3
+- id: 54f1c06081de44ab8f9759ed501c14a8
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/4n3/6P1/nnn1nnnn w - - 1 2
+  san: Nde3
+  lan: d1e3
+- id: 67ae98fa00704c778bd61a92d163c36c
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/2n3P1/nnnn1nnn w - - 1 2
+  san: Nec2
+  lan: e1c2
+- id: 6e6f9ab6c386486ea8b9b2e3c94e69e7
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/6n1/nnnn1nnn w - - 0 2
+  san: Nxg2
+  lan: e1g2
+- id: 22b3e96f84cb4acc88291c20d50380c7
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/3n4/6P1/nnnn1nnn w - - 1 2
+  san: Ned3
+  lan: e1d3
+- id: ee0fd716ccdd480485c14350c7385217
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/5n2/6P1/nnnn1nnn w - - 1 2
+  san: Nef3
+  lan: e1f3
+- id: 3a93941e7f0343e8ab2ae7f72b43e682
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/3n2P1/nnnnn1nn w - - 1 2
+  san: Nfd2
+  lan: f1d2
+- id: d8af42ece2fa4a8ca72950039e4abc84
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/6Pn/nnnnn1nn w - - 1 2
+  san: Nh2
+  lan: f1h2
+- id: 8248003a61f240f98ad578ee9ed1c6e5
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/4n3/6P1/nnnnn1nn w - - 1 2
+  san: Nfe3
+  lan: f1e3
+- id: d489735dbaea4bef9585597496efba87
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/6n1/6P1/nnnnn1nn w - - 1 2
+  san: Nfg3
+  lan: f1g3
+- id: ac8ac3f352d84083bdec91d3c5dd8d30
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/4n1P1/nnnnnn1n w - - 1 2
+  san: Nge2
+  lan: g1e2
+- id: 1c0fc5f69e294b7ea83bd0a4c9efe0b1
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/5n2/6P1/nnnnnn1n w - - 1 2
+  san: Ngf3
+  lan: g1f3
+- id: 7610f4624080458eaae110919f6e0dfe
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/7n/6P1/nnnnnn1n w - - 1 2
+  san: Nh3
+  lan: g1h3
+- id: e3b24c83a9f94b6c831145c0616e24af
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/8/5nP1/nnnnnnn1 w - - 1 2
+  san: Nhf2
+  lan: h1f2
+- id: 53b41a405bd24a08b2747da5e070973d
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP1k2/6n1/6P1/nnnnnnn1 w - - 1 2
+  san: Nhg3
+  lan: h1g3
+- id: f99f1aa748fc4cb6b4d6f289c7254c3f
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP4/4k3/6P1/nnnnnnnn w - - 1 2
+  san: Ke3
+  lan: f4e3
+- id: c5cedb2579ee467ea4800eb84e66d717
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP4/6k1/6P1/nnnnnnnn w - - 1 2
+  san: Kg3
+  lan: f4g3
+- id: b1b03115225547fc86d91dc06e5f493b
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KPk3/8/6P1/nnnnnnnn w - - 1 2
+  san: Ke4
+  lan: f4e4
+- id: 66a4fd07ddfc4b02a5dbe7e2b820e7b9
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/8/P1KP2k1/8/6P1/nnnnnnnn w - - 1 2
+  san: Kg4
+  lan: f4g4
+- id: ca9fae00e916495480aaa8aefb5eefc2
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/5k2/P1KP4/8/6P1/nnnnnnnn w - - 1 2
+  san: Kf5
+  lan: f4f5
+- id: a941e1605f2a4eeb858cd76c637d7e10
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n6n/8/8/6k1/P1KP4/8/6P1/nnnnnnnn w - - 1 2
+  san: Kg5
+  lan: f4g5
+- id: d00066f70fe1466bab775df91606583b
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: 7n/8/1n6/8/P1KP1k2/8/6P1/nnnnnnnn w - - 1 2
+  san: Nb6
+  lan: a8b6
+- id: 09f1bb6914a04a4aa94ed713350c5f94
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: 7n/2n5/8/8/P1KP1k2/8/6P1/nnnnnnnn w - - 1 2
+  san: Nc7
+  lan: a8c7
+- id: 0571a589fc45451287aa8716bd2e1a83
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n7/8/6n1/8/P1KP1k2/8/6P1/nnnnnnnn w - - 1 2
+  san: Ng6
+  lan: h8g6
+- id: 01ff96e9d1604416a7bb42813e8fa3cd
+  description: Another position with maximum knights.
+  start_fen: n6n/8/8/8/P1KP1k2/8/6P1/nnnnnnnn b - - 0 1
+  expected_fen: n7/5n2/8/8/P1KP1k2/8/6P1/nnnnnnnn w - - 1 2
+  san: Nf7
+  lan: h8f7
+- id: 8c07f12150794b6cae642b42310aa0bb
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/3K4/2N5/7N b - - 1 1
+  san: Nc2
+  lan: a1c2
+- id: d34ffdc8a7a44facbd68838075b46543
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/1N1K4/8/7N b - - 1 1
+  san: Nb3
+  lan: a1b3
+- id: 241bcae92f894f4a924944993da50507
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/3K4/5N2/N7 b - - 1 1
+  san: Nf2
+  lan: h1f2
+- id: 20a09f0b91b54ab58e9fb02190c622d1
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/3K2N1/8/N7 b - - 1 1
+  san: Ng3
+  lan: h1g3
+- id: 537a8e24dd1e4dcab0790c562ced107c
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/8/2K5/N6N b - - 1 1
+  san: Kc2
+  lan: d3c2
+- id: 08e8e899fef94f8a9e5c390c89adcb41
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/8/3K4/N6N b - - 1 1
+  san: Kd2
+  lan: d3d2
+- id: 94d6346a5e1c4a6c9c44503a8d48702c
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/8/4K3/N6N b - - 1 1
+  san: Ke2
+  lan: d3e2
+- id: f08c2b1e1dd84c20af2f199b0d553859
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/2K5/8/N6N b - - 1 1
+  san: Kc3
+  lan: d3c3
+- id: 499e9e788e0941828a6316b5f3aaa999
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/8/4K3/8/N6N b - - 1 1
+  san: Ke3
+  lan: d3e3
+- id: ed796bef1c0a4d269124f4e680e7b3f0
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNNN/8/8/4k3/2K5/8/8/N6N b - - 1 1
+  san: Kc4
+  lan: d3c4
+- id: b1f35fc390274ecc973a04dfe3aadc6d
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: 1NNNNNNN/8/1N6/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nab6
+  lan: a8b6
+- id: 64235409f0df4260b7d7d38db6696a62
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: 1NNNNNNN/2N5/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nac7
+  lan: a8c7
+- id: 8990c3ecbba643ccb2bc116060579cb8
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: N1NNNNNN/8/N7/4k3/8/3K4/8/N6N b - - 1 1
+  san: Na6
+  lan: b8a6
+- id: 6e2ada7547ba432aa139472b235ec809
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: N1NNNNNN/8/2N5/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nbc6
+  lan: b8c6
+- id: fccbb0eab80746afa9fafdec7aa6147d
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: N1NNNNNN/3N4/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nbd7
+  lan: b8d7
+- id: ed39b83fd88845ffbde07eed5a1167d9
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NN1NNNNN/8/1N6/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ncb6
+  lan: c8b6
+- id: 53a029f5def145a58ff994b6191da861
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NN1NNNNN/8/3N4/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ncd6
+  lan: c8d6
+- id: 28c0d18a30a5401ab9824191b27be98e
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NN1NNNNN/N7/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Na7
+  lan: c8a7
+- id: 14d75292fa614ab7bf927c615107b799
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NN1NNNNN/4N3/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nce7
+  lan: c8e7
+- id: f6964f1c77b1498d88f5d448fd6d30be
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNN1NNNN/8/2N5/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ndc6
+  lan: d8c6
+- id: 3289c4ca34af4b038bc3e410c8fa2c16
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNN1NNNN/8/4N3/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nde6
+  lan: d8e6
+- id: cf344ac94b3d4c6caaa0801549938f08
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNN1NNNN/1N6/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nb7
+  lan: d8b7
+- id: 3b090032fe4b46a787c4916159a8a95f
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNN1NNNN/5N2/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ndf7
+  lan: d8f7
+- id: 43311b933c7c4f8683391d8a79300376
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNN1NNN/8/3N4/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ned6
+  lan: e8d6
+- id: c00b0cc109e6451db1ac715cc6925b3d
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNN1NNN/8/5N2/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nef6
+  lan: e8f6
+- id: b6395471c0f4489fa867e40d0acab63d
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNN1NNN/2N5/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nec7
+  lan: e8c7
+- id: e5908776430c44f9b0655cc33129df65
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNN1NNN/6N1/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ng7
+  lan: e8g7
+- id: 5a9b6f0ad0274bc48d41494c6588c8d4
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNN1NN/8/4N3/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nfe6
+  lan: f8e6
+- id: f6ba856fc8c340868765b8aaab73c7a9
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNN1NN/8/6N1/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nfg6
+  lan: f8g6
+- id: d31ccaf25aaa4c3fb6dfcf18acda57d5
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNN1NN/3N4/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nfd7
+  lan: f8d7
+- id: 9cce8a757cd94b6fb5fc21191e1e7a0b
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNN1NN/7N/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nh7
+  lan: f8h7
+- id: 746432a4c3ea4ca0b8438de18608e617
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNN1N/8/5N2/4k3/8/3K4/8/N6N b - - 1 1
+  san: Ngf6
+  lan: g8f6
+- id: d8c4fa6c22d94ebeb359166406a9c805
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNN1N/8/7N/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nh6
+  lan: g8h6
+- id: 50f479471ad04cbe84461c85fc4e06c8
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNN1N/4N3/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nge7
+  lan: g8e7
+- id: 782e4b2c0688445d81c125688952a30d
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNN1/8/6N1/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nhg6
+  lan: h8g6
+- id: fed8bbf95b0b49918b980eef1c94df85
+  description: White with maximal knights.
+  start_fen: NNNNNNNN/8/8/4k3/8/3K4/8/N6N w - - 0 1
+  expected_fen: NNNNNNN1/5N2/8/4k3/8/3K4/8/N6N b - - 1 1
+  san: Nhf7
+  lan: h8f7
+- id: 5c76e3aa04274de98d4e9150b68a9081
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/2N5/1NNNNNNN b - - 1 1
+  san: Nac2
+  lan: a1c2
+- id: 8289c981667243b6a5f59d444fc81182
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/1N1K4/8/1NNNNNNN b - - 1 1
+  san: Nab3
+  lan: a1b3
+- id: 1c5ecb6d13de4aaebca1e5b334f885df
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/3N4/N1NNNNNN b - - 1 1
+  san: Nbd2
+  lan: b1d2
+- id: 2f22a3fcccae4e68887a2d9199010bb7
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/N2K4/8/N1NNNNNN b - - 1 1
+  san: Na3
+  lan: b1a3
+- id: 83bf2285bc484e219a06c71528e73705
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/2NK4/8/N1NNNNNN b - - 1 1
+  san: Nbc3
+  lan: b1c3
+- id: 837f1db1365c4f638eddae8e69f075e6
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/N7/NN1NNNNN b - - 1 1
+  san: Na2
+  lan: c1a2
+- id: a72017cd5e054dcfbf315e6610c1cc7b
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/4N3/NN1NNNNN b - - 1 1
+  san: Nce2
+  lan: c1e2
+- id: 6e9a46c2ec5f4cd5bc3d1162db2054e1
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/1N1K4/8/NN1NNNNN b - - 1 1
+  san: Ncb3
+  lan: c1b3
+- id: dc1a9f97adae42f9a42de02858a7817f
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/1N6/NNN1NNNN b - - 1 1
+  san: Nb2
+  lan: d1b2
+- id: 0bf4786de5b7472da6f2d6a677645d26
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/5N2/NNN1NNNN b - - 1 1
+  san: Ndf2
+  lan: d1f2
+- id: 871352e22ae7497a9c6356b5b9a00c2c
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/2NK4/8/NNN1NNNN b - - 1 1
+  san: Ndc3
+  lan: d1c3
+- id: f9a45989b5074b08bde1f5274c13f1de
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3KN3/8/NNN1NNNN b - - 1 1
+  san: Nde3
+  lan: d1e3
+- id: 4882d05638a14165b44ccc0ecb70059c
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/2N5/NNNN1NNN b - - 1 1
+  san: Nec2
+  lan: e1c2
+- id: 88fdab5e6f6143969310ef1e99352aca
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/6N1/NNNN1NNN b - - 1 1
+  san: Ng2
+  lan: e1g2
+- id: fcc0cb8672cc466384c31ae473c8d918
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K1N2/8/NNNN1NNN b - - 1 1
+  san: Nef3
+  lan: e1f3
+- id: aa4145f048a54f46b70f884a015ed91d
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/3N4/NNNNN1NN b - - 1 1
+  san: Nfd2
+  lan: f1d2
+- id: f82c3f3850dd4d1a9ca70511537fd2c9
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/7N/NNNNN1NN b - - 1 1
+  san: Nh2
+  lan: f1h2
+- id: d63a7ebc47f94454b3892f03bb375bef
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3KN3/8/NNNNN1NN b - - 1 1
+  san: Nfe3
+  lan: f1e3
+- id: 6087b303af874f76b6d82e2a60cec783
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K2N1/8/NNNNN1NN b - - 1 1
+  san: Nfg3
+  lan: f1g3
+- id: 58a912fbff4246e0be3857e295d77c82
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/4N3/NNNNNN1N b - - 1 1
+  san: Nge2
+  lan: g1e2
+- id: ca37e5ec76fd4d628dababa2d9f95dc7
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K1N2/8/NNNNNN1N b - - 1 1
+  san: Ngf3
+  lan: g1f3
+- id: b60571d1ca324f96add71bc7f9823703
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K3N/8/NNNNNN1N b - - 1 1
+  san: Nh3
+  lan: g1h3
+- id: 4c14ada41e27472aa6d0ced252cd92fd
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K4/5N2/NNNNNNN1 b - - 1 1
+  san: Nhf2
+  lan: h1f2
+- id: 5a127d91fcd74b679be68cafbeee57cc
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/3K2N1/8/NNNNNNN1 b - - 1 1
+  san: Nhg3
+  lan: h1g3
+- id: d88b231d08b4459aad2d8650e880bf0a
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/8/2K5/NNNNNNNN b - - 1 1
+  san: Kc2
+  lan: d3c2
+- id: f74b48563e9a40b783058f958b4f12b2
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/8/3K4/NNNNNNNN b - - 1 1
+  san: Kd2
+  lan: d3d2
+- id: 8dabf464c42446fea22aa6e52c21dfe1
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/8/4K3/NNNNNNNN b - - 1 1
+  san: Ke2
+  lan: d3e2
+- id: d77744dd4bab4cdd81aa1c93a607beb6
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/2K5/8/NNNNNNNN b - - 1 1
+  san: Kc3
+  lan: d3c3
+- id: e09b77e1613d4553b1140f9aea96e880
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/8/4K3/8/NNNNNNNN b - - 1 1
+  san: Ke3
+  lan: d3e3
+- id: 86418a3bc8204760975e2a8b5e13ea97
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N6N/8/8/4k3/2K5/8/8/NNNNNNNN b - - 1 1
+  san: Kc4
+  lan: d3c4
+- id: 8ae2ff3e45e740b08e9b51a6f6fa6a41
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: 7N/8/1N6/4k3/8/3K4/8/NNNNNNNN b - - 1 1
+  san: Nb6
+  lan: a8b6
+- id: e2e4b93aa2924696a256fce689f290b7
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: 7N/2N5/8/4k3/8/3K4/8/NNNNNNNN b - - 1 1
+  san: Nc7
+  lan: a8c7
+- id: a7324981a0884669b3d6f1ec701d4cc8
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N7/8/6N1/4k3/8/3K4/8/NNNNNNNN b - - 1 1
+  san: Ng6
+  lan: h8g6
+- id: bc632bf6a1cf4696ae4e50628f48b86a
+  description: Another position with the max number of white knights.
+  start_fen: N6N/8/8/4k3/8/3K4/8/NNNNNNNN w - - 0 1
+  expected_fen: N7/5N2/8/4k3/8/3K4/8/NNNNNNNN b - - 1 1
+  san: Nf7
+  lan: h8f7
+- id: 2dfb4f4cb9014e6d8e643e438406a387
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 8/6kq/8/8/8/bq6/1r1qqqqq/K1nqnbrq w - - 0 2
+  san: Qcxh7
+  lan: c2h7
+- id: 9f20a721bb1d482c8f24fbf80ee4ff8c
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 8/6kq/8/8/8/bq6/1rqqqqq1/K1nqnbrq w - - 0 2
+  san: Qhxh7
+  lan: h2h7
+- id: f92374ea17d24f6a953d5492a6df782b
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 8/7R/5k2/8/8/bq6/1rqqqqqq/K1nqnbrq w - - 1 2
+  san: Kf6
+  lan: g7f6
+- id: f2064ad4e24c4e07a7bb278895aa1d2c
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 8/7R/6k1/8/8/bq6/1rqqqqqq/K1nqnbrq w - - 1 2
+  san: Kg6
+  lan: g7g6
+- id: 6487129798a841189a1bbb6cf78af1a9
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 8/7k/8/8/8/bq6/1rqqqqqq/K1nqnbrq w - - 0 2
+  san: Kh7
+  lan: g7h7
+- id: 09d9f0ae6a0c4152a6ad209a298ce001
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 5k2/7R/8/8/8/bq6/1rqqqqqq/K1nqnbrq w - - 1 2
+  san: Kf8
+  lan: g7f8
+- id: 5c710a9fbe254872901e00cfd7950007
+  description: ''
+  start_fen: 8/6kR/8/8/8/bq6/1rqqqqqq/K1nqnbrq b - - 0 1
+  expected_fen: 6k1/7R/8/8/8/bq6/1rqqqqqq/K1nqnbrq w - - 1 2
+  san: Kg8
+  lan: g7g8
