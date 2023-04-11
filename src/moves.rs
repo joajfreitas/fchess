@@ -197,49 +197,49 @@ impl Move {
     }
 
     fn san_match_type(piece_type: PieceType, scope: Scope) -> bool {
-        match (piece_type, scope) {
-            (_, Scope::All) => true,
-            (PieceType::WhitePawn, Scope::WhitePawn) => true,
-            (PieceType::BlackPawn, Scope::BlackPawn) => true,
-            (PieceType::WhiteRook, Scope::WhiteRook) => true,
-            (PieceType::BlackRook, Scope::BlackRook) => true,
-            (PieceType::WhiteKnight, Scope::WhiteKnight) => true,
-            (PieceType::BlackKnight, Scope::BlackKnight) => true,
-            (PieceType::WhiteBishop, Scope::WhiteBishop) => true,
-            (PieceType::BlackBishop, Scope::BlackBishop) => true,
-            (PieceType::WhiteQueen, Scope::WhiteQueen) => true,
-            (PieceType::BlackQueen, Scope::BlackQueen) => true,
-            (PieceType::WhiteKing, Scope::WhiteKing) => true,
-            (PieceType::BlackKing, Scope::BlackKing) => true,
-            _ => false,
-        }
+        matches!(
+            (piece_type, scope),
+            (_, Scope::All)
+                | (PieceType::WhitePawn, Scope::WhitePawn)
+                | (PieceType::BlackPawn, Scope::BlackPawn)
+                | (PieceType::WhiteRook, Scope::WhiteRook)
+                | (PieceType::BlackRook, Scope::BlackRook)
+                | (PieceType::WhiteKnight, Scope::WhiteKnight)
+                | (PieceType::BlackKnight, Scope::BlackKnight)
+                | (PieceType::WhiteBishop, Scope::WhiteBishop)
+                | (PieceType::BlackBishop, Scope::BlackBishop)
+                | (PieceType::WhiteQueen, Scope::WhiteQueen)
+                | (PieceType::BlackQueen, Scope::BlackQueen)
+                | (PieceType::WhiteKing, Scope::WhiteKing)
+                | (PieceType::BlackKing, Scope::BlackKing)
+        )
     }
 
     fn from_san_queen_side_castle(board: &Board) -> Option<Move> {
         if board.get_turn() == Side::White {
-            return Some(Move::new(
+            Some(Move::new(
                 Square::from_algebraic("e1").unwrap(),
                 Square::from_algebraic("c1").unwrap(),
-            ));
+            ))
         } else {
-            return Some(Move::new(
+            Some(Move::new(
                 Square::from_algebraic("e7").unwrap(),
                 Square::from_algebraic("c7").unwrap(),
-            ));
+            ))
         }
     }
 
     fn from_san_king_side_castle(board: &Board) -> Option<Move> {
         if board.get_turn() == Side::White {
-            return Some(Move::new(
+            Some(Move::new(
                 Square::from_algebraic("e1").unwrap(),
                 Square::from_algebraic("g1").unwrap(),
-            ));
+            ))
         } else {
-            return Some(Move::new(
+            Some(Move::new(
                 Square::from_algebraic("e7").unwrap(),
                 Square::from_algebraic("g7").unwrap(),
-            ));
+            ))
         }
     }
 
@@ -276,7 +276,7 @@ impl Move {
             .get(1)
             .and_then(set_empty_string_to_none)
             .map(handle_piece_type)
-            .map(|piece_type| Scope::from(piece_type))
+            .map(Scope::from)
             .unwrap_or_else(|| Scope::All);
         let src_file = captures
             .get(2)
@@ -306,8 +306,8 @@ impl Move {
         for moveset in moves {
             for mov in moveset.into_iter() {
                 let piece_type = board.piece_at(mov.get_src()).unwrap();
-                if (!src_rank.is_some() || Some(mov.get_src().get_rank()) == src_rank)
-                    && (!src_file.is_some() || Some(mov.get_src().get_file()) == src_file)
+                if (src_rank.is_none() || Some(mov.get_src().get_rank()) == src_rank)
+                    && (src_file.is_none() || Some(mov.get_src().get_file()) == src_file)
                     && mov.get_dst() == dst
                     && Move::san_match_type(piece_type, scope)
                 {
@@ -350,7 +350,7 @@ impl Move {
         let src_file = (self.src.get_rank() + b'1') as char;
 
         let promotion = if self.promotion.is_some() {
-            format!("{}", self.promotion.unwrap().to_string().to_uppercase())
+            self.promotion.unwrap().to_string().to_uppercase()
         } else {
             "".to_string()
         };
