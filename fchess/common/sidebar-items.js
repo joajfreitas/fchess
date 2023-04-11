@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["E",""],["N",""],["NE",""],["NW",""],["S",""],["SE",""],["SW",""],["W",""]],"type":[["Shift",""]]};
