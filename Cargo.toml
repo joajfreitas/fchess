@@ -38,10 +38,6 @@ name = "test_move_generation"
 path = "bin/test_move_generation.rs"
 
 [[bin]]
-name = "convert"
-path = "bin/convert.rs"
-
-[[bin]]
 name = "cli"
 path = "bin/cli.rs"
 
