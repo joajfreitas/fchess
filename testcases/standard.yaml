@@ -1,0 +1,282 @@
+- id: 5550a2d5a80e485bb4cebfce71e1161e
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/N7/PPPPPPPP/R1BQKBNR b KQkq - 1 1
+  san: Na3
+  lan: b1a3
+- id: d64ad40b81244c61b3643dd51ad5a0d5
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1
+  san: Nc3
+  lan: b1c3
+- id: 0c306dd5c35d4eb9a03b4ecd69baa157
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1
+  san: Nf3
+  lan: g1f3
+- id: de24b5956fde4e2c98ac2ec7b18c662f
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/7N/PPPPPPPP/RNBQKB1R b KQkq - 1 1
+  san: Nh3
+  lan: g1h3
+- id: 407e00eab3ea486aa0ed046d4722eff4
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+  san: a3
+  lan: a2a3
+- id: 8386e6c5e20d4bc7906f6fbda77b71b2
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/P7/8/1PPPPPPP/RNBQKBNR b KQkq a3 0 1
+  san: a4
+  lan: a2a4
+- id: 0726da5a6e724dc497f77ace42f1cbca
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/1P6/P1PPPPPP/RNBQKBNR b KQkq - 0 1
+  san: b3
+  lan: b2b3
+- id: ae1bf96f95b9470fa008ad2a9bbdac60
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/1P6/8/P1PPPPPP/RNBQKBNR b KQkq b3 0 1
+  san: b4
+  lan: b2b4
+- id: 1cf6f4cea6424960b673a459901723cd
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/2P5/PP1PPPPP/RNBQKBNR b KQkq - 0 1
+  san: c3
+  lan: c2c3
+- id: 9e31e4fef8dd4bd88c4695197360eed0
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq c3 0 1
+  san: c4
+  lan: c2c4
+- id: bb7ee829525a4097893972f93d4a0f8b
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/3P4/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+  san: d3
+  lan: d2d3
+- id: b94f2dc71a1541e9a8d34b43bcafb30f
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1
+  san: d4
+  lan: d2d4
+- id: ef975326c3714bdd80365e2f8ca7ec9d
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+  san: e3
+  lan: e2e3
+- id: 322f5b68dbed4a6bad42b99b6da37c94
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1
+  san: e4
+  lan: e2e4
+- id: 1968e5ee5964408c8455ca6d6f410b0c
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1
+  san: f3
+  lan: f2f3
+- id: 920a7a9fb157484088e2400e367ffa00
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/5P2/8/PPPPP1PP/RNBQKBNR b KQkq f3 0 1
+  san: f4
+  lan: f2f4
+- id: 435160bc6c9f4d70a996d06f59d79a89
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBQKBNR b KQkq - 0 1
+  san: g3
+  lan: g2g3
+- id: b37a9a4e8b48448ea954e1d2ccbf1d02
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq g3 0 1
+  san: g4
+  lan: g2g4
+- id: 5903756fad114f8d8ff0172f122feaac
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/8/7P/PPPPPPP1/RNBQKBNR b KQkq - 0 1
+  san: h3
+  lan: h2h3
+- id: 94b9173dfd2242cf9c4a1d6ae22f799d
+  description: Standard starting position.
+  start_fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+  expected_fen: rnbqkbnr/pppppppp/8/8/7P/8/PPPPPPP1/RNBQKBNR b KQkq h3 0 1
+  san: h4
+  lan: h2h4
+- id: 5a7a336809ca40d1abf14231ac076ab4
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp4/brk2K1n b - - 12 7
+  san: Kf1
+  lan: g2f1
+- id: 08c89bfe9b2f4d4bac591093bc85a088
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp4/brk3Kn b - - 12 7
+  san: Kg1
+  lan: g2g1
+- id: 1ec2a8ed25004052b32cdf7c881bc3eb
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp4/brk4K b - - 0 7
+  san: Kh1
+  lan: g2h1
+- id: 8fb4fb3239b04a639675e65a097ebe1f
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp3K/brk4n b - - 12 7
+  san: Kh2
+  lan: g2h2
+- id: 77c31d3ad31d474ab510fde6f601fd1f
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/5Q1K/1ppp4/brk4n b - - 12 7
+  san: Kh3
+  lan: g2h3
+- id: 9256df9452ee4340bc3b15e6d532b911
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/8/1pppQ1K1/brk4n b - - 12 7
+  san: Qe2
+  lan: f3e2
+- id: 3990b4bae0ec42b7bca51f24324426df
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/8/1ppp2K1/brkQ3n b - - 12 7
+  san: Qd1
+  lan: f3d1
+- id: 15552c8283084c34a051553f5d48c1f2
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/8/1ppp1QK1/brk4n b - - 12 7
+  san: Qf2
+  lan: f3f2
+- id: b4ec0e6b77d94b21aec0569a9c48b7ac
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/8/1ppp2K1/brk2Q1n b - - 12 7
+  san: Qf1
+  lan: f3f1
+- id: 8e737dbe731f4b77bd412fe40d9b44f1
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/4Q3/1ppp2K1/brk4n b - - 12 7
+  san: Qe3
+  lan: f3e3
+- id: 997bc92463084f5f8bbfc44537bb1d3f
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/3Q4/1ppp2K1/brk4n b - - 12 7
+  san: Qd3
+  lan: f3d3
+- id: ce43df49915849f6a2a1de8e2d444dea
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/2Q5/1ppp2K1/brk4n b - - 12 7
+  san: Qc3
+  lan: f3c3
+- id: 23231fccf6c14ddf85d5be26be9e1b7e
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/1Q6/1ppp2K1/brk4n b - - 12 7
+  san: Qb3
+  lan: f3b3
+- id: 1722b5e72b3e4ae0a666bbd9d72a992f
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/Q7/1ppp2K1/brk4n b - - 12 7
+  san: Qa3
+  lan: f3a3
+- id: 52c51148a423441d9f27bcf44c18f015
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/6Q1/1ppp2K1/brk4n b - - 12 7
+  san: Qg3
+  lan: f3g3
+- id: fc6ef9a809b34c2da41c9e6d9052deb1
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p4/7Q/1ppp2K1/brk4n b - - 12 7
+  san: Qh3
+  lan: f3h3
+- id: 4cc7a1a8f8414122b2b2e3d15929da88
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3pQ3/8/1ppp2K1/brk4n b - - 12 7
+  san: Qe4
+  lan: f3e4
+- id: c21e954db9634aa6aa048fd4cf0d964a
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/3Q4/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qd5
+  lan: f3d5
+- id: c43d8bfce4a0411fa3c3b12481bbda40
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/2Q5/8/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qc6
+  lan: f3c6
+- id: 74334d477dd546d4bb28f2d8012456ee
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/pQp3p1/8/8/3p4/8/1ppp2K1/brk4n b - - 0 7
+  san: Qxb7
+  lan: f3b7
+- id: 319e6e13df554af295caa816a48a80d7
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p1Q2/8/1ppp2K1/brk4n b - - 12 7
+  san: Qf4
+  lan: f3f4
+- id: 9c39bd128172412fb2e1a4cb7ef17a6e
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/5Q2/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qf5
+  lan: f3f5
+- id: aaac398cc2f54523bfa4934e871bb085
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/5Q2/8/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qf6
+  lan: f3f6
+- id: 031009ccc5f34aaaaf421a312c91d033
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp2Qp1/8/8/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qf7
+  lan: f3f7
+- id: 4f66ee2c0d1744c087d972af2a5ea329
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 5Q2/ppp3p1/8/8/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qf8
+  lan: f3f8
+- id: cf3a6a3e21a04e139b54c0aaab90b85c
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/8/3p2Q1/8/1ppp2K1/brk4n b - - 12 7
+  san: Qg4
+  lan: f3g4
+- id: 826bbca12d394f0693bcd0fa990d33e0
+  description: Standard starting position.
+  start_fen: 8/ppp3p1/8/8/3p4/5Q2/1ppp2K1/brk4n w - - 11 7
+  expected_fen: 8/ppp3p1/8/7Q/3p4/8/1ppp2K1/brk4n b - - 12 7
+  san: Qh5
+  lan: f3h5

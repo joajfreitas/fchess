@@ -36,7 +36,7 @@
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pp1QN3/kB1N1KB1 b - - 1 1"
         },
         {
-          "move": "Nb3+",
+          "move": "Nb3",
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/QN3Q2/pp1Q4/kB1N1KB1 b - - 1 1"
         },
         {
@@ -104,7 +104,7 @@
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/ppQ5/kBNN1KB1 b - - 1 1"
         },
         {
-          "move": "Qdxb2+",
+          "move": "Qdxb2",
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/Q4Q2/pQ6/kBNN1KB1 b - - 0 1"
         },
         {
@@ -168,11 +168,11 @@
           "fen": "R6R/3Q4/1Q4QQ/4Q3/2Q4Q/Q4Q2/pp6/kBNN1KB1 b - - 1 1"
         },
         {
-          "move": "Qaxa2+",
+          "move": "Qaxa2",
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/5Q2/Qp1Q4/kBNN1KB1 b - - 0 1"
         },
         {
-          "move": "Qaxb2+",
+          "move": "Qaxb2",
           "fen": "R6R/3Q4/1Q4Q1/4Q3/2Q4Q/5Q2/pQ1Q4/kBNN1KB1 b - - 0 1"
         },
         {
@@ -316,7 +316,7 @@
           "fen": "R6R/3Q4/1Q4Q1/4Q3/7Q/QQ3Q2/pp1Q4/kBNN1KB1 b - - 1 1"
         },
         {
-          "move": "Qcxa2+",
+          "move": "Qcxa2",
           "fen": "R6R/3Q4/1Q4Q1/4Q3/7Q/Q4Q2/Qp1Q4/kBNN1KB1 b - - 0 1"
         },
         {
@@ -476,7 +476,7 @@
           "fen": "R6R/3Q4/1Q4Q1/8/2Q4Q/Q1Q2Q2/pp1Q4/kBNN1KB1 b - - 1 1"
         },
         {
-          "move": "Qexb2+",
+          "move": "Qexb2",
           "fen": "R6R/3Q4/1Q4Q1/8/2Q4Q/Q4Q2/pQ1Q4/kBNN1KB1 b - - 0 1"
         },
         {
@@ -584,7 +584,7 @@
           "fen": "R6R/3Q4/6Q1/4Q3/2Q4Q/QQ3Q2/pp1Q4/kBNN1KB1 b - - 1 1"
         },
         {
-          "move": "Qbxb2+",
+          "move": "Qbxb2",
           "fen": "R6R/3Q4/6Q1/4Q3/2Q4Q/Q4Q2/pQ1Q4/kBNN1KB1 b - - 0 1"
         },
         {
@@ -1088,7 +1088,7 @@
           "fen": "1Bk5/B1B5/1B1B4/B6B/1B6/B3B3/5K2/8 b - - 1 1"
         },
         {
-          "move": "Bg4+",
+          "move": "Bg4",
           "fen": "1Bk5/B1B5/1B1B4/B1B5/1B4B1/B7/5K2/8 b - - 1 1"
         },
         {
@@ -1160,7 +1160,7 @@
           "fen": "BBB5/BBB5/BBB4k/2K5/8/2B5/8/8 b - - 1 1"
         },
         {
-          "move": "Bd2+",
+          "move": "Bd2",
           "fen": "BBB5/BBB5/BBB4k/2K5/8/8/3B4/8 b - - 1 1"
         },
         {
@@ -1256,7 +1256,7 @@
           "fen": "BBB5/BB6/BBB4k/B1K1B3/8/8/8/8 b - - 1 1"
         },
         {
-          "move": "Bf4+",
+          "move": "Bf4",
           "fen": "BBB5/BB6/BBB4k/B1K5/5B2/8/8/8 b - - 1 1"
         },
         {
@@ -1372,7 +1372,7 @@
           "fen": "nnnnnnnn/8/8/8/P2P1k2/8/2n3P1/2K4n w - - 1 2"
         },
         {
-          "move": "Nb3+",
+          "move": "Nb3",
           "fen": "nnnnnnnn/8/8/8/P2P1k2/1n6/6P1/2K4n w - - 1 2"
         },
         {
@@ -1528,11 +1528,11 @@
           "fen": "n6n/8/8/8/P1KP1k2/1n6/6P1/1nnnnnnn w - - 1 2"
         },
         {
-          "move": "Nbd2+",
+          "move": "Nbd2",
           "fen": "n6n/8/8/8/P1KP1k2/8/3n2P1/n1nnnnnn w - - 1 2"
         },
         {
-          "move": "Na3+",
+          "move": "Na3",
           "fen": "n6n/8/8/8/P1KP1k2/n7/6P1/n1nnnnnn w - - 1 2"
         },
         {
@@ -1556,7 +1556,7 @@
           "fen": "n6n/8/8/8/P1KP1k2/3n4/6P1/nn1nnnnn w - - 1 2"
         },
         {
-          "move": "Nb2+",
+          "move": "Nb2",
           "fen": "n6n/8/8/8/P1KP1k2/8/1n4P1/nnn1nnnn w - - 1 2"
         },
         {
@@ -1568,7 +1568,7 @@
           "fen": "n6n/8/8/8/P1KP1k2/2n5/6P1/nnn1nnnn w - - 1 2"
         },
         {
-          "move": "Nde3+",
+          "move": "Nde3",
           "fen": "n6n/8/8/8/P1KP1k2/4n3/6P1/nnn1nnnn w - - 1 2"
         },
         {
@@ -1588,7 +1588,7 @@
           "fen": "n6n/8/8/8/P1KP1k2/5n2/6P1/nnnn1nnn w - - 1 2"
         },
         {
-          "move": "Nfd2+",
+          "move": "Nfd2",
           "fen": "n6n/8/8/8/P1KP1k2/8/3n2P1/nnnnn1nn w - - 1 2"
         },
         {
@@ -1596,7 +1596,7 @@
           "fen": "n6n/8/8/8/P1KP1k2/8/6Pn/nnnnn1nn w - - 1 2"
         },
         {
-          "move": "Nfe3+",
+          "move": "Nfe3",
           "fen": "n6n/8/8/8/P1KP1k2/4n3/6P1/nnnnn1nn w - - 1 2"
         },
         {
@@ -1648,7 +1648,7 @@
           "fen": "n6n/8/8/6k1/P1KP4/8/6P1/nnnnnnnn w - - 1 2"
         },
         {
-          "move": "Nb6+",
+          "move": "Nb6",
           "fen": "7n/8/1n6/8/P1KP1k2/8/6P1/nnnnnnnn w - - 1 2"
         },
         {
@@ -1724,11 +1724,11 @@
           "fen": "N1NNNNNN/8/N7/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nbc6+",
+          "move": "Nbc6",
           "fen": "N1NNNNNN/8/2N5/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nbd7+",
+          "move": "Nbd7",
           "fen": "N1NNNNNN/3N4/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
@@ -1748,7 +1748,7 @@
           "fen": "NN1NNNNN/4N3/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Ndc6+",
+          "move": "Ndc6",
           "fen": "NNN1NNNN/8/2N5/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
@@ -1760,7 +1760,7 @@
           "fen": "NNN1NNNN/1N6/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Ndf7+",
+          "move": "Ndf7",
           "fen": "NNN1NNNN/5N2/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
@@ -1784,11 +1784,11 @@
           "fen": "NNNNN1NN/8/4N3/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nfg6+",
+          "move": "Nfg6",
           "fen": "NNNNN1NN/8/6N1/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nfd7+",
+          "move": "Nfd7",
           "fen": "NNNNN1NN/3N4/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
@@ -1808,11 +1808,11 @@
           "fen": "NNNNNN1N/4N3/8/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nhg6+",
+          "move": "Nhg6",
           "fen": "NNNNNNN1/8/6N1/4k3/8/3K4/8/N6N b - - 1 1"
         },
         {
-          "move": "Nhf7+",
+          "move": "Nhf7",
           "fen": "NNNNNNN1/5N2/8/4k3/8/3K4/8/N6N b - - 1 1"
         }
       ]
@@ -1880,7 +1880,7 @@
           "fen": "N6N/8/8/4k3/8/3K4/6N1/NNNN1NNN b - - 1 1"
         },
         {
-          "move": "Nef3+",
+          "move": "Nef3",
           "fen": "N6N/8/8/4k3/8/3K1N2/8/NNNN1NNN b - - 1 1"
         },
         {
@@ -1904,7 +1904,7 @@
           "fen": "N6N/8/8/4k3/8/3K4/4N3/NNNNNN1N b - - 1 1"
         },
         {
-          "move": "Ngf3+",
+          "move": "Ngf3",
           "fen": "N6N/8/8/4k3/8/3K1N2/8/NNNNNN1N b - - 1 1"
         },
         {
@@ -1952,11 +1952,11 @@
           "fen": "7N/2N5/8/4k3/8/3K4/8/NNNNNNNN b - - 1 1"
         },
         {
-          "move": "Ng6+",
+          "move": "Ng6",
           "fen": "N7/8/6N1/4k3/8/3K4/8/NNNNNNNN b - - 1 1"
         },
         {
-          "move": "Nf7+",
+          "move": "Nf7",
           "fen": "N7/5N2/8/4k3/8/3K4/8/NNNNNNNN b - - 1 1"
         }
       ]

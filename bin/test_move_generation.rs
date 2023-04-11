@@ -25,10 +25,12 @@ struct SuitResult {
 }
 
 struct TestResult {
+    id: String,
     starting_board: Board,
     expected_board: Board,
     result_board: Board,
-    original_move: String,
+    san: String,
+    lan: String,
     mov: Move,
     result: bool,
 }
@@ -56,17 +58,21 @@ impl SuitResult {
 
 impl TestResult {
     pub fn new(
+        id: &str,
         starting_board: &Board,
         expected_board: &Board,
         result_board: &Board,
-        original_move: &str,
+        san: &str,
+        lan: &str,
         mov: Move,
     ) -> TestResult {
         TestResult {
+            id: id.to_string(),
             starting_board: starting_board.clone(),
             expected_board: expected_board.clone(),
             result_board: result_board.clone(),
-            original_move: original_move.to_string(),
+            san: san.to_string(),
+            lan: lan.to_string(),
             mov,
             result: TestResult::check(expected_board, result_board),
         }
@@ -99,9 +105,11 @@ fn main() -> Result<()> {
             let resulting_board = resulting_board;
             let expected_board = Board::from_fen(&testcase.expected_fen);
             let test_result = TestResult::new(
+                &testcase.id,
                 &board,
                 &expected_board,
                 &resulting_board,
+                &testcase.san,
                 &testcase.lan,
                 mov,
             );
@@ -114,9 +122,11 @@ fn main() -> Result<()> {
     for test_case in testsuit_results.tests {
         if !test_case.result {
             println!("====================================");
+            println!("{}", test_case.id);
             println!("{}", test_case.starting_board);
             println!("{:?}", test_case.starting_board);
-            println!("{}", test_case.original_move);
+            println!("{}", test_case.san);
+            println!("{}", test_case.lan);
             println!("{:?}", test_case.mov);
             println!("expected:\n{}", test_case.expected_board);
             println!("expected:\n{:?}", test_case.expected_board);

@@ -1,3 +1,4 @@
+use regex::{Match, Regex};
 use std::fmt;
 use std::ops::Not;
 
@@ -214,97 +215,107 @@ impl Move {
         }
     }
 
-    fn from_two_char_san(mov: Vec<char>) -> Option<Square> {
-        let dst_rank = (mov[1] as u8) - b'1';
-        let dst_file = (mov[0] as u8) - b'a';
-
-        Some(Square::from_rank_file(dst_rank, dst_file))
+    fn from_san_queen_side_castle(board: &Board) -> Option<Move> {
+        if board.get_turn() == Side::White {
+            return Some(Move::new(
+                Square::from_algebraic("e1").unwrap(),
+                Square::from_algebraic("c1").unwrap(),
+            ));
+        } else {
+            return Some(Move::new(
+                Square::from_algebraic("e7").unwrap(),
+                Square::from_algebraic("c7").unwrap(),
+            ));
+        }
     }
 
-    fn from_four_char_san(mov: Vec<char>) -> Option<(u8, Square)> {
-        let dst_rank = (mov[3] as u8) - b'1';
-        let dst_file = (mov[2] as u8) - b'a';
-
-        let src_file = (mov[0] as u8) - b'a';
-
-        Some((src_file, Square::from_rank_file(dst_rank, dst_file)))
+    fn from_san_king_side_castle(board: &Board) -> Option<Move> {
+        if board.get_turn() == Side::White {
+            return Some(Move::new(
+                Square::from_algebraic("e1").unwrap(),
+                Square::from_algebraic("g1").unwrap(),
+            ));
+        } else {
+            return Some(Move::new(
+                Square::from_algebraic("e7").unwrap(),
+                Square::from_algebraic("g7").unwrap(),
+            ));
+        }
     }
 
     pub fn from_san(algebra: &str, board: &Board) -> Option<Move> {
-        let mov: Vec<char> = algebra.chars().collect();
-        let move_generator = MoveGenerator::new();
-
-        let (src_rank, src_file, dst, scope, promotion) = if mov.len() == 2 {
-            (None, None, Move::from_two_char_san(mov), Scope::All, None)
-        } else if mov.len() == 3 {
-            let mut piece = Scope::from(PieceType::from_string(&mov[0])?);
-            if board.get_turn() == Side::Black {
-                piece = !piece;
-            }
-            (
-                None,
-                None,
-                Move::from_two_char_san(mov[1..].iter().map(|x| *x).collect::<Vec<char>>()),
-                piece,
-                None,
-            )
-        } else if mov.len() == 4 && mov[2] == '=' {
-            (
-                None,
-                None,
-                Move::from_two_char_san(mov.clone()),
-                Scope::All,
-                Some(PieceType::from_string(&mov[3])?),
-            )
-        } else if mov.len() == 4 && mov[1] == 'x' {
-            let (src_file, dst) = Move::from_four_char_san(mov)?;
-            (None, Some(src_file), Some(dst), Scope::All, None)
-        } else if mov.len() == 4 {
-            let mut piece = Scope::from(PieceType::from_string(&mov[0])?);
-            if board.get_turn() == Side::Black {
-                piece = !piece;
-            }
-
-            let src_file = (mov[1] as u8) - b'a';
-            (
-                None,
-                Some(src_file),
-                Move::from_two_char_san(mov[2..].iter().map(|x| *x).collect::<Vec<char>>()),
-                piece,
-                None,
-            )
-        } else if mov.len() == 6 && mov[4] == '=' && mov[1] == 'x' {
-            let (src_file, dst) = Move::from_four_char_san(mov.clone())?;
-
-            (
-                None,
-                Some(src_file),
-                Some(dst),
-                Scope::All,
-                Some(PieceType::from_string(&mov[5])?),
-            )
-        } else {
-            (None, None, None, Scope::All, None)
-        };
-        if !src_rank.is_some() && !src_file.is_some() && !dst.is_some() {
-            return None;
+        if algebra == "O-O-O" {
+            return Move::from_san_queen_side_castle(board);
+        } else if algebra == "O-O" {
+            return Move::from_san_king_side_castle(board);
         }
 
+        fn set_empty_string_to_none(m: Match) -> Option<Match> {
+            if m.as_str() == "" {
+                None
+            } else {
+                Some(m)
+            }
+        }
+
+        let handle_piece_type = |m: Match| -> PieceType {
+            let piece_type = PieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
+            if board.get_turn() == Side::Black {
+                !piece_type
+            } else {
+                piece_type
+            }
+        };
+
+        let handle_rank = |rank: Match| rank.as_str().chars().next().unwrap() as u8 - b'a';
+        let handle_file = |file: Match| file.as_str().chars().next().unwrap() as u8 - b'1';
+
+        let re = Regex::new(r"([BNRQK]?)([a-h]?)([1-8]?)x?([a-h])([1-8])=?([BNRQK]?)").unwrap();
+        let captures = re.captures(algebra).unwrap();
+        let scope = captures
+            .get(1)
+            .and_then(set_empty_string_to_none)
+            .map(handle_piece_type)
+            .map(|piece_type| Scope::from(piece_type))
+            .unwrap_or_else(|| Scope::All);
+        let src_file = captures
+            .get(2)
+            .and_then(set_empty_string_to_none)
+            .map(handle_rank);
+        let src_rank = captures
+            .get(3)
+            .and_then(set_empty_string_to_none)
+            .map(handle_file);
+        let dst_rank = captures
+            .get(4)
+            .and_then(set_empty_string_to_none)
+            .map(handle_rank);
+        let dst_file = captures
+            .get(5)
+            .and_then(set_empty_string_to_none)
+            .map(handle_file);
+        let promotion = captures
+            .get(6)
+            .and_then(set_empty_string_to_none)
+            .map(handle_piece_type);
+
+        let dst = Square::from_rank_file(dst_file.unwrap(), dst_rank.unwrap());
+        let move_generator = MoveGenerator::new();
         let mut resulting_move: Option<Move> = None;
         let moves = move_generator.generate_moves(board);
         for moveset in moves {
             for mov in moveset.into_iter() {
-                let piece_type = board.piece_at(mov.get_src())?;
+                let piece_type = board.piece_at(mov.get_src()).unwrap();
                 if (!src_rank.is_some() || Some(mov.get_src().get_rank()) == src_rank)
                     && (!src_file.is_some() || Some(mov.get_src().get_file()) == src_file)
-                    && (!dst.is_some() || Some(mov.get_dst()) == dst)
+                    && mov.get_dst() == dst
                     && Move::san_match_type(piece_type, scope)
                 {
                     resulting_move = Some(mov);
                 }
             }
         }
-        resulting_move.as_mut()?.set_promotion(promotion);
+        resulting_move.as_mut().unwrap().set_promotion(promotion);
         resulting_move
     }
 

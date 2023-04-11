@@ -1,0 +1,175 @@
+- id: 93a761d05ddc45b49b1a5f92249a4e79
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 7k/8/8/8/1Pp5/p7/8/7K w - - 0 2
+  san: a3
+  lan: a4a3
+- id: 7601480ebd694c3eb71e93a0e8216b7f
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 7k/8/8/8/2p5/1p6/8/7K w - - 0 2
+  san: axb3
+  lan: a4b3
+- id: d80955684e7c4e28ab7497c31c98c0f8
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 7k/8/8/8/pP6/2p5/8/7K w - - 0 2
+  san: c3
+  lan: c4c3
+- id: 5d1d39d84254467d9fd3d172b48a8fde
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 7k/8/8/8/p7/1p6/8/7K w - - 0 2
+  san: cxb3
+  lan: c4b3
+- id: 201d34fce4304575849cdf79b2930f74
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 8/6k1/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kg7
+  lan: h8g7
+- id: 1280a85e7fb7456ea82dea9f3555803b
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 8/7k/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kh7
+  lan: h8h7
+- id: 077d19780cfa473383e5d03c4f4fa4f4
+  description: Two possible en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - b3 0 1
+  expected_fen: 6k1/8/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kg8
+  lan: h8g8
+- id: 497ae6a1576b4f989538732be97ea1c8
+  description: Same position but without the en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - - 0 1
+  expected_fen: 7k/8/8/8/1Pp5/p7/8/7K w - - 0 2
+  san: a3
+  lan: a4a3
+- id: a1141abe14e247579142c1fa1a95af3b
+  description: Same position but without the en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - - 0 1
+  expected_fen: 7k/8/8/8/pP6/2p5/8/7K w - - 0 2
+  san: c3
+  lan: c4c3
+- id: f18b1861afb34d1c9ac2e14ce112a75a
+  description: Same position but without the en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - - 0 1
+  expected_fen: 8/6k1/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kg7
+  lan: h8g7
+- id: 2b2d4f0450824e75999930a5a8f779bc
+  description: Same position but without the en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - - 0 1
+  expected_fen: 8/7k/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kh7
+  lan: h8h7
+- id: 4d051df5f5924b6c988b38058467e9d8
+  description: Same position but without the en passant capture possibilities.
+  start_fen: 7k/8/8/8/pPp5/8/8/7K b - - 0 1
+  expected_fen: 6k1/8/8/8/pPp5/8/8/7K w - - 1 2
+  san: Kg8
+  lan: h8g8
+- id: 071246d30f9947618dc55c9f910bc66d
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/8/4K3 b - - 1 1
+  san: Ke1
+  lan: f2e1
+- id: f569c42964364363a2a36971ced8a994
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/8/5K2 b - - 1 1
+  san: Kf1
+  lan: f2f1
+- id: 4293b80388fd4152b466e3c072d0b8fb
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/8/6K1 b - - 1 1
+  san: Kg1
+  lan: f2g1
+- id: d617b0381bcf41c18f456202ca13386d
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/4K3/8 b - - 1 1
+  san: Ke2
+  lan: f2e2
+- id: 1fa454a589404a7ea4027d612e0e3a0f
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/6K1/8 b - - 1 1
+  san: Kg2
+  lan: f2g2
+- id: 94f7a0b194c84ae4974542ac9bccc1cb
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/4K3/8/8 b - - 1 1
+  san: Ke3
+  lan: f2e3
+- id: 4402968a242d422a90c08c5a1d35996d
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/5K2/8/8 b - - 1 1
+  san: Kf3
+  lan: f2f3
+- id: f06797b960ba414faae49a5aee337454
+  description: Full set of pawns but no moves.
+  start_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/8/5K2/8 w - - 0 1
+  expected_fen: 8/4k3/1p1p1p1p/pPpPpPpP/P1P1P1P1/6K1/8/8 b - - 1 1
+  san: Kg3
+  lan: f2g3
+- id: 1326446a1f4a41438add6c54b6f09be5
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/4k3/8/2pP4/4p3/B7/7K w - - 0 2
+  san: e3
+  lan: e4e3
+- id: d0b233c71fc04e33a1c7ee88d3efbd94
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/4k3/8/2p5/3p4/B7/7K w - - 0 2
+  san: exd3
+  lan: e4d3
+- id: cef79270052f4b46b9b8eac37e9933af
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/8/3k4/2pPp3/8/B7/7K w - - 1 2
+  san: Kd5
+  lan: e6d5
+- id: a5f3a7d1bfba4db7b8b447819c362bb3
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/8/5k2/2pPp3/8/B7/7K w - - 1 2
+  san: Kf5
+  lan: e6f5
+- id: 981f7a58a6df4316aee1e0bb6410f618
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/3k4/8/2pPp3/8/B7/7K w - - 1 2
+  san: Kd6
+  lan: e6d6
+- id: ffaca89be51042d4870a38501b3b79fd
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/8/5k2/8/2pPp3/8/B7/7K w - - 1 2
+  san: Kf6
+  lan: e6f6
+- id: 8ef526afa3cb4d35a0c9f46952a744f2
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/3k4/8/8/2pPp3/8/B7/7K w - - 1 2
+  san: Kd7
+  lan: e6d7
+- id: f486ac5446354853930877e431961c49
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/4k3/8/8/2pPp3/8/B7/7K w - - 1 2
+  san: Ke7
+  lan: e6e7
+- id: 489ca3ea0aa44f00ae8a808b6382a9aa
+  description: Black has two en passant possibilities, but only one is legal.
+  start_fen: 8/8/4k3/8/2pPp3/8/B7/7K b - d3 0 1
+  expected_fen: 8/5k2/8/8/2pPp3/8/B7/7K w - - 1 2
+  san: Kf7
+  lan: e6f7
+

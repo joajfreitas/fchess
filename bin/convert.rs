@@ -57,19 +57,15 @@ fn main() -> Result<()> {
     for testcase in &mut test_suit.testcases {
         let start_board = Board::from_fen(&testcase.start.fen);
         for mut expected in &mut testcase.expected {
-            let mov = match Move::from_san(&expected.mov, &start_board) {
-                Some(mov) => {
-                    tests.push(Test {
-                        id: Uuid::new_v4().simple().to_string(),
-                        description: testcase.start.description.clone(),
-                        start_fen: testcase.start.fen.clone(),
-                        expected_fen: expected.fen.clone(),
-                        san: expected.mov.clone(),
-                        lan: mov.to_algebraic(),
-                    });
-                }
-                None => {}
-            };
+            let mov = Move::from_san(&expected.mov, &start_board).unwrap();
+            tests.push(Test {
+                id: Uuid::new_v4().simple().to_string(),
+                description: testcase.start.description.clone(),
+                start_fen: testcase.start.fen.clone(),
+                expected_fen: expected.fen.clone(),
+                san: expected.mov.clone(),
+                lan: mov.to_algebraic(),
+            });
         }
     }
 
