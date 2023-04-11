@@ -3,7 +3,9 @@ use std::env;
 
 use fchess::board::Board;
 use fchess::book::Book;
-use fchess::moves::{Move, Scope, Side};
+use fchess::moves::Move;
+use fchess::side::Side;
+use fchess::solver::Solver;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -16,14 +18,12 @@ fn main() -> Result<()> {
     let book_filename = args.get(1).unwrap();
 
     let book = Book::from_filename(book_filename);
-
-    let mut board = Board::read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
-    println!("{:?}", board);
-
-    let mut side = Side::White;
+    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
+    let solver = Solver::new();
+    println!("{}", board);
 
     loop {
-        let mov: Move = Move::from_algebraic(&match side {
+        let mov: Move = Move::from_algebraic(&match board.get_turn() {
             Side::White => {
                 let line = rl.readline("> ");
                 match line {
@@ -38,11 +38,17 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => match dbg!(book.get_best_move(&board, &Side::Black)) {
-                Some(mov) => mov,
-                _ => board.best_move(Scope::Black).unwrap(),
+            Side::Black => dbg!(match book.get_best_move(&board) {
+                Some(mov) => {
+                    println!("Book move");
+                    mov
+                }
+                _ => {
+                    println!("Search move");
+                    solver.best_move(&board).unwrap()
+                }
             }
-            .to_algebraic(),
+            .to_algebraic()),
         })
         .unwrap();
 
@@ -50,8 +56,6 @@ fn main() -> Result<()> {
             Some(board) => board,
             None => continue,
         };
-        println!("{:?}", board);
-
-        side = !side;
+        println!("{}", board);
     }
 }

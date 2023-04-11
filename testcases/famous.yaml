@@ -1,0 +1,247 @@
+- id: 0f3fe50b851d46ac9a3a08414584c72d
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/2R2K1R b - - 5 18
+  san: Rc1
+  lan: d1c1
+- id: 373fe6993916464d804e34c659c578b5
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/1R3K1R b - - 5 18
+  san: Rb1
+  lan: d1b1
+- id: a833eb86bac54a68976897dbc4120fb4
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/R4K1R b - - 5 18
+  san: Ra1
+  lan: d1a1
+- id: 7ad7169869804df694ad4f685eeb7180
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/4RK1R b - - 5 18
+  san: Re1
+  lan: d1e1
+- id: 91080456f3b9411d889143696ad18b88
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P2R1PPP/5K1R b - - 5 18
+  san: Rd2
+  lan: d1d2
+- id: 024b539f7f6945fbb45107b4579b9529
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1nR1N2/P4PPP/5K1R b - - 5 18
+  san: Rd3
+  lan: d1d3
+- id: 01a18aafb27a4fe7b662e70de62bc744
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3RK2R b - - 5 18
+  san: Ke1
+  lan: f1e1
+- id: c1e49db4fe294666bb7c547c4612ac6b
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R2KR b - - 5 18
+  san: Kg1
+  lan: f1g1
+- id: dfa707e7745b4d66972d26a8e5c4a92d
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1KR1 b - - 5 18
+  san: Rg1
+  lan: h1g1
+- id: 4eef070bfcf04a039adc38e920e2345a
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2NP1/P4P1P/3R1K1R b - - 0 18
+  san: g3
+  lan: g2g3
+- id: 6df49517452544d69e38dab26b9e32f8
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP2P1/Q1n2N2/P4P1P/3R1K1R b - g3 0 18
+  san: g4
+  lan: g2g4
+- id: b2983c3587f342eebfcaf0cca0152622
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N1P/P4PP1/3R1K1R b - - 0 18
+  san: h3
+  lan: h2h3
+- id: adfea1276f31461598a677fb1610f3f0
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP3P/Q1n2N2/P4PP1/3R1K1R b - h3 0 18
+  san: h4
+  lan: h2h4
+- id: d78adcc4821645f7a14279948a1da6d4
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/2n2N2/PQ3PPP/3R1K1R b - - 5 18
+  san: Qb2
+  lan: a3b2
+- id: d3aa3123e24f4ca7b9730ffda449eaca
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/2n2N2/P4PPP/2QR1K1R b - - 5 18
+  san: Qc1
+  lan: a3c1
+- id: 8fe2265689c14ee28e562d4b16ac0408
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/1Qn2N2/P4PPP/3R1K1R b - - 5 18
+  san: Qb3
+  lan: a3b3
+- id: e7a865be716e44b197908aa5c99d8531
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/2Q2N2/P4PPP/3R1K1R b - - 0 18
+  san: Qxc3
+  lan: a3c3
+- id: ff97f1904b3846989a99a136ac920a87
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/Q1BP4/2n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Qa4
+  lan: a3a4
+- id: ea946f75725847b4aa17fe6859e2bd06
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/Q1B5/2BP4/2n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Qa5
+  lan: a3a5
+- id: e502de68928e4520ba72ef28cfcf76b5
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/Qqp1b1p1/2B5/2BP4/2n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Qa6
+  lan: a3a6
+- id: 7b03a233b1d043eb93f5fb9b3b78c82c
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/Qp3pbp/1qp1b1p1/2B5/2BP4/2n2N2/P4PPP/3R1K1R b - - 0 18
+  san: Qxa7
+  lan: a3a7
+- id: 894103755c3f41b5b5f911bc97ca7245
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/1QBP4/2n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Qb4
+  lan: a3b4
+- id: 2a0687f59cd94b7588260a375b016146
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n5/P4PPP/3RNK1R b - - 5 18
+  san: Ne1
+  lan: f3e1
+- id: 14b63ea4633941a7a435b94a82b4f684
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n5/P4PPP/3R1KNR b - - 5 18
+  san: Ng1
+  lan: f3g1
+- id: 0b818b81a9bb452b8180b9257ac86ebc
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n5/P2N1PPP/3R1K1R b - - 5 18
+  san: Nd2
+  lan: f3d2
+- id: 010a098cfc0f4a76ad38b77706a0e3f1
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP3N/Q1n5/P4PPP/3R1K1R b - - 5 18
+  san: Nh4
+  lan: f3h4
+- id: e7d387defe5b454c97f7311b4b767d2a
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B1N3/2BP4/Q1n5/P4PPP/3R1K1R b - - 5 18
+  san: Ne5
+  lan: f3e5
+- id: 16c0e949aa0444d1ab400e234bf34a1f
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B3N1/2BP4/Q1n5/P4PPP/3R1K1R b - - 5 18
+  san: Ng5
+  lan: f3g5
+- id: bda377efdf7e496a9547318f6e0c7337
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/3P4/QBn2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bb3
+  lan: c4b3
+- id: 68cd3830c92048ca98ada800a3999f12
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/3P4/Q1nB1N2/P4PPP/3R1K1R b - - 5 18
+  san: Bd3
+  lan: c4d3
+- id: 561a0226583f45b38a1f61d7709d2b0c
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/3P4/Q1n2N2/P3BPPP/3R1K1R b - - 5 18
+  san: Be2
+  lan: c4e2
+- id: e74ddd652ccc48aea0f0f7853ac4d251
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/1BB5/3P4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bb5
+  lan: c4b5
+- id: b0d837aec45944688d048f1d64d36317
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/Bqp1b1p1/2B5/3P4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Ba6
+  lan: c4a6
+- id: a5ced764e2954cd593f4931fd0020b9c
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2BB4/3P4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bd5
+  lan: c4d5
+- id: 55219b00358b4460b14680067cfa552d
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1B1p1/2B5/3P4/Q1n2N2/P4PPP/3R1K1R b - - 0 18
+  san: Bxe6
+  lan: c4e6
+- id: be2899cf26534aa7a190a47919f1ebe5
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/2BP4/2B5/Q1n2N2/P4PPP/3R1K1R b - - 0 18
+  san: d5
+  lan: d4d5
+- id: 6d3b6353862a464ba79c060a5b2ab489
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qp1b1p1/8/1BBP4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bb4
+  lan: c5b4
+- id: 681eeddef1e64d13b1374f414f900e26
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1Bp1b1p1/8/2BP4/Q1n2N2/P4PPP/3R1K1R b - - 0 18
+  san: Bxb6
+  lan: c5b6
+- id: be25f8b2392c405b80dcb5d480f1d4d3
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp3pbp/1qpBb1p1/8/2BP4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bd6
+  lan: c5d6
+- id: 8e5d11aa384a43878175279cb026e16b
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3r1k1/pp2Bpbp/1qp1b1p1/8/2BP4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Be7
+  lan: c5e7
+- id: a64526c574b14d3cacd0f32c6d7e3007
+  description: From 'The Game of the Century' (Bobby Fischer v. Donald Byrne).
+  start_fen: r3r1k1/pp3pbp/1qp1b1p1/2B5/2BP4/Q1n2N2/P4PPP/3R1K1R w - - 4 18
+  expected_fen: r3rBk1/pp3pbp/1qp1b1p1/8/2BP4/Q1n2N2/P4PPP/3R1K1R b - - 5 18
+  san: Bf8
+  lan: c5f8
+

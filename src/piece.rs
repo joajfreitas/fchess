@@ -1,8 +1,9 @@
 use std::fmt;
+use std::ops::Not;
 
 use crate::square::Square;
 
-#[derive(Copy, Clone, FromPrimitive, PartialEq)]
+#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug)]
 pub enum PieceType {
     WhitePawn = 0,
     WhiteRook = 1,
@@ -21,7 +22,7 @@ pub enum PieceType {
     NoPiece,
 }
 
-impl fmt::Debug for PieceType {
+impl fmt::Display for PieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
             "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", "+", " ",
@@ -53,6 +54,63 @@ impl PieceType {
                 | PieceType::WhiteQueen
                 | PieceType::WhiteKing
         )
+    }
+
+    pub fn from_string(s: &char) -> Option<PieceType> {
+        match s {
+            'P' => Some(PieceType::WhitePawn),
+            'R' => Some(PieceType::WhiteRook),
+            'N' => Some(PieceType::WhiteKnight),
+            'B' => Some(PieceType::WhiteBishop),
+            'Q' => Some(PieceType::WhiteQueen),
+            'K' => Some(PieceType::WhiteKing),
+            'p' => Some(PieceType::BlackPawn),
+            'r' => Some(PieceType::BlackRook),
+            'n' => Some(PieceType::BlackKnight),
+            'b' => Some(PieceType::BlackBishop),
+            'q' => Some(PieceType::BlackQueen),
+            'k' => Some(PieceType::BlackKing),
+            _ => None,
+        }
+    }
+    pub fn to_char(&self) -> char {
+        match self {
+            PieceType::WhitePawn => 'P',
+            PieceType::WhiteRook => 'R',
+            PieceType::WhiteKnight => 'N',
+            PieceType::WhiteBishop => 'B',
+            PieceType::WhiteQueen => 'Q',
+            PieceType::WhiteKing => 'K',
+            PieceType::BlackPawn => 'p',
+            PieceType::BlackRook => 'r',
+            PieceType::BlackKnight => 'n',
+            PieceType::BlackBishop => 'b',
+            PieceType::BlackQueen => 'q',
+            PieceType::BlackKing => 'k',
+            _ => panic!(),
+        }
+    }
+}
+
+impl Not for PieceType {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            PieceType::WhitePawn => PieceType::BlackPawn,
+            PieceType::WhiteRook => PieceType::BlackRook,
+            PieceType::WhiteKnight => PieceType::BlackKnight,
+            PieceType::WhiteBishop => PieceType::BlackBishop,
+            PieceType::WhiteQueen => PieceType::BlackQueen,
+            PieceType::WhiteKing => PieceType::BlackKing,
+            PieceType::BlackPawn => PieceType::WhitePawn,
+            PieceType::BlackRook => PieceType::WhiteRook,
+            PieceType::BlackKnight => PieceType::WhiteKnight,
+            PieceType::BlackBishop => PieceType::WhiteBishop,
+            PieceType::BlackQueen => PieceType::WhiteQueen,
+            PieceType::BlackKing => PieceType::WhiteKing,
+            _ => self,
+        }
     }
 }
 

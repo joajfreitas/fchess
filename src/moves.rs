@@ -1,32 +1,57 @@
+use regex::{Match, Regex};
 use std::fmt;
-use std::ops::{BitAnd, BitOr, BitXor, Not};
+use std::ops::Not;
 
-use crate::bitboard::{Bitboard, BitboardExt};
 use crate::board::print_board;
-use crate::common::*;
+use crate::board::Board;
+use crate::move_generator::MoveGenerator;
 use crate::piece::{Piece, PieceType};
+use crate::side::Side;
 use crate::square::Square;
 
-pub enum Side {
-    White,
-    Black,
-}
-
-impl Not for Side {
-    type Output = Self;
-
-    fn not(self) -> Self::Output {
-        match self {
-            Side::White => Side::Black,
-            Side::Black => Side::White,
-        }
-    }
-}
-
+#[derive(Clone, Copy, Debug)]
 pub enum Scope {
     All = 0,
     White = 1,
     Black = 2,
+    None = 3,
+    WhitePawn,
+    WhiteRook,
+    WhiteKnight,
+    WhiteBishop,
+    WhiteQueen,
+    WhiteKing,
+    BlackPawn,
+    BlackRook,
+    BlackKnight,
+    BlackBishop,
+    BlackQueen,
+    BlackKing,
+}
+
+impl Not for Scope {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        match self {
+            Scope::White => Scope::Black,
+            Scope::Black => Scope::White,
+            Scope::All => Scope::None,
+            Scope::None => Scope::All,
+            Scope::WhitePawn => Scope::BlackPawn,
+            Scope::WhiteRook => Scope::BlackRook,
+            Scope::WhiteKnight => Scope::BlackKnight,
+            Scope::WhiteBishop => Scope::BlackBishop,
+            Scope::WhiteQueen => Scope::BlackQueen,
+            Scope::WhiteKing => Scope::BlackKing,
+            Scope::BlackPawn => Scope::WhitePawn,
+            Scope::BlackRook => Scope::WhiteRook,
+            Scope::BlackKnight => Scope::WhiteKnight,
+            Scope::BlackBishop => Scope::WhiteBishop,
+            Scope::BlackQueen => Scope::WhiteQueen,
+            Scope::BlackKing => Scope::WhiteKing,
+        }
+    }
 }
 
 impl Scope {
@@ -35,6 +60,19 @@ impl Scope {
             Scope::All => 0..12,
             Scope::White => 0..6,
             Scope::Black => 6..12,
+            Scope::None => 0..0,
+            Scope::WhitePawn => 0..1,
+            Scope::WhiteRook => 1..2,
+            Scope::WhiteKnight => 2..3,
+            Scope::WhiteBishop => 3..4,
+            Scope::WhiteQueen => 4..5,
+            Scope::WhiteKing => 5..6,
+            Scope::BlackPawn => 6..7,
+            Scope::BlackRook => 7..8,
+            Scope::BlackKnight => 8..9,
+            Scope::BlackBishop => 9..10,
+            Scope::BlackQueen => 10..11,
+            Scope::BlackKing => 11..12,
         }
     }
 
@@ -47,38 +85,46 @@ impl Scope {
     }
 }
 
-#[derive(Clone)]
-pub struct MoveSet {
-    pub src: Square,
-    pub piece: PieceType,
-    pub mov: u64,
-}
-
-impl MoveSet {
-    pub fn new(src: Square, piece: PieceType, x: u64) -> MoveSet {
-        MoveSet { src, piece, mov: x }
-    }
-
-    pub fn shift(self: &MoveSet, x: i8) -> MoveSet {
-        if x > 0 {
-            MoveSet::new(self.src, self.piece, self.mov << x)
-        } else {
-            MoveSet::new(self.src, self.piece, self.mov >> -x)
+impl From<Side> for Scope {
+    fn from(side: Side) -> Self {
+        match side {
+            Side::White => Scope::White,
+            Side::Black => Scope::Black,
         }
     }
+}
 
-    pub fn contains(&self, mov: &Move) -> bool {
-        (self.mov >> mov.dst.get_index()) & 1 == 1
+impl From<PieceType> for Scope {
+    fn from(piece: PieceType) -> Self {
+        match piece {
+            PieceType::WhitePawn => Scope::WhitePawn,
+            PieceType::WhiteRook => Scope::WhiteRook,
+            PieceType::WhiteKnight => Scope::WhiteKnight,
+            PieceType::WhiteBishop => Scope::WhiteBishop,
+            PieceType::WhiteQueen => Scope::WhiteQueen,
+            PieceType::WhiteKing => Scope::WhiteKing,
+            PieceType::BlackPawn => Scope::BlackPawn,
+            PieceType::BlackRook => Scope::BlackRook,
+            PieceType::BlackKnight => Scope::BlackKnight,
+            PieceType::BlackBishop => Scope::BlackBishop,
+            PieceType::BlackQueen => Scope::BlackQueen,
+            PieceType::BlackKing => Scope::BlackKing,
+            PieceType::Marker => panic!(),
+            PieceType::SourceMarker => panic!(),
+            PieceType::NoPiece => panic!(),
+        }
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Move {
     src: Square,
     dst: Square,
+    target: Option<Square>,
+    promotion: Option<PieceType>,
 }
 
-impl fmt::Debug for Move {
+impl fmt::Display for Move {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let v = vec![
             Piece::new(self.src, PieceType::Marker),
@@ -91,29 +137,206 @@ impl fmt::Debug for Move {
 
 impl Move {
     pub fn new(src: Square, dst: Square) -> Move {
-        Move { src, dst }
+        Move {
+            src,
+            dst,
+            target: None,
+            promotion: None,
+        }
     }
+
     pub fn get_src(&self) -> Square {
         self.src
     }
     pub fn get_dst(&self) -> Square {
         self.dst
     }
+    pub fn get_target(&self) -> Option<Square> {
+        self.target
+    }
+    pub fn set_target(&mut self, target: Option<Square>) {
+        self.target = target
+    }
 
-    pub fn from_algebraic(mov: &str) -> Option<Move> {
-        let mov: Vec<char> = mov.chars().collect();
-        if mov.len() == 2 {
-            None
-        } else if mov.len() == 4 {
+    pub fn set_promotion(&mut self, promotion: Option<PieceType>) {
+        self.promotion = promotion
+    }
+
+    pub fn get_promotion(&self) -> Option<PieceType> {
+        self.promotion
+    }
+
+    pub fn from_full_algebraic(algebra: &str) -> Option<Move> {
+        let mov: Vec<char> = algebra.chars().collect();
+        if mov.len() == 4 {
             let src_rank = (mov[1] as u8) - b'1';
             let src_file = (mov[0] as u8) - b'a';
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            let mov = Move {
-                src: Square::from_rank_file(src_rank, src_file),
-                dst: Square::from_rank_file(dst_rank, dst_file),
-            };
+            Some(Move::new(
+                Square::from_rank_file(src_rank, src_file),
+                Square::from_rank_file(dst_rank, dst_file),
+            ))
+        } else if mov.len() == 5 {
+            let src_rank = (mov[1] as u8) - b'1';
+            let src_file = (mov[0] as u8) - b'a';
+            let dst_rank = (mov[3] as u8) - b'1';
+            let dst_file = (mov[2] as u8) - b'a';
+
+            let promotion = PieceType::from_string(&mov[4]);
+            let mut mov = Move::new(
+                Square::from_rank_file(src_rank, src_file),
+                Square::from_rank_file(dst_rank, dst_file),
+            );
+            mov.set_promotion(promotion);
+            Some(mov)
+        } else {
+            None
+        }
+    }
+
+    fn san_match_type(piece_type: PieceType, scope: Scope) -> bool {
+        matches!(
+            (piece_type, scope),
+            (_, Scope::All)
+                | (PieceType::WhitePawn, Scope::WhitePawn)
+                | (PieceType::BlackPawn, Scope::BlackPawn)
+                | (PieceType::WhiteRook, Scope::WhiteRook)
+                | (PieceType::BlackRook, Scope::BlackRook)
+                | (PieceType::WhiteKnight, Scope::WhiteKnight)
+                | (PieceType::BlackKnight, Scope::BlackKnight)
+                | (PieceType::WhiteBishop, Scope::WhiteBishop)
+                | (PieceType::BlackBishop, Scope::BlackBishop)
+                | (PieceType::WhiteQueen, Scope::WhiteQueen)
+                | (PieceType::BlackQueen, Scope::BlackQueen)
+                | (PieceType::WhiteKing, Scope::WhiteKing)
+                | (PieceType::BlackKing, Scope::BlackKing)
+        )
+    }
+
+    fn from_san_queen_side_castle(board: &Board) -> Option<Move> {
+        if board.get_turn() == Side::White {
+            Some(Move::new(
+                Square::from_algebraic("e1").unwrap(),
+                Square::from_algebraic("c1").unwrap(),
+            ))
+        } else {
+            Some(Move::new(
+                Square::from_algebraic("e7").unwrap(),
+                Square::from_algebraic("c7").unwrap(),
+            ))
+        }
+    }
+
+    fn from_san_king_side_castle(board: &Board) -> Option<Move> {
+        if board.get_turn() == Side::White {
+            Some(Move::new(
+                Square::from_algebraic("e1").unwrap(),
+                Square::from_algebraic("g1").unwrap(),
+            ))
+        } else {
+            Some(Move::new(
+                Square::from_algebraic("e7").unwrap(),
+                Square::from_algebraic("g7").unwrap(),
+            ))
+        }
+    }
+
+    pub fn from_san(algebra: &str, board: &Board) -> Option<Move> {
+        if algebra == "O-O-O" {
+            return Move::from_san_queen_side_castle(board);
+        } else if algebra == "O-O" {
+            return Move::from_san_king_side_castle(board);
+        }
+
+        fn set_empty_string_to_none(m: Match) -> Option<Match> {
+            if m.as_str() == "" {
+                None
+            } else {
+                Some(m)
+            }
+        }
+
+        let handle_piece_type = |m: Match| -> PieceType {
+            let piece_type = PieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
+            if board.get_turn() == Side::Black {
+                !piece_type
+            } else {
+                piece_type
+            }
+        };
+
+        let handle_rank = |rank: Match| rank.as_str().chars().next().unwrap() as u8 - b'a';
+        let handle_file = |file: Match| file.as_str().chars().next().unwrap() as u8 - b'1';
+
+        let re = Regex::new(r"([BNRQK]?)([a-h]?)([1-8]?)x?([a-h])([1-8])=?([BNRQK]?)").unwrap();
+        let captures = re.captures(algebra).unwrap();
+        let scope = captures
+            .get(1)
+            .and_then(set_empty_string_to_none)
+            .map(handle_piece_type)
+            .map(Scope::from)
+            .unwrap_or_else(|| Scope::All);
+        let src_file = captures
+            .get(2)
+            .and_then(set_empty_string_to_none)
+            .map(handle_rank);
+        let src_rank = captures
+            .get(3)
+            .and_then(set_empty_string_to_none)
+            .map(handle_file);
+        let dst_rank = captures
+            .get(4)
+            .and_then(set_empty_string_to_none)
+            .map(handle_rank);
+        let dst_file = captures
+            .get(5)
+            .and_then(set_empty_string_to_none)
+            .map(handle_file);
+        let promotion = captures
+            .get(6)
+            .and_then(set_empty_string_to_none)
+            .map(handle_piece_type);
+
+        let dst = Square::from_rank_file(dst_file.unwrap(), dst_rank.unwrap());
+        let move_generator = MoveGenerator::new();
+        let mut resulting_move: Option<Move> = None;
+        let moves = move_generator.generate_moves(board);
+        for moveset in moves {
+            for mov in moveset.into_iter() {
+                let piece_type = board.piece_at(mov.get_src()).unwrap();
+                if (src_rank.is_none() || Some(mov.get_src().get_rank()) == src_rank)
+                    && (src_file.is_none() || Some(mov.get_src().get_file()) == src_file)
+                    && mov.get_dst() == dst
+                    && Move::san_match_type(piece_type, scope)
+                {
+                    resulting_move = Some(mov);
+                }
+            }
+        }
+        resulting_move.as_mut().unwrap().set_promotion(promotion);
+        resulting_move
+    }
+
+    pub fn from_algebraic(algebra: &str) -> Option<Move> {
+        let algebra: Vec<char> = algebra.chars().collect();
+        if algebra.len() == 2 {
+            None
+        } else if algebra.len() == 4 || algebra.len() == 5 {
+            let src_rank = (algebra[1] as u8) - b'1';
+            let src_file = (algebra[0] as u8) - b'a';
+            let dst_rank = (algebra[3] as u8) - b'1';
+            let dst_file = (algebra[2] as u8) - b'a';
+
+            let mut mov = Move::new(
+                Square::from_rank_file(src_rank, src_file),
+                Square::from_rank_file(dst_rank, dst_file),
+            );
+
+            if algebra.len() == 5 {
+                mov.set_promotion(PieceType::from_string(&algebra[4]));
+            }
             Some(mov)
         } else {
             None
@@ -126,174 +349,44 @@ impl Move {
         let src_rank = (self.src.get_file() + b'a') as char;
         let src_file = (self.src.get_rank() + b'1') as char;
 
-        format!("{}{}{}{}", src_rank, src_file, dst_rank, dst_file)
+        let promotion = if self.promotion.is_some() {
+            self.promotion.unwrap().to_string().to_uppercase()
+        } else {
+            "".to_string()
+        };
+        format!(
+            "{}{}{}{}{}",
+            src_rank, src_file, dst_rank, dst_file, promotion
+        )
     }
 }
 
-impl<'a> IntoIterator for &'a MoveSet {
-    type Item = Move;
-    type IntoIter = MoveIterator<'a>;
+#[cfg(test)]
+mod tests {
+    use crate::square::Square;
 
-    fn into_iter(self) -> Self::IntoIter {
-        MoveIterator {
-            mov: self,
-            index: 0,
-        }
+    use super::Board;
+    use super::Move;
+    use super::MoveGenerator;
+
+    #[test]
+    fn test_king_move() {
+        let move_generator = MoveGenerator::new();
+        let board = Board::from_fen("8/K7/8/8/8/8/8/8");
+        let origin = Square::from_algebraic("a7").unwrap();
+        let moveset = move_generator
+            .generate_moves_for_piece(&board, origin)
+            .unwrap();
+
+        assert_eq!(
+            moveset.into_iter().collect::<Vec<Move>>(),
+            vec![
+                Move::new(origin, Square::from_algebraic("a6").unwrap()),
+                Move::new(origin, Square::from_algebraic("b6").unwrap()),
+                Move::new(origin, Square::from_algebraic("b7").unwrap()),
+                Move::new(origin, Square::from_algebraic("a8").unwrap()),
+                Move::new(origin, Square::from_algebraic("b8").unwrap()),
+            ]
+        )
     }
-}
-
-pub struct MoveIterator<'a> {
-    mov: &'a MoveSet,
-    index: u8,
-}
-
-impl<'a> Iterator for MoveIterator<'a> {
-    type Item = Move;
-
-    fn next(&mut self) -> Option<Move> {
-        for i in self.index..64 {
-            self.index += 1;
-            if (self.mov.mov >> i) & 1 == 1 {
-                return Some(Move {
-                    src: self.mov.src,
-                    dst: Square::from_index(i),
-                });
-            }
-        }
-        None
-    }
-}
-
-impl BitOr for MoveSet {
-    type Output = Self;
-    fn bitor(self, rhs: Self) -> Self::Output {
-        Self {
-            piece: self.piece,
-            src: self.src,
-            mov: self.mov | rhs.mov,
-        }
-    }
-}
-
-impl BitAnd for MoveSet {
-    type Output = Self;
-    fn bitand(self, rhs: Self) -> Self::Output {
-        Self {
-            piece: self.piece,
-            src: self.src,
-            mov: self.mov & rhs.mov,
-        }
-    }
-}
-
-impl BitXor for MoveSet {
-    type Output = Self;
-    fn bitxor(self, rhs: Self) -> Self::Output {
-        Self {
-            piece: self.piece,
-            src: self.src,
-            mov: self.mov ^ rhs.mov,
-        }
-    }
-}
-
-impl fmt::Debug for MoveSet {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut v = (0..64)
-            .filter(|x| self.mov >> x & 1 == 1)
-            .map(|x| Piece::new(Square::from_index(x), PieceType::Marker))
-            .collect::<Vec<Piece>>();
-        v.push(Piece::new(self.src, PieceType::SourceMarker));
-
-        print_board(v, f)
-    }
-}
-
-pub fn generate_knight_moves() -> Vec<u64> {
-    let mut vec: Vec<u64> = Vec::new();
-
-    let not_a = 0x7F7F7F7F7F7F7F7F;
-    let not_h = 0xFEFEFEFEFEFEFEFE;
-
-    for i in 0..64 {
-        let mut mov = 0;
-        let fill: Bitboard = 1 << i;
-        mov |= fill.shift_p(N, not_a).shift_p(E, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(N, not_a).shift_p(W, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(N, not_a).shift_p(N, not_a).shift_p(E, not_h);
-        mov |= fill.shift_p(N, not_a).shift_p(N, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(S, not_h).shift_p(E, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(S, not_h).shift_p(W, not_a).shift_p(W, not_a);
-        mov |= fill.shift_p(S, not_h).shift_p(S, not_h).shift_p(E, not_h);
-        mov |= fill.shift_p(S, not_h).shift_p(S, not_h).shift_p(W, not_a);
-        vec.push(mov);
-    }
-
-    vec
-}
-
-pub fn generate_white_pawn_moves() -> Vec<u64> {
-    let mut vec: Vec<u64> = Vec::new();
-
-    for i in 0..64 {
-        let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
-        if i / 8 == 1 {
-            fill = fill.shift(N);
-            mov |= fill;
-        }
-        mov |= fill.shift(N);
-
-        vec.push(mov);
-    }
-
-    vec
-}
-
-pub fn generate_black_pawn_moves() -> Vec<u64> {
-    let mut vec: Vec<u64> = Vec::new();
-
-    for i in 0..64 {
-        let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
-        if i / 8 == 6 {
-            fill = fill.shift(S);
-            mov |= fill;
-        }
-        mov |= fill.shift(S);
-
-        vec.push(mov);
-    }
-
-    vec
-}
-
-pub fn generate_white_pawn_attacks() -> Vec<u64> {
-    let mut vec: Vec<u64> = Vec::new();
-
-    for i in 0..64 {
-        let mut mov = 0;
-        let fill: Bitboard = 1 << i;
-        mov |= fill.shift(NE) & 0xFEFEFEFEFEFEFEFE;
-        mov |= fill.shift(NW) & 0x7F7F7F7F7F7F7F7F;
-
-        vec.push(mov);
-    }
-
-    vec
-}
-
-pub fn generate_black_pawn_attacks() -> Vec<u64> {
-    let mut vec: Vec<u64> = Vec::new();
-
-    for i in 0..64 {
-        let mut mov = 0;
-        let fill: Bitboard = 1 << i;
-        mov |= fill.shift(SE) & 0xFEFEFEFEFEFEFEFE;
-        mov |= fill.shift(SW) & 0x7F7F7F7F7F7F7F7F;
-
-        vec.push(mov);
-    }
-
-    vec
 }

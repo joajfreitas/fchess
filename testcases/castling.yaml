@@ -1,0 +1,1098 @@
+- id: 86787a436db641048cf435896c79b746
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/1R2K2R b K - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 12af2872141f4db88b62a371a6df9484
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2R1K2R b K - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 5b718e2ca1464be892edf921c7407741
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/3RK2R b K - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 47ecabe958754d51b8a0bb595432114e
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/R6r/4K2R b K - 0 1
+  san: Ra2
+  lan: a1a2
+- id: d01e9479fa844dce8c6cb81366a5e143
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 84e4bbc3b9be4a91b6833861f65a188d
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: fba327995a214eb68f62730d772eb28a
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2KR3R b - - 1 1
+  san: O-O-O
+  lan: e1c1
+- id: 5107c503ccce4d198e2b8b6f8a0b141d
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4RK1 b - - 1 1
+  san: O-O
+  lan: e1g1
+- id: ce42d6099fba430492341a9077f9f09e
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3K1R1 b Q - 1 1
+  san: Rg1
+  lan: h1g1
+- id: 1974390cb3f448a8ab3e7e9976224e58
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3KR2 b Q - 1 1
+  san: Rf1
+  lan: h1f1
+- id: 3be2a2be35f447909f12aebbdb752679
+  description: White can castle normally in either direction.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w KQ - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6R/R3K3 b Q - 0 1
+  san: Rh2
+  lan: h1h2
+- id: 9b0b4a2175f844528a94e1ee9d009a5d
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/1R2K2R b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 9ee67fd318c44c74b8f43ea1837104e0
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2R1K2R b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: f95d962b19014badaa8c1166739e1608
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/3RK2R b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: a971df25deec482b9b3edcb55a1db270
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/R6r/4K2R b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: c3f7000be0074053994b0b1c936465d2
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 74220258f4a8493aac87ed37022978c2
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 99858660523f48e0b4218b6c66907ffa
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2KR3R b - - 1 1
+  san: O-O-O
+  lan: e1c1
+- id: 7b2ef9d290334269a8bebad42da2974e
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3K1R1 b Q - 1 1
+  san: Rg1
+  lan: h1g1
+- id: e8cb36e86af64bdc9ec699c950c9f486
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3KR2 b Q - 1 1
+  san: Rf1
+  lan: h1f1
+- id: fc9ac72df80c4318a971f63388193d91
+  description: White can only castle queenside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6R/R3K3 b Q - 0 1
+  san: Rh2
+  lan: h1h2
+- id: cdae6a4aa07f4920918992b73fcbe068
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/1R2K2R b K - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 253f3a0fb51f4ea8a8fb3e46bc68e2fb
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2R1K2R b K - 1 1
+  san: Rc1
+  lan: a1c1
+- id: f7cc2cba747941daa19246c1c39d99dd
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/3RK2R b K - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 2f903bb25a0145c7a03a2de1276ead22
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/R6r/4K2R b K - 0 1
+  san: Ra2
+  lan: a1a2
+- id: 3c7308e86c7f40cd86d790514d717230
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 2fada8aa1d7647deb30a2206966eeb17
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 9393fabf782b48f49442581137191364
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4RK1 b - - 1 1
+  san: O-O
+  lan: e1g1
+- id: d34fe4625bdc46cf9b84eea397fe3cf6
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3K1R1 b - - 1 1
+  san: Rg1
+  lan: h1g1
+- id: 4bdd6be5862f4c44814c2cc4c3415842
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3KR2 b - - 1 1
+  san: Rf1
+  lan: h1f1
+- id: 07b39ed2531f4a9f8113922a08b22097
+  description: White can only castle kingside.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w K - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6R/R3K3 b - - 0 1
+  san: Rh2
+  lan: h1h2
+- id: 355815879f65484cbfca43fd558defac
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/1R2K2R b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 969745953ea144fda9672a27051af504
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/2R1K2R b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: d614f7ed356b435983ddfe6ae68cf556
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/3RK2R b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 2e796fcf09b3433b98e34f75474bf5c7
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/R6r/4K2R b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: eba298c48eb94c07822226fa6789e8f2
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: a9a6d92c65fe40c4b0b339a23b1081bc
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: dcc6451e13374e0a8f33f0bcd36ce86e
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3K1R1 b - - 1 1
+  san: Rg1
+  lan: h1g1
+- id: c503078c8f6d49ad840902afd721da7c
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6r/R3KR2 b - - 1 1
+  san: Rf1
+  lan: h1f1
+- id: c77c1366eef34f66b09d05d601b87093
+  description: White can't castle despite pieces being in the right position; presumably they've already moved the king or rooks.
+  start_fen: 8/4k3/8/8/8/8/r6r/R3K2R w - - 0 1
+  expected_fen: 8/4k3/8/8/8/8/r6R/R3K3 b - - 0 1
+  san: Rh2
+  lan: h1h2
+- id: b78fb03bbe6142e2bf523265765f1416
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 9e6f3eb50a3b4888ad2d112052a51461
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: e2be5d90d09d4981acf43159d9405186
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 2f74753314be4ab4901ec27fc44cf20d
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/R7/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: ddae314fd0b247448a49ef15350de18e
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 99e148a0340f4cd0bd3af3866ae42529
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 53d9b6d839a740c1888839193703ad09
+  description: White can castle queenside despite b1 being attacked.
+  start_fen: 1r6/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 1r6/4k3/8/8/8/8/r7/2KR4 b - - 1 1
+  san: O-O-O
+  lan: e1c1
+- id: 3015220b1d1846f6be2f2bb6ebf2370a
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/r7/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 4321d20e9159431c92ccb0ad0375abbb
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/r7/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 78f331a3b588405eb6849f910cc6e4f1
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/r7/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 74726fd71b414912a20f43791c6e7f54
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/R7/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: 2b1d309eb8de45c2961be37ae24358b8
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/r7/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 11191cd42f094328ac5da113250c7c4a
+  description: White can't castle queenside because it would into check from a rook.
+  start_fen: 2r5/4k3/8/8/8/8/r7/R3K3 w Q - 0 1
+  expected_fen: 2r5/4k3/8/8/8/8/r7/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 223a4ccbf5e54ab3a60be6e1e9a992f7
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/r7/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: be1f0a70f40e457f9d13a82837cb63f3
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/r7/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: d6539d8fdd1e431e842b3834684c4473
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/r7/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: b9a67999b5254a8380d4146a0db41663
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/R7/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: b1edce8790684f9b9a4dced620c1b39d
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/r7/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 7a1d523cc5bc455eb658c62de1fb019c
+  description: White can't castle queenside because it would be into check from a bishop.
+  start_fen: 8/4k3/8/8/8/b7/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/b7/r7/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 0425d383d5af4e8dbaef15281b17fb85
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n7/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: fba3e531c64c459eaa35dc98be539368
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n7/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 6c73f7430acb413ea2dea857fa9d8f45
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n7/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: e8c14cd016af4ee4a8ddcdd173605606
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/R7/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: 131513436a6248e786136fe7d54cf332
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n7/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: e1adaf0164d14869aca280fbad27dd05
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n7/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: c26649b596af4c1ca201cbe028cfeb43
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n2K4/R7 b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: 0f4e4e2504fb43baba8ea7a953431146
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n3K3/R7 b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: 174c3d16aaa043c7bd829e0401569a36
+  description: White can't castle queenside because it would be into check from a knight.
+  start_fen: 8/4k3/8/8/8/8/n7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/8/8/n4K2/R7 b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: aadbf3e310724bee941ca335c596e78a
+  description: White can't castle queenside because it would be into check from a queen.
+  start_fen: 8/4k3/8/8/5q2/8/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/5q2/8/r7/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: fc78b9256d9b45e1bab62292771aca90
+  description: White can't castle queenside because it would be into check from a queen.
+  start_fen: 8/4k3/8/8/5q2/8/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/5q2/8/r7/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 9f1ea44e5f3d474d824880849220738f
+  description: White can't castle queenside because it would be into check from a queen.
+  start_fen: 8/4k3/8/8/5q2/8/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/5q2/8/r7/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: fef3ebc3d6a34c908b2d0be0d06e6091
+  description: White can't castle queenside because it would be into check from a queen.
+  start_fen: 8/4k3/8/8/5q2/8/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/5q2/8/R7/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: f90428912b194e7fa3517129173869c9
+  description: White can't castle queenside because it would be into check from a queen.
+  start_fen: 8/4k3/8/8/5q2/8/r7/R3K3 w Q - 0 1
+  expected_fen: 8/4k3/8/8/5q2/8/r7/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 7d5b61532000483d8b7e22ac92c58bed
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk6/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: bb20352bd2124a06b3f00aae2d9c5b9c
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk6/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 7cb65ab273fa4b4985180766773aec66
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk6/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 1d6434279de34aa3b75a7519b17a0d1b
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/Rk6/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: 957a0734a32241c39c02ba1f37f8a41e
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk6/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 61aea2ae6d6d4db9bdd35ffa756489ec
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk6/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: e5f00aa77e254c1b8b470963eff317a1
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk1K4/R7 b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: 401091c3317a4c3b86a321f6d6c4c746
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk2K3/R7 b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: de23757884bb4204bdaba5ddf894c734
+  description: White can't castle queenside because it would be into check from black king.
+  start_fen: 8/8/8/8/8/8/rk6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/8/8/rk3K2/R7 b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: 0f2954cabcd54a348fae4020c81498f9
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp6/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: c297b49f5e9e4f099db2ce2351a0c1b4
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp6/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: a2be0f0c906c4e66878614eb20c38289
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp6/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: fa0f3293bb6540f285b91f436a8f7852
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/Rp6/4K3 b - - 0 1
+  san: Ra2
+  lan: a1a2
+- id: c0dbb42044524753b79ba62244a44792
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp6/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 66f5845ee6a04a3fbd63cb05bea62130
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp6/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 1ec71e7a3934408d9a043e6e55a2654f
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp1K4/R7 b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: ec0ecb87b3d84ebfb4c6038a1ff74899
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp2K3/R7 b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: ce60f3a2502d44a9b380589c54cd49ae
+  description: White can't castle queenside because it would be into check from a pawn.
+  start_fen: 8/8/8/8/3k4/8/rp6/R3K3 w Q - 0 1
+  expected_fen: 8/8/8/8/3k4/8/rp3K2/R7 b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: 8dd6a37e9f684435a7d172ab298fabe9
+  description: White can't castle either direction because they are in check from a rook.
+  start_fen: 8/8/8/4r3/3k4/8/8/R3K2R w Q - 0 1
+  expected_fen: 8/8/8/4r3/3k4/8/8/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: 2e469be4afa04750acd400e912d14d32
+  description: White can't castle either direction because they are in check from a rook.
+  start_fen: 8/8/8/4r3/3k4/8/8/R3K2R w Q - 0 1
+  expected_fen: 8/8/8/4r3/3k4/8/8/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 4600f1a0e6354c99978fd7940c945fd8
+  description: White can't castle either direction because they are in check from a rook.
+  start_fen: 8/8/8/4r3/3k4/8/8/R3K2R w Q - 0 1
+  expected_fen: 8/8/8/4r3/3k4/8/3K4/R6R b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: ae9307b7ddb040ec8ff73e94391bcefb
+  description: White can't castle either direction because they are in check from a rook.
+  start_fen: 8/8/8/4r3/3k4/8/8/R3K2R w Q - 0 1
+  expected_fen: 8/8/8/4r3/3k4/8/5K2/R6R b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: 573f743bec4d40acba29772db0433496
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p3/1R2K2R b K - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 843b059f02d54623ad4a8f7f2616410e
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p3/2R1K2R b K - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 70540229b3eb46978139aad1ade038f3
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p3/3RK2R b K - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 24fdf12e547e454eaf872df1a57fb548
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/R3p3/4K2R b K - 1 1
+  san: Ra2
+  lan: a1a2
+- id: 5dc6cb9fab884c12b3420b571fbe2d03
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/R7/4p3/4K2R b K - 1 1
+  san: Ra3
+  lan: a1a3
+- id: 2b547401e38040d399799635857764fd
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/R7/8/4p3/4K2R b K - 1 1
+  san: Ra4
+  lan: a1a4
+- id: 55337acf704e42929029b40b8f5c7eba
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/R7/8/8/4p3/4K2R b K - 1 1
+  san: Ra5
+  lan: a1a5
+- id: 68b69b0994be4541bed2c37eda903b7c
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/R3k3/8/8/8/4p3/4K2R b K - 1 1
+  san: Ra6
+  lan: a1a6
+- id: 66de8af3c516436bb7ccfa7dfbf6cbfe
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/R7/4k3/8/8/8/4p3/4K2R b K - 1 1
+  san: Ra7
+  lan: a1a7
+- id: 04819b4bd0794dfe8666ffa09b3d87e6
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: R7/8/4k3/8/8/8/4p3/4K2R b K - 1 1
+  san: Ra8
+  lan: a1a8
+- id: 362ad3bfecee4065842f6cc5012ef6e6
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/3Kp3/R6R b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: 83d282c6782f449799de9e77c657eab3
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4K3/R6R b - - 0 1
+  san: Ke2
+  lan: e1e2
+- id: 82ed1b09019241b1930073b477be01d5
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4pK2/R6R b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: c317d2510f7744bda37997edbb8a9d0b
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p3/R3K1R1 b Q - 1 1
+  san: Rg1
+  lan: h1g1
+- id: e37f85599c8a4ca6805755601367b5c6
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p3/R3KR2 b Q - 1 1
+  san: Rf1
+  lan: h1f1
+- id: 67521a88181740d58989606c45e0acf8
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/4p2R/R3K3 b Q - 1 1
+  san: Rh2
+  lan: h1h2
+- id: 46e6d6c8ed284096b16c7302361fddbf
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/7R/4p3/R3K3 b Q - 1 1
+  san: Rh3
+  lan: h1h3
+- id: 173040af3ccb4085bb2a8a3be917b2b6
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/7R/8/4p3/R3K3 b Q - 1 1
+  san: Rh4
+  lan: h1h4
+- id: 7b879b2aba9443f6bccb394195e9d38f
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/7R/8/8/4p3/R3K3 b Q - 1 1
+  san: Rh5
+  lan: h1h5
+- id: 2fdfb9cf94e64d0d9a84f65b83c286b9
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k2R/8/8/8/4p3/R3K3 b Q - 1 1
+  san: Rh6
+  lan: h1h6
+- id: bb89486304f4456cbe9b397a83d72bf8
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 8/7R/4k3/8/8/8/4p3/R3K3 b Q - 1 1
+  san: Rh7
+  lan: h1h7
+- id: 72da6b3b4a6b491b9836eedefa2f4ff4
+  description: White can't castle because it would be through squares attacked by a pawn.
+  start_fen: 8/8/4k3/8/8/8/4p3/R3K2R w KQ - 0 1
+  expected_fen: 7R/8/4k3/8/8/8/4p3/R3K3 b Q - 1 1
+  san: Rh8
+  lan: h1h8
+- id: bde07f9f115d4f6292e1e65af5a9d14c
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/1R2K2R b K - 1 1
+  san: Rb1
+  lan: a1b1
+- id: 595f9da064d845d1804703a070065d19
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/2R1K2R b K - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 2ec962df349b414e8520295850608db5
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/3RK2R b K - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 1ab4c405b231432d877bde1d840cef46
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/R7/4K2R b K - 1 1
+  san: Ra2
+  lan: a1a2
+- id: 1c9aca92e74d4bf58aa4a287f6eb203e
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/R7/8/4K2R b K - 1 1
+  san: Ra3
+  lan: a1a3
+- id: 2eb3533203e34ae4a7b6f14bc7c1a337
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/R7/8/8/4K2R b K - 1 1
+  san: Ra4
+  lan: a1a4
+- id: ab554b5eb8a24166b905324974abaa5e
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/R2bb3/8/8/8/4K2R b K - 1 1
+  san: Ra5
+  lan: a1a5
+- id: 1f2bcf2a2bb24a7d888a58048dc49b23
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/R3k3/3bb3/8/8/8/4K2R b K - 1 1
+  san: Ra6
+  lan: a1a6
+- id: 1696108c355244869fc82c1e3da494e3
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/R7/4k3/3bb3/8/8/8/4K2R b K - 1 1
+  san: Ra7
+  lan: a1a7
+- id: b497e64280ef4f308b9ccfa83bc86354
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: R7/8/4k3/3bb3/8/8/8/4K2R b K - 1 1
+  san: Ra8
+  lan: a1a8
+- id: 424bf67cf2c749af96c3ab73fb4dac2e
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/R2K3R b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: e3f3dc4481af4a178a5951461a1440f6
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/R4K1R b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: e685ef949a8541efb9e5001ef2559d63
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/3K4/R6R b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: f7f38f5419c94f72a2df1cb8e80aa634
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/4K3/R6R b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: 660e06bf17cb4f858319edffff4309f0
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/5K2/R6R b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: 3bfb66d0e6724378ba65cfffce0b8a11
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/2KR3R b - - 1 1
+  san: O-O-O
+  lan: e1c1
+- id: 7b3e07ef8c8741cb9563ec75cd5dd457
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/R4RK1 b - - 1 1
+  san: O-O
+  lan: e1g1
+- id: c407afe698014e9d81f0c8feb45db4ef
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/R3K1R1 b Q - 1 1
+  san: Rg1
+  lan: h1g1
+- id: a0c927e3c53c4759855ebb77dc51a21e
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/8/R3KR2 b Q - 1 1
+  san: Rf1
+  lan: h1f1
+- id: 00e9b0881c62475ba08799e38f22c0f7
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/8/7R/R3K3 b Q - 1 1
+  san: Rh2
+  lan: h1h2
+- id: 6679b2c776114054a40d5a6b905c0bc2
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/8/7R/8/R3K3 b Q - 1 1
+  san: Rh3
+  lan: h1h3
+- id: e1ced6c7cbb64057ada28cae4b00081d
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb3/7R/8/8/R3K3 b Q - 1 1
+  san: Rh4
+  lan: h1h4
+- id: 1241fa1cbb4e42d898f8560984ed6853
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/3bb2R/8/8/8/R3K3 b Q - 1 1
+  san: Rh5
+  lan: h1h5
+- id: cac2eab10bc54a8fbad1a60a863f0f57
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k2R/3bb3/8/8/8/R3K3 b Q - 1 1
+  san: Rh6
+  lan: h1h6
+- id: c7e652f0de0448db97c7004a141dd92a
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 8/7R/4k3/3bb3/8/8/8/R3K3 b Q - 1 1
+  san: Rh7
+  lan: h1h7
+- id: f9cd2ba6d5a94d5fa7419e73730871a2
+  description: Attacks on the rooks shouldn't prevent castling.
+  start_fen: 8/8/4k3/3bb3/8/8/8/R3K2R w KQ - 0 1
+  expected_fen: 7R/8/4k3/3bb3/8/8/8/R3K3 b Q - 1 1
+  san: Rh8
+  lan: h1h8
+- id: c629cf02930941b3852a811a2dccb7e9
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3p1/1R2K2R b K - 1 1
+  san: Rb1
+  lan: a1b1
+- id: b14dabb9c1574d0bafd69e482d179503
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3p1/2R1K2R b K - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 6209917134a740b9aec400db062e7b3d
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3p1/3RK2R b K - 1 1
+  san: Rd1
+  lan: a1d1
+- id: b3b20309db4c48198781c2ddaf09c492
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/R1p3p1/4K2R b K - 1 1
+  san: Ra2
+  lan: a1a2
+- id: b509ea98bf934da1b0d091a2d65c1105
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/R7/2p3p1/4K2R b K - 1 1
+  san: Ra3
+  lan: a1a3
+- id: 2f7175b132b145d1b2a01c623dd04c18
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/R7/8/2p3p1/4K2R b K - 1 1
+  san: Ra4
+  lan: a1a4
+- id: d0187063056341bb945d27c93b5c00c5
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/R7/8/8/2p3p1/4K2R b K - 1 1
+  san: Ra5
+  lan: a1a5
+- id: fff3c30b07904653a2f02598d52a3796
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/R3k3/8/8/8/2p3p1/4K2R b K - 1 1
+  san: Ra6
+  lan: a1a6
+- id: f4a05e0a5f65439692e89bb4e45f3655
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/R7/4k3/8/8/8/2p3p1/4K2R b K - 1 1
+  san: Ra7
+  lan: a1a7
+- id: 6f42c805d4eb4810809e98c7cd3f94b3
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: R7/8/4k3/8/8/8/2p3p1/4K2R b K - 1 1
+  san: Ra8
+  lan: a1a8
+- id: 9221e119ff7d44089fbb84c9eabb293c
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2pK2p1/R6R b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: 51490e8a481a47ae842b5241dbed3a11
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p1K1p1/R6R b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: 9229ecb734ba415989cd047031557d00
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p2Kp1/R6R b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: a507053cd6494c1ea45cdce5f34b2e0b
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3p1/R3K1R1 b Q - 1 1
+  san: Rg1
+  lan: h1g1
+- id: 5dd16c403bb14a0eb708496125209b00
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3p1/R3KR2 b Q - 1 1
+  san: Rf1
+  lan: h1f1
+- id: e17d347dff0745b5817429d59e6212ed
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/8/2p3pR/R3K3 b Q - 1 1
+  san: Rh2
+  lan: h1h2
+- id: f1534012406b4c679b53a6d64b344afc
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/8/7R/2p3p1/R3K3 b Q - 1 1
+  san: Rh3
+  lan: h1h3
+- id: 9786cc6951b2410a92fc61b11512321a
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/8/7R/8/2p3p1/R3K3 b Q - 1 1
+  san: Rh4
+  lan: h1h4
+- id: 95393a401f1f4440b6f29daa60a04999
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k3/7R/8/8/2p3p1/R3K3 b Q - 1 1
+  san: Rh5
+  lan: h1h5
+- id: 54ee79b6ca8b4071af08bec4e3cbbf1f
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/8/4k2R/8/8/8/2p3p1/R3K3 b Q - 1 1
+  san: Rh6
+  lan: h1h6
+- id: f89fb6b016b44b5e9cfd5005eb2254ac
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 8/7R/4k3/8/8/8/2p3p1/R3K3 b Q - 1 1
+  san: Rh7
+  lan: h1h7
+- id: dd997e54401f4b94b05040b03035426c
+  description: White can't castle through check from differently placed pawns.
+  start_fen: 8/8/4k3/8/8/8/2p3p1/R3K2R w KQ - 0 1
+  expected_fen: 7R/8/4k3/8/8/8/2p3p1/R3K3 b Q - 1 1
+  san: Rh8
+  lan: h1h8
+- id: 6639e5f9990b453b9af39b99214f1939
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/1R2K3 b - - 1 1
+  san: Rb1
+  lan: a1b1
+- id: c3179572032f463e809efe40e096dada
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/2R1K3 b - - 1 1
+  san: Rc1
+  lan: a1c1
+- id: 87925b983bf94994b600e53a8e449f97
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/3RK3 b - - 1 1
+  san: Rd1
+  lan: a1d1
+- id: 089ae1c9578e4cf68e529f391c31656f
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/R7/4K3 b - - 1 1
+  san: Ra2
+  lan: a1a2
+- id: 95adb83870df4eafbefebfe7ac7dd07d
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/Rr6/8/4K3 b - - 0 1
+  san: Ra3
+  lan: a1a3
+- id: b46db7de257a42f194d5cf702199a8f8
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/R2K4 b - - 1 1
+  san: Kd1
+  lan: e1d1
+- id: fabb04b6b9c0491198fe6b3aa5a0ca5b
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/R4K2 b - - 1 1
+  san: Kf1
+  lan: e1f1
+- id: 6cd8919419ee4da5982d68ef3c2a24bf
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/3K4/R7 b - - 1 1
+  san: Kd2
+  lan: e1d2
+- id: 2dd1fd2331c943f7b8c63d72365ca176
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/4K3/R7 b - - 1 1
+  san: Ke2
+  lan: e1e2
+- id: d99dc6a73fff41b9aaef7222729c9f2e
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/5K2/R7 b - - 1 1
+  san: Kf2
+  lan: e1f2
+- id: 94d8d5d775ad4949ad1425bc37904ea4
+  description: An attack on b1 shouldn't prevent queenside castle.
+  start_fen: 8/8/4k3/8/8/pr6/8/R3K3 w Q - 0 1
+  expected_fen: 8/8/4k3/8/8/pr6/8/2KR4 b - - 1 1
+  san: O-O-O
+  lan: e1c1
+- id: 53ea2a93704d4d1087223228bc1c9599
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: 4k2r/r3P2R/8/8/8/8/8/4K3 w k - 0 2
+  san: Ra7
+  lan: a8a7
+- id: 8d64d901641f47f49d6cff963c189601
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: 1r2k2r/R3P2R/8/8/8/8/8/4K3 w k - 1 2
+  san: Rb8
+  lan: a8b8
+- id: b7c5b62417e94c0c8d103c0a5235167d
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: 2r1k2r/R3P2R/8/8/8/8/8/4K3 w k - 1 2
+  san: Rc8
+  lan: a8c8
+- id: 1b08fe860466497ba212aca7235dcb42
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: 3rk2r/R3P2R/8/8/8/8/8/4K3 w k - 1 2
+  san: Rd8
+  lan: a8d8
+- id: 6a5eb5374a3843e881f80870abbaa4ea
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: r3k3/R3P2r/8/8/8/8/8/4K3 w q - 0 2
+  san: Rh7
+  lan: h8h7
+- id: 6126eaca45714259b8011756a4ac6f62
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: r3k1r1/R3P2R/8/8/8/8/8/4K3 w q - 1 2
+  san: Rg8
+  lan: h8g8
+- id: 444513b9fd9546daa4997cf436400344
+  description: Black can't castle either direction because of attack from pawn.
+  start_fen: r3k2r/R3P2R/8/8/8/8/8/4K3 b kq - 0 1
+  expected_fen: r3kr2/R3P2R/8/8/8/8/8/4K3 w q - 1 2
+  san: Rf8
+  lan: h8f8
