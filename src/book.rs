@@ -2,7 +2,9 @@ use std::fmt;
 use std::fs;
 
 use crate::board::Board;
-use crate::moves::{Move, Side};
+use crate::moves::Move;
+use crate::piece::PieceType;
+use crate::side::Side;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -36,6 +38,30 @@ impl Entry {
 
     fn get_weight(&self) -> u16 {
         self.weight
+    }
+
+    fn to_move(self, board: &Board) -> Option<Move> {
+        Some(
+            match (
+                (self.get_from().get_rank(), self.get_from().get_file()),
+                (self.get_to().get_rank(), self.get_to().get_file()),
+                board.piece_at(self.get_from()),
+            ) {
+                ((0, 4), (0, 7), Some(PieceType::WhiteKing)) => {
+                    Move::new(self.get_from(), Square::from_rank_file(0, 6))
+                }
+                ((0, 4), (0, 0), Some(PieceType::WhiteKing)) => {
+                    Move::new(self.get_from(), Square::from_rank_file(0, 2))
+                }
+                ((7, 4), (7, 7), Some(PieceType::BlackKing)) => {
+                    Move::new(self.get_from(), Square::from_rank_file(7, 6))
+                }
+                ((7, 4), (7, 0), Some(PieceType::BlackKing)) => {
+                    Move::new(self.get_from(), Square::from_rank_file(7, 2))
+                }
+                _ => Move::new(self.get_from(), self.get_to()),
+            },
+        )
     }
 }
 
@@ -77,7 +103,7 @@ impl Book {
 
     fn binary_search(&self, key: u64) -> usize {
         let mut lo: usize = 0;
-        let mut hi: usize = dbg!(self.0.len());
+        let mut hi: usize = self.0.len();
         while lo < hi {
             let mid = (lo + hi) / 2;
             let entry = self.0[mid];
@@ -107,10 +133,10 @@ impl Book {
         entries
     }
 
-    pub fn get_best_move(&self, board: &Board, turn: &Side) -> Option<Move> {
-        let all_entries = self.find_all(board, turn);
+    pub fn get_best_move(&self, board: &Board) -> Option<Move> {
+        let all_entries = self.find_all(board, &board.get_turn());
         let best_entry = all_entries.iter().max_by_key(|entry| entry.get_weight())?;
 
-        Some(Move::new(best_entry.get_from(), best_entry.get_to()))
+        best_entry.to_move(board)
     }
 }

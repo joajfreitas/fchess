@@ -1,13 +1,20 @@
+use std::env;
 use std::io;
 
 use fchess::board::Board;
 
 fn main() {
-    let mut input = String::new();
-    match io::stdin().read_line(&mut input) {
-        Ok(_) => {}
-        Err(err) => println!("{:?}", err),
+    let args = env::args().collect::<Vec<String>>();
+    let input = if args.len() == 2 {
+        args[1].to_string()
+    } else {
+        let mut input = String::new();
+        match io::stdin().read_line(&mut input) {
+            Ok(_) => {}
+            Err(err) => println!("{:?}", err),
+        };
+        input
     };
 
-    println!("{:?}", Board::read_fen(&input));
+    println!("{}", Board::from_fen(&input));
 }

@@ -46,3 +46,10 @@ jobs:
         - uses: actions/checkout@v2
         - name: Run rustfmt
           run: cargo fmt
+
+  test-move-generation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run move generation tests
+        run: ./scripts/run_move_generation_tests.sh
