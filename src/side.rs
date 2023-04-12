@@ -1,5 +1,6 @@
 use std::ops::Not;
 
+/// Represents the board side.
 #[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
 pub enum Side {
     #[default]
@@ -7,6 +8,11 @@ pub enum Side {
     Black,
 }
 
+/**
+Negation implementation for Side:
+ * Black -> White
+ * White -> Black
+*/
 impl Not for Side {
     type Output = Self;
 

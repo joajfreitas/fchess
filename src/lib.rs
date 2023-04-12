@@ -1,20 +1,29 @@
+/*!
+This crate provides a library for chess board representation, move generation and an engine.
+*/
 extern crate num;
 #[macro_use]
 extern crate num_derive;
 
-pub mod bitboard;
-pub mod bitwise;
-pub mod board;
-pub mod book;
-pub mod common;
-pub mod dumb7fill;
-pub mod move_generator;
-pub mod moves;
-pub mod moveset;
-pub mod piece;
-pub mod side;
-pub mod solver;
-pub mod square;
+pub use crate::board::Board;
+pub use crate::book::Book;
+pub use crate::moves::Move;
+pub use crate::side::Side;
+pub use crate::solver::Solver;
+
+mod bitboard;
+mod bitwise;
+mod board;
+mod book;
+mod common;
+mod dumb7fill;
+mod move_generator;
+mod moves;
+mod moveset;
+mod piece;
+mod side;
+mod solver;
+mod square;
 
 #[cfg(test)]
 mod tests {

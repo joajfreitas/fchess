@@ -4,8 +4,8 @@ use std::fs;
 use serde::{Deserialize, Serialize};
 use serde_json::Result;
 
-use fchess::board::Board;
-use fchess::moves::Move;
+use fchess::Board;
+use fchess::Move;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct TestCase {

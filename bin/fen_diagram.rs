@@ -1,7 +1,7 @@
 use std::env;
 use std::io;
 
-use fchess::board::Board;
+use fchess::Board;
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
