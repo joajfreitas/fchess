@@ -1,5 +1,5 @@
 use rustyline::{Editor, Result};
-use std::env;
+use clap::Parser;
 
 use fchess::Board;
 use fchess::Book;
@@ -7,17 +7,26 @@ use fchess::Move;
 use fchess::Side;
 use fchess::Solver;
 
-fn main() -> Result<()> {
-    let args: Vec<String> = env::args().collect();
+/// fchess cli interface
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// path to polyglot openning book
+    #[arg(short, long)]
+    book: Option<String>,
+}
 
+fn main() -> Result<()> {
+    // Setup shell history
     let mut rl = Editor::<()>::new()?;
     if rl.load_history(".fchess_history").is_err() {
         println!("No previous history");
     }
+    
+    let args = Args::parse();
+    
+    let book = args.book.map(|book| Book::from_filename(&book));
 
-    let book_filename = args.get(1).unwrap();
-
-    let book = Book::from_filename(book_filename);
     let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
     let solver = Solver::new();
     println!("{}", board);
@@ -38,17 +47,17 @@ fn main() -> Result<()> {
                     }
                 }
             }
-            Side::Black => dbg!(match book.get_best_move(&board) {
+            Side::Black => match book.as_ref().and_then(|b| b.get_best_move(&board)) {
                 Some(mov) => {
-                    println!("Book move");
+                    println!("=> Book move");
                     mov
                 }
                 _ => {
-                    println!("Search move");
+                    println!("=> Search move");
                     solver.best_move(&board).unwrap()
                 }
             }
-            .to_algebraic()),
+            .to_algebraic(),
         })
         .unwrap();
 
