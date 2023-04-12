@@ -1,11 +1,11 @@
 use rustyline::{Editor, Result};
 use std::env;
 
-use fchess::board::Board;
-use fchess::book::Book;
-use fchess::moves::Move;
-use fchess::side::Side;
-use fchess::solver::Solver;
+use fchess::Board;
+use fchess::Book;
+use fchess::Move;
+use fchess::Side;
+use fchess::Solver;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();

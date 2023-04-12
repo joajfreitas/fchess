@@ -21,6 +21,8 @@ jobs:
 
       - name: Build documentation
         run: cargo doc --no-deps 
+      - name: Generate index
+        run: echo "<head><meta http-equiv=\"Refresh\" content=\"0; url='https://joajfreitas.github.io/fchess/fchess/index.html'\" /></head>" > target/doc/index.html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
