@@ -140,6 +140,7 @@
 <a href="#140" id="140">140</a>
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::fs;
 
@@ -216,7 +217,8 @@
     }
 }
 
-<span class="kw">pub struct </span>Book(Vec&lt;Entry&gt;);
+<span class="doccomment">/// Representation of a PolyGlot book
+</span><span class="kw">pub struct </span>Book(Vec&lt;Entry&gt;);
 
 <span class="kw">impl </span>Book {
     <span class="kw">pub fn </span>from_filename(filename: <span class="kw-2">&amp;</span>str) -&gt; Book {

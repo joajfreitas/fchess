@@ -1564,6 +1564,7 @@
 <a href="#1564" id="1564">1564</a>
 <a href="#1565" id="1565">1565</a>
 <a href="#1566" id="1566">1566</a>
+<a href="#1567" id="1567">1567</a>
 </pre><pre class="rust"><code><span class="kw">use </span>regex::Regex;
 <span class="kw">use </span>std::collections::VecDeque;
 <span class="kw">use </span>std::fmt;
@@ -1583,7 +1584,8 @@
     BlackLong,
 }
 
-<span class="attr">#[derive(Default, Clone, Eq, PartialEq, Debug)]
+<span class="doccomment">/// Bitboard representation of the chess board
+</span><span class="attr">#[derive(Default, Clone, Eq, PartialEq, Debug)]
 </span><span class="kw">pub struct </span>Board {
     pieces: [u64; <span class="number">13</span>],
     turn: Side, <span class="comment">// who should play next

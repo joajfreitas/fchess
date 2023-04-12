@@ -390,6 +390,7 @@
 <a href="#390" id="390">390</a>
 <a href="#391" id="391">391</a>
 <a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
 </pre><pre class="rust"><code><span class="kw">use </span>regex::{Match, Regex};
 <span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::ops::Not;
@@ -508,7 +509,8 @@
     }
 }
 
-<span class="attr">#[derive(Clone, Debug, Eq, PartialEq)]
+<span class="doccomment">/// Chess move
+</span><span class="attr">#[derive(Clone, Debug, Eq, PartialEq)]
 </span><span class="kw">pub struct </span>Move {
     src: Square,
     dst: Square,
