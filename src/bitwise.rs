@@ -1,3 +1,4 @@
+/// Set bit in bitfield according to value
 pub fn set_bit<T>(
     bitfield: T,
     position: u8,
@@ -16,6 +17,7 @@ where
     (bitfield & !mask) | (value << position)
 }
 
+/// Set bit in bitfield to true
 pub fn enable_bit<T>(
     bitfield: T,
     position: u8,

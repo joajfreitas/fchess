@@ -28,7 +28,7 @@ impl Square {
         }
     }
 
-    pub fn to_algebraic(&self) -> String {
+    pub fn to_algebraic(self) -> String {
         format!(
             "{}{}",
             (self.get_file() + b'a') as char,

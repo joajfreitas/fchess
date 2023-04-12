@@ -73,7 +73,7 @@ impl PieceType {
             _ => None,
         }
     }
-    pub fn to_char(&self) -> char {
+    pub fn to_char(self) -> char {
         match self {
             PieceType::WhitePawn => 'P',
             PieceType::WhiteRook => 'R',

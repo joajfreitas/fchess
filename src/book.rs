@@ -74,6 +74,7 @@ impl fmt::Debug for Entry {
     }
 }
 
+/// Representation of a PolyGlot book
 pub struct Book(Vec<Entry>);
 
 impl Book {
