@@ -17,6 +17,7 @@ enum Castling {
     BlackLong,
 }
 
+/// Bitboard representation of the chess board
 #[derive(Default, Clone, Eq, PartialEq, Debug)]
 pub struct Board {
     pieces: [u64; 13],
