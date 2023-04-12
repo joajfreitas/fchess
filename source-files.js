@@ -3,7 +3,7 @@ var sourcesIndex = JSON.parse('{\
 "cli":["",[],["cli.rs"]],\
 "fchess":["",[],["bitboard.rs","bitwise.rs","board.rs","book.rs","common.rs","dumb7fill.rs","lib.rs","move_generator.rs","moves.rs","moveset.rs","piece.rs","side.rs","solver.rs","square.rs"]],\
 "fen_diagram":["",[],["fen_diagram.rs"]],\
-"test_move_generation":["",[],["test_move_generation.rs"]],\
+"test_apply_move":["",[],["test_apply_move.rs"]],\
 "uci":["",[],["uci.rs"]]\
 }');
 createSourceSidebar();
