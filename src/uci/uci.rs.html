@@ -106,9 +106,9 @@
 <span class="kw">use </span>std::sync::mpsc::{Receiver, Sender};
 <span class="kw">use </span>std::thread;
 
-<span class="kw">use </span>fchess::board::Board;
-<span class="kw">use </span>fchess::moves::Move;
-<span class="kw">use </span>fchess::solver::Solver;
+<span class="kw">use </span>fchess::Board;
+<span class="kw">use </span>fchess::Move;
+<span class="kw">use </span>fchess::Solver;
 
 <span class="kw">fn </span>main() -&gt; io::Result&lt;()&gt; {
     <span class="kw">let </span>(tx, rx): (Sender&lt;String&gt;, Receiver&lt;String&gt;) = mpsc::channel();

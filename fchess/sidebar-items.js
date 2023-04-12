@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":[["bitboard",""],["bitwise",""],["board",""],["book",""],["common",""],["dumb7fill",""],["move_generator",""],["moves",""],["moveset",""],["piece",""],["side",""],["solver",""],["square",""]]};
+window.SIDEBAR_ITEMS = {"enum":[["Side","Represents the board side."]],"struct":[["Board",""],["Book",""],["Move",""],["Solver",""]]};

@@ -62,11 +62,11 @@
 </pre><pre class="rust"><code><span class="kw">use </span>rustyline::{Editor, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>std::env;
 
-<span class="kw">use </span>fchess::board::Board;
-<span class="kw">use </span>fchess::book::Book;
-<span class="kw">use </span>fchess::moves::Move;
-<span class="kw">use </span>fchess::side::Side;
-<span class="kw">use </span>fchess::solver::Solver;
+<span class="kw">use </span>fchess::Board;
+<span class="kw">use </span>fchess::Book;
+<span class="kw">use </span>fchess::Move;
+<span class="kw">use </span>fchess::Side;
+<span class="kw">use </span>fchess::Solver;
 
 <span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">let </span>args: Vec&lt;String&gt; = env::args().collect();

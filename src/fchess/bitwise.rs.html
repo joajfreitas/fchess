@@ -49,7 +49,10 @@
 <a href="#49" id="49">49</a>
 <a href="#50" id="50">50</a>
 <a href="#51" id="51">51</a>
-</pre><pre class="rust"><code><span class="kw">pub fn </span>set_bit&lt;T&gt;(
+<a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+</pre><pre class="rust"><code><span class="doccomment">/// Set bit in bitfield according to value
+</span><span class="kw">pub fn </span>set_bit&lt;T&gt;(
     bitfield: T,
     position: u8,
     value: T,
@@ -67,7 +70,8 @@
     (bitfield &amp; !mask) | (value &lt;&lt; position)
 }
 
-<span class="kw">pub fn </span>enable_bit&lt;T&gt;(
+<span class="doccomment">/// Set bit in bitfield to true
+</span><span class="kw">pub fn </span>enable_bit&lt;T&gt;(
     bitfield: T,
     position: u8,
 ) -&gt; &lt;&lt;T <span class="kw">as </span>std::ops::BitAnd&lt;&lt;T <span class="kw">as </span>std::ops::Not&gt;::Output&gt;&gt;::Output <span class="kw">as </span>std::ops::BitOr&lt;T&gt;&gt;::Output

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":[["generate_black_pawn_attacks",""],["generate_black_pawn_moves",""],["generate_knight_moves",""],["generate_white_pawn_attacks",""],["generate_white_pawn_moves",""]],"struct":[["MoveGenerator",""]]};

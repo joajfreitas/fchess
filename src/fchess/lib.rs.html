@@ -475,23 +475,41 @@
 <a href="#475" id="475">475</a>
 <a href="#476" id="476">476</a>
 <a href="#477" id="477">477</a>
-</pre><pre class="rust"><code><span class="kw">extern crate </span>num;
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+</pre><pre class="rust"><code><span class="doccomment">/*!
+This crate provides a library for chess board representation, move generation and an engine.
+*/
+</span><span class="kw">extern crate </span>num;
 <span class="attr">#[macro_use]
 </span><span class="kw">extern crate </span>num_derive;
 
-<span class="kw">pub mod </span>bitboard;
-<span class="kw">pub mod </span>bitwise;
-<span class="kw">pub mod </span>board;
-<span class="kw">pub mod </span>book;
-<span class="kw">pub mod </span>common;
-<span class="kw">pub mod </span>dumb7fill;
-<span class="kw">pub mod </span>move_generator;
-<span class="kw">pub mod </span>moves;
-<span class="kw">pub mod </span>moveset;
-<span class="kw">pub mod </span>piece;
-<span class="kw">pub mod </span>side;
-<span class="kw">pub mod </span>solver;
-<span class="kw">pub mod </span>square;
+<span class="kw">pub use </span><span class="kw">crate</span>::board::Board;
+<span class="kw">pub use </span><span class="kw">crate</span>::book::Book;
+<span class="kw">pub use </span><span class="kw">crate</span>::moves::Move;
+<span class="kw">pub use </span><span class="kw">crate</span>::side::Side;
+<span class="kw">pub use </span><span class="kw">crate</span>::solver::Solver;
+
+<span class="kw">mod </span>bitboard;
+<span class="kw">mod </span>bitwise;
+<span class="kw">mod </span>board;
+<span class="kw">mod </span>book;
+<span class="kw">mod </span>common;
+<span class="kw">mod </span>dumb7fill;
+<span class="kw">mod </span>move_generator;
+<span class="kw">mod </span>moves;
+<span class="kw">mod </span>moveset;
+<span class="kw">mod </span>piece;
+<span class="kw">mod </span>side;
+<span class="kw">mod </span>solver;
+<span class="kw">mod </span>square;
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {

@@ -17,16 +17,28 @@
 <a href="#17" id="17">17</a>
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
 </pre><pre class="rust"><code><span class="kw">use </span>std::ops::Not;
 
-<span class="attr">#[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
+<span class="doccomment">/// Represents the board side.
+</span><span class="attr">#[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
 </span><span class="kw">pub enum </span>Side {
     <span class="attr">#[default]
     </span>White,
     Black,
 }
 
-<span class="kw">impl </span>Not <span class="kw">for </span>Side {
+<span class="doccomment">/**
+Negation implementation for Side:
+ * Black -&gt; White
+ * White -&gt; Black
+*/
+</span><span class="kw">impl </span>Not <span class="kw">for </span>Side {
     <span class="kw">type </span>Output = <span class="self">Self</span>;
 
     <span class="kw">fn </span>not(<span class="self">self</span>) -&gt; <span class="self">Self</span>::Output {
