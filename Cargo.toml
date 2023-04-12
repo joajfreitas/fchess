@@ -35,8 +35,8 @@ path = "bin/uci.rs"
 
 
 [[bin]]
-name = "test_move_generation"
-path = "bin/test_move_generation.rs"
+name = "test_apply_move"
+path = "bin/test_apply_move.rs"
 
 [[bin]]
 name = "cli"

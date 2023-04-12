@@ -52,4 +52,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run move generation tests
-        run: ./scripts/run_move_generation_tests.sh
+        run: ./scripts/apply_move_tests.sh
