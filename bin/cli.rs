@@ -1,5 +1,5 @@
-use rustyline::{Editor, Result};
 use clap::Parser;
+use rustyline::{Editor, Result};
 
 use fchess::Board;
 use fchess::Book;
@@ -22,9 +22,9 @@ fn main() -> Result<()> {
     if rl.load_history(".fchess_history").is_err() {
         println!("No previous history");
     }
-    
+
     let args = Args::parse();
-    
+
     let book = args.book.map(|book| Book::from_filename(&book));
 
     let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
