@@ -68,8 +68,8 @@
 <a href="#68" id="68">68</a>
 <a href="#69" id="69">69</a>
 <a href="#70" id="70">70</a>
-</pre><pre class="rust"><code><span class="kw">use </span>rustyline::{Editor, <span class="prelude-ty">Result</span>};
-<span class="kw">use </span>clap::Parser;
+</pre><pre class="rust"><code><span class="kw">use </span>clap::Parser;
+<span class="kw">use </span>rustyline::{Editor, <span class="prelude-ty">Result</span>};
 
 <span class="kw">use </span>fchess::Board;
 <span class="kw">use </span>fchess::Book;
@@ -92,9 +92,9 @@
     <span class="kw">if </span>rl.load_history(<span class="string">&quot;.fchess_history&quot;</span>).is_err() {
         <span class="macro">println!</span>(<span class="string">&quot;No previous history&quot;</span>);
     }
-    
+
     <span class="kw">let </span>args = Args::parse();
-    
+
     <span class="kw">let </span>book = args.book.map(|book| Book::from_filename(<span class="kw-2">&amp;</span>book));
 
     <span class="kw">let </span><span class="kw-2">mut </span>board = Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0&quot;</span>);

@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["book","cli","fchess","fen_diagram","test_apply_move","uci"];
+window.ALL_CRATES = ["book","cli","fchess","fen_diagram","test_apply_move","test_movegen","uci"];
