@@ -28,6 +28,9 @@ features = [
 [dev-dependencies]
 rstest = "0.17.0"
 
+[lib]
+name = "fchess"
+path = "src/lib.rs"
 
 [[bin]]
 name = "uci"
