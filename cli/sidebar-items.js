@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":[["main",""]],"struct":[["Args","fchess cli interface"]]};
+window.SIDEBAR_ITEMS = {"fn":["main"],"struct":["Args"]};
