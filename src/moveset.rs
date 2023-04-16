@@ -39,6 +39,7 @@ impl<'a> IntoIterator for &'a MoveSet {
         MoveIterator {
             mov: self,
             index: 0,
+            promotion_index: 0,
         }
     }
 }
@@ -46,6 +47,7 @@ impl<'a> IntoIterator for &'a MoveSet {
 pub struct MoveIterator<'a> {
     mov: &'a MoveSet,
     index: u8,
+    promotion_index: u8,
 }
 
 impl<'a> Iterator for MoveIterator<'a> {
@@ -53,9 +55,53 @@ impl<'a> Iterator for MoveIterator<'a> {
 
     fn next(&mut self) -> Option<Move> {
         for i in self.index..64 {
-            self.index += 1;
             if (self.mov.mov >> i) & 1 == 1 {
-                return Some(Move::new(self.mov.src, Square::from_index(i)));
+                let destination = Square::from_index(i);
+                if self.mov.piece == PieceType::WhitePawn &&  destination.get_rank() == 7 {
+                    let mov = match self.promotion_index {
+                        0 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteQueen)),
+                        1 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteRook)),
+                        2 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteBishop)),
+                        3 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteKnight)),
+                        _ => panic!(),
+                    };
+
+                    if self.promotion_index >= 3 {
+                        self.index += 1;
+                        self.promotion_index = 0;
+                    }
+                    else {
+                        self.promotion_index += 1;
+                    }
+
+                    return mov;
+                }
+                else if self.mov.piece == PieceType::BlackPawn &&  destination.get_rank() == 0 {
+                    let mov = match self.promotion_index {
+                        0 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackQueen)),
+                        1 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackRook)),
+                        2 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackBishop)),
+                        3 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackKnight)),
+                        _ => panic!(),
+                    };
+
+                    if self.promotion_index >= 3 {
+                        self.index += 1;
+                        self.promotion_index = 0;
+                    }
+                    else {
+                        self.promotion_index += 1;
+                    }
+
+                    return mov;
+                }
+                else {
+                    self.index += 1;
+                    return Some(Move::new(self.mov.src, destination));
+                }
+            }
+            else {
+                self.index += 1;
             }
         }
         None

@@ -146,6 +146,15 @@ impl Move {
         }
     }
 
+    pub fn with_promotion(src: Square, dst: Square, promotion: PieceType) -> Move {
+        Move {
+            src,
+            dst,
+            target: None,
+            promotion: Some(promotion)
+        }
+    }
+
     pub fn get_src(&self) -> Square {
         self.src
     }
@@ -351,7 +360,7 @@ impl Move {
         let src_file = (self.src.get_rank() + b'1') as char;
 
         let promotion = if self.promotion.is_some() {
-            self.promotion.unwrap().to_string().to_uppercase()
+            self.promotion.unwrap().to_char().to_string().to_uppercase()
         } else {
             "".to_string()
         };
