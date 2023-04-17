@@ -3,7 +3,7 @@ use std::ops::Not;
 
 use crate::square::Square;
 
-#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug)]
+#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug, Ord, PartialOrd)]
 pub enum PieceType {
     WhitePawn = 0,
     WhiteRook = 1,

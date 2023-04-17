@@ -28,6 +28,9 @@ features = [
 [dev-dependencies]
 rstest = "0.17.0"
 
+[lib]
+name = "fchess"
+path = "src/lib.rs"
 
 [[bin]]
 name = "uci"
@@ -37,6 +40,10 @@ path = "bin/uci.rs"
 [[bin]]
 name = "test_apply_move"
 path = "bin/test_apply_move.rs"
+
+[[bin]]
+name = "test_movegen"
+path = "bin/test_movegen.rs"
 
 [[bin]]
 name = "cli"
