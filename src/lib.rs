@@ -7,9 +7,12 @@ extern crate num_derive;
 
 pub use crate::board::Board;
 pub use crate::book::Book;
+pub use crate::move_generator::MoveGenerator;
 pub use crate::moves::Move;
+pub use crate::moveset::MoveSet;
 pub use crate::side::Side;
 pub use crate::solver::Solver;
+pub use crate::square::Square;
 
 mod bitboard;
 mod bitwise;

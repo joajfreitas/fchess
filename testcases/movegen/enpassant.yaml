@@ -1,0 +1,6 @@
+- id: f0c81d33-27a6-4eee-bca8-2c8b2ab49816
+  description: en passant capture
+  fen: "8/8/8/nn4nn/P6P/8/8/8"
+  square: a4
+  moves:
+    - a4b5
