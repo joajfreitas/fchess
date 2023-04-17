@@ -117,7 +117,7 @@ impl From<PieceType> for Scope {
 }
 
 /// Chess move
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub struct Move {
     src: Square,
     dst: Square,
@@ -143,6 +143,15 @@ impl Move {
             dst,
             target: None,
             promotion: None,
+        }
+    }
+
+    pub fn with_promotion(src: Square, dst: Square, promotion: PieceType) -> Move {
+        Move {
+            src,
+            dst,
+            target: None,
+            promotion: Some(promotion)
         }
     }
 
@@ -351,7 +360,7 @@ impl Move {
         let src_file = (self.src.get_rank() + b'1') as char;
 
         let promotion = if self.promotion.is_some() {
-            self.promotion.unwrap().to_string().to_uppercase()
+            self.promotion.unwrap().to_char().to_string().to_uppercase()
         } else {
             "".to_string()
         };

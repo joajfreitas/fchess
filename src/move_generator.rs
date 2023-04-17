@@ -135,6 +135,9 @@ impl MoveGenerator {
             .collect::<Vec<MoveSet>>()
     }
 
+    pub fn generate_moves_for_piece(&self, board: &Board, square: Square) -> Option<MoveSet> {
+        Some(self.attack(board, &Piece::new(square, board.piece_at(square)?)))
+    }
 
     pub fn attack(&self, board: &Board, piece: &Piece) -> MoveSet {
         let square = piece.get_square();
@@ -264,18 +267,5 @@ impl MoveGenerator {
         flood |= fill.shift(NW) & 0x7F7F7F7F7F7F7F7F & free;
 
         MoveSet::new(from, piece, flood)
-    }
-}
-#[cfg(test)]
-mod tests {
-    use super::Board;
-    use super::Square;
-    use super::Piece;
-    use super::MoveGenerator;
-    use super::MoveSet;
-    impl MoveGenerator {
-        pub fn generate_moves_for_piece(&self, board: &Board, square: Square) -> Option<MoveSet> {
-            Some(self.attack(board, &Piece::new(square, board.piece_at(square)?)))
-        }
     }
 }
