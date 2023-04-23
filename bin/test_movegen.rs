@@ -1,5 +1,6 @@
 #![feature(iter_intersperse)]
 
+use std::collections::HashSet;
 use std::env;
 use std::fs;
 
@@ -42,8 +43,31 @@ impl MovegenTestResult {
 
 impl TestResult for MovegenTestResult {
     fn to_string(&self) -> String {
+        let expected_set: HashSet<String> =
+            self.testcase.moves.iter().map(|x| x.to_string()).collect();
+        let resulting_set: HashSet<String> = self
+            .resulting_moves
+            .iter()
+            .map(|mov| mov.to_algebraic())
+            .collect();
+
+        let d1: HashSet<String> = expected_set
+            .difference(&resulting_set)
+            .map(|x| x.to_string())
+            .collect();
+        let d2: HashSet<String> = resulting_set
+            .difference(&expected_set)
+            .map(|x| x.to_string())
+            .collect();
+        let diffs = d2
+            .union(&d1)
+            .map(|x| x.to_string())
+            .intersperse(",".to_string())
+            .collect::<String>();
+
         format!(
-            "{}\nexpected: {}\nresult: {}",
+            "id:{}\n{}\nexpected: {}\nresult: {}\ndiff: {}",
+            self.testcase.id,
             Board::from_fen(&self.testcase.fen),
             self.testcase
                 .moves
@@ -56,7 +80,8 @@ impl TestResult for MovegenTestResult {
                 .iter()
                 .map(|mov| mov.to_algebraic())
                 .intersperse(",".to_string())
-                .collect::<String>()
+                .collect::<String>(),
+            diffs
         )
     }
 
@@ -96,7 +121,7 @@ fn main() {
             .iter()
             .map(|mov| Move::from_full_algebraic(mov).unwrap())
             .collect::<Vec<Move>>();
-        
+
         moves.sort();
         expected_moves.sort();
 

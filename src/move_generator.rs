@@ -162,6 +162,7 @@ impl MoveGenerator {
                 piece,
                 square,
                 !board.occupied(Scope::from(board.get_turn())),
+                board,
             ),
             PieceType::BlackPawn => {
                 self.black_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
@@ -254,7 +255,13 @@ impl MoveGenerator {
         MoveSet::new(from, piece, targets)
     }
 
-    pub fn king_attacks(&self, piece: PieceType, from: Square, free: u64) -> MoveSet {
+    pub fn king_attacks(
+        &self,
+        piece: PieceType,
+        from: Square,
+        free: u64,
+        board: &Board,
+    ) -> MoveSet {
         let fill = 1 << from.get_index();
         let mut flood = fill;
         flood |= fill.shift(N) & free;
@@ -266,6 +273,66 @@ impl MoveGenerator {
         flood |= fill.shift(SW) & 0x7F7F7F7F7F7F7F7F & free;
         flood |= fill.shift(NW) & 0x7F7F7F7F7F7F7F7F & free;
 
-        MoveSet::new(from, piece, flood)
+        let mut aux = board.clone();
+        aux.set_turn(!aux.get_turn());
+        let moves = dbg!(self.generate_moves(&aux));
+
+        let enemies = moves
+            .iter()
+            .map(|mov| mov.mov)
+            .reduce(|mov1, mov2| mov1 | mov2)
+            .unwrap_or(0);
+
+        if piece == PieceType::WhiteKing {
+            let b1 = Square::from_rank_file(0, 1);
+            let c1 = Square::from_rank_file(0, 2);
+            let d1 = Square::from_rank_file(0, 3);
+            let f1 = Square::from_rank_file(0, 5);
+            let g1 = Square::from_rank_file(0, 6);
+
+            let long_unoccupied = board.piece_at(b1) == Some(PieceType::NoPiece)
+                && board.piece_at(c1) == Some(PieceType::NoPiece)
+                && board.piece_at(d1) == Some(PieceType::NoPiece)
+                && enemies >> b1.get_index() == 0
+                && enemies >> c1.get_index() == 0
+                && enemies >> d1.get_index() == 0;
+            let short_unoccupied = board.piece_at(f1) == Some(PieceType::NoPiece)
+                && board.piece_at(g1) == Some(PieceType::NoPiece)
+                && enemies >> f1.get_index() == 0
+                && enemies >> g1.get_index() == 0;
+            if board.get_castling_white_long() && long_unoccupied {
+                flood |= 1 << Square::from_rank_file(0, 2).get_index();
+            }
+            if board.get_castling_white_short() && short_unoccupied {
+                flood |= 1 << Square::from_rank_file(0, 6).get_index();
+            }
+        }
+
+        if piece == PieceType::BlackKing {
+            let b8 = Square::from_rank_file(7, 1);
+            let c8 = Square::from_rank_file(7, 2);
+            let d8 = Square::from_rank_file(7, 3);
+            let f8 = Square::from_rank_file(7, 5);
+            let g8 = Square::from_rank_file(7, 6);
+            let long_unoccupied = board.piece_at(b8) == Some(PieceType::NoPiece)
+                && board.piece_at(c8) == Some(PieceType::NoPiece)
+                && board.piece_at(d8) == Some(PieceType::NoPiece)
+                && enemies >> b8.get_index() == 0
+                && enemies >> c8.get_index() == 0
+                && enemies >> d8.get_index() == 0;
+            let short_unoccupied = board.piece_at(f8) == Some(PieceType::NoPiece)
+                && board.piece_at(g8) == Some(PieceType::NoPiece)
+                && enemies >> f8.get_index() == 0
+                && enemies >> g8.get_index() == 0;
+            if board.get_castling_black_long() && long_unoccupied {
+                flood |= 1 << Square::from_rank_file(7, 2).get_index();
+            }
+            if board.get_castling_black_short() && short_unoccupied {
+                flood |= 1 << Square::from_rank_file(7, 6).get_index();
+            }
+        }
+
+        let mov = MoveSet::new(from, piece, flood);
+        mov
     }
 }

@@ -37,6 +37,17 @@ where
     bitfield | (T::one() << position)
 }
 
+pub fn get_bit<T>(
+    bitfield: T,
+    position: u8,
+) -> <<T as std::ops::Shr<u8>>::Output as std::ops::BitAnd<T>>::Output
+where
+    T: num::Unsigned + std::ops::Shr<u8>,
+    <T as std::ops::Shr<u8>>::Output: std::ops::BitAnd<T>,
+{
+    (bitfield >> position) & T::one()
+}
+
 #[cfg(test)]
 mod tests {
     use super::{enable_bit, set_bit};

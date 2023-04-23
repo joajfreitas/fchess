@@ -151,7 +151,7 @@ impl Move {
             src,
             dst,
             target: None,
-            promotion: Some(promotion)
+            promotion: Some(promotion),
         }
     }
 

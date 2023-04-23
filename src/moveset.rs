@@ -57,50 +57,77 @@ impl<'a> Iterator for MoveIterator<'a> {
         for i in self.index..64 {
             if (self.mov.mov >> i) & 1 == 1 {
                 let destination = Square::from_index(i);
-                if self.mov.piece == PieceType::WhitePawn &&  destination.get_rank() == 7 {
+                if self.mov.piece == PieceType::WhitePawn && destination.get_rank() == 7 {
                     let mov = match self.promotion_index {
-                        0 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteQueen)),
-                        1 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteRook)),
-                        2 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteBishop)),
-                        3 => Some(Move::with_promotion(self.mov.src, destination, PieceType::WhiteKnight)),
+                        0 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::WhiteQueen,
+                        )),
+                        1 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::WhiteRook,
+                        )),
+                        2 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::WhiteBishop,
+                        )),
+                        3 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::WhiteKnight,
+                        )),
                         _ => panic!(),
                     };
 
                     if self.promotion_index >= 3 {
                         self.index += 1;
                         self.promotion_index = 0;
-                    }
-                    else {
+                    } else {
                         self.promotion_index += 1;
                     }
 
                     return mov;
-                }
-                else if self.mov.piece == PieceType::BlackPawn &&  destination.get_rank() == 0 {
+                } else if self.mov.piece == PieceType::BlackPawn && destination.get_rank() == 0 {
                     let mov = match self.promotion_index {
-                        0 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackQueen)),
-                        1 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackRook)),
-                        2 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackBishop)),
-                        3 => Some(Move::with_promotion(self.mov.src, destination, PieceType::BlackKnight)),
+                        0 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::BlackQueen,
+                        )),
+                        1 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::BlackRook,
+                        )),
+                        2 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::BlackBishop,
+                        )),
+                        3 => Some(Move::with_promotion(
+                            self.mov.src,
+                            destination,
+                            PieceType::BlackKnight,
+                        )),
                         _ => panic!(),
                     };
 
                     if self.promotion_index >= 3 {
                         self.index += 1;
                         self.promotion_index = 0;
-                    }
-                    else {
+                    } else {
                         self.promotion_index += 1;
                     }
 
                     return mov;
-                }
-                else {
+                } else {
                     self.index += 1;
                     return Some(Move::new(self.mov.src, destination));
                 }
-            }
-            else {
+            } else {
                 self.index += 1;
             }
         }
