@@ -2,21 +2,30 @@ use crate::Board;
 use std::collections::HashMap;
 use std::collections::VecDeque;
 
-#[derive(Debug, Eq, PartialEq)]
-struct Epd {
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct Epd {
     board: Board,
     properties: HashMap<String, String>,
 }
 
 #[allow(dead_code)]
 impl Epd {
-    fn new(board: &Board, properties: HashMap<String, String>) -> Epd {
+    pub fn new(board: &Board, properties: HashMap<String, String>) -> Epd {
         Epd {
             board: board.clone(),
             properties,
         }
     }
-    fn from_string(s: &str) -> Epd {
+
+    pub fn get_board(&self) -> Board {
+        self.board.clone()
+    }
+
+    pub fn get_properties(&self) -> HashMap<String, String> {
+        self.properties.clone()
+    }
+
+    pub fn from_string(s: &str) -> Epd {
         let sp = s.split(" ").collect::<Vec<&str>>();
         let fen = sp[..6]
             .iter()

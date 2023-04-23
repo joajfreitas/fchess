@@ -56,3 +56,8 @@ path = "bin/book.rs"
 [[bin]]
 name = "fen_diagram"
 path = "bin/fen_diagram.rs"
+
+
+[[bin]]
+name = "test_epd"
+path = "bin/test_epd.rs"
