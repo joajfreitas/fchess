@@ -8,6 +8,7 @@ extern crate num_derive;
 
 pub use crate::board::Board;
 pub use crate::book::Book;
+pub use crate::epd::Epd;
 pub use crate::move_generator::MoveGenerator;
 pub use crate::moves::Move;
 pub use crate::moveset::MoveSet;

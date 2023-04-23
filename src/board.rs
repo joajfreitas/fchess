@@ -131,6 +131,23 @@ impl Board {
         self.castling_rights = bitwise::set_bit(self.castling_rights, 3, enabled as u8);
     }
 
+    pub fn get_castling_rights(&self) -> u8 {
+        self.castling_rights
+    }
+
+    pub fn get_castling_white_short(&self) -> bool {
+        bitwise::get_bit(self.castling_rights, 0) != 0
+    }
+    pub fn get_castling_white_long(&self) -> bool {
+        bitwise::get_bit(self.castling_rights, 1) != 0
+    }
+    pub fn get_castling_black_short(&self) -> bool {
+        bitwise::get_bit(self.castling_rights, 2) != 0
+    }
+    pub fn get_castling_black_long(&self) -> bool {
+        bitwise::get_bit(self.castling_rights, 3) != 0
+    }
+
     pub fn set_enpassant(&mut self, square: Option<Square>) {
         self.enpassant = square;
     }
