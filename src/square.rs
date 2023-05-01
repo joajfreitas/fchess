@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Copy, Clone, PartialEq, Eq, Ord, PartialOrd)]
+#[derive(Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash)]
 pub struct Square {
     square: u8,
 }

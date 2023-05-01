@@ -27,7 +27,7 @@ fn main() -> rustyline::Result<()> {
     let book = args.book.map(|book| Book::from_filename(&book));
 
     let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
-    let solver = Solver::new();
+    let mut solver = Solver::new();
     println!("{board}");
 
     loop {
@@ -60,7 +60,7 @@ fn main() -> rustyline::Result<()> {
         })
         .unwrap();
 
-        board = match board.apply(mov) {
+        board = match board.apply(&mov) {
             Some(board) => board,
             None => continue,
         };

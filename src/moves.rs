@@ -117,7 +117,7 @@ impl From<PieceType> for Scope {
 }
 
 /// Chess move
-#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Move {
     src: Square,
     dst: Square,
