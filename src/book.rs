@@ -4,7 +4,6 @@ use std::fs;
 use crate::board::Board;
 use crate::moves::Move;
 use crate::piece::PieceType;
-use crate::side::Side;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -118,8 +117,8 @@ impl Book {
         lo
     }
 
-    fn find_all(&self, board: &Board, turn: &Side) -> Vec<Entry> {
-        let hash = board.zobryst_hash(turn);
+    fn find_all(&self, board: &Board) -> Vec<Entry> {
+        let hash = board.zobryst_hash();
         let index = self.binary_search(hash);
 
         let mut entries: Vec<Entry> = vec![];
@@ -135,7 +134,7 @@ impl Book {
     }
 
     pub fn get_best_move(&self, board: &Board) -> Option<Move> {
-        let all_entries = self.find_all(board, &board.get_turn());
+        let all_entries = self.find_all(board);
         let best_entry = all_entries.iter().max_by_key(|entry| entry.get_weight())?;
 
         best_entry.to_move(board)

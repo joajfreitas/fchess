@@ -18,7 +18,7 @@ enum Castling {
 }
 
 /// Bitboard representation of the chess board
-#[derive(Default, Clone, Eq, PartialEq, Debug)]
+#[derive(Default, Clone, Eq, PartialEq, Debug, Hash)]
 pub struct Board {
     pieces: [u64; 13],
     turn: Side, // who should play next
@@ -280,6 +280,10 @@ impl Board {
             bitwise::enable_bit(self.pieces[piece_type as usize], square.get_index());
     }
 
+    pub fn set_piece_type(&mut self, piece_type: PieceType, mask: u64) {
+        self.pieces[piece_type as usize] = mask;
+    }
+
     fn is_castle(&self, mov: Move) -> Option<(Move, Move, Castling)> {
         let piece_type = self.piece_at(mov.get_src())?;
         let src_rank = mov.get_src().get_rank();
@@ -328,7 +332,7 @@ impl Board {
         Some(result)
     }
 
-    pub fn apply(self: &Board, mov: Move) -> Option<Board> {
+    pub fn apply(self: &Board, mov: &Move) -> Option<Board> {
         let castle = self.is_castle(mov.clone());
         let mut result = if castle.is_some() {
             let castle = castle.unwrap();
@@ -484,7 +488,7 @@ impl Board {
         false
     }
 
-    pub fn zobryst_hash(&self, turn: &Side) -> u64 {
+    pub fn zobryst_hash(&self) -> u64 {
         fn typing_cast(piece: &Piece) -> u8 {
             match piece.get_type() {
                 PieceType::BlackPawn => 0,
@@ -1298,7 +1302,7 @@ impl Board {
             ^ zobryst_table[768 + 2]
             ^ zobryst_table[768 + 3];
         let enpassant_hash = 0;
-        let side_hash = match turn {
+        let side_hash = match self.turn {
             Side::White => zobryst_table[780],
             Side::Black => 0,
         };

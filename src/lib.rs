@@ -91,7 +91,7 @@ mod tests {
     ) {
         let unit = Board::from_fen(initial_fen);
         let unit = unit
-            .apply(Move::from_full_algebraic(algebraic_move).unwrap())
+            .apply(&Move::from_full_algebraic(algebraic_move).unwrap())
             .unwrap();
 
         assert_eq!(unit, Board::from_fen(resulting_fen))

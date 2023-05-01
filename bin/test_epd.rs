@@ -53,7 +53,7 @@ fn main() {
     let contents =
         fs::read_to_string(args.get(1).unwrap()).expect("Should have been able to read the file");
 
-    let solver = Solver::new();
+    let mut solver = Solver::new();
 
     let mut testsuit_result: TestSuit<BestMoveTestResult> = TestSuit::new();
 

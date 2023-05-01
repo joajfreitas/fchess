@@ -100,7 +100,7 @@ fn main() -> Result<()> {
             continue;
         }
         let mov = mov.unwrap();
-        let resulting_board = board.apply(mov.clone());
+        let resulting_board = board.apply(&mov.clone());
         if let Some(resulting_board) = resulting_board {
             let resulting_board = resulting_board;
             let expected_board = Board::from_fen(&testcase.expected_fen);

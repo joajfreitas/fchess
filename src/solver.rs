@@ -1,61 +1,143 @@
+use priority_queue::PriorityQueue;
+use std::cmp;
+use std::collections::HashMap;
+
 use crate::board::Board;
 use crate::move_generator::MoveGenerator;
 use crate::moves::Move;
+use crate::side::Side;
 
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct Solver {
     move_generator: MoveGenerator,
+    transposition_table: HashMap<u64, f32>,
+    search_queue: PriorityQueue<Board, u32>,
+}
+
+#[derive(Debug, Clone, Hash, Eq, PartialEq)]
+struct Node {
+    board: Board,
+    mov: Move,
+    depth: u32,
+    parent: Option<Box<Node>>,
+    evaluation: Option<i32>,
+}
+
+impl Node {
+    fn new(board: Board, mov: Move, depth: u32, parent: Option<Node>) -> Node {
+        Node {
+            board,
+            mov,
+            depth,
+            parent: parent.map(|parent| Box::new(parent)),
+            evaluation: None,
+        }
+    }
 }
 
 impl Solver {
     pub fn new() -> Solver {
         Solver {
             move_generator: MoveGenerator::new(),
+            transposition_table: HashMap::default(),
+            search_queue: PriorityQueue::new(),
         }
     }
 
-    pub fn best_move(&self, board: &Board) -> Option<Move> {
-        let mut best = None;
-        let mut score = -500.0;
+    fn generate_moves(&self, board: &Board) -> Vec<Move> {
+        self.move_generator
+            .generate_moves(board)
+            .iter()
+            .map(|moveset| moveset.into_iter())
+            .flatten()
+            .collect::<Vec<Move>>()
+    }
 
-        let mut evals = 0;
-        for piece in self.move_generator.generate_moves(board) {
-            for mov in piece.into_iter() {
-                let b = board.apply(mov.clone())?;
-                let (sc, min_max_evals) = self.min_max(&b, 3).unwrap();
-                if score < sc {
-                    best = Some(mov);
-                    score = sc;
-                }
-                evals += min_max_evals;
+    pub fn best_move(&mut self, board: &Board) -> Option<Move> {
+        let mut best: Option<Move> = None;
+        let mut best_evaluation = - 1000000000;
+        let mut best_node: Option<Node> = None;
+        for mov in self.generate_moves(board) {
+            let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
+            let r = self.min_max(&node, 4, node.board.get_turn() == Side::White);
+            if r.is_none() {
+                continue
+            }
+
+            let (node, evaluation) = r.unwrap();
+            best_evaluation = cmp::max(best_evaluation, evaluation);
+            if best_evaluation == evaluation {
+                best = Some(mov);
+                best_node = Some(node);
             }
         }
+        
+        let mut best_node = best_node.unwrap();
+        loop {
+            //println!("{} {:?}", best_node.mov.to_algebraic(), best_node.evaluation);
+            if best_node.parent.is_none() {
+                break;
+            }
 
-        println!("evaluations: {}", evals);
+            best_node = *best_node.parent.unwrap();
+        }
+
         best
     }
 
-    fn min_max(&self, board: &Board, depth: u8) -> Option<(f32, u32)> {
-        //let mut best = None;
-        let mut score = -500.0;
-        let mut evals = 1;
+    fn min_max(&mut self, node: &Node, max_depth: u32, max_min: bool) -> Option<(Node, i32)> {
+        let mut max: i32 = -10000000;
+        let mut best_node: Option<Node> = None;
+        for mov in self.generate_moves(&node.board) {
+            let board_result: Board = node.board.apply(&mov).unwrap();
+            let mut new_node = Node::new(
+                board_result.clone(),
+                mov,
+                node.depth + 1,
+                Some(node.clone()),
+            );
 
-        if depth == 0 || board.checkmate() {
-            //return Some(board.eval(), evals));
-            return Some((1.0, evals));
-        }
-
-        for piece in self.move_generator.generate_moves(board) {
-            for mov in piece.into_iter() {
-                let b = board.apply(mov.clone())?;
-                let sc = self.min_max(&b, depth - 1);
-                if sc.unwrap().0 > score {
-                    score = sc.unwrap().0;
+            let (mut new_new_node, board_evaluation) = if node.depth + 1 == max_depth {
+                (
+                    new_node,
+                    self.eval(&board_result) * if max_min { 1 } else { -1 },
+                )
+            } else {
+                let m = self.min_max(&new_node, max_depth, !max_min);
+                if m.is_none() {
+                    continue;
                 }
-                evals += sc.unwrap().1;
+                m.unwrap()
+            };
+
+            new_new_node.evaluation = Some(-board_evaluation);
+        
+            max = cmp::max(new_new_node.evaluation?, max);
+            if max == new_new_node.evaluation? {
+                //println!("{:?} {:?}", new_new_node.mov, new_new_node.evaluation);
+                best_node = Some(new_new_node);
             }
         }
 
-        Some((score, evals))
+        Some((best_node?, max))
+    }
+
+    fn eval(&self, board: &Board) -> i32 {
+        let pieces_values: [i32; 14] = [
+            10, 50, 30, 30, 90, 1000, -10, -50, -30, -30, -90, -1000, 0, 0,
+        ];
+
+        let mut s: i32 = 0;
+        for piece in board {
+            s += pieces_values[piece.get_type() as usize];
+        }
+
+        if s > 1000 {
+            s = 1000;
+        } else if s < -1000 {
+            s = -1000;
+        }
+
+        s
     }
 }

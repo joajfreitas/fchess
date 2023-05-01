@@ -68,7 +68,7 @@ fn main() -> io::Result<()> {
     let engine_thread = thread::spawn(move || {
         let mut board =
             Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
-        let solver = Solver::new();
+        let mut solver = Solver::new();
         loop {
             let cmd = rx.recv().unwrap();
             if cmd == "startpos" {
@@ -79,7 +79,7 @@ fn main() -> io::Result<()> {
                 let sp = cmd.split(':');
                 let mov = sp.collect::<Vec<&str>>()[1];
                 board = board
-                    .apply(Move::from_full_algebraic(mov).unwrap())
+                    .apply(&Move::from_full_algebraic(mov).unwrap())
                     .unwrap();
                 println!("board {:?}", board);
             } else if cmd.starts_with("go") {

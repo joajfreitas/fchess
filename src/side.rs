@@ -1,7 +1,7 @@
 use std::ops::Not;
 
 /// Represents the board side.
-#[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash)]
 pub enum Side {
     #[default]
     White,
