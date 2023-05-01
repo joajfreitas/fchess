@@ -38,10 +38,9 @@ pub fn generate_white_pawn_moves() -> Vec<u64> {
 
     for i in 0..64 {
         let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
+        let fill: Bitboard = 1 << i;
         if i / 8 == 1 {
-            fill = fill.shift(N);
-            mov |= fill;
+            mov |= fill.shift(N).shift(N);
         }
         mov |= fill.shift(N);
 
@@ -56,10 +55,9 @@ pub fn generate_black_pawn_moves() -> Vec<u64> {
 
     for i in 0..64 {
         let mut mov = 0;
-        let mut fill: Bitboard = 1 << i;
+        let fill: Bitboard = 1 << i;
         if i / 8 == 6 {
-            fill = fill.shift(S);
-            mov |= fill;
+            mov |= fill.shift(S).shift(S);
         }
         mov |= fill.shift(S);
 
@@ -199,7 +197,9 @@ impl MoveGenerator {
             enemy |= 1 << enpassant.get_index()
         }
         let mov = self.black_pawn_moves[from.get_index() as usize];
-        let mov = mov & !friendlies;
+
+        enemy |= ((1 << from.get_index()).shift(S) & enemy).shift(S);
+        let mov = mov & !friendlies & !enemy;
         let attack = self.black_pawn_attacks[from.get_index() as usize];
         let attacks = attack & enemy;
         MoveSet::new(from, piece, mov | attacks)
@@ -218,6 +218,9 @@ impl MoveGenerator {
             enemy |= 1 << enpassant.get_index();
         }
         let mov = self.white_pawn_moves[from.get_index() as usize];
+
+        enemy |= ((1 << from.get_index()).shift(N) & enemy).shift(N);
+
         let mov = mov & !friendlies & !enemy;
         let attack = self.white_pawn_attacks[from.get_index() as usize];
         let attacks = attack & enemy;
@@ -275,7 +278,9 @@ impl MoveGenerator {
 
         let mut aux = board.clone();
         aux.set_turn(!aux.get_turn());
-        let moves = dbg!(self.generate_moves(&aux));
+        aux.set_piece_type(!piece, 0);
+
+        let moves = self.generate_moves(&aux);
 
         let enemies = moves
             .iter()
