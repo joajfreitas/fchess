@@ -1,2 +1,0 @@
-books filter=lfs diff=lfs merge=lfs -text
-books/*.bin filter=lfs diff=lfs merge=lfs -text
