@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fchess" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.0-nightly (d0f204e4d 2023-04-16)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../fchess/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-cf3c48c1.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fchess" data-themes="" data-resource-suffix="" data-rustdoc-version="1.86.0-nightly (43ca9d18e 2025-02-08)" data-channel="nightly" data-search-js="search-581efc7a.js" data-settings-js="settings-6dad6058.js" ><script src="../../static.files/storage-3a5871a4.js"></script><script defer src="../../static.files/src-script-8fee9dc5.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-4d63596a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">fchess/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -486,8 +487,7 @@
 <a href="#486" id="486">486</a>
 <a href="#487" id="487">487</a>
 <a href="#488" id="488">488</a>
-<a href="#489" id="489">489</a>
-</pre></div><pre class="rust"><code><span class="doccomment">/*!
+<a href="#489" id="489">489</a></pre></div><pre class="rust"><code><span class="doccomment">/*!
 This crate provides a library for chess board representation, move generation and an engine.
 */
 </span><span class="kw">extern crate </span>num;
@@ -556,9 +556,9 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/3r4/8/8/8/8/8 w KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d7&quot;</span>, PieceType::BlackRook),
-            <span class="macro">vec!</span>[<span class="string">&quot;d8&quot;</span>, <span class="string">&quot;d6&quot;</span>, <span class="string">&quot;d5&quot;</span>, <span class="string">&quot;d4&quot;</span>, <span class="string">&quot;d3&quot;</span>, <span class="string">&quot;d2&quot;</span>, <span class="string">&quot;d1&quot;</span>, <span class="string">&quot;a7&quot;</span>, <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;c7&quot;</span>, <span class="string">&quot;e7&quot;</span>, <span class="string">&quot;f7&quot;</span>, <span class="string">&quot;g7&quot;</span>, <span class="string">&quot;h7&quot;</span>]
+    </span><span class="attr">#[case(<span class="string">"8/3r4/8/8/8/8/8 w KQkq - 2 3"</span>,
+           (<span class="string">"d7"</span>, PieceType::BlackRook),
+            <span class="macro">vec!</span>[<span class="string">"d8"</span>, <span class="string">"d6"</span>, <span class="string">"d5"</span>, <span class="string">"d4"</span>, <span class="string">"d3"</span>, <span class="string">"d2"</span>, <span class="string">"d1"</span>, <span class="string">"a7"</span>, <span class="string">"b7"</span>, <span class="string">"c7"</span>, <span class="string">"e7"</span>, <span class="string">"f7"</span>, <span class="string">"g7"</span>, <span class="string">"h7"</span>]
                 </span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │ ♜ │   │   │   │   │
@@ -578,10 +578,10 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;3R4/3r4/8/8/3q4/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d7&quot;</span>, PieceType::BlackRook),
+    </span><span class="attr">#[case(<span class="string">"3R4/3r4/8/8/3q4/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d7"</span>, PieceType::BlackRook),
                     <span class="macro">vec!</span>[
-                    <span class="string">&quot;d6&quot;</span>, <span class="string">&quot;d5&quot;</span>, <span class="string">&quot;d8&quot;</span>, <span class="string">&quot;a7&quot;</span>, <span class="string">&quot;b7&quot;</span>, <span class="string">&quot;c7&quot;</span>, <span class="string">&quot;e7&quot;</span>, <span class="string">&quot;f7&quot;</span>, <span class="string">&quot;g7&quot;</span>, <span class="string">&quot;h7&quot;
+                    <span class="string">"d6"</span>, <span class="string">"d5"</span>, <span class="string">"d8"</span>, <span class="string">"a7"</span>, <span class="string">"b7"</span>, <span class="string">"c7"</span>, <span class="string">"e7"</span>, <span class="string">"f7"</span>, <span class="string">"g7"</span>, <span class="string">"h7"
                 </span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
@@ -601,8 +601,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/3b4/8/8/8/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d7&quot;</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">&quot;c8&quot;</span>, <span class="string">&quot;e6&quot;</span>, <span class="string">&quot;f5&quot;</span>, <span class="string">&quot;g4&quot;</span>, <span class="string">&quot;h3&quot;</span>, <span class="string">&quot;e8&quot;</span>, <span class="string">&quot;c6&quot;</span>, <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;a4&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/3b4/8/8/8/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d7"</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">"c8"</span>, <span class="string">"e6"</span>, <span class="string">"f5"</span>, <span class="string">"g4"</span>, <span class="string">"h3"</span>, <span class="string">"e8"</span>, <span class="string">"c6"</span>, <span class="string">"b5"</span>, <span class="string">"a4"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -621,8 +621,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/3b4/4B3/8/8/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d7&quot;</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">&quot;c8&quot;</span>, <span class="string">&quot;e6&quot;</span>, <span class="string">&quot;e8&quot;</span>, <span class="string">&quot;c6&quot;</span>, <span class="string">&quot;b5&quot;</span>, <span class="string">&quot;a4&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/3b4/4B3/8/8/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d7"</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">"c8"</span>, <span class="string">"e6"</span>, <span class="string">"e8"</span>, <span class="string">"c6"</span>, <span class="string">"b5"</span>, <span class="string">"a4"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -641,8 +641,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/3b4/2r1B3/8/8/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d7&quot;</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">&quot;c8&quot;</span>, <span class="string">&quot;e6&quot;</span>, <span class="string">&quot;e8&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/3b4/2r1B3/8/8/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d7"</span>, PieceType::BlackBishop), <span class="macro">vec!</span>[<span class="string">"c8"</span>, <span class="string">"e6"</span>, <span class="string">"e8"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -661,8 +661,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/3n4/8/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d5&quot;</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">&quot;b6&quot;</span>, <span class="string">&quot;c7&quot;</span>, <span class="string">&quot;e7&quot;</span>, <span class="string">&quot;f6&quot;</span>, <span class="string">&quot;f4&quot;</span>, <span class="string">&quot;e3&quot;</span>, <span class="string">&quot;c3&quot;</span>, <span class="string">&quot;b4&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/3n4/8/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d5"</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">"b6"</span>, <span class="string">"c7"</span>, <span class="string">"e7"</span>, <span class="string">"f6"</span>, <span class="string">"f4"</span>, <span class="string">"e3"</span>, <span class="string">"c3"</span>, <span class="string">"b4"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -681,8 +681,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/3n4/1N6/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d5&quot;</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">&quot;b6&quot;</span>, <span class="string">&quot;c7&quot;</span>, <span class="string">&quot;e7&quot;</span>, <span class="string">&quot;f6&quot;</span>, <span class="string">&quot;f4&quot;</span>, <span class="string">&quot;e3&quot;</span>, <span class="string">&quot;c3&quot;</span>, <span class="string">&quot;b4&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/3n4/1N6/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d5"</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">"b6"</span>, <span class="string">"c7"</span>, <span class="string">"e7"</span>, <span class="string">"f6"</span>, <span class="string">"f4"</span>, <span class="string">"e3"</span>, <span class="string">"c3"</span>, <span class="string">"b4"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -701,8 +701,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/3n4/1b6/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;d5&quot;</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">&quot;b6&quot;</span>, <span class="string">&quot;c7&quot;</span>, <span class="string">&quot;e7&quot;</span>, <span class="string">&quot;f6&quot;</span>, <span class="string">&quot;f4&quot;</span>, <span class="string">&quot;e3&quot;</span>, <span class="string">&quot;c3&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/3n4/1b6/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"d5"</span>, PieceType::BlackKnight), <span class="macro">vec!</span>[<span class="string">"b6"</span>, <span class="string">"c7"</span>, <span class="string">"e7"</span>, <span class="string">"f6"</span>, <span class="string">"f4"</span>, <span class="string">"e3"</span>, <span class="string">"c3"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -721,8 +721,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/4P3/8/8/8 b KQkq - 2 3&quot;</span>,
-           (<span class="string">&quot;e5&quot;</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">&quot;e6&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/4P3/8/8/8 b KQkq - 2 3"</span>,
+           (<span class="string">"e5"</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">"e6"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -741,8 +741,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/3N4/3P4/8/8/8&quot;
-           </span>, (<span class="string">&quot;d4&quot;</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/3N4/3P4/8/8/8"
+           </span>, (<span class="string">"d4"</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -761,8 +761,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/2nnn3/3P4/8/8/8&quot;
-           </span>, (<span class="string">&quot;d4&quot;</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">&quot;c5&quot;</span>, <span class="string">&quot;e5&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/2nnn3/3P4/8/8/8"
+           </span>, (<span class="string">"d4"</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">"c5"</span>, <span class="string">"e5"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -781,8 +781,8 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;N7/8/8/8/8/8/8/8&quot;
-           </span>, (<span class="string">&quot;a8&quot;</span>, PieceType::WhiteKnight), <span class="macro">vec!</span>[<span class="string">&quot;b6&quot;</span>, <span class="string">&quot;c7&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"N7/8/8/8/8/8/8/8"
+           </span>, (<span class="string">"a8"</span>, PieceType::WhiteKnight), <span class="macro">vec!</span>[<span class="string">"b6"</span>, <span class="string">"c7"</span>]</span>)]
     <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
     // 8 │   │   │   │   │   │   │   │   │
     //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -801,7 +801,7 @@ This crate provides a library for chess board representation, move generation an
     // 1 │   │   │   │   │   │   │   │   │
     //   └───┴───┴───┴───┴───┴───┴───┴───┘
     //     a   b   c   d   e   f   g   h
-    </span><span class="attr">#[case(<span class="string">&quot;8/8/8/nn4nn/P6P/8/8/8&quot;</span>, (<span class="string">&quot;a4&quot;</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">&quot;b5&quot;</span>]</span>)]
+    </span><span class="attr">#[case(<span class="string">"8/8/8/nn4nn/P6P/8/8/8"</span>, (<span class="string">"a4"</span>, PieceType::WhitePawn), <span class="macro">vec!</span>[<span class="string">"b5"</span>]</span>)]
     <span class="kw">fn </span>test_generate_move_for_piece(
         <span class="attr">#[case] </span>initial_fen: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[case] </span>source_piece: (<span class="kw-2">&amp;</span>str, PieceType),
@@ -843,9 +843,9 @@ This crate provides a library for chess board representation, move generation an
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
         //     a   b   c   d   e   f   g   h  
 
-        </span><span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>,
-        <span class="string">&quot;e2e4&quot;</span>,
-        <span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1&quot;
+        </span><span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>,
+        <span class="string">"e2e4"</span>,
+        <span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
     </span>)]
     #[case(
          <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
@@ -867,9 +867,9 @@ This crate provides a library for chess board representation, move generation an
          //   └───┴───┴───┴───┴───┴───┴───┴───┘
          //     a   b   c   d   e   f   g   h  
 
-        </span><span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1&quot;</span>,
-        <span class="string">&quot;e1g1&quot;</span>,
-        <span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b kq - 1 1&quot;
+        </span><span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1"</span>,
+        <span class="string">"e1g1"</span>,
+        <span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1RK1 b kq - 1 1"
     </span>)]
     #[case(
         <span class="comment">//   ┌───┬───┬───┬───┬───┬───┬───┬───┐
@@ -891,11 +891,11 @@ This crate provides a library for chess board representation, move generation an
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
         //     a   b   c   d   e   f   g   h  
 
-        </span><span class="string">&quot;rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>,
-        <span class="string">&quot;e8g8&quot;</span>,
-        <span class="string">&quot;rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQ - 1 1&quot;
+        </span><span class="string">"rnbqk2r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>,
+        <span class="string">"e8g8"</span>,
+        <span class="string">"rnbq1rk1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQ - 1 1"
     </span>)]
-    #[case(<span class="string">&quot;8/3P4/8/8/8/8/3p4/8&quot;</span>, <span class="string">&quot;d7d8Q&quot;</span>, <span class="string">&quot;3Q4/8/8/8/8/8/3p4/8 b&quot;</span>)]
+    #[case(<span class="string">"8/3P4/8/8/8/8/3p4/8"</span>, <span class="string">"d7d8Q"</span>, <span class="string">"3Q4/8/8/8/8/8/3p4/8 b"</span>)]
     </span><span class="kw">fn </span>test_apply_move(
         <span class="attr">#[case] </span>initial_fen: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[case] </span>algebraic_move: <span class="kw-2">&amp;</span>str,
@@ -930,22 +930,22 @@ This crate provides a library for chess board representation, move generation an
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
         //     a   b   c   d   e   f   g   h
 
-        </span><span class="kw">let </span>board = Board::from_fen(<span class="string">&quot;rnbqkbnr/ppp1pppp/8/8/3p4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>);
+        </span><span class="kw">let </span>board = Board::from_fen(<span class="string">"rnbqkbnr/ppp1pppp/8/8/3p4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>);
 
         <span class="comment">// apply enpassant move
         </span><span class="kw">let </span>result = board
-            .apply(Move::from_full_algebraic(<span class="string">&quot;e2e4&quot;</span>).unwrap())
+            .apply(Move::from_full_algebraic(<span class="string">"e2e4"</span>).unwrap())
             .unwrap();
 
         <span class="comment">// check enpassant target square is set
         </span><span class="macro">assert_eq!</span>(
             result,
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1&quot;</span>)
+            Board::from_fen(<span class="string">"rnbqkbnr/ppp1pppp/8/8/3pP3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"</span>)
         );
 
         <span class="comment">// apply capture during enpassant
         </span><span class="kw">let </span>result = result
-            .apply(Move::from_full_algebraic(<span class="string">&quot;d4e3&quot;</span>).unwrap())
+            .apply(Move::from_full_algebraic(<span class="string">"d4e3"</span>).unwrap())
             .unwrap();
 
         <span class="comment">//  ┌───┬───┬───┬───┬───┬───┬───┬───┐
@@ -969,10 +969,10 @@ This crate provides a library for chess board representation, move generation an
 
         // check that pawn is enpassant captured
         //
-        </span><span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, result);
+        </span><span class="macro">println!</span>(<span class="string">"{}"</span>, result);
         <span class="macro">assert_eq!</span>(
             result,
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/ppp1pppp/8/8/8/4p3/PPPP1PPP/RNBQKBNR w KQkq - 0 2&quot;</span>)
+            Board::from_fen(<span class="string">"rnbqkbnr/ppp1pppp/8/8/8/4p3/PPPP1PPP/RNBQKBNR w KQkq - 0 2"</span>)
         );
     }
 }

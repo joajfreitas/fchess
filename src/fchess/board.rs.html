@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/board.rs`."><title>board.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fchess" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.0-nightly (d0f204e4d 2023-04-16)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../fchess/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/board.rs`."><title>board.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-cf3c48c1.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="fchess" data-themes="" data-resource-suffix="" data-rustdoc-version="1.86.0-nightly (43ca9d18e 2025-02-08)" data-channel="nightly" data-search-js="search-581efc7a.js" data-settings-js="settings-6dad6058.js" ><script src="../../static.files/storage-3a5871a4.js"></script><script defer src="../../static.files/src-script-8fee9dc5.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-4d63596a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">fchess/</div>board.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1564,8 +1565,7 @@
 <a href="#1564" id="1564">1564</a>
 <a href="#1565" id="1565">1565</a>
 <a href="#1566" id="1566">1566</a>
-<a href="#1567" id="1567">1567</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>regex::Regex;
+<a href="#1567" id="1567">1567</a></pre></div><pre class="rust"><code><span class="kw">use </span>regex::Regex;
 <span class="kw">use </span>std::collections::VecDeque;
 <span class="kw">use </span>std::fmt;
 
@@ -1595,46 +1595,46 @@
     full_move_clock: u8,
 }
 
-<span class="kw">pub fn </span>print_board(pieces: Vec&lt;Piece&gt;, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+<span class="kw">pub fn </span>print_board(pieces: Vec&lt;Piece&gt;, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
     <span class="kw">let </span>coords: Vec&lt;Square&gt; = pieces
         .clone()
         .into_iter()
         .map(|piece| (piece.get_square()))
         .collect();
-    <span class="macro">writeln!</span>(f, <span class="string">&quot;  ┌───┬───┬───┬───┬───┬───┬───┬───┐&quot;</span>)<span class="question-mark">?</span>;
+    <span class="macro">writeln!</span>(f, <span class="string">"  ┌───┬───┬───┬───┬───┬───┬───┬───┐"</span>)<span class="question-mark">?</span>;
     <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">8 </span>{
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="number">8 </span>- i)<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">"{} "</span>, <span class="number">8 </span>- i)<span class="question-mark">?</span>;
         <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..<span class="number">8 </span>{
             <span class="kw">if </span>coords.contains(<span class="kw-2">&amp;</span>Square::from_rank_file(<span class="number">7 </span>- i, j)) {
                 <span class="kw">let </span>index = coords
                     .iter()
                     .position(|r| <span class="kw-2">*</span>r == Square::from_rank_file(<span class="number">7 </span>- i, j))
                     .unwrap();
-                <span class="macro">write!</span>(f, <span class="string">&quot;│ {} &quot;</span>, pieces[index].get_type())<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"│ {} "</span>, pieces[index].get_type())<span class="question-mark">?</span>;
             } <span class="kw">else </span>{
-                <span class="macro">write!</span>(f, <span class="string">&quot;│   &quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">write!</span>(f, <span class="string">"│   "</span>)<span class="question-mark">?</span>;
             }
         }
 
         <span class="kw">if </span>i != <span class="number">7 </span>{
-            <span class="macro">write!</span>(f, <span class="string">&quot;│\n  ├───┼───┼───┼───┼───┼───┼───┼───┤\n&quot;</span>)<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(f, <span class="string">"│\n  ├───┼───┼───┼───┼───┼───┼───┼───┤\n"</span>)<span class="question-mark">?</span>;
         }
     }
-    <span class="macro">write!</span>(f, <span class="string">&quot;│\n  └───┴───┴───┴───┴───┴───┴───┴───┘\n&quot;</span>)<span class="question-mark">?</span>;
-    <span class="macro">writeln!</span>(f, <span class="string">&quot;    a   b   c   d   e   f   g   h  &quot;</span>)<span class="question-mark">?</span>;
-    f.write_str(<span class="string">&quot;&quot;</span>)
+    <span class="macro">write!</span>(f, <span class="string">"│\n  └───┴───┴───┴───┴───┴───┴───┴───┘\n"</span>)<span class="question-mark">?</span>;
+    <span class="macro">writeln!</span>(f, <span class="string">"    a   b   c   d   e   f   g   h  "</span>)<span class="question-mark">?</span>;
+    f.write_str(<span class="string">""</span>)
 }
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>Board {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
         <span class="kw">let </span>pieces = <span class="self">self</span>.into_iter().collect();
         print_board(pieces, f)
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Board {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; IntoIterator <span class="kw">for </span><span class="kw-2">&amp;</span><span class="lifetime">'a </span>Board {
     <span class="kw">type </span>Item = Piece;
-    <span class="kw">type </span>IntoIter = BoardIterator&lt;<span class="lifetime">&#39;a</span>&gt;;
+    <span class="kw">type </span>IntoIter = BoardIterator&lt;<span class="lifetime">'a</span>&gt;;
 
     <span class="kw">fn </span>into_iter(<span class="self">self</span>) -&gt; <span class="self">Self</span>::IntoIter {
         BoardIterator {
@@ -1644,12 +1644,12 @@
     }
 }
 
-<span class="kw">pub struct </span>BoardIterator&lt;<span class="lifetime">&#39;a</span>&gt; {
-    board: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Board,
+<span class="kw">pub struct </span>BoardIterator&lt;<span class="lifetime">'a</span>&gt; {
+    board: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Board,
     index: u32,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Iterator <span class="kw">for </span>BoardIterator&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Iterator <span class="kw">for </span>BoardIterator&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Item = Piece;
 
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Piece&gt; {
@@ -1721,10 +1721,10 @@
     }
 
     <span class="kw">pub fn </span>from_basic_board() -&gt; Board {
-        Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>)
+        Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
     }
     <span class="kw">pub fn </span>from_fen(fen: <span class="kw-2">&amp;</span>str) -&gt; Board {
-        <span class="kw">let </span>vec = [<span class="string">&#39;P&#39;</span>, <span class="string">&#39;R&#39;</span>, <span class="string">&#39;N&#39;</span>, <span class="string">&#39;B&#39;</span>, <span class="string">&#39;Q&#39;</span>, <span class="string">&#39;K&#39;</span>, <span class="string">&#39;p&#39;</span>, <span class="string">&#39;r&#39;</span>, <span class="string">&#39;n&#39;</span>, <span class="string">&#39;b&#39;</span>, <span class="string">&#39;q&#39;</span>, <span class="string">&#39;k&#39;</span>];
+        <span class="kw">let </span>vec = [<span class="string">'P'</span>, <span class="string">'R'</span>, <span class="string">'N'</span>, <span class="string">'B'</span>, <span class="string">'Q'</span>, <span class="string">'K'</span>, <span class="string">'p'</span>, <span class="string">'r'</span>, <span class="string">'n'</span>, <span class="string">'b'</span>, <span class="string">'q'</span>, <span class="string">'k'</span>];
 
         <span class="kw">let </span><span class="kw-2">mut </span>board = Board {
             ..Default::default()
@@ -1748,33 +1748,33 @@
                     board.set_piece(Square::from_rank_file(<span class="number">7 </span>- file, rank), piece);
                     rank += <span class="number">1</span>;
                 }
-                (<span class="kw">_</span>, <span class="string">&#39;/&#39;</span>) =&gt; {
+                (<span class="kw">_</span>, <span class="string">'/'</span>) =&gt; {
                     rank = <span class="number">0</span>;
                     file += <span class="number">1</span>;
                 }
-                (<span class="kw">_</span>, <span class="string">&#39; &#39;</span>) =&gt; <span class="kw">break</span>,
-                (<span class="kw">_</span>, <span class="string">&#39;0&#39;</span>..=<span class="string">&#39;9&#39;</span>) =&gt; rank += c.to_digit(<span class="number">10</span>).unwrap() <span class="kw">as </span>u8,
+                (<span class="kw">_</span>, <span class="string">' '</span>) =&gt; <span class="kw">break</span>,
+                (<span class="kw">_</span>, <span class="string">'0'</span>..=<span class="string">'9'</span>) =&gt; rank += c.to_digit(<span class="number">10</span>).unwrap() <span class="kw">as </span>u8,
                 <span class="kw">_ </span>=&gt; <span class="kw">continue</span>,
             }
         }
 
         <span class="kw">let </span>tail_re =
-            Regex::new(<span class="string">r&quot;([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-h][1-8])?) ?(\d{1,2})? ?(\d{1,2})?&quot;</span>)
+            Regex::new(<span class="string">r"([wb])? ?(K?)(Q?)(k?)(q?)-? ?(-?([a-h][1-8])?) ?(\d{1,2})? ?(\d{1,2})?"</span>)
                 .unwrap();
 
         <span class="kw">let </span>tail = chars.iter().collect::&lt;String&gt;();
         <span class="kw">let </span>captures = tail_re.captures(<span class="kw-2">&amp;</span>tail).unwrap();
 
         board.set_turn(<span class="kw">match </span>captures.get(<span class="number">1</span>).map(|side| side.as_str()) {
-            <span class="prelude-val">None </span>| <span class="prelude-val">Some</span>(<span class="string">&quot;w&quot;</span>) =&gt; Side::White,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;b&quot;</span>) =&gt; Side::Black,
+            <span class="prelude-val">None </span>| <span class="prelude-val">Some</span>(<span class="string">"w"</span>) =&gt; Side::White,
+            <span class="prelude-val">Some</span>(<span class="string">"b"</span>) =&gt; Side::Black,
             <span class="kw">_ </span>=&gt; Side::White,
         });
 
-        board.set_castling_white_short(captures.get(<span class="number">2</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">&quot;K&quot;</span>));
-        board.set_castling_white_long(captures.get(<span class="number">3</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">&quot;Q&quot;</span>));
-        board.set_castling_black_short(captures.get(<span class="number">4</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">&quot;k&quot;</span>));
-        board.set_castling_black_long(captures.get(<span class="number">5</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">&quot;q&quot;</span>));
+        board.set_castling_white_short(captures.get(<span class="number">2</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">"K"</span>));
+        board.set_castling_white_long(captures.get(<span class="number">3</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">"Q"</span>));
+        board.set_castling_black_short(captures.get(<span class="number">4</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">"k"</span>));
+        board.set_castling_black_long(captures.get(<span class="number">5</span>).map_or(<span class="bool-val">false</span>, |key| key.as_str() == <span class="string">"q"</span>));
 
         board.set_enpassant(
             captures
@@ -1990,10 +1990,10 @@
     //    if mov.len() == 2 {
     //        panic!();
     //    } else if mov.len() == 4 {
-    //        let src_rank = (mov[1] as u8) - b&#39;1&#39;;
-    //        let src_file = (mov[0] as u8) - b&#39;a&#39;;
-    //        let dst_rank = (mov[3] as u8) - b&#39;1&#39;;
-    //        let dst_file = (mov[2] as u8) - b&#39;a&#39;;
+    //        let src_rank = (mov[1] as u8) - b'1';
+    //        let src_file = (mov[0] as u8) - b'a';
+    //        let dst_rank = (mov[3] as u8) - b'1';
+    //        let dst_file = (mov[2] as u8) - b'a';
 
     //        let mov = Move::new(
     //            Square::from_rank_file(src_rank, src_file),
@@ -2948,20 +2948,20 @@
         //   └───┴───┴───┴───┴───┴───┴───┴───┘
         //     a   b   c   d   e   f   g   h
 
-        </span><span class="kw">let </span>board = Board::from_fen(<span class="string">&quot;8/4p3/3r4/Q7/8/8/8/8&quot;</span>);
+        </span><span class="kw">let </span>board = Board::from_fen(<span class="string">"8/4p3/3r4/Q7/8/8/8/8"</span>);
         <span class="macro">assert_eq!</span>(
             board.into_iter().collect::&lt;Vec&lt;Piece&gt;&gt;(),
             <span class="macro">vec!</span>[
-                Piece::new(Square::from_algebraic(<span class="string">&quot;a5&quot;</span>).unwrap(), PieceType::WhiteQueen),
-                Piece::new(Square::from_algebraic(<span class="string">&quot;e7&quot;</span>).unwrap(), PieceType::BlackPawn),
-                Piece::new(Square::from_algebraic(<span class="string">&quot;d6&quot;</span>).unwrap(), PieceType::BlackRook),
+                Piece::new(Square::from_algebraic(<span class="string">"a5"</span>).unwrap(), PieceType::WhiteQueen),
+                Piece::new(Square::from_algebraic(<span class="string">"e7"</span>).unwrap(), PieceType::BlackPawn),
+                Piece::new(Square::from_algebraic(<span class="string">"d6"</span>).unwrap(), PieceType::BlackRook),
             ]
         );
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_simple_fen() {
-        <span class="macro">assert_eq!</span>(Board::from_fen(<span class="string">&quot;8/8/8/8/8/8/8/8&quot;</span>), Board::new());
+        <span class="macro">assert_eq!</span>(Board::from_fen(<span class="string">"8/8/8/8/8/8/8/8"</span>), Board::new());
     }
 
     <span class="attr">#[test]
@@ -2986,40 +2986,40 @@
         //     a   b   c   d   e   f   g   h
 
         </span><span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"</span>),
             BoardBuilder::new()
-                .with_piece(<span class="string">&quot;a1&quot;</span>, PieceType::WhiteRook)
-                .with_piece(<span class="string">&quot;b1&quot;</span>, PieceType::WhiteKnight)
-                .with_piece(<span class="string">&quot;c1&quot;</span>, PieceType::WhiteBishop)
-                .with_piece(<span class="string">&quot;d1&quot;</span>, PieceType::WhiteQueen)
-                .with_piece(<span class="string">&quot;e1&quot;</span>, PieceType::WhiteKing)
-                .with_piece(<span class="string">&quot;f1&quot;</span>, PieceType::WhiteBishop)
-                .with_piece(<span class="string">&quot;g1&quot;</span>, PieceType::WhiteKnight)
-                .with_piece(<span class="string">&quot;h1&quot;</span>, PieceType::WhiteRook)
-                .with_piece(<span class="string">&quot;a2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;b2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;c2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;d2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;e2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;f2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;g2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;h2&quot;</span>, PieceType::WhitePawn)
-                .with_piece(<span class="string">&quot;a7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;b7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;c7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;d7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;e7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;f7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;g7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;h7&quot;</span>, PieceType::BlackPawn)
-                .with_piece(<span class="string">&quot;a8&quot;</span>, PieceType::BlackRook)
-                .with_piece(<span class="string">&quot;b8&quot;</span>, PieceType::BlackKnight)
-                .with_piece(<span class="string">&quot;c8&quot;</span>, PieceType::BlackBishop)
-                .with_piece(<span class="string">&quot;d8&quot;</span>, PieceType::BlackQueen)
-                .with_piece(<span class="string">&quot;e8&quot;</span>, PieceType::BlackKing)
-                .with_piece(<span class="string">&quot;f8&quot;</span>, PieceType::BlackBishop)
-                .with_piece(<span class="string">&quot;g8&quot;</span>, PieceType::BlackKnight)
-                .with_piece(<span class="string">&quot;h8&quot;</span>, PieceType::BlackRook)
+                .with_piece(<span class="string">"a1"</span>, PieceType::WhiteRook)
+                .with_piece(<span class="string">"b1"</span>, PieceType::WhiteKnight)
+                .with_piece(<span class="string">"c1"</span>, PieceType::WhiteBishop)
+                .with_piece(<span class="string">"d1"</span>, PieceType::WhiteQueen)
+                .with_piece(<span class="string">"e1"</span>, PieceType::WhiteKing)
+                .with_piece(<span class="string">"f1"</span>, PieceType::WhiteBishop)
+                .with_piece(<span class="string">"g1"</span>, PieceType::WhiteKnight)
+                .with_piece(<span class="string">"h1"</span>, PieceType::WhiteRook)
+                .with_piece(<span class="string">"a2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"b2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"c2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"d2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"e2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"f2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"g2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"h2"</span>, PieceType::WhitePawn)
+                .with_piece(<span class="string">"a7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"b7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"c7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"d7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"e7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"f7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"g7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"h7"</span>, PieceType::BlackPawn)
+                .with_piece(<span class="string">"a8"</span>, PieceType::BlackRook)
+                .with_piece(<span class="string">"b8"</span>, PieceType::BlackKnight)
+                .with_piece(<span class="string">"c8"</span>, PieceType::BlackBishop)
+                .with_piece(<span class="string">"d8"</span>, PieceType::BlackQueen)
+                .with_piece(<span class="string">"e8"</span>, PieceType::BlackKing)
+                .with_piece(<span class="string">"f8"</span>, PieceType::BlackBishop)
+                .with_piece(<span class="string">"g8"</span>, PieceType::BlackKnight)
+                .with_piece(<span class="string">"h8"</span>, PieceType::BlackRook)
                 .build()
         );
     }
@@ -3027,9 +3027,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_black_turn() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR&quot;</span>)
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"</span>)
                 .with_turn(Side::Black)
                 .build()
         )
@@ -3037,9 +3037,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_castling_rights_white() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQ&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQ"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR&quot;</span>)
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"</span>)
                 .with_castling_white_short(<span class="bool-val">true</span>)
                 .with_castling_white_long(<span class="bool-val">true</span>)
                 .build()
@@ -3048,9 +3048,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_castling_rights_black() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w kq&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w kq"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR&quot;</span>)
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"</span>)
                 .with_castling_black_short(<span class="bool-val">true</span>)
                 .with_castling_black_long(<span class="bool-val">true</span>)
                 .build()
@@ -3059,10 +3059,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_enpassant() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w e3 0 0&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w e3 0 0"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR&quot;</span>)
-                .with_enpassant(<span class="prelude-val">Some</span>(Square::from_algebraic(<span class="string">&quot;e3&quot;</span>).unwrap()))
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"</span>)
+                .with_enpassant(<span class="prelude-val">Some</span>(Square::from_algebraic(<span class="string">"e3"</span>).unwrap()))
                 .build()
         )
     }
@@ -3070,9 +3070,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_half_move_clock() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 10 0&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 10 0"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR&quot;</span>)
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"</span>)
                 .with_half_move_clock(<span class="number">10</span>)
                 .build()
         )
@@ -3080,9 +3080,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_read_fen_with_full_move_clock() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - 0 10&quot;</span>),
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - 0 10"</span>),
             BoardBuilder::new()
-                .with_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR&quot;</span>)
+                .with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"</span>)
                 .with_full_move_clock(<span class="number">10</span>)
                 .build()
         )
@@ -3091,16 +3091,16 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_board_scoped() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>)
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
                 .scoped(Scope::White),
-            Board::from_fen(<span class="string">&quot;8/8/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>)
+            Board::from_fen(<span class="string">"8/8/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
         )
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_board_occupied_white() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>)
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
                 .occupied(Scope::White),
             <span class="number">0x000000000000FFFF
         </span>)
@@ -3108,7 +3108,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_board_occupied_all() {
         <span class="macro">assert_eq!</span>(
-            Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>)
+            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
                 .occupied(Scope::All),
             <span class="number">0xFFFF00000000FFFF
         </span>)
@@ -3116,19 +3116,19 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_board_piece_at() {
-        <span class="kw">let </span>board = Board::from_fen(<span class="string">&quot;rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1&quot;</span>);
+        <span class="kw">let </span>board = Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>);
 
         <span class="macro">assert_eq!</span>(
             <span class="prelude-val">Some</span>(PieceType::WhiteRook),
-            board.piece_at(Square::from_algebraic(<span class="string">&quot;a1&quot;</span>).unwrap()),
+            board.piece_at(Square::from_algebraic(<span class="string">"a1"</span>).unwrap()),
         )
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_board_set_piece() {
-        <span class="kw">let </span>board = Board::from_fen(<span class="string">&quot;8/8/8/8/8/8/8/3K4&quot;</span>);
+        <span class="kw">let </span>board = Board::from_fen(<span class="string">"8/8/8/8/8/8/8/3K4"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>unit = Board::new();
-        unit.set_piece(Square::from_algebraic(<span class="string">&quot;d1&quot;</span>).unwrap(), PieceType::WhiteKing);
+        unit.set_piece(Square::from_algebraic(<span class="string">"d1"</span>).unwrap(), PieceType::WhiteKing);
         <span class="macro">assert_eq!</span>(unit, board);
     }
 }

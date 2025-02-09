@@ -1,0 +1,1 @@
+searchState.loadedDescShard("cli", 0, "fchess cli interface\npath to polyglot openning book\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.")
