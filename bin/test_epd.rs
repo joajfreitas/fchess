@@ -24,9 +24,9 @@ struct BestMoveTestResult {
 impl BestMoveTestResult {
     fn new(testcase: TestCase, resulting_move: Move, result: bool) -> BestMoveTestResult {
         BestMoveTestResult {
-            testcase: testcase,
-            resulting_move: resulting_move,
-            result: result,
+            testcase,
+            resulting_move,
+            result,
         }
     }
 }

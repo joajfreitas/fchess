@@ -364,10 +364,7 @@ impl Move {
         } else {
             "".to_string()
         };
-        format!(
-            "{}{}{}{}{}",
-            src_rank, src_file, dst_rank, dst_file, promotion
-        )
+        format!("{src_rank}{src_file}{dst_rank}{dst_file}{promotion}")
     }
 }
 

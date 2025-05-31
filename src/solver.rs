@@ -29,7 +29,7 @@ impl Node {
             board,
             mov,
             depth,
-            parent: parent.map(|parent| Box::new(parent)),
+            parent: parent.map(Box::new),
             evaluation: None,
         }
     }
@@ -48,20 +48,19 @@ impl Solver {
         self.move_generator
             .generate_moves(board)
             .iter()
-            .map(|moveset| moveset.into_iter())
-            .flatten()
+            .flat_map(|moveset| moveset.into_iter())
             .collect::<Vec<Move>>()
     }
 
     pub fn best_move(&mut self, board: &Board) -> Option<Move> {
         let mut best: Option<Move> = None;
-        let mut best_evaluation = - 1000000000;
+        let mut best_evaluation = -1000000000;
         let mut best_node: Option<Node> = None;
         for mov in self.generate_moves(board) {
             let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
             let r = self.min_max(&node, 4, node.board.get_turn() == Side::White);
             if r.is_none() {
-                continue
+                continue;
             }
 
             let (node, evaluation) = r.unwrap();
@@ -71,7 +70,7 @@ impl Solver {
                 best_node = Some(node);
             }
         }
-        
+
         let mut best_node = best_node.unwrap();
         loop {
             //println!("{} {:?}", best_node.mov.to_algebraic(), best_node.evaluation);
@@ -90,7 +89,7 @@ impl Solver {
         let mut best_node: Option<Node> = None;
         for mov in self.generate_moves(&node.board) {
             let board_result: Board = node.board.apply(&mov).unwrap();
-            let mut new_node = Node::new(
+            let new_node = Node::new(
                 board_result.clone(),
                 mov,
                 node.depth + 1,
@@ -111,7 +110,7 @@ impl Solver {
             };
 
             new_new_node.evaluation = Some(-board_evaluation);
-        
+
             max = cmp::max(new_new_node.evaluation?, max);
             if max == new_new_node.evaluation? {
                 //println!("{:?} {:?}", new_new_node.mov, new_new_node.evaluation);
@@ -132,12 +131,6 @@ impl Solver {
             s += pieces_values[piece.get_type() as usize];
         }
 
-        if s > 1000 {
-            s = 1000;
-        } else if s < -1000 {
-            s = -1000;
-        }
-
-        s
+        s.clamp(-1000, 1000)
     }
 }

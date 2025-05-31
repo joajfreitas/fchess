@@ -20,7 +20,7 @@ fn main() -> io::Result<()> {
             let mut buffer = String::new();
             io::stdin().read_line(&mut buffer).unwrap();
             let buffer = buffer.replace('\n', "");
-            file.write_all(format!("{}\n", buffer).as_bytes()).unwrap();
+            file.write_all(format!("{buffer}\n").as_bytes()).unwrap();
 
             match &buffer[..] {
                 "uci" => {
@@ -39,11 +39,11 @@ fn main() -> io::Result<()> {
                 _ => {
                     if buffer.starts_with("position") {
                         let sp = &buffer.split(' ').collect::<Vec<&str>>()[1..];
-                        println!("{:?}", sp);
+                        println!("{sp:?}");
                         let mut moves = false;
                         for s in sp.iter() {
                             if moves {
-                                tx.send(format!("move:{}", s)).unwrap();
+                                tx.send(format!("move:{s}")).unwrap();
                             }
                             if *s == "startpos" {
                                 tx.send("startpos".to_string()).unwrap();
@@ -75,17 +75,17 @@ fn main() -> io::Result<()> {
                 board =
                     Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
             } else if cmd.starts_with("move") {
-                println!("cmd: {}", cmd);
+                println!("cmd: {cmd}");
                 let sp = cmd.split(':');
                 let mov = sp.collect::<Vec<&str>>()[1];
                 board = board
                     .apply(&Move::from_full_algebraic(mov).unwrap())
                     .unwrap();
-                println!("board {:?}", board);
+                println!("board {board:?}");
             } else if cmd.starts_with("go") {
                 let info = "info_currmove 1";
-                println!("{}", info);
-                println!("start: {:?}", board);
+                println!("{info}");
+                println!("start: {board:?}");
                 println!(
                     "bestmove {}",
                     solver.best_move(&board).unwrap().to_algebraic()

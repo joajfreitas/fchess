@@ -337,7 +337,6 @@ impl MoveGenerator {
             }
         }
 
-        let mov = MoveSet::new(from, piece, flood);
-        mov
+        MoveSet::new(from, piece, flood)
     }
 }

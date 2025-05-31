@@ -96,13 +96,12 @@ fn main() -> Result<()> {
         let mov = Move::from_algebraic(&testcase.lan);
         if mov.is_none() {
             println!("Failed to parse move {}", &testcase.lan);
-            println!("{}", board);
+            println!("{board}");
             continue;
         }
         let mov = mov.unwrap();
         let resulting_board = board.apply(&mov.clone());
         if let Some(resulting_board) = resulting_board {
-            let resulting_board = resulting_board;
             let expected_board = Board::from_fen(&testcase.expected_fen);
             let test_result = TestResult::new(
                 &testcase.id,
@@ -115,7 +114,7 @@ fn main() -> Result<()> {
             );
             testsuit_results.push_test(test_result);
         } else {
-            println!("Failed to apply move to board {}", mov);
+            println!("Failed to apply move to board {mov}");
         }
     }
 

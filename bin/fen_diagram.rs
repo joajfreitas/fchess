@@ -11,7 +11,7 @@ fn main() {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
             Ok(_) => {}
-            Err(err) => println!("{:?}", err),
+            Err(err) => println!("{err:?}"),
         };
         input
     };

@@ -1,5 +1,4 @@
 use clap::Parser;
-use rustyline::{Editor, Result};
 
 use fchess::Board;
 use fchess::Book;
@@ -16,9 +15,9 @@ struct Args {
     book: Option<String>,
 }
 
-fn main() -> Result<()> {
+fn main() -> rustyline::Result<()> {
     // Setup shell history
-    let mut rl = Editor::<()>::new()?;
+    let mut rl = rustyline::DefaultEditor::new()?;
     if rl.load_history(".fchess_history").is_err() {
         println!("No previous history");
     }
@@ -29,7 +28,7 @@ fn main() -> Result<()> {
 
     let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
     let mut solver = Solver::new();
-    println!("{}", board);
+    println!("{board}");
 
     loop {
         let mov: Move = Move::from_algebraic(&match board.get_turn() {
@@ -37,12 +36,12 @@ fn main() -> Result<()> {
                 let line = rl.readline("> ");
                 match line {
                     Ok(line) => {
-                        rl.add_history_entry(line.as_str());
+                        rl.add_history_entry(line.as_str())?;
                         rl.save_history(".fchess_history").unwrap();
                         line
                     }
                     Err(err) => {
-                        println!("Error: {:?}", err);
+                        println!("Error: {err:?}");
                         return Err(err);
                     }
                 }
@@ -65,6 +64,6 @@ fn main() -> Result<()> {
             Some(board) => board,
             None => continue,
         };
-        println!("{}", board);
+        println!("{board}");
     }
 }
