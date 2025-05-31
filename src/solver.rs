@@ -31,7 +31,7 @@ impl Solver {
             }
         }
 
-        println!("evaluations: {}", evals);
+        println!("evaluations: {evals}");
         best
     }
 

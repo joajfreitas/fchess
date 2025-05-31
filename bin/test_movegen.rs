@@ -96,7 +96,7 @@ fn main() {
             .iter()
             .map(|mov| Move::from_full_algebraic(mov).unwrap())
             .collect::<Vec<Move>>();
-        
+
         moves.sort();
         expected_moves.sort();
 

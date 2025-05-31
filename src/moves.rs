@@ -151,7 +151,7 @@ impl Move {
             src,
             dst,
             target: None,
-            promotion: Some(promotion)
+            promotion: Some(promotion),
         }
     }
 
@@ -365,9 +365,7 @@ impl Move {
             "".to_string()
         };
         format!(
-            "{}{}{}{}{}",
-            src_rank, src_file, dst_rank, dst_file, promotion
-        )
+            "{src_rank}{src_file}{dst_rank}{dst_file}{promotion}")
     }
 }
 
