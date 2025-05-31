@@ -204,10 +204,10 @@ impl Board {
             _ => Side::White,
         });
 
-        board.set_castling_white_short(captures.get(2).map_or(false, |key| key.as_str() == "K"));
-        board.set_castling_white_long(captures.get(3).map_or(false, |key| key.as_str() == "Q"));
-        board.set_castling_black_short(captures.get(4).map_or(false, |key| key.as_str() == "k"));
-        board.set_castling_black_long(captures.get(5).map_or(false, |key| key.as_str() == "q"));
+        board.set_castling_white_short(captures.get(2).is_some_and(|key| key.as_str() == "K"));
+        board.set_castling_white_long(captures.get(3).is_some_and(|key| key.as_str() == "Q"));
+        board.set_castling_black_short(captures.get(4).is_some_and(|key| key.as_str() == "k"));
+        board.set_castling_black_long(captures.get(5).is_some_and(|key| key.as_str() == "q"));
 
         board.set_enpassant(
             captures
