@@ -132,6 +132,6 @@ impl Solver {
             s += pieces_values[piece.get_type() as usize];
         }
 
-        s.clamp(-1000,1000)
+        s.clamp(-1000, 1000)
     }
 }
