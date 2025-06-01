@@ -2,8 +2,8 @@ use std::env;
 use std::fs;
 
 use serde::{Deserialize, Serialize};
-use serde_json::Result;
 
+use anyhow::Result;
 use fchess::Board;
 use fchess::Move;
 
@@ -92,7 +92,7 @@ fn main() -> Result<()> {
     let mut testsuit_results = SuitResult::new();
 
     for testcase in testsuit {
-        let board = Board::from_fen(&testcase.start_fen);
+        let board = Board::from_fen(&testcase.start_fen)?;
         let mov = Move::from_algebraic(&testcase.lan);
         if mov.is_none() {
             println!("Failed to parse move {}", &testcase.lan);
@@ -102,7 +102,7 @@ fn main() -> Result<()> {
         let mov = mov.unwrap();
         let resulting_board = board.apply(&mov.clone());
         if let Some(resulting_board) = resulting_board {
-            let expected_board = Board::from_fen(&testcase.expected_fen);
+            let expected_board = Board::from_fen(&testcase.expected_fen)?;
             let test_result = TestResult::new(
                 &testcase.id,
                 &board,

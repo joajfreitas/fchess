@@ -6,11 +6,10 @@ use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
-use fchess::Board;
-use fchess::Move;
-use fchess::Solver;
+use anyhow::Result;
+use fchess::{Board, Move, Solver};
 
-fn main() -> io::Result<()> {
+fn main() -> Result<()> {
     let (tx, rx): (Sender<String>, Receiver<String>) = mpsc::channel();
 
     let t = thread::spawn(move || {
@@ -67,13 +66,14 @@ fn main() -> io::Result<()> {
 
     let engine_thread = thread::spawn(move || {
         let mut board =
-            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+            Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1").unwrap();
         let mut solver = Solver::new();
         loop {
             let cmd = rx.recv().unwrap();
             if cmd == "startpos" {
                 board =
-                    Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
+                    Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1")
+                        .unwrap();
             } else if cmd.starts_with("move") {
                 println!("cmd: {cmd}");
                 let sp = cmd.split(':');

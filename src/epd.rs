@@ -1,4 +1,5 @@
 use crate::Board;
+use anyhow::Result;
 use std::collections::HashMap;
 use std::collections::VecDeque;
 
@@ -24,7 +25,7 @@ impl Epd {
         self.properties.clone()
     }
 
-    pub fn from_string(s: &str) -> Epd {
+    pub fn from_string(s: &str) -> Result<Epd> {
         let sp = s.split(" ").collect::<Vec<&str>>();
         let fen = sp[..6]
             .iter()
@@ -55,10 +56,10 @@ impl Epd {
             }
         }
 
-        Epd {
-            board: Board::from_fen(&fen),
+        Ok(Epd {
+            board: Board::from_fen(&fen)?,
             properties: property_map,
-        }
+        })
     }
 }
 
@@ -68,16 +69,17 @@ mod tests {
 
     #[test]
     fn test_simple_epd() {
-        let epd = Epd::from_string("5N1r/5n1n/ppp3R1/5K2/7k/6p1/6PN/8 w - - 0 1 bm g6g4");
+        let epd =
+            Epd::from_string("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 bm g6g4")
+                .unwrap();
 
-        let properties: HashMap<String, String> = [("bm".to_string(), "g6g4".to_string())]
-            .iter()
-            .cloned()
-            .collect();
         assert_eq!(
             Epd::new(
-                &Board::from_fen("5N1r/5n1n/ppp3R1/5K2/7k/6p1/6PN/8 w - - 0 1 bm g6g4"),
-                properties
+                &Board::from_fen(
+                    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 bm g6g4"
+                )
+                .unwrap(),
+                HashMap::from([("bm".to_string(), "g6g4".to_string())])
             ),
             epd
         );

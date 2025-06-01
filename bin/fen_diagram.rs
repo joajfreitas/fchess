@@ -3,7 +3,7 @@ use std::io;
 
 use fchess::Board;
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = env::args().collect::<Vec<String>>();
     let input = if args.len() == 2 {
         args[1].to_string()
@@ -16,5 +16,7 @@ fn main() {
         input
     };
 
-    println!("{}", Board::from_fen(&input));
+    println!("{}", Board::from_fen(&input)?);
+
+    Ok(())
 }

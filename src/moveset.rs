@@ -3,18 +3,18 @@ use std::ops::{BitAnd, BitOr, BitXor};
 
 use crate::board::print_board;
 use crate::moves::Move;
-use crate::piece::{Piece, PieceType};
+use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MoveSet {
     pub src: Square,
-    pub piece: PieceType,
+    pub piece: ColoredPieceType,
     pub mov: u64,
 }
 
 impl MoveSet {
-    pub fn new(src: Square, piece: PieceType, x: u64) -> MoveSet {
+    pub fn new(src: Square, piece: ColoredPieceType, x: u64) -> MoveSet {
         MoveSet { src, piece, mov: x }
     }
 
@@ -57,27 +57,27 @@ impl<'a> Iterator for MoveIterator<'a> {
         for i in self.index..64 {
             if (self.mov.mov >> i) & 1 == 1 {
                 let destination = Square::from_index(i);
-                if self.mov.piece == PieceType::WhitePawn && destination.get_rank() == 7 {
+                if self.mov.piece == ColoredPieceType::WhitePawn && destination.get_rank() == 7 {
                     let mov = match self.promotion_index {
                         0 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::WhiteQueen,
+                            ColoredPieceType::WhiteQueen,
                         )),
                         1 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::WhiteRook,
+                            ColoredPieceType::WhiteRook,
                         )),
                         2 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::WhiteBishop,
+                            ColoredPieceType::WhiteBishop,
                         )),
                         3 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::WhiteKnight,
+                            ColoredPieceType::WhiteKnight,
                         )),
                         _ => panic!(),
                     };
@@ -90,27 +90,29 @@ impl<'a> Iterator for MoveIterator<'a> {
                     }
 
                     return mov;
-                } else if self.mov.piece == PieceType::BlackPawn && destination.get_rank() == 0 {
+                } else if self.mov.piece == ColoredPieceType::BlackPawn
+                    && destination.get_rank() == 0
+                {
                     let mov = match self.promotion_index {
                         0 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::BlackQueen,
+                            ColoredPieceType::BlackQueen,
                         )),
                         1 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::BlackRook,
+                            ColoredPieceType::BlackRook,
                         )),
                         2 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::BlackBishop,
+                            ColoredPieceType::BlackBishop,
                         )),
                         3 => Some(Move::with_promotion(
                             self.mov.src,
                             destination,
-                            PieceType::BlackKnight,
+                            ColoredPieceType::BlackKnight,
                         )),
                         _ => panic!(),
                     };
@@ -172,9 +174,9 @@ impl fmt::Display for MoveSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut v = (0..64)
             .filter(|x| self.mov >> x & 1 == 1)
-            .map(|x| Piece::new(Square::from_index(x), PieceType::Marker))
+            .map(|x| Piece::new(Square::from_index(x), ColoredPieceType::Marker))
             .collect::<Vec<Piece>>();
-        v.push(Piece::new(self.src, PieceType::SourceMarker));
+        v.push(Piece::new(self.src, ColoredPieceType::SourceMarker));
 
         print_board(v, f)
     }

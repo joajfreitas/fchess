@@ -5,7 +5,7 @@ use std::ops::Not;
 use crate::board::print_board;
 use crate::board::Board;
 use crate::move_generator::MoveGenerator;
-use crate::piece::{Piece, PieceType};
+use crate::piece::{ColoredPieceType, Piece};
 use crate::side::Side;
 use crate::square::Square;
 
@@ -94,24 +94,24 @@ impl From<Side> for Scope {
     }
 }
 
-impl From<PieceType> for Scope {
-    fn from(piece: PieceType) -> Self {
+impl From<ColoredPieceType> for Scope {
+    fn from(piece: ColoredPieceType) -> Self {
         match piece {
-            PieceType::WhitePawn => Scope::WhitePawn,
-            PieceType::WhiteRook => Scope::WhiteRook,
-            PieceType::WhiteKnight => Scope::WhiteKnight,
-            PieceType::WhiteBishop => Scope::WhiteBishop,
-            PieceType::WhiteQueen => Scope::WhiteQueen,
-            PieceType::WhiteKing => Scope::WhiteKing,
-            PieceType::BlackPawn => Scope::BlackPawn,
-            PieceType::BlackRook => Scope::BlackRook,
-            PieceType::BlackKnight => Scope::BlackKnight,
-            PieceType::BlackBishop => Scope::BlackBishop,
-            PieceType::BlackQueen => Scope::BlackQueen,
-            PieceType::BlackKing => Scope::BlackKing,
-            PieceType::Marker => panic!(),
-            PieceType::SourceMarker => panic!(),
-            PieceType::NoPiece => panic!(),
+            ColoredPieceType::WhitePawn => Scope::WhitePawn,
+            ColoredPieceType::WhiteRook => Scope::WhiteRook,
+            ColoredPieceType::WhiteKnight => Scope::WhiteKnight,
+            ColoredPieceType::WhiteBishop => Scope::WhiteBishop,
+            ColoredPieceType::WhiteQueen => Scope::WhiteQueen,
+            ColoredPieceType::WhiteKing => Scope::WhiteKing,
+            ColoredPieceType::BlackPawn => Scope::BlackPawn,
+            ColoredPieceType::BlackRook => Scope::BlackRook,
+            ColoredPieceType::BlackKnight => Scope::BlackKnight,
+            ColoredPieceType::BlackBishop => Scope::BlackBishop,
+            ColoredPieceType::BlackQueen => Scope::BlackQueen,
+            ColoredPieceType::BlackKing => Scope::BlackKing,
+            ColoredPieceType::Marker => panic!(),
+            ColoredPieceType::SourceMarker => panic!(),
+            ColoredPieceType::NoPiece => panic!(),
         }
     }
 }
@@ -122,14 +122,14 @@ pub struct Move {
     src: Square,
     dst: Square,
     target: Option<Square>,
-    promotion: Option<PieceType>,
+    promotion: Option<ColoredPieceType>,
 }
 
 impl fmt::Display for Move {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let v = vec![
-            Piece::new(self.src, PieceType::Marker),
-            Piece::new(self.dst, PieceType::Marker),
+            Piece::new(self.src, ColoredPieceType::Marker),
+            Piece::new(self.dst, ColoredPieceType::Marker),
         ];
 
         print_board(v, f)
@@ -146,7 +146,7 @@ impl Move {
         }
     }
 
-    pub fn with_promotion(src: Square, dst: Square, promotion: PieceType) -> Move {
+    pub fn with_promotion(src: Square, dst: Square, promotion: ColoredPieceType) -> Move {
         Move {
             src,
             dst,
@@ -168,11 +168,11 @@ impl Move {
         self.target = target
     }
 
-    pub fn set_promotion(&mut self, promotion: Option<PieceType>) {
+    pub fn set_promotion(&mut self, promotion: Option<ColoredPieceType>) {
         self.promotion = promotion
     }
 
-    pub fn get_promotion(&self) -> Option<PieceType> {
+    pub fn get_promotion(&self) -> Option<ColoredPieceType> {
         self.promotion
     }
 
@@ -194,7 +194,7 @@ impl Move {
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            let promotion = PieceType::from_string(&mov[4]);
+            let promotion = ColoredPieceType::from_string(&mov[4]);
             let mut mov = Move::new(
                 Square::from_rank_file(src_rank, src_file),
                 Square::from_rank_file(dst_rank, dst_file),
@@ -206,22 +206,22 @@ impl Move {
         }
     }
 
-    fn san_match_type(piece_type: PieceType, scope: Scope) -> bool {
+    fn san_match_type(piece_type: ColoredPieceType, scope: Scope) -> bool {
         matches!(
             (piece_type, scope),
             (_, Scope::All)
-                | (PieceType::WhitePawn, Scope::WhitePawn)
-                | (PieceType::BlackPawn, Scope::BlackPawn)
-                | (PieceType::WhiteRook, Scope::WhiteRook)
-                | (PieceType::BlackRook, Scope::BlackRook)
-                | (PieceType::WhiteKnight, Scope::WhiteKnight)
-                | (PieceType::BlackKnight, Scope::BlackKnight)
-                | (PieceType::WhiteBishop, Scope::WhiteBishop)
-                | (PieceType::BlackBishop, Scope::BlackBishop)
-                | (PieceType::WhiteQueen, Scope::WhiteQueen)
-                | (PieceType::BlackQueen, Scope::BlackQueen)
-                | (PieceType::WhiteKing, Scope::WhiteKing)
-                | (PieceType::BlackKing, Scope::BlackKing)
+                | (ColoredPieceType::WhitePawn, Scope::WhitePawn)
+                | (ColoredPieceType::BlackPawn, Scope::BlackPawn)
+                | (ColoredPieceType::WhiteRook, Scope::WhiteRook)
+                | (ColoredPieceType::BlackRook, Scope::BlackRook)
+                | (ColoredPieceType::WhiteKnight, Scope::WhiteKnight)
+                | (ColoredPieceType::BlackKnight, Scope::BlackKnight)
+                | (ColoredPieceType::WhiteBishop, Scope::WhiteBishop)
+                | (ColoredPieceType::BlackBishop, Scope::BlackBishop)
+                | (ColoredPieceType::WhiteQueen, Scope::WhiteQueen)
+                | (ColoredPieceType::BlackQueen, Scope::BlackQueen)
+                | (ColoredPieceType::WhiteKing, Scope::WhiteKing)
+                | (ColoredPieceType::BlackKing, Scope::BlackKing)
         )
     }
 
@@ -268,8 +268,9 @@ impl Move {
             }
         }
 
-        let handle_piece_type = |m: Match| -> PieceType {
-            let piece_type = PieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
+        let handle_piece_type = |m: Match| -> ColoredPieceType {
+            let piece_type =
+                ColoredPieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
             if board.get_turn() == Side::Black {
                 !piece_type
             } else {
@@ -345,7 +346,7 @@ impl Move {
             );
 
             if algebra.len() == 5 {
-                mov.set_promotion(PieceType::from_string(&algebra[4]));
+                mov.set_promotion(ColoredPieceType::from_string(&algebra[4]));
             }
             Some(mov)
         } else {
@@ -376,10 +377,12 @@ mod tests {
     use super::Move;
     use super::MoveGenerator;
 
+    use anyhow::Result;
+
     #[test]
-    fn test_king_move() {
+    fn test_king_move() -> Result<()> {
         let move_generator = MoveGenerator::new();
-        let board = Board::from_fen("8/K7/8/8/8/8/8/8");
+        let board = Board::from_fen("8/K7/8/8/8/8/8/8")?;
         let origin = Square::from_algebraic("a7").unwrap();
         let moveset = move_generator
             .generate_moves_for_piece(&board, origin)
@@ -394,6 +397,8 @@ mod tests {
                 Move::new(origin, Square::from_algebraic("a8").unwrap()),
                 Move::new(origin, Square::from_algebraic("b8").unwrap()),
             ]
-        )
+        );
+
+        Ok(())
     }
 }

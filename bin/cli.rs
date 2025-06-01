@@ -1,5 +1,6 @@
 use clap::Parser;
 
+use anyhow::{anyhow, Result};
 use fchess::Board;
 use fchess::Book;
 use fchess::Move;
@@ -15,7 +16,7 @@ struct Args {
     book: Option<String>,
 }
 
-fn main() -> rustyline::Result<()> {
+fn main() -> Result<()> {
     // Setup shell history
     let mut rl = rustyline::DefaultEditor::new()?;
     if rl.load_history(".fchess_history").is_err() {
@@ -26,7 +27,7 @@ fn main() -> rustyline::Result<()> {
 
     let book = args.book.map(|book| Book::from_filename(&book));
 
-    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
+    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0")?;
     let mut solver = Solver::new();
     println!("{board}");
 
@@ -42,7 +43,7 @@ fn main() -> rustyline::Result<()> {
                     }
                     Err(err) => {
                         println!("Error: {err:?}");
-                        return Err(err);
+                        return Err(anyhow!(err));
                     }
                 }
             }

@@ -6,11 +6,8 @@ use std::fs;
 
 use serde::{Deserialize, Serialize};
 
-use fchess::Board;
-use fchess::Move;
-use fchess::MoveGenerator;
-use fchess::MoveSet;
-use fchess::Square;
+use anyhow::Result;
+use fchess::{Board, Move, MoveGenerator, MoveSet, Square};
 
 mod test_common;
 use crate::test_common::{TestResult, TestSuit};
@@ -68,7 +65,7 @@ impl TestResult for MovegenTestResult {
         format!(
             "id:{}\n{}\nexpected: {}\nresult: {}\ndiff: {}",
             self.testcase.id,
-            Board::from_fen(&self.testcase.fen),
+            Board::from_fen(&self.testcase.fen).expect("Invalid FEN"),
             self.testcase
                 .moves
                 .clone()
@@ -90,7 +87,7 @@ impl TestResult for MovegenTestResult {
     }
 }
 
-fn main() {
+fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
     let contents =
         fs::read_to_string(args.get(1).unwrap()).expect("Should have been able to read the file");
@@ -100,7 +97,7 @@ fn main() {
 
     let move_generator = MoveGenerator::new();
     for testcase in testsuit {
-        let board = Board::from_fen(&testcase.fen);
+        let board = Board::from_fen(&testcase.fen)?;
         let movesets: Vec<MoveSet> = if testcase.square.is_none() {
             move_generator.generate_moves(&board)
         } else {
@@ -130,4 +127,5 @@ fn main() {
     }
 
     testsuit_result.finalize();
+    Ok(())
 }

@@ -21,10 +21,12 @@ pub use crate::square::Square;
 mod bitboard;
 mod bitwise;
 mod board;
+mod board_builder;
 mod book;
 mod common;
 mod dumb7fill;
 mod epd;
+mod fen;
 mod move_generator;
 mod moves;
 mod moveset;
@@ -32,6 +34,7 @@ mod piece;
 mod side;
 mod solver;
 mod square;
+mod zobrist_hash;
 
 #[cfg(test)]
 mod tests {
@@ -39,6 +42,8 @@ mod tests {
 
     use super::board::Board;
     use super::moves::Move;
+
+    use anyhow::Result;
 
     #[rstest]
     #[case(
@@ -59,7 +64,7 @@ mod tests {
          //   ├───┼───┼───┼───┼───┼───┼───┼───┤
          // 1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │   │   │ ♜ │
          //   └───┴───┴───┴───┴───┴───┴───┴───┘
-         //     a   b   c   d   e   f   g   h  
+         //     a   b   c   d   e   f   g   h
 
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1",
         "e1g1",
@@ -88,12 +93,14 @@ mod tests {
         #[case] initial_fen: &str,
         #[case] algebraic_move: &str,
         #[case] resulting_fen: &str,
-    ) {
-        let unit = Board::from_fen(initial_fen);
+    ) -> Result<()> {
+        let unit = Board::from_fen(initial_fen)?;
         let unit = unit
             .apply(&Move::from_full_algebraic(algebraic_move).unwrap())
             .unwrap();
 
-        assert_eq!(unit, Board::from_fen(resulting_fen))
+        assert_eq!(unit, Board::from_fen(resulting_fen)?);
+
+        Ok(())
     }
 }

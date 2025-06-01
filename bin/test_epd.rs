@@ -4,9 +4,8 @@ use std::fs;
 mod test_common;
 use crate::test_common::{TestResult, TestSuit};
 
-use fchess::Epd;
-use fchess::Move;
-use fchess::Solver;
+use anyhow::Result;
+use fchess::{Epd, Move, Solver};
 
 #[derive(Clone)]
 struct TestCase {
@@ -47,7 +46,7 @@ impl TestResult for BestMoveTestResult {
     }
 }
 
-fn main() {
+fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
 
     let contents =
@@ -58,7 +57,7 @@ fn main() {
     let mut testsuit_result: TestSuit<BestMoveTestResult> = TestSuit::new();
 
     for line in contents.lines() {
-        let epd = Epd::from_string(line);
+        let epd = Epd::from_string(line)?;
         let board = epd.get_board();
         let best_move = solver.best_move(&board).unwrap();
 
@@ -88,4 +87,5 @@ fn main() {
 
     //println!("{:?}", epd);
     //std::process::exit(0);
+    Ok(())
 }

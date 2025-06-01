@@ -6,7 +6,7 @@ use crate::common::*;
 use crate::dumb7fill::dumb7fill;
 use crate::moves::Scope;
 use crate::moveset::MoveSet;
-use crate::piece::{Piece, PieceType};
+use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
 
 pub fn generate_knight_moves() -> Vec<u64> {
@@ -146,29 +146,29 @@ impl MoveGenerator {
         let piece = board.piece_at(square).unwrap();
 
         let mov = match piece {
-            PieceType::BlackRook | PieceType::WhiteRook => {
+            ColoredPieceType::BlackRook | ColoredPieceType::WhiteRook => {
                 self.rook_attacks(piece, square, !(occupied | enemy))
             }
-            PieceType::BlackBishop | PieceType::WhiteBishop => {
+            ColoredPieceType::BlackBishop | ColoredPieceType::WhiteBishop => {
                 self.bishop_attacks(piece, square, !(occupied | enemy))
             }
-            PieceType::BlackQueen | PieceType::WhiteQueen => {
+            ColoredPieceType::BlackQueen | ColoredPieceType::WhiteQueen => {
                 self.bishop_attacks(piece, square, !(occupied | enemy))
                     | self.rook_attacks(piece, square, !(occupied | enemy))
             }
-            PieceType::BlackKing | PieceType::WhiteKing => self.king_attacks(
+            ColoredPieceType::BlackKing | ColoredPieceType::WhiteKing => self.king_attacks(
                 piece,
                 square,
                 !board.occupied(Scope::from(board.get_turn())),
                 board,
             ),
-            PieceType::BlackPawn => {
+            ColoredPieceType::BlackPawn => {
                 self.black_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
             }
-            PieceType::WhitePawn => {
+            ColoredPieceType::WhitePawn => {
                 self.white_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
             }
-            PieceType::BlackKnight | PieceType::WhiteKnight => self.knight_attacks(
+            ColoredPieceType::BlackKnight | ColoredPieceType::WhiteKnight => self.knight_attacks(
                 piece,
                 square,
                 !board.occupied(Scope::from(board.get_turn())),
@@ -186,7 +186,7 @@ impl MoveGenerator {
 
     pub fn black_pawn_attacks(
         &self,
-        piece: PieceType,
+        piece: ColoredPieceType,
         from: Square,
         friendlies: u64,
         enemy: u64,
@@ -207,7 +207,7 @@ impl MoveGenerator {
 
     pub fn white_pawn_attacks(
         &self,
-        piece: PieceType,
+        piece: ColoredPieceType,
         from: Square,
         friendlies: u64,
         enemy: u64,
@@ -226,7 +226,7 @@ impl MoveGenerator {
         let attacks = attack & enemy;
         MoveSet::new(from, piece, mov | attacks)
     }
-    pub fn knight_attacks(&self, piece: PieceType, from: Square, free: u64) -> MoveSet {
+    pub fn knight_attacks(&self, piece: ColoredPieceType, from: Square, free: u64) -> MoveSet {
         MoveSet::new(
             from,
             piece,
@@ -234,7 +234,7 @@ impl MoveGenerator {
         )
     }
 
-    pub fn bishop_attacks(&self, piece: PieceType, from: Square, free: u64) -> MoveSet {
+    pub fn bishop_attacks(&self, piece: ColoredPieceType, from: Square, free: u64) -> MoveSet {
         let fill = 1 << from.get_index();
         let mut targets = 0;
 
@@ -246,7 +246,7 @@ impl MoveGenerator {
         MoveSet::new(from, piece, targets)
     }
 
-    pub fn rook_attacks(&self, piece: PieceType, from: Square, free: u64) -> MoveSet {
+    pub fn rook_attacks(&self, piece: ColoredPieceType, from: Square, free: u64) -> MoveSet {
         let fill = 1 << from.get_index();
         let mut targets = 0;
 
@@ -260,7 +260,7 @@ impl MoveGenerator {
 
     pub fn king_attacks(
         &self,
-        piece: PieceType,
+        piece: ColoredPieceType,
         from: Square,
         free: u64,
         board: &Board,
@@ -288,21 +288,21 @@ impl MoveGenerator {
             .reduce(|mov1, mov2| mov1 | mov2)
             .unwrap_or(0);
 
-        if piece == PieceType::WhiteKing {
+        if piece == ColoredPieceType::WhiteKing {
             let b1 = Square::from_rank_file(0, 1);
             let c1 = Square::from_rank_file(0, 2);
             let d1 = Square::from_rank_file(0, 3);
             let f1 = Square::from_rank_file(0, 5);
             let g1 = Square::from_rank_file(0, 6);
 
-            let long_unoccupied = board.piece_at(b1) == Some(PieceType::NoPiece)
-                && board.piece_at(c1) == Some(PieceType::NoPiece)
-                && board.piece_at(d1) == Some(PieceType::NoPiece)
+            let long_unoccupied = board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(c1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(d1) == Some(ColoredPieceType::NoPiece)
                 && enemies >> b1.get_index() == 0
                 && enemies >> c1.get_index() == 0
                 && enemies >> d1.get_index() == 0;
-            let short_unoccupied = board.piece_at(f1) == Some(PieceType::NoPiece)
-                && board.piece_at(g1) == Some(PieceType::NoPiece)
+            let short_unoccupied = board.piece_at(f1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(g1) == Some(ColoredPieceType::NoPiece)
                 && enemies >> f1.get_index() == 0
                 && enemies >> g1.get_index() == 0;
             if board.get_castling_white_long() && long_unoccupied {
@@ -313,20 +313,20 @@ impl MoveGenerator {
             }
         }
 
-        if piece == PieceType::BlackKing {
+        if piece == ColoredPieceType::BlackKing {
             let b8 = Square::from_rank_file(7, 1);
             let c8 = Square::from_rank_file(7, 2);
             let d8 = Square::from_rank_file(7, 3);
             let f8 = Square::from_rank_file(7, 5);
             let g8 = Square::from_rank_file(7, 6);
-            let long_unoccupied = board.piece_at(b8) == Some(PieceType::NoPiece)
-                && board.piece_at(c8) == Some(PieceType::NoPiece)
-                && board.piece_at(d8) == Some(PieceType::NoPiece)
+            let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(c8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(d8) == Some(ColoredPieceType::NoPiece)
                 && enemies >> b8.get_index() == 0
                 && enemies >> c8.get_index() == 0
                 && enemies >> d8.get_index() == 0;
-            let short_unoccupied = board.piece_at(f8) == Some(PieceType::NoPiece)
-                && board.piece_at(g8) == Some(PieceType::NoPiece)
+            let short_unoccupied = board.piece_at(f8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(g8) == Some(ColoredPieceType::NoPiece)
                 && enemies >> f8.get_index() == 0
                 && enemies >> g8.get_index() == 0;
             if board.get_castling_black_long() && long_unoccupied {
