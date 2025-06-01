@@ -1,6 +1,6 @@
 use crate::Board;
+use anyhow::Result;
 use std::collections::HashMap;
-use std::collections::VecDeque;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Epd {
@@ -25,41 +25,27 @@ impl Epd {
         self.properties.clone()
     }
 
-    pub fn from_string(s: &str) -> Epd {
-        let sp = s.split(" ").collect::<Vec<&str>>();
-        let fen = sp[..6]
-            .iter()
-            .map(|x| x.to_string())
-            .intersperse(" ".to_string())
-            .collect::<String>();
+    pub fn from_string(s: &str) -> Result<Epd> {
+        let mut properties: HashMap<String, String> = HashMap::default();
+        let mut iter = s.split(" ").skip(6);
+        loop {
+            let key = iter.next();
+            let value = iter.next();
 
-        let mut properties = sp[6..]
-            .iter()
-            .map(|x| x.to_string())
-            .collect::<VecDeque<String>>();
-
-        let mut property_map: HashMap<String, String> = HashMap::default();
-
-        let mut key = "".to_string();
-        let mut value;
-        let mut state = 0;
-
-        while !properties.is_empty() {
-            let v = properties.pop_front().unwrap();
-            if state == 0 {
-                key = v;
-                state = 1;
-            } else if state == 1 {
-                value = v;
-                state = 0;
-                property_map.insert(key.clone(), value.to_string());
+            if key.is_none() || value.is_none() {
+                break;
             }
+
+            properties.insert(
+                key.unwrap().to_string(),
+                value.unwrap().to_string(),
+            );
         }
 
-        Epd {
-            board: Board::from_fen(&fen),
-            properties: property_map,
-        }
+        Ok(Epd {
+            board: Board::from_fen(s)?,
+            properties,
+        })
     }
 }
 
@@ -69,16 +55,17 @@ mod tests {
 
     #[test]
     fn test_simple_epd() {
-        let epd = Epd::from_string("5N1r/5n1n/ppp3R1/5K2/7k/6p1/6PN/8 w - - 0 1 bm g6g4");
+        let epd =
+            Epd::from_string("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 bm g6g4")
+                .unwrap();
 
-        let properties: HashMap<String, String> = [("bm".to_string(), "g6g4".to_string())]
-            .iter()
-            .cloned()
-            .collect();
         assert_eq!(
             Epd::new(
-                &Board::from_fen("5N1r/5n1n/ppp3R1/5K2/7k/6p1/6PN/8 w - - 0 1 bm g6g4"),
-                properties
+                &Board::from_fen(
+                    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+                )
+                .unwrap(),
+                HashMap::from([("bm".to_string(), "g6g4".to_string())])
             ),
             epd
         );
