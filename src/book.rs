@@ -3,7 +3,7 @@ use std::fs;
 
 use crate::board::Board;
 use crate::moves::Move;
-use crate::piece::PieceType;
+use crate::piece::ColoredPieceType;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -46,16 +46,16 @@ impl Entry {
                 (self.get_to().get_rank(), self.get_to().get_file()),
                 board.piece_at(self.get_from()),
             ) {
-                ((0, 4), (0, 7), Some(PieceType::WhiteKing)) => {
+                ((0, 4), (0, 7), Some(ColoredPieceType::WhiteKing)) => {
                     Move::new(self.get_from(), Square::from_rank_file(0, 6))
                 }
-                ((0, 4), (0, 0), Some(PieceType::WhiteKing)) => {
+                ((0, 4), (0, 0), Some(ColoredPieceType::WhiteKing)) => {
                     Move::new(self.get_from(), Square::from_rank_file(0, 2))
                 }
-                ((7, 4), (7, 7), Some(PieceType::BlackKing)) => {
+                ((7, 4), (7, 7), Some(ColoredPieceType::BlackKing)) => {
                     Move::new(self.get_from(), Square::from_rank_file(7, 6))
                 }
-                ((7, 4), (7, 0), Some(PieceType::BlackKing)) => {
+                ((7, 4), (7, 0), Some(ColoredPieceType::BlackKing)) => {
                     Move::new(self.get_from(), Square::from_rank_file(7, 2))
                 }
                 _ => Move::new(self.get_from(), self.get_to()),
@@ -118,7 +118,7 @@ impl Book {
     }
 
     fn find_all(&self, board: &Board) -> Vec<Entry> {
-        let hash = board.zobryst_hash();
+        let hash = board.zobrist_hash();
         let index = self.binary_search(hash);
 
         let mut entries: Vec<Entry> = vec![];

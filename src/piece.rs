@@ -1,10 +1,40 @@
 use std::fmt;
 use std::ops::Not;
 
+use crate::side::Side;
 use crate::square::Square;
 
-#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug, Ord, PartialOrd, Hash)]
+#[allow(dead_code)]
 pub enum PieceType {
+    Pawn,
+    Rook,
+    Knight,
+    Bishop,
+    Queen,
+    King,
+}
+
+impl PieceType {
+    pub fn with_color(self, side: Side) -> ColoredPieceType {
+        match (self, side) {
+            (PieceType::Pawn, Side::White) => ColoredPieceType::WhitePawn,
+            (PieceType::Rook, Side::White) => ColoredPieceType::WhiteRook,
+            (PieceType::Knight, Side::White) => ColoredPieceType::WhiteKnight,
+            (PieceType::Bishop, Side::White) => ColoredPieceType::WhiteBishop,
+            (PieceType::Queen, Side::White) => ColoredPieceType::WhiteQueen,
+            (PieceType::King, Side::White) => ColoredPieceType::WhiteKing,
+            (PieceType::Pawn, Side::Black) => ColoredPieceType::BlackPawn,
+            (PieceType::Rook, Side::Black) => ColoredPieceType::BlackRook,
+            (PieceType::Knight, Side::Black) => ColoredPieceType::BlackKnight,
+            (PieceType::Bishop, Side::Black) => ColoredPieceType::BlackBishop,
+            (PieceType::Queen, Side::Black) => ColoredPieceType::BlackQueen,
+            (PieceType::King, Side::Black) => ColoredPieceType::BlackKing,
+        }
+    }
+}
+
+#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug, Ord, PartialOrd, Hash)]
+pub enum ColoredPieceType {
     WhitePawn = 0,
     WhiteRook = 1,
     WhiteKnight = 2,
@@ -22,7 +52,7 @@ pub enum PieceType {
     NoPiece,
 }
 
-impl fmt::Display for PieceType {
+impl fmt::Display for ColoredPieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
             "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", "+", " ",
@@ -31,84 +61,84 @@ impl fmt::Display for PieceType {
     }
 }
 
-impl PieceType {
-    pub fn is_black(self: &PieceType) -> bool {
+impl ColoredPieceType {
+    pub fn is_black(self: &ColoredPieceType) -> bool {
         matches!(
             self,
-            PieceType::BlackPawn
-                | PieceType::BlackRook
-                | PieceType::BlackKnight
-                | PieceType::BlackBishop
-                | PieceType::BlackQueen
-                | PieceType::BlackKing
+            ColoredPieceType::BlackPawn
+                | ColoredPieceType::BlackRook
+                | ColoredPieceType::BlackKnight
+                | ColoredPieceType::BlackBishop
+                | ColoredPieceType::BlackQueen
+                | ColoredPieceType::BlackKing
         )
     }
 
-    pub fn is_white(self: &PieceType) -> bool {
+    pub fn is_white(self: &ColoredPieceType) -> bool {
         matches!(
             self,
-            PieceType::WhitePawn
-                | PieceType::WhiteRook
-                | PieceType::WhiteKnight
-                | PieceType::WhiteBishop
-                | PieceType::WhiteQueen
-                | PieceType::WhiteKing
+            ColoredPieceType::WhitePawn
+                | ColoredPieceType::WhiteRook
+                | ColoredPieceType::WhiteKnight
+                | ColoredPieceType::WhiteBishop
+                | ColoredPieceType::WhiteQueen
+                | ColoredPieceType::WhiteKing
         )
     }
 
-    pub fn from_string(s: &char) -> Option<PieceType> {
+    pub fn from_string(s: &char) -> Option<ColoredPieceType> {
         match s {
-            'P' => Some(PieceType::WhitePawn),
-            'R' => Some(PieceType::WhiteRook),
-            'N' => Some(PieceType::WhiteKnight),
-            'B' => Some(PieceType::WhiteBishop),
-            'Q' => Some(PieceType::WhiteQueen),
-            'K' => Some(PieceType::WhiteKing),
-            'p' => Some(PieceType::BlackPawn),
-            'r' => Some(PieceType::BlackRook),
-            'n' => Some(PieceType::BlackKnight),
-            'b' => Some(PieceType::BlackBishop),
-            'q' => Some(PieceType::BlackQueen),
-            'k' => Some(PieceType::BlackKing),
+            'P' => Some(ColoredPieceType::WhitePawn),
+            'R' => Some(ColoredPieceType::WhiteRook),
+            'N' => Some(ColoredPieceType::WhiteKnight),
+            'B' => Some(ColoredPieceType::WhiteBishop),
+            'Q' => Some(ColoredPieceType::WhiteQueen),
+            'K' => Some(ColoredPieceType::WhiteKing),
+            'p' => Some(ColoredPieceType::BlackPawn),
+            'r' => Some(ColoredPieceType::BlackRook),
+            'n' => Some(ColoredPieceType::BlackKnight),
+            'b' => Some(ColoredPieceType::BlackBishop),
+            'q' => Some(ColoredPieceType::BlackQueen),
+            'k' => Some(ColoredPieceType::BlackKing),
             _ => None,
         }
     }
     pub fn to_char(self) -> char {
         match self {
-            PieceType::WhitePawn => 'P',
-            PieceType::WhiteRook => 'R',
-            PieceType::WhiteKnight => 'N',
-            PieceType::WhiteBishop => 'B',
-            PieceType::WhiteQueen => 'Q',
-            PieceType::WhiteKing => 'K',
-            PieceType::BlackPawn => 'p',
-            PieceType::BlackRook => 'r',
-            PieceType::BlackKnight => 'n',
-            PieceType::BlackBishop => 'b',
-            PieceType::BlackQueen => 'q',
-            PieceType::BlackKing => 'k',
+            ColoredPieceType::WhitePawn => 'P',
+            ColoredPieceType::WhiteRook => 'R',
+            ColoredPieceType::WhiteKnight => 'N',
+            ColoredPieceType::WhiteBishop => 'B',
+            ColoredPieceType::WhiteQueen => 'Q',
+            ColoredPieceType::WhiteKing => 'K',
+            ColoredPieceType::BlackPawn => 'p',
+            ColoredPieceType::BlackRook => 'r',
+            ColoredPieceType::BlackKnight => 'n',
+            ColoredPieceType::BlackBishop => 'b',
+            ColoredPieceType::BlackQueen => 'q',
+            ColoredPieceType::BlackKing => 'k',
             _ => panic!(),
         }
     }
 }
 
-impl Not for PieceType {
+impl Not for ColoredPieceType {
     type Output = Self;
 
     fn not(self) -> Self::Output {
         match self {
-            PieceType::WhitePawn => PieceType::BlackPawn,
-            PieceType::WhiteRook => PieceType::BlackRook,
-            PieceType::WhiteKnight => PieceType::BlackKnight,
-            PieceType::WhiteBishop => PieceType::BlackBishop,
-            PieceType::WhiteQueen => PieceType::BlackQueen,
-            PieceType::WhiteKing => PieceType::BlackKing,
-            PieceType::BlackPawn => PieceType::WhitePawn,
-            PieceType::BlackRook => PieceType::WhiteRook,
-            PieceType::BlackKnight => PieceType::WhiteKnight,
-            PieceType::BlackBishop => PieceType::WhiteBishop,
-            PieceType::BlackQueen => PieceType::WhiteQueen,
-            PieceType::BlackKing => PieceType::WhiteKing,
+            ColoredPieceType::WhitePawn => ColoredPieceType::BlackPawn,
+            ColoredPieceType::WhiteRook => ColoredPieceType::BlackRook,
+            ColoredPieceType::WhiteKnight => ColoredPieceType::BlackKnight,
+            ColoredPieceType::WhiteBishop => ColoredPieceType::BlackBishop,
+            ColoredPieceType::WhiteQueen => ColoredPieceType::BlackQueen,
+            ColoredPieceType::WhiteKing => ColoredPieceType::BlackKing,
+            ColoredPieceType::BlackPawn => ColoredPieceType::WhitePawn,
+            ColoredPieceType::BlackRook => ColoredPieceType::WhiteRook,
+            ColoredPieceType::BlackKnight => ColoredPieceType::WhiteKnight,
+            ColoredPieceType::BlackBishop => ColoredPieceType::WhiteBishop,
+            ColoredPieceType::BlackQueen => ColoredPieceType::WhiteQueen,
+            ColoredPieceType::BlackKing => ColoredPieceType::WhiteKing,
             _ => self,
         }
     }
@@ -117,11 +147,11 @@ impl Not for PieceType {
 #[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Piece {
     square: Square,
-    piece_type: PieceType,
+    piece_type: ColoredPieceType,
 }
 
 impl Piece {
-    pub fn new(square: Square, piece_type: PieceType) -> Piece {
+    pub fn new(square: Square, piece_type: ColoredPieceType) -> Piece {
         Piece { square, piece_type }
     }
 
@@ -129,7 +159,7 @@ impl Piece {
         self.square
     }
 
-    pub fn get_type(&self) -> PieceType {
+    pub fn get_type(&self) -> ColoredPieceType {
         self.piece_type
     }
 }
