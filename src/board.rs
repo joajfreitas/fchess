@@ -10,6 +10,31 @@ use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
 use anyhow::Result;
 
+pub trait Mask {
+    fn shift_down(&self) -> Self;
+    fn shift_up(&self) -> Self;
+    fn shift_left(&self) -> Self;
+    fn shift_right(&self) -> Self;
+}
+
+impl Mask for u64 {
+    fn shift_down(&self) -> u64 {
+        self >> 8
+    }
+
+    fn shift_up(&self) -> u64 {
+        self << 8
+    }
+
+    fn shift_left(&self) -> u64 {
+        self >> 1
+    }
+
+    fn shift_right(&self) -> u64 {
+        self << 1
+    }
+}
+
 #[derive(Clone, Eq, PartialEq, Debug)]
 enum Castling {
     WhiteShort,
