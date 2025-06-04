@@ -101,6 +101,96 @@ pub fn read_fen(fen: &str) -> Result<Board> {
     Ok(board.clone())
 }
 
+fn write_piece_placement(board: &Board) -> Result<String> {
+    let mut fen = String::new();
+    for rank in (0..8).rev() {
+        let mut empty_count = 0;
+        for file in 0..8 {
+            let square = Square::from_rank_file(rank, file);
+            if let Some(piece) = board.piece_at(square) {
+                if empty_count > 0 {
+                    fen.push_str(&empty_count.to_string());
+                    empty_count = 0;
+                }
+                fen.push(piece.to_char());
+            } else {
+                empty_count += 1;
+            }
+        }
+        if empty_count > 0 {
+            fen.push_str(&empty_count.to_string());
+        }
+        if rank > 0 {
+            fen.push('/');
+        }
+    }
+    Ok(fen)
+}
+
+fn write_castling(board: &Board) -> String {
+    let castling_white_short = match board.get_castling_white_short() {
+        true => "K",
+        false => "",
+    };
+
+    let castling_white_long = match board.get_castling_white_long() {
+        true => "Q",
+        false => "",
+    };
+
+    let castling_black_short = match board.get_castling_black_short() {
+        true => "k",
+        false => "",
+    };
+
+    let castling_black_long = match board.get_castling_black_long() {
+        true => "q",
+        false => "",
+    };
+
+    let castling = castling_white_short.to_string()
+        + castling_white_long
+        + castling_black_short
+        + castling_black_long;
+
+    if castling.is_empty() {
+        "-".to_string()
+    } else {
+        castling
+    }
+}
+
+pub fn write_fen(board: &Board) -> Result<String> {
+    let piece_placement = write_piece_placement(board)?;
+
+    let turn = match board.get_turn() {
+        Side::White => "w",
+        Side::Black => "b",
+    };
+
+    let castling = write_castling(board);
+
+    let en_passant = match board.get_enpassant() {
+        Some(square) => square.to_algebraic(),
+        None => "-".to_string(),
+    };
+
+    let half_move_clock = board.get_half_move_clock().to_string();
+    let full_move_clock = board.get_full_move_clock().to_string();
+
+    Ok(piece_placement
+        + " "
+        + turn
+        + " "
+        + &castling
+        + " "
+        + &en_passant
+        + " "
+        + &half_move_clock
+        + " "
+        + &full_move_clock)
+}
+
 #[cfg(test)]
 mod tests {
     use super::read_fen;
@@ -282,5 +372,12 @@ mod tests {
             format!("{}", board.err().unwrap()),
             "Invalid file in FEN string, expected 8 files".to_string()
         );
+    }
+
+    #[test]
+    fn test_write_simple_fen() {
+        let board = Board::new();
+        let fen = board.to_fen().unwrap();
+        assert_eq!(fen, "8/8/8/8/8/8/8/8 w - - 0 1");
     }
 }

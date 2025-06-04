@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::bitwise;
 
-use crate::fen::read_fen;
+use crate::fen::{read_fen, write_fen};
 use crate::moves::{Move, Scope};
 use crate::piece::{ColoredPieceType, Piece};
 use crate::side::Side;
@@ -213,6 +213,10 @@ impl Board {
         read_fen(fen)
     }
 
+    pub fn to_fen(&self) -> Result<String> {
+        write_fen(self)
+    }
+
     pub fn get_piece_mask(&self, piece_type: ColoredPieceType) -> u64 {
         self.pieces[piece_type as usize]
     }
@@ -239,10 +243,13 @@ impl Board {
         for piece_index in 0..13 {
             let bit = (self.pieces[piece_index] >> square.get_index()) & 1;
             if bit == 1 {
-                return num::FromPrimitive::from_usize(piece_index);
+                return Some(
+                    num::FromPrimitive::from_usize(piece_index)
+                        .expect("Convertion from integer to piece type should never fail"),
+                );
             }
         }
-        Some(ColoredPieceType::NoPiece)
+        None
     }
 
     pub fn set_piece(&mut self, square: Square, piece_type: ColoredPieceType) {
