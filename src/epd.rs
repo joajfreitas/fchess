@@ -36,10 +36,7 @@ impl Epd {
                 break;
             }
 
-            properties.insert(
-                key.unwrap().to_string(),
-                value.unwrap().to_string(),
-            );
+            properties.insert(key.unwrap().to_string(), value.unwrap().to_string());
         }
 
         Ok(Epd {
@@ -61,10 +58,8 @@ mod tests {
 
         assert_eq!(
             Epd::new(
-                &Board::from_fen(
-                    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-                )
-                .unwrap(),
+                &Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+                    .unwrap(),
                 HashMap::from([("bm".to_string(), "g6g4".to_string())])
             ),
             epd
