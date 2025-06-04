@@ -57,6 +57,7 @@ fn main() -> Result<()> {
     let mut testsuit_result: TestSuit<BestMoveTestResult> = TestSuit::new();
 
     for line in contents.lines() {
+        println!("Processing line: {}", line);
         let epd = Epd::from_string(line)?;
         let board = epd.get_board();
         let best_move = solver.best_move(&board).unwrap();

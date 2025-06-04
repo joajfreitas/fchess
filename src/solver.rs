@@ -58,7 +58,7 @@ impl Solver {
         let mut best_node: Option<Node> = None;
         for mov in self.generate_moves(board) {
             let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
-            let r = self.min_max(&node, 4, node.board.get_turn() == Side::White);
+            let r = self.min_max(&node, 3, node.board.get_turn() == Side::White);
             if r.is_none() {
                 continue;
             }

@@ -108,7 +108,7 @@ pub struct MoveGenerator {
 
 impl Default for MoveGenerator {
     fn default() -> Self {
-        Self::new()
+        MoveGenerator::new()
     }
 }
 
@@ -338,5 +338,14 @@ impl MoveGenerator {
         }
 
         MoveSet::new(from, piece, flood)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_something() {
+        assert_eq!(2 + 2, 4)
+            ;
     }
 }

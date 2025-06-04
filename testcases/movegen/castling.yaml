@@ -15,9 +15,9 @@
 #   ├───┼───┼───┼───┼───┼───┼───┼───┤
 # 1 │   │   │   │   │ ♚ │   │   │ ♜ │
 #   └───┴───┴───┴───┴───┴───┴───┴───┘
-#     a   b   c   d   e   f   g   h  
+#     a   b   c   d   e   f   g   h
 - id: 91b523dd-0d78-4818-b303-21b9e49289af
-  description: Kingg side castling
+  description: King side castling
   fen: 8/8/8/8/8/8/7P/4K2R w K 0 1
   moves:
     - e1g1
@@ -48,7 +48,7 @@
 #   ├───┼───┼───┼───┼───┼───┼───┼───┤
 # 1 │ ♜ │   │   │   │ ♚ │   │   │   │
 #   └───┴───┴───┴───┴───┴───┴───┴───┘
-#     a   b   c   d   e   f   g   h  
+#     a   b   c   d   e   f   g   h
 - id: 94025c82-d3ed-49b8-9a52-5f4ecfc5f909
   description: Queen side castling
   fen: 8/8/8/8/8/8/P7/R3K3 w Q 0 1
@@ -147,7 +147,7 @@
 #   ├───┼───┼───┼───┼───┼───┼───┼───┤
 # 1 │   │   │   │   │ ♚ │   │   │ ♜ │
 #   └───┴───┴───┴───┴───┴───┴───┴───┘
-#     a   b   c   d   e   f   g   h  
+#     a   b   c   d   e   f   g   h
 - id: 1fea2359-f059-494d-b075-e3df209cd1fd
   description: Enemy blocked short castling
   fen: 5q2/8/8/8/8/8/7P/4K2R w K 0 1

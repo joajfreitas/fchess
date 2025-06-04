@@ -65,3 +65,7 @@ path = "bin/fen_diagram.rs"
 [[bin]]
 name = "test_epd"
 path = "bin/test_epd.rs"
+
+[[bin]]
+name = "solve"
+path = "bin/solve.rs"
