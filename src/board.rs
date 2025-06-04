@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::bitwise;
 
-use crate::fen::read_fen;
+use crate::fen::{read_fen, write_fen};
 use crate::moves::{Move, Scope};
 use crate::piece::{ColoredPieceType, Piece};
 use crate::side::Side;
@@ -213,6 +213,10 @@ impl Board {
         read_fen(fen)
     }
 
+    pub fn to_fen(&self) -> Result<String> {
+        write_fen(self)
+    }
+
     pub fn get_piece_mask(&self, piece_type: ColoredPieceType) -> u64 {
         self.pieces[piece_type as usize]
     }
@@ -239,10 +243,13 @@ impl Board {
         for (index, piece) in self.pieces.iter().enumerate() {
             let bit = (piece >> square.get_index()) & 1;
             if bit == 1 {
-                return num::FromPrimitive::from_usize(index);
+                return Some(
+                    num::FromPrimitive::from_usize(index)
+                        .expect("Convertion from integer to piece type should never fail"),
+                );
             }
         }
-        Some(ColoredPieceType::NoPiece)
+        None
     }
 
     pub fn set_piece(&mut self, square: Square, piece_type: ColoredPieceType) {
@@ -382,16 +389,16 @@ impl Board {
             result.set_full_move_clock(result.get_full_move_clock() + 1);
         }
 
-        let moved_piece = self.piece_at(mov.get_src()).unwrap();
-        let target_piece = self.piece_at(mov.get_dst()).unwrap();
+        let moved_piece = self.piece_at(mov.get_src());
+        let target_piece = self.piece_at(mov.get_dst());
 
         let mov = (moved_piece, target_piece);
 
-        let halfmove_clock_reset = matches!(mov, (ColoredPieceType::WhitePawn, _))
-            | matches!(mov, (ColoredPieceType::BlackPawn, _))
-            | matches!(mov, (_, ColoredPieceType::WhitePawn))
-            | matches!(mov, (_, ColoredPieceType::BlackPawn))
-            | (target_piece != ColoredPieceType::NoPiece);
+        let halfmove_clock_reset = matches!(mov, (Some(ColoredPieceType::WhitePawn), _))
+            | matches!(mov, (Some(ColoredPieceType::BlackPawn), _))
+            | matches!(mov, (_, Some(ColoredPieceType::WhitePawn)))
+            | matches!(mov, (_, Some(ColoredPieceType::BlackPawn)))
+            | Option::is_some(&target_piece);
 
         if halfmove_clock_reset {
             result.set_half_move_clock(0);

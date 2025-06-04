@@ -104,7 +104,7 @@ impl ColoredPieceType {
         }
     }
     pub fn to_char(self) -> char {
-        match self {
+        match dbg!(self) {
             ColoredPieceType::WhitePawn => 'P',
             ColoredPieceType::WhiteRook => 'R',
             ColoredPieceType::WhiteKnight => 'N',
