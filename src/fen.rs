@@ -264,7 +264,6 @@ mod tests {
                 .with_piece("g8", ColoredPieceType::BlackKnight)
                 .with_piece("h8", ColoredPieceType::BlackRook)
                 .with_turn(Side::White)
-                .with_enpassant(None)
                 .with_half_move_clock(0)
                 .with_full_move_clock(1)
                 .build()))
@@ -379,5 +378,131 @@ mod tests {
         let board = Board::new();
         let fen = board.to_fen().unwrap();
         assert_eq!(fen, "8/8/8/8/8/8/8/8 w - - 0 1");
+    }
+
+    #[test]
+    fn test_write_starting_position_fen() {
+        let starting_board = BoardBuilder::new()
+            .with_piece("a1", ColoredPieceType::WhiteRook)
+            .with_piece("b1", ColoredPieceType::WhiteKnight)
+            .with_piece("c1", ColoredPieceType::WhiteBishop)
+            .with_piece("d1", ColoredPieceType::WhiteQueen)
+            .with_piece("e1", ColoredPieceType::WhiteKing)
+            .with_piece("f1", ColoredPieceType::WhiteBishop)
+            .with_piece("g1", ColoredPieceType::WhiteKnight)
+            .with_piece("h1", ColoredPieceType::WhiteRook)
+            .with_piece("a2", ColoredPieceType::WhitePawn)
+            .with_piece("b2", ColoredPieceType::WhitePawn)
+            .with_piece("c2", ColoredPieceType::WhitePawn)
+            .with_piece("d2", ColoredPieceType::WhitePawn)
+            .with_piece("e2", ColoredPieceType::WhitePawn)
+            .with_piece("f2", ColoredPieceType::WhitePawn)
+            .with_piece("g2", ColoredPieceType::WhitePawn)
+            .with_piece("h2", ColoredPieceType::WhitePawn)
+            .with_piece("a7", ColoredPieceType::BlackPawn)
+            .with_piece("b7", ColoredPieceType::BlackPawn)
+            .with_piece("c7", ColoredPieceType::BlackPawn)
+            .with_piece("d7", ColoredPieceType::BlackPawn)
+            .with_piece("e7", ColoredPieceType::BlackPawn)
+            .with_piece("f7", ColoredPieceType::BlackPawn)
+            .with_piece("g7", ColoredPieceType::BlackPawn)
+            .with_piece("h7", ColoredPieceType::BlackPawn)
+            .with_piece("a8", ColoredPieceType::BlackRook)
+            .with_piece("b8", ColoredPieceType::BlackKnight)
+            .with_piece("c8", ColoredPieceType::BlackBishop)
+            .with_piece("d8", ColoredPieceType::BlackQueen)
+            .with_piece("e8", ColoredPieceType::BlackKing)
+            .with_piece("f8", ColoredPieceType::BlackBishop)
+            .with_piece("g8", ColoredPieceType::BlackKnight)
+            .with_piece("h8", ColoredPieceType::BlackRook)
+            .with_turn(Side::White)
+            .with_half_move_clock(0)
+            .with_full_move_clock(1)
+            .build();
+
+        assert_that!(
+            starting_board.to_fen(),
+            ok(eq("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1"))
+        );
+    }
+
+    #[test]
+    fn test_write_fen_with_black_turn() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_turn(Side::Black).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 b - - 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_castling_rights_white_short() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_castling_white_short(true).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w K - 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_castling_rights_white_long() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_castling_white_long(true).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w Q - 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_castling_rights_black_short() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_castling_black_short(true).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w k - 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_castling_rights_black_long() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_castling_black_long(true).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w q - 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_enpassant() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_enpassant(Square::from_algebraic("e4").unwrap()).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w - e4 0 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_half_move_clock() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_half_move_clock(10).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w - - 10 0"))
+        );
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_write_fen_with_full_move_clock() -> Result<()> {
+        assert_that!(
+            BoardBuilder::new().with_full_move_clock(10).build().to_fen(),
+            ok(eq("8/8/8/8/8/8/8/8 w - - 0 10"))
+        );
+
+        Ok(())
     }
 }

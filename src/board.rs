@@ -391,16 +391,16 @@ impl Board {
             result.set_full_move_clock(result.get_full_move_clock() + 1);
         }
 
-        let moved_piece = self.piece_at(mov.get_src()).unwrap();
-        let target_piece = self.piece_at(mov.get_dst()).unwrap();
+        let moved_piece = self.piece_at(mov.get_src());
+        let target_piece = self.piece_at(mov.get_dst());
 
         let mov = (moved_piece, target_piece);
 
-        let halfmove_clock_reset = matches!(mov, (ColoredPieceType::WhitePawn, _))
-            | matches!(mov, (ColoredPieceType::BlackPawn, _))
-            | matches!(mov, (_, ColoredPieceType::WhitePawn))
-            | matches!(mov, (_, ColoredPieceType::BlackPawn))
-            | (target_piece != ColoredPieceType::NoPiece);
+        let halfmove_clock_reset = matches!(mov, (Some(ColoredPieceType::WhitePawn), _))
+            | matches!(mov, (Some(ColoredPieceType::BlackPawn), _))
+            | matches!(mov, (_, Some(ColoredPieceType::WhitePawn)))
+            | matches!(mov, (_, Some(ColoredPieceType::BlackPawn)))
+            | (target_piece != None);
 
         if halfmove_clock_reset {
             result.set_half_move_clock(0);

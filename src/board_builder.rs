@@ -70,9 +70,9 @@ impl BoardBuilder {
     }
 
     #[allow(dead_code)]
-    pub fn with_enpassant(&self, enpassant: Option<Square>) -> BoardBuilder {
+    pub fn with_enpassant(&self, enpassant: Square) -> BoardBuilder {
         let mut builder = self.clone();
-        builder.board.set_enpassant(enpassant);
+        builder.board.set_enpassant(Some(enpassant));
         builder
     }
 
@@ -88,6 +88,11 @@ impl BoardBuilder {
         let mut builder = self.clone();
         builder.board.set_full_move_clock(full_move_clock);
         builder
+    }
+
+    #[allow(dead_code)]
+    pub fn with_basic_board(&self) -> Result<BoardBuilder> {
+        self.with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
     }
 
     #[allow(dead_code)]

@@ -5,8 +5,8 @@ This crate provides a library for chess board representation, move generation an
 #![feature(iter_intersperse)]
 #![feature(test)]
 
-extern crate test;
 extern crate num;
+extern crate test;
 #[macro_use]
 extern crate num_derive;
 

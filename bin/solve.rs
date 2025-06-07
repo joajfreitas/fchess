@@ -14,6 +14,8 @@ fn main() -> Result<()> {
     let args = Args::parse();
     let mut solver = Solver::new();
 
-    solver.best_move(&Board::from_fen(&args.fen).unwrap()).unwrap();
+    solver
+        .best_move(&Board::from_fen(&args.fen).unwrap())
+        .unwrap();
     Ok(())
 }
