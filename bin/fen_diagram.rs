@@ -16,6 +16,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         input
     };
 
+    println!("fen: {}", input.trim());
+
     println!("{}", Board::from_fen(&input)?);
 
     Ok(())

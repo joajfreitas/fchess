@@ -8,6 +8,8 @@ use crate::moves::Scope;
 use crate::moveset::MoveSet;
 use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
+use crate::utils::print_u64;
+use crate::moves::Move;
 
 pub fn generate_knight_moves() -> Vec<u64> {
     let mut vec: Vec<u64> = Vec::new();
@@ -288,6 +290,12 @@ impl MoveGenerator {
             .reduce(|mov1, mov2| mov1 | mov2)
             .unwrap_or(0);
 
+        println!("enemies:");
+        print_u64(enemies);
+
+        println!("flood1:");
+        print_u64(flood);
+
         if piece == ColoredPieceType::WhiteKing {
             let b1 = Square::from_rank_file(0, 1);
             let c1 = Square::from_rank_file(0, 2);
@@ -337,14 +345,13 @@ impl MoveGenerator {
             }
         }
 
-        MoveSet::new(from, piece, flood)
-    }
-}
+        flood &= !(1 << from.get_index());
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_something() {
-        assert_eq!(2 + 2, 4);
+        println!("flood2:");
+        print_u64(flood);
+
+        let moveset = MoveSet::new(from, piece, flood);
+        dbg!(moveset.into_iter().collect::<Vec<Move>>());
+        moveset
     }
 }

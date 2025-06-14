@@ -8,6 +8,7 @@ use crate::piece::{ColoredPieceType, Piece};
 use crate::side::Side;
 use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
+use crate::move_generator::MoveGenerator;
 use anyhow::Result;
 
 pub trait Mask {
@@ -415,16 +416,9 @@ impl Board {
         Some(result)
     }
 
-    pub fn checkmate(self: &Board) -> bool {
-        if self.pieces[ColoredPieceType::WhiteKing as usize] == 0 {
-            return true;
-        }
-
-        if self.pieces[ColoredPieceType::BlackKing as usize] == 0 {
-            return true;
-        }
-
-        false
+    pub fn checkmate(self: &Board, move_generator: &MoveGenerator) -> bool {
+        println!("{}", move_generator.generate_moves(self)[0]);
+        move_generator.generate_moves(self).is_empty()
     }
 
     pub fn zobrist_hash(&self) -> u64 {
@@ -439,6 +433,7 @@ mod tests {
     use super::Piece;
     use super::Scope;
     use super::Square;
+    use super::MoveGenerator;
 
     #[test]
     fn test_board_iterator() {
@@ -535,5 +530,13 @@ mod tests {
                 .to_algebraic(),
             "a8".to_string()
         );
+    }
+
+    #[test]
+    fn test_checkmate() {
+        let board = Board::from_fen("k7/1R6/2K5/8/8/8/8/8 b - - 0 1").unwrap();
+        let move_generator = MoveGenerator::new();
+
+        assert!(board.checkmate(&move_generator));
     }
 }

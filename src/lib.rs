@@ -30,6 +30,7 @@ mod dumb7fill;
 mod epd;
 mod fen;
 mod move_generator;
+mod san;
 mod moves;
 mod moveset;
 mod piece;
@@ -37,6 +38,7 @@ mod side;
 mod solver;
 mod square;
 mod zobrist_hash;
+mod utils;
 
 #[cfg(test)]
 mod tests {
