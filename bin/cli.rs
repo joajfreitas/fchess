@@ -32,7 +32,7 @@ fn main() -> Result<()> {
     println!("{board}");
 
     loop {
-        let mov: Move = Move::from_algebraic(&match board.get_turn() {
+        let mov: Move = Move::from_san(&match board.get_turn() {
             Side::White => {
                 let line = rl.readline("> ");
                 match line {
@@ -58,7 +58,7 @@ fn main() -> Result<()> {
                 }
             }
             .to_algebraic(),
-        })
+        }, &board)
         .unwrap();
 
         board = match board.apply(&mov) {
