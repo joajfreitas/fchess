@@ -4,8 +4,8 @@ use std::ops::Not;
 
 use crate::board::print_board;
 use crate::board::Board;
-use crate::san::read_san;
 use crate::piece::{ColoredPieceType, Piece};
+use crate::san::read_san;
 use crate::side::Side;
 use crate::square::Square;
 
@@ -194,7 +194,7 @@ impl Move {
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            let promotion = ColoredPieceType::from_string(&mov[4]);
+            let promotion = ColoredPieceType::from_char(&mov[4]);
             let mut mov = Move::new(
                 Square::from_rank_file(src_rank, src_file),
                 Square::from_rank_file(dst_rank, dst_file),
@@ -226,7 +226,7 @@ impl Move {
             );
 
             if algebra.len() == 5 {
-                mov.set_promotion(ColoredPieceType::from_string(&algebra[4]));
+                mov.set_promotion(ColoredPieceType::from_char(&algebra[4]));
             }
             Some(mov)
         } else {
@@ -241,7 +241,12 @@ impl Move {
         let src_file = (self.src.get_rank() + b'1') as char;
 
         let promotion = if self.promotion.is_some() {
-            self.promotion.unwrap().to_char().to_string().to_uppercase()
+            self.promotion
+                .unwrap()
+                .to_char()
+                .unwrap()
+                .to_string()
+                .to_uppercase()
         } else {
             "".to_string()
         };
@@ -253,8 +258,8 @@ impl Move {
 mod tests {
     use anyhow::Result;
 
-    use crate::square::Square;
     use crate::move_generator::MoveGenerator;
+    use crate::square::Square;
 
     use super::Board;
     use super::Move;

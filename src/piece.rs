@@ -4,36 +4,33 @@ use std::ops::Not;
 use crate::side::Side;
 use crate::square::Square;
 
+const LAST_WHITE_OFFSET: u32 = 6;
+const LAST_BLACK_OFFSET: u32 = 12;
+
 #[allow(dead_code)]
+#[derive(FromPrimitive, ToPrimitive)]
 pub enum PieceType {
-    Pawn,
-    Rook,
-    Knight,
-    Bishop,
-    Queen,
-    King,
+    Pawn = 0,
+    Rook = 1,
+    Knight = 2,
+    Bishop = 3,
+    Queen = 4,
+    King = 5,
 }
 
 impl PieceType {
     pub fn with_color(self, side: Side) -> ColoredPieceType {
-        match (self, side) {
-            (PieceType::Pawn, Side::White) => ColoredPieceType::WhitePawn,
-            (PieceType::Rook, Side::White) => ColoredPieceType::WhiteRook,
-            (PieceType::Knight, Side::White) => ColoredPieceType::WhiteKnight,
-            (PieceType::Bishop, Side::White) => ColoredPieceType::WhiteBishop,
-            (PieceType::Queen, Side::White) => ColoredPieceType::WhiteQueen,
-            (PieceType::King, Side::White) => ColoredPieceType::WhiteKing,
-            (PieceType::Pawn, Side::Black) => ColoredPieceType::BlackPawn,
-            (PieceType::Rook, Side::Black) => ColoredPieceType::BlackRook,
-            (PieceType::Knight, Side::Black) => ColoredPieceType::BlackKnight,
-            (PieceType::Bishop, Side::Black) => ColoredPieceType::BlackBishop,
-            (PieceType::Queen, Side::Black) => ColoredPieceType::BlackQueen,
-            (PieceType::King, Side::Black) => ColoredPieceType::BlackKing,
-        }
+        let side_offset: u32 = match side {
+            Side::White => 0,
+            Side::Black => LAST_WHITE_OFFSET,
+        };
+
+        num::FromPrimitive::from_u32(num::ToPrimitive::to_u32(&self).unwrap() + side_offset)
+            .unwrap()
     }
 }
 
-#[derive(Copy, Clone, FromPrimitive, Eq, PartialEq, Debug, Ord, PartialOrd, Hash)]
+#[derive(Copy, Clone, FromPrimitive, ToPrimitive, Eq, PartialEq, Debug, Ord, PartialOrd, Hash)]
 pub enum ColoredPieceType {
     WhitePawn = 0,
     WhiteRook = 1,
@@ -63,31 +60,19 @@ impl fmt::Display for ColoredPieceType {
 
 impl ColoredPieceType {
     pub fn is_black(self: &ColoredPieceType) -> bool {
-        matches!(
-            self,
-            ColoredPieceType::BlackPawn
-                | ColoredPieceType::BlackRook
-                | ColoredPieceType::BlackKnight
-                | ColoredPieceType::BlackBishop
-                | ColoredPieceType::BlackQueen
-                | ColoredPieceType::BlackKing
-        )
+        let offset = num::ToPrimitive::to_u32(self).unwrap();
+
+        LAST_WHITE_OFFSET <= offset && offset < LAST_BLACK_OFFSET
     }
 
     pub fn is_white(self: &ColoredPieceType) -> bool {
-        matches!(
-            self,
-            ColoredPieceType::WhitePawn
-                | ColoredPieceType::WhiteRook
-                | ColoredPieceType::WhiteKnight
-                | ColoredPieceType::WhiteBishop
-                | ColoredPieceType::WhiteQueen
-                | ColoredPieceType::WhiteKing
-        )
+        let offset = num::ToPrimitive::to_u32(self).unwrap();
+
+        offset < LAST_WHITE_OFFSET
     }
 
-    pub fn from_string(s: &char) -> Option<ColoredPieceType> {
-        match s {
+    pub fn from_char(c: &char) -> Option<ColoredPieceType> {
+        match c {
             'P' => Some(ColoredPieceType::WhitePawn),
             'R' => Some(ColoredPieceType::WhiteRook),
             'N' => Some(ColoredPieceType::WhiteKnight),
@@ -103,21 +88,21 @@ impl ColoredPieceType {
             _ => None,
         }
     }
-    pub fn to_char(self) -> char {
-        match dbg!(self) {
-            ColoredPieceType::WhitePawn => 'P',
-            ColoredPieceType::WhiteRook => 'R',
-            ColoredPieceType::WhiteKnight => 'N',
-            ColoredPieceType::WhiteBishop => 'B',
-            ColoredPieceType::WhiteQueen => 'Q',
-            ColoredPieceType::WhiteKing => 'K',
-            ColoredPieceType::BlackPawn => 'p',
-            ColoredPieceType::BlackRook => 'r',
-            ColoredPieceType::BlackKnight => 'n',
-            ColoredPieceType::BlackBishop => 'b',
-            ColoredPieceType::BlackQueen => 'q',
-            ColoredPieceType::BlackKing => 'k',
-            _ => panic!(),
+    pub fn to_char(self) -> Option<char> {
+        match self {
+            ColoredPieceType::WhitePawn => Some('P'),
+            ColoredPieceType::WhiteRook => Some('R'),
+            ColoredPieceType::WhiteKnight => Some('N'),
+            ColoredPieceType::WhiteBishop => Some('B'),
+            ColoredPieceType::WhiteQueen => Some('Q'),
+            ColoredPieceType::WhiteKing => Some('K'),
+            ColoredPieceType::BlackPawn => Some('p'),
+            ColoredPieceType::BlackRook => Some('r'),
+            ColoredPieceType::BlackKnight => Some('n'),
+            ColoredPieceType::BlackBishop => Some('b'),
+            ColoredPieceType::BlackQueen => Some('q'),
+            ColoredPieceType::BlackKing => Some('k'),
+            _ => None,
         }
     }
 }

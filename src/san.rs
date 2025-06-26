@@ -71,8 +71,7 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     }
 
     let handle_piece_type = |m: Match| -> ColoredPieceType {
-        let piece_type =
-            ColoredPieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
+        let piece_type = ColoredPieceType::from_char(&m.as_str().chars().next().unwrap()).unwrap();
         if board.get_turn() == Side::Black {
             !piece_type
         } else {
@@ -185,9 +184,8 @@ mod tests {
             .build()
     }
 
-
     #[rstest]
-    #[case("d3", "d2d3")]  // Pawn move
+    #[case("d3", "d2d3")] // Pawn move
     #[case("Ra2", "a1a2")] // Rook move
     #[case("Nc3", "b1c3")] // Knight move
     #[case("Ba3", "c1a3")] // Bishop move
@@ -233,7 +231,7 @@ mod tests {
     }
 
     #[rstest]
-    #[case("e6", "e7e6")]  // Pawn move
+    #[case("e6", "e7e6")] // Pawn move
     #[case("Rh7", "h8h7")] // Rook move
     #[case("Nf6", "g8f6")] // Knight move
     #[case("Bh6", "f8h6")] // Bishop move

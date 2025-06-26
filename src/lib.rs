@@ -30,15 +30,15 @@ mod dumb7fill;
 mod epd;
 mod fen;
 mod move_generator;
-mod san;
 mod moves;
 mod moveset;
 mod piece;
+mod san;
 mod side;
 mod solver;
 mod square;
-mod zobrist_hash;
 mod utils;
+mod zobrist_hash;
 
 #[cfg(test)]
 mod tests {

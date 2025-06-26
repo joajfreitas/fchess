@@ -112,7 +112,11 @@ fn write_piece_placement(board: &Board) -> Result<String> {
                     fen.push_str(&empty_count.to_string());
                     empty_count = 0;
                 }
-                fen.push(piece.to_char());
+                fen.push(
+                    piece
+                        .to_char()
+                        .ok_or(anyhow!("Invalid piece in FEN string"))?,
+                );
             } else {
                 empty_count += 1;
             }
@@ -439,7 +443,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_castling_rights_white_short() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_castling_white_short(true).build().to_fen(),
+            BoardBuilder::new()
+                .with_castling_white_short(true)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w K - 0 0"))
         );
 
@@ -449,7 +456,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_castling_rights_white_long() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_castling_white_long(true).build().to_fen(),
+            BoardBuilder::new()
+                .with_castling_white_long(true)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w Q - 0 0"))
         );
 
@@ -459,7 +469,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_castling_rights_black_short() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_castling_black_short(true).build().to_fen(),
+            BoardBuilder::new()
+                .with_castling_black_short(true)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w k - 0 0"))
         );
 
@@ -469,7 +482,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_castling_rights_black_long() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_castling_black_long(true).build().to_fen(),
+            BoardBuilder::new()
+                .with_castling_black_long(true)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w q - 0 0"))
         );
 
@@ -479,7 +495,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_enpassant() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_enpassant(Square::from_algebraic("e4").unwrap()).build().to_fen(),
+            BoardBuilder::new()
+                .with_enpassant(Square::from_algebraic("e4").unwrap())
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w - e4 0 0"))
         );
 
@@ -489,7 +508,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_half_move_clock() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_half_move_clock(10).build().to_fen(),
+            BoardBuilder::new()
+                .with_half_move_clock(10)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w - - 10 0"))
         );
 
@@ -499,7 +521,10 @@ mod tests {
     #[test]
     fn test_write_fen_with_full_move_clock() -> Result<()> {
         assert_that!(
-            BoardBuilder::new().with_full_move_clock(10).build().to_fen(),
+            BoardBuilder::new()
+                .with_full_move_clock(10)
+                .build()
+                .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w - - 0 10"))
         );
 

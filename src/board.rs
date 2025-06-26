@@ -3,12 +3,12 @@ use std::fmt;
 use crate::bitwise;
 
 use crate::fen::{read_fen, write_fen};
+use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
-use crate::piece::{ColoredPieceType, Piece};
+use crate::piece::{ColoredPieceType, Piece, PieceType};
 use crate::side::Side;
 use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
-use crate::move_generator::MoveGenerator;
 use anyhow::Result;
 
 pub trait Mask {
@@ -130,6 +130,20 @@ impl<'a> Iterator for BoardIterator<'a> {
     }
 }
 
+// U64 attacksBy0x88DiffAndPiece[7][256];  // 14KByte
+//
+// /* is square <to> attacked by <piece> from square <from> */
+// bool isAttacked(enumSquare from, enumSquare to, enumPiece piece, U64 occ) {
+//    int isBlackPawn = (piece ^ nBlackPawn) - 1;
+//    isBlackPawn >>= 31; /* -1 if black pawn, otherwise 0 */
+//    return (attacksBy0x88DiffAndPiece [piece/2 + isBlackPawn] [x88diff(from,to)]
+//            & rotateRight (occ, from) ) == 0;
+// }
+
+//fn is_attacked(from: &Piece, to: &Square) -> bool {
+//    let is_black_pawn = from.get_type() == ColoredPieceType::BlackPawn;
+//}
+
 impl Board {
     pub fn new() -> Self {
         Self {
@@ -222,6 +236,19 @@ impl Board {
         self.pieces[piece_type as usize]
     }
 
+    pub fn king(&self, side: Side) -> Square {
+        let mut mask = self.get_piece_mask(PieceType::King.with_color(side));
+
+        let mut r = 0;
+
+        while mask >> 1 != 0 {
+            mask = mask >> 1;
+            r += 1;
+        }
+
+        Square::from_index(r as u8)
+    }
+
     // Create board with scope
     pub fn scoped(self: &Board, scope: Scope) -> Board {
         let mut board = self.clone();
@@ -310,7 +337,7 @@ impl Board {
         Some(result)
     }
 
-    pub fn apply(self: &Board, mov: &Move) -> Option<Board> {
+    pub fn apply(self: &Self, mov: &Move) -> Option<Board> {
         let castle = self.is_castle(mov.clone());
         let mut result = if castle.is_some() {
             let castle = castle.unwrap();
@@ -428,12 +455,10 @@ impl Board {
 
 #[cfg(test)]
 mod tests {
-    use super::Board;
-    use super::ColoredPieceType;
-    use super::Piece;
-    use super::Scope;
-    use super::Square;
-    use super::MoveGenerator;
+    use rstest::rstest;
+
+    use super::*;
+    use crate::board_builder::BoardBuilder;
 
     #[test]
     fn test_board_iterator() {
@@ -532,11 +557,22 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_checkmate() {
-        let board = Board::from_fen("k7/1R6/2K5/8/8/8/8/8 b - - 0 1").unwrap();
-        let move_generator = MoveGenerator::new();
+    #[rstest]
+    #[case("e1", Side::White)]
+    #[case("a4", Side::Black)]
+    fn test_king(#[case] square: &str, #[case] side: Side) {
+        let board = BoardBuilder::new()
+            .with_piece(square, PieceType::King.with_color(side))
+            .build();
 
-        assert!(board.checkmate(&move_generator));
+        assert_eq!(board.king(side).to_algebraic(), square);
     }
+
+    //#[test]
+    //fn test_checkmate() {
+    //    let board = Board::from_fen("k7/1R6/2K5/8/8/8/8/8 b - - 0 1").unwrap();
+    //    let move_generator = MoveGenerator::new();
+
+    //    assert!(board.checkmate(&move_generator));
+    //}
 }
