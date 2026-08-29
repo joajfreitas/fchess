@@ -95,7 +95,7 @@ fn main() -> Result<()> {
         let board = Board::from_fen(&testcase.start_fen);
         let mov = Move::from_algebraic(&testcase.lan);
         if mov.is_none() {
-            println!("Failed to parse move {}", &testcase.lan);
+            println!("Failed to parse move {}", testcase.lan);
             println!("{board}");
             continue;
         }

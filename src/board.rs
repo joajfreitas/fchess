@@ -32,7 +32,7 @@ pub fn print_board(pieces: Vec<Piece>, f: &mut fmt::Formatter<'_>) -> fmt::Resul
     let coords: Vec<Square> = pieces
         .clone()
         .into_iter()
-        .map(|piece| (piece.get_square()))
+        .map(|piece| piece.get_square())
         .collect();
     writeln!(f, "  ┌───┬───┬───┬───┬───┬───┬───┬───┐")?;
     for i in 0..8 {
@@ -249,10 +249,10 @@ impl Board {
     }
 
     pub fn piece_at(self: &Board, square: Square) -> Option<PieceType> {
-        for piece_index in 0..13 {
-            let bit = (self.pieces[piece_index] >> square.get_index()) & 1;
+        for (index, piece) in self.pieces.iter().enumerate() {
+            let bit = (piece >> square.get_index()) & 1;
             if bit == 1 {
-                return num::FromPrimitive::from_usize(piece_index);
+                return num::FromPrimitive::from_usize(index);
             }
         }
         Some(PieceType::NoPiece)
@@ -312,9 +312,7 @@ impl Board {
     }
 
     pub fn apply(self: &Board, mov: Move) -> Option<Board> {
-        let castle = self.is_castle(mov.clone());
-        let mut result = if castle.is_some() {
-            let castle = castle.unwrap();
+        let mut result = if let Some(castle) = self.is_castle(mov.clone()) {
             let mut board = self.apply_single_move(castle.0)?;
             match castle.2 {
                 Castling::WhiteShort => board.set_castling_white_short(false),
