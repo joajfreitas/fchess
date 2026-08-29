@@ -1,1 +1,0 @@
-searchState.loadedDescShard("book", 0, "")
