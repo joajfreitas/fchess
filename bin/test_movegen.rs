@@ -51,7 +51,7 @@ impl TestResult for MovegenTestResult {
                 .into_iter()
                 .intersperse(",".to_string())
                 .collect::<String>(),
-            &self
+            self
                 .resulting_moves
                 .iter()
                 .map(|mov| mov.to_algebraic())

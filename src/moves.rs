@@ -359,8 +359,8 @@ impl Move {
         let src_rank = (self.src.get_file() + b'a') as char;
         let src_file = (self.src.get_rank() + b'1') as char;
 
-        let promotion = if self.promotion.is_some() {
-            self.promotion.unwrap().to_char().to_string().to_uppercase()
+        let promotion = if let Some(promotion) = self.promotion {
+            promotion.to_char().to_string().to_uppercase()
         } else {
             "".to_string()
         };
