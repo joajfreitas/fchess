@@ -359,8 +359,8 @@
 <a href=#359 id=359 data-nosnippet>359</a>        <span class="kw">let </span>src_rank = (<span class="self">self</span>.src.get_file() + <span class="string">b'a'</span>) <span class="kw">as </span>char;
 <a href=#360 id=360 data-nosnippet>360</a>        <span class="kw">let </span>src_file = (<span class="self">self</span>.src.get_rank() + <span class="string">b'1'</span>) <span class="kw">as </span>char;
 <a href=#361 id=361 data-nosnippet>361</a>
-<a href=#362 id=362 data-nosnippet>362</a>        <span class="kw">let </span>promotion = <span class="kw">if </span><span class="self">self</span>.promotion.is_some() {
-<a href=#363 id=363 data-nosnippet>363</a>            <span class="self">self</span>.promotion.unwrap().to_char().to_string().to_uppercase()
+<a href=#362 id=362 data-nosnippet>362</a>        <span class="kw">let </span>promotion = <span class="kw">if let </span><span class="prelude-val">Some</span>(promotion) = <span class="self">self</span>.promotion {
+<a href=#363 id=363 data-nosnippet>363</a>            promotion.to_char().to_string().to_uppercase()
 <a href=#364 id=364 data-nosnippet>364</a>        } <span class="kw">else </span>{
 <a href=#365 id=365 data-nosnippet>365</a>            <span class="string">""</span>.to_string()
 <a href=#366 id=366 data-nosnippet>366</a>        };
