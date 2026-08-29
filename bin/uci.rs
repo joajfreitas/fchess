@@ -65,7 +65,7 @@ fn main() -> io::Result<()> {
         }
     });
 
-    let engine_thread = thread::spawn(move || {
+    let _engine_thread = thread::spawn(move || {
         let mut board =
             Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1");
         let solver = Solver::new();
@@ -95,6 +95,6 @@ fn main() -> io::Result<()> {
     });
 
     t.join().unwrap();
-    engine_thread.join().unwrap();
+    _engine_thread.join().unwrap();
     Ok(())
 }
