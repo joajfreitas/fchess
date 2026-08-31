@@ -6,7 +6,7 @@
 <a href=#6 id=6 data-nosnippet>6</a><span class="kw">use </span><span class="kw">crate</span>::dumb7fill::dumb7fill;
 <a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span><span class="kw">crate</span>::moves::Scope;
 <a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span><span class="kw">crate</span>::moveset::MoveSet;
-<a href=#9 id=9 data-nosnippet>9</a><span class="kw">use </span><span class="kw">crate</span>::piece::{Piece, PieceType};
+<a href=#9 id=9 data-nosnippet>9</a><span class="kw">use </span><span class="kw">crate</span>::piece::{ColoredPieceType, Piece};
 <a href=#10 id=10 data-nosnippet>10</a><span class="kw">use </span><span class="kw">crate</span>::square::Square;
 <a href=#11 id=11 data-nosnippet>11</a>
 <a href=#12 id=12 data-nosnippet>12</a><span class="kw">pub fn </span>generate_knight_moves() -&gt; Vec&lt;u64&gt; {
@@ -108,7 +108,7 @@
 <a href=#108 id=108 data-nosnippet>108</a>
 <a href=#109 id=109 data-nosnippet>109</a><span class="kw">impl </span>Default <span class="kw">for </span>MoveGenerator {
 <a href=#110 id=110 data-nosnippet>110</a>    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-<a href=#111 id=111 data-nosnippet>111</a>        <span class="self">Self</span>::new()
+<a href=#111 id=111 data-nosnippet>111</a>        MoveGenerator::new()
 <a href=#112 id=112 data-nosnippet>112</a>    }
 <a href=#113 id=113 data-nosnippet>113</a>}
 <a href=#114 id=114 data-nosnippet>114</a>
@@ -146,29 +146,29 @@
 <a href=#146 id=146 data-nosnippet>146</a>        <span class="kw">let </span>piece = board.piece_at(square).unwrap();
 <a href=#147 id=147 data-nosnippet>147</a>
 <a href=#148 id=148 data-nosnippet>148</a>        <span class="kw">let </span>mov = <span class="kw">match </span>piece {
-<a href=#149 id=149 data-nosnippet>149</a>            PieceType::BlackRook | PieceType::WhiteRook =&gt; {
+<a href=#149 id=149 data-nosnippet>149</a>            ColoredPieceType::BlackRook | ColoredPieceType::WhiteRook =&gt; {
 <a href=#150 id=150 data-nosnippet>150</a>                <span class="self">self</span>.rook_attacks(piece, square, !(occupied | enemy))
 <a href=#151 id=151 data-nosnippet>151</a>            }
-<a href=#152 id=152 data-nosnippet>152</a>            PieceType::BlackBishop | PieceType::WhiteBishop =&gt; {
+<a href=#152 id=152 data-nosnippet>152</a>            ColoredPieceType::BlackBishop | ColoredPieceType::WhiteBishop =&gt; {
 <a href=#153 id=153 data-nosnippet>153</a>                <span class="self">self</span>.bishop_attacks(piece, square, !(occupied | enemy))
 <a href=#154 id=154 data-nosnippet>154</a>            }
-<a href=#155 id=155 data-nosnippet>155</a>            PieceType::BlackQueen | PieceType::WhiteQueen =&gt; {
+<a href=#155 id=155 data-nosnippet>155</a>            ColoredPieceType::BlackQueen | ColoredPieceType::WhiteQueen =&gt; {
 <a href=#156 id=156 data-nosnippet>156</a>                <span class="self">self</span>.bishop_attacks(piece, square, !(occupied | enemy))
 <a href=#157 id=157 data-nosnippet>157</a>                    | <span class="self">self</span>.rook_attacks(piece, square, !(occupied | enemy))
 <a href=#158 id=158 data-nosnippet>158</a>            }
-<a href=#159 id=159 data-nosnippet>159</a>            PieceType::BlackKing | PieceType::WhiteKing =&gt; <span class="self">self</span>.king_attacks(
+<a href=#159 id=159 data-nosnippet>159</a>            ColoredPieceType::BlackKing | ColoredPieceType::WhiteKing =&gt; <span class="self">self</span>.king_attacks(
 <a href=#160 id=160 data-nosnippet>160</a>                piece,
 <a href=#161 id=161 data-nosnippet>161</a>                square,
 <a href=#162 id=162 data-nosnippet>162</a>                !board.occupied(Scope::from(board.get_turn())),
 <a href=#163 id=163 data-nosnippet>163</a>                board,
 <a href=#164 id=164 data-nosnippet>164</a>            ),
-<a href=#165 id=165 data-nosnippet>165</a>            PieceType::BlackPawn =&gt; {
+<a href=#165 id=165 data-nosnippet>165</a>            ColoredPieceType::BlackPawn =&gt; {
 <a href=#166 id=166 data-nosnippet>166</a>                <span class="self">self</span>.black_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
 <a href=#167 id=167 data-nosnippet>167</a>            }
-<a href=#168 id=168 data-nosnippet>168</a>            PieceType::WhitePawn =&gt; {
+<a href=#168 id=168 data-nosnippet>168</a>            ColoredPieceType::WhitePawn =&gt; {
 <a href=#169 id=169 data-nosnippet>169</a>                <span class="self">self</span>.white_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
 <a href=#170 id=170 data-nosnippet>170</a>            }
-<a href=#171 id=171 data-nosnippet>171</a>            PieceType::BlackKnight | PieceType::WhiteKnight =&gt; <span class="self">self</span>.knight_attacks(
+<a href=#171 id=171 data-nosnippet>171</a>            ColoredPieceType::BlackKnight | ColoredPieceType::WhiteKnight =&gt; <span class="self">self</span>.knight_attacks(
 <a href=#172 id=172 data-nosnippet>172</a>                piece,
 <a href=#173 id=173 data-nosnippet>173</a>                square,
 <a href=#174 id=174 data-nosnippet>174</a>                !board.occupied(Scope::from(board.get_turn())),
@@ -186,7 +186,7 @@
 <a href=#186 id=186 data-nosnippet>186</a>
 <a href=#187 id=187 data-nosnippet>187</a>    <span class="kw">pub fn </span>black_pawn_attacks(
 <a href=#188 id=188 data-nosnippet>188</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#189 id=189 data-nosnippet>189</a>        piece: PieceType,
+<a href=#189 id=189 data-nosnippet>189</a>        piece: ColoredPieceType,
 <a href=#190 id=190 data-nosnippet>190</a>        from: Square,
 <a href=#191 id=191 data-nosnippet>191</a>        friendlies: u64,
 <a href=#192 id=192 data-nosnippet>192</a>        enemy: u64,
@@ -207,7 +207,7 @@
 <a href=#207 id=207 data-nosnippet>207</a>
 <a href=#208 id=208 data-nosnippet>208</a>    <span class="kw">pub fn </span>white_pawn_attacks(
 <a href=#209 id=209 data-nosnippet>209</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#210 id=210 data-nosnippet>210</a>        piece: PieceType,
+<a href=#210 id=210 data-nosnippet>210</a>        piece: ColoredPieceType,
 <a href=#211 id=211 data-nosnippet>211</a>        from: Square,
 <a href=#212 id=212 data-nosnippet>212</a>        friendlies: u64,
 <a href=#213 id=213 data-nosnippet>213</a>        enemy: u64,
@@ -226,7 +226,7 @@
 <a href=#226 id=226 data-nosnippet>226</a>        <span class="kw">let </span>attacks = attack &amp; enemy;
 <a href=#227 id=227 data-nosnippet>227</a>        MoveSet::new(from, piece, mov | attacks)
 <a href=#228 id=228 data-nosnippet>228</a>    }
-<a href=#229 id=229 data-nosnippet>229</a>    <span class="kw">pub fn </span>knight_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: PieceType, from: Square, free: u64) -&gt; MoveSet {
+<a href=#229 id=229 data-nosnippet>229</a>    <span class="kw">pub fn </span>knight_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: ColoredPieceType, from: Square, free: u64) -&gt; MoveSet {
 <a href=#230 id=230 data-nosnippet>230</a>        MoveSet::new(
 <a href=#231 id=231 data-nosnippet>231</a>            from,
 <a href=#232 id=232 data-nosnippet>232</a>            piece,
@@ -234,7 +234,7 @@
 <a href=#234 id=234 data-nosnippet>234</a>        )
 <a href=#235 id=235 data-nosnippet>235</a>    }
 <a href=#236 id=236 data-nosnippet>236</a>
-<a href=#237 id=237 data-nosnippet>237</a>    <span class="kw">pub fn </span>bishop_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: PieceType, from: Square, free: u64) -&gt; MoveSet {
+<a href=#237 id=237 data-nosnippet>237</a>    <span class="kw">pub fn </span>bishop_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: ColoredPieceType, from: Square, free: u64) -&gt; MoveSet {
 <a href=#238 id=238 data-nosnippet>238</a>        <span class="kw">let </span>fill = <span class="number">1 </span>&lt;&lt; from.get_index();
 <a href=#239 id=239 data-nosnippet>239</a>        <span class="kw">let </span><span class="kw-2">mut </span>targets = <span class="number">0</span>;
 <a href=#240 id=240 data-nosnippet>240</a>
@@ -246,7 +246,7 @@
 <a href=#246 id=246 data-nosnippet>246</a>        MoveSet::new(from, piece, targets)
 <a href=#247 id=247 data-nosnippet>247</a>    }
 <a href=#248 id=248 data-nosnippet>248</a>
-<a href=#249 id=249 data-nosnippet>249</a>    <span class="kw">pub fn </span>rook_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: PieceType, from: Square, free: u64) -&gt; MoveSet {
+<a href=#249 id=249 data-nosnippet>249</a>    <span class="kw">pub fn </span>rook_attacks(<span class="kw-2">&amp;</span><span class="self">self</span>, piece: ColoredPieceType, from: Square, free: u64) -&gt; MoveSet {
 <a href=#250 id=250 data-nosnippet>250</a>        <span class="kw">let </span>fill = <span class="number">1 </span>&lt;&lt; from.get_index();
 <a href=#251 id=251 data-nosnippet>251</a>        <span class="kw">let </span><span class="kw-2">mut </span>targets = <span class="number">0</span>;
 <a href=#252 id=252 data-nosnippet>252</a>
@@ -260,7 +260,7 @@
 <a href=#260 id=260 data-nosnippet>260</a>
 <a href=#261 id=261 data-nosnippet>261</a>    <span class="kw">pub fn </span>king_attacks(
 <a href=#262 id=262 data-nosnippet>262</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#263 id=263 data-nosnippet>263</a>        piece: PieceType,
+<a href=#263 id=263 data-nosnippet>263</a>        piece: ColoredPieceType,
 <a href=#264 id=264 data-nosnippet>264</a>        from: Square,
 <a href=#265 id=265 data-nosnippet>265</a>        free: u64,
 <a href=#266 id=266 data-nosnippet>266</a>        board: <span class="kw-2">&amp;</span>Board,
@@ -288,21 +288,21 @@
 <a href=#288 id=288 data-nosnippet>288</a>            .reduce(|mov1, mov2| mov1 | mov2)
 <a href=#289 id=289 data-nosnippet>289</a>            .unwrap_or(<span class="number">0</span>);
 <a href=#290 id=290 data-nosnippet>290</a>
-<a href=#291 id=291 data-nosnippet>291</a>        <span class="kw">if </span>piece == PieceType::WhiteKing {
+<a href=#291 id=291 data-nosnippet>291</a>        <span class="kw">if </span>piece == ColoredPieceType::WhiteKing {
 <a href=#292 id=292 data-nosnippet>292</a>            <span class="kw">let </span>b1 = Square::from_rank_file(<span class="number">0</span>, <span class="number">1</span>);
 <a href=#293 id=293 data-nosnippet>293</a>            <span class="kw">let </span>c1 = Square::from_rank_file(<span class="number">0</span>, <span class="number">2</span>);
 <a href=#294 id=294 data-nosnippet>294</a>            <span class="kw">let </span>d1 = Square::from_rank_file(<span class="number">0</span>, <span class="number">3</span>);
 <a href=#295 id=295 data-nosnippet>295</a>            <span class="kw">let </span>f1 = Square::from_rank_file(<span class="number">0</span>, <span class="number">5</span>);
 <a href=#296 id=296 data-nosnippet>296</a>            <span class="kw">let </span>g1 = Square::from_rank_file(<span class="number">0</span>, <span class="number">6</span>);
 <a href=#297 id=297 data-nosnippet>297</a>
-<a href=#298 id=298 data-nosnippet>298</a>            <span class="kw">let </span>long_unoccupied = board.piece_at(b1) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#299 id=299 data-nosnippet>299</a>                &amp;&amp; board.piece_at(c1) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#300 id=300 data-nosnippet>300</a>                &amp;&amp; board.piece_at(d1) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
+<a href=#298 id=298 data-nosnippet>298</a>            <span class="kw">let </span>long_unoccupied = board.piece_at(b1) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#299 id=299 data-nosnippet>299</a>                &amp;&amp; board.piece_at(c1) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#300 id=300 data-nosnippet>300</a>                &amp;&amp; board.piece_at(d1) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
 <a href=#301 id=301 data-nosnippet>301</a>                &amp;&amp; enemies &gt;&gt; b1.get_index() == <span class="number">0
 <a href=#302 id=302 data-nosnippet>302</a>                </span>&amp;&amp; enemies &gt;&gt; c1.get_index() == <span class="number">0
 <a href=#303 id=303 data-nosnippet>303</a>                </span>&amp;&amp; enemies &gt;&gt; d1.get_index() == <span class="number">0</span>;
-<a href=#304 id=304 data-nosnippet>304</a>            <span class="kw">let </span>short_unoccupied = board.piece_at(f1) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#305 id=305 data-nosnippet>305</a>                &amp;&amp; board.piece_at(g1) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
+<a href=#304 id=304 data-nosnippet>304</a>            <span class="kw">let </span>short_unoccupied = board.piece_at(f1) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#305 id=305 data-nosnippet>305</a>                &amp;&amp; board.piece_at(g1) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
 <a href=#306 id=306 data-nosnippet>306</a>                &amp;&amp; enemies &gt;&gt; f1.get_index() == <span class="number">0
 <a href=#307 id=307 data-nosnippet>307</a>                </span>&amp;&amp; enemies &gt;&gt; g1.get_index() == <span class="number">0</span>;
 <a href=#308 id=308 data-nosnippet>308</a>            <span class="kw">if </span>board.get_castling_white_long() &amp;&amp; long_unoccupied {
@@ -313,20 +313,20 @@
 <a href=#313 id=313 data-nosnippet>313</a>            }
 <a href=#314 id=314 data-nosnippet>314</a>        }
 <a href=#315 id=315 data-nosnippet>315</a>
-<a href=#316 id=316 data-nosnippet>316</a>        <span class="kw">if </span>piece == PieceType::BlackKing {
+<a href=#316 id=316 data-nosnippet>316</a>        <span class="kw">if </span>piece == ColoredPieceType::BlackKing {
 <a href=#317 id=317 data-nosnippet>317</a>            <span class="kw">let </span>b8 = Square::from_rank_file(<span class="number">7</span>, <span class="number">1</span>);
 <a href=#318 id=318 data-nosnippet>318</a>            <span class="kw">let </span>c8 = Square::from_rank_file(<span class="number">7</span>, <span class="number">2</span>);
 <a href=#319 id=319 data-nosnippet>319</a>            <span class="kw">let </span>d8 = Square::from_rank_file(<span class="number">7</span>, <span class="number">3</span>);
 <a href=#320 id=320 data-nosnippet>320</a>            <span class="kw">let </span>f8 = Square::from_rank_file(<span class="number">7</span>, <span class="number">5</span>);
 <a href=#321 id=321 data-nosnippet>321</a>            <span class="kw">let </span>g8 = Square::from_rank_file(<span class="number">7</span>, <span class="number">6</span>);
-<a href=#322 id=322 data-nosnippet>322</a>            <span class="kw">let </span>long_unoccupied = board.piece_at(b8) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#323 id=323 data-nosnippet>323</a>                &amp;&amp; board.piece_at(c8) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#324 id=324 data-nosnippet>324</a>                &amp;&amp; board.piece_at(d8) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
+<a href=#322 id=322 data-nosnippet>322</a>            <span class="kw">let </span>long_unoccupied = board.piece_at(b8) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#323 id=323 data-nosnippet>323</a>                &amp;&amp; board.piece_at(c8) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#324 id=324 data-nosnippet>324</a>                &amp;&amp; board.piece_at(d8) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
 <a href=#325 id=325 data-nosnippet>325</a>                &amp;&amp; enemies &gt;&gt; b8.get_index() == <span class="number">0
 <a href=#326 id=326 data-nosnippet>326</a>                </span>&amp;&amp; enemies &gt;&gt; c8.get_index() == <span class="number">0
 <a href=#327 id=327 data-nosnippet>327</a>                </span>&amp;&amp; enemies &gt;&gt; d8.get_index() == <span class="number">0</span>;
-<a href=#328 id=328 data-nosnippet>328</a>            <span class="kw">let </span>short_unoccupied = board.piece_at(f8) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
-<a href=#329 id=329 data-nosnippet>329</a>                &amp;&amp; board.piece_at(g8) == <span class="prelude-val">Some</span>(PieceType::NoPiece)
+<a href=#328 id=328 data-nosnippet>328</a>            <span class="kw">let </span>short_unoccupied = board.piece_at(f8) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
+<a href=#329 id=329 data-nosnippet>329</a>                &amp;&amp; board.piece_at(g8) == <span class="prelude-val">Some</span>(ColoredPieceType::NoPiece)
 <a href=#330 id=330 data-nosnippet>330</a>                &amp;&amp; enemies &gt;&gt; f8.get_index() == <span class="number">0
 <a href=#331 id=331 data-nosnippet>331</a>                </span>&amp;&amp; enemies &gt;&gt; g8.get_index() == <span class="number">0</span>;
 <a href=#332 id=332 data-nosnippet>332</a>            <span class="kw">if </span>board.get_castling_black_long() &amp;&amp; long_unoccupied {
@@ -340,4 +340,12 @@
 <a href=#340 id=340 data-nosnippet>340</a>        MoveSet::new(from, piece, flood)
 <a href=#341 id=341 data-nosnippet>341</a>    }
 <a href=#342 id=342 data-nosnippet>342</a>}
+<a href=#343 id=343 data-nosnippet>343</a>
+<a href=#344 id=344 data-nosnippet>344</a><span class="attr">#[cfg(test)]
+<a href=#345 id=345 data-nosnippet>345</a></span><span class="kw">mod </span>tests {
+<a href=#346 id=346 data-nosnippet>346</a>    <span class="attr">#[test]
+<a href=#347 id=347 data-nosnippet>347</a>    </span><span class="kw">fn </span>test_something() {
+<a href=#348 id=348 data-nosnippet>348</a>        <span class="macro">assert_eq!</span>(<span class="number">2 </span>+ <span class="number">2</span>, <span class="number">4</span>);
+<a href=#349 id=349 data-nosnippet>349</a>    }
+<a href=#350 id=350 data-nosnippet>350</a>}
 </code></pre></div></section></main></body></html>

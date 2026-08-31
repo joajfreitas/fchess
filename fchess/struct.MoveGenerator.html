@@ -4,31 +4,36 @@
     square: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
 ) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a>&gt;</h4></section><section id="method.attack" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#140-185">Source</a><h4 class="code-header">pub fn <a href="#method.attack" class="fn">attack</a>(&amp;self, board: &amp;<a class="struct" href="struct.Board.html" title="struct fchess::Board">Board</a>, piece: &amp;Piece) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.black_pawn_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#187-206">Source</a><h4 class="code-header">pub fn <a href="#method.black_pawn_attacks" class="fn">black_pawn_attacks</a>(
     &amp;self,
-    piece: PieceType,
+    piece: ColoredPieceType,
     from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
     friendlies: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     enemy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     enpassant: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>&gt;,
 ) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.white_pawn_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#208-228">Source</a><h4 class="code-header">pub fn <a href="#method.white_pawn_attacks" class="fn">white_pawn_attacks</a>(
     &amp;self,
-    piece: PieceType,
+    piece: ColoredPieceType,
     from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
     friendlies: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     enemy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     enpassant: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>&gt;,
 ) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.knight_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#229-235">Source</a><h4 class="code-header">pub fn <a href="#method.knight_attacks" class="fn">knight_attacks</a>(
     &amp;self,
-    piece: PieceType,
+    piece: ColoredPieceType,
     from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
     free: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
 ) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.bishop_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#237-247">Source</a><h4 class="code-header">pub fn <a href="#method.bishop_attacks" class="fn">bishop_attacks</a>(
     &amp;self,
-    piece: PieceType,
+    piece: ColoredPieceType,
     from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
     free: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
-) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.rook_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#249-259">Source</a><h4 class="code-header">pub fn <a href="#method.rook_attacks" class="fn">rook_attacks</a>(&amp;self, piece: PieceType, from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>, free: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.king_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#261-341">Source</a><h4 class="code-header">pub fn <a href="#method.king_attacks" class="fn">king_attacks</a>(
+) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.rook_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#249-259">Source</a><h4 class="code-header">pub fn <a href="#method.rook_attacks" class="fn">rook_attacks</a>(
     &amp;self,
-    piece: PieceType,
+    piece: ColoredPieceType,
+    from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
+    free: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
+) -&gt; <a class="struct" href="struct.MoveSet.html" title="struct fchess::MoveSet">MoveSet</a></h4></section><section id="method.king_attacks" class="method"><a class="src rightside" href="../src/fchess/move_generator.rs.html#261-341">Source</a><h4 class="code-header">pub fn <a href="#method.king_attacks" class="fn">king_attacks</a>(
+    &amp;self,
+    piece: ColoredPieceType,
     from: <a class="struct" href="struct.Square.html" title="struct fchess::Square">Square</a>,
     free: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     board: &amp;<a class="struct" href="struct.Board.html" title="struct fchess::Board">Board</a>,

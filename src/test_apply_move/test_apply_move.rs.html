@@ -2,8 +2,8 @@
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span>std::fs;
 <a href=#3 id=3 data-nosnippet>3</a>
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>serde::{Deserialize, Serialize};
-<a href=#5 id=5 data-nosnippet>5</a><span class="kw">use </span>serde_json::Result;
-<a href=#6 id=6 data-nosnippet>6</a>
+<a href=#5 id=5 data-nosnippet>5</a>
+<a href=#6 id=6 data-nosnippet>6</a><span class="kw">use </span>anyhow::Result;
 <a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span>fchess::Board;
 <a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>fchess::Move;
 <a href=#9 id=9 data-nosnippet>9</a>
@@ -92,7 +92,7 @@
 <a href=#92 id=92 data-nosnippet>92</a>    <span class="kw">let </span><span class="kw-2">mut </span>testsuit_results = SuitResult::new();
 <a href=#93 id=93 data-nosnippet>93</a>
 <a href=#94 id=94 data-nosnippet>94</a>    <span class="kw">for </span>testcase <span class="kw">in </span>testsuit {
-<a href=#95 id=95 data-nosnippet>95</a>        <span class="kw">let </span>board = Board::from_fen(<span class="kw-2">&amp;</span>testcase.start_fen);
+<a href=#95 id=95 data-nosnippet>95</a>        <span class="kw">let </span>board = Board::from_fen(<span class="kw-2">&amp;</span>testcase.start_fen)<span class="question-mark">?</span>;
 <a href=#96 id=96 data-nosnippet>96</a>        <span class="kw">let </span>mov = Move::from_algebraic(<span class="kw-2">&amp;</span>testcase.lan);
 <a href=#97 id=97 data-nosnippet>97</a>        <span class="kw">if </span>mov.is_none() {
 <a href=#98 id=98 data-nosnippet>98</a>            <span class="macro">println!</span>(<span class="string">"Failed to parse move {}"</span>, testcase.lan);
@@ -102,7 +102,7 @@
 <a href=#102 id=102 data-nosnippet>102</a>        <span class="kw">let </span>mov = mov.unwrap();
 <a href=#103 id=103 data-nosnippet>103</a>        <span class="kw">let </span>resulting_board = board.apply(<span class="kw-2">&amp;</span>mov.clone());
 <a href=#104 id=104 data-nosnippet>104</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(resulting_board) = resulting_board {
-<a href=#105 id=105 data-nosnippet>105</a>            <span class="kw">let </span>expected_board = Board::from_fen(<span class="kw-2">&amp;</span>testcase.expected_fen);
+<a href=#105 id=105 data-nosnippet>105</a>            <span class="kw">let </span>expected_board = Board::from_fen(<span class="kw-2">&amp;</span>testcase.expected_fen)<span class="question-mark">?</span>;
 <a href=#106 id=106 data-nosnippet>106</a>            <span class="kw">let </span>test_result = TestResult::new(
 <a href=#107 id=107 data-nosnippet>107</a>                <span class="kw-2">&amp;</span>testcase.id,
 <a href=#108 id=108 data-nosnippet>108</a>                <span class="kw-2">&amp;</span>board,

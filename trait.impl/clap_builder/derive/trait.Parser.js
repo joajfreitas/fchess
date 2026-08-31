@@ -1,9 +1,9 @@
 (function() {
-    const implementors = Object.fromEntries([["cli",[["impl Parser for <a class=\"struct\" href=\"cli/struct.Args.html\" title=\"struct cli::Args\">Args</a>",0]]]]);
+    const implementors = Object.fromEntries([["cli",[["impl Parser for <a class=\"struct\" href=\"cli/struct.Args.html\" title=\"struct cli::Args\">Args</a>",0]]],["solve",[["impl Parser for <a class=\"struct\" href=\"solve/struct.Args.html\" title=\"struct solve::Args\">Args</a>",0]]]]);
     if (window.register_implementors) {
         window.register_implementors(implementors);
     } else {
         window.pending_implementors = implementors;
     }
 })()
-//{"start":59,"fragment_lengths":[117]}
+//{"start":59,"fragment_lengths":[117,124]}

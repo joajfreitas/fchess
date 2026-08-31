@@ -1,1 +1,0 @@
-rd_("Adfchess cli interfaceBaRepresentation of a PolyGlot bookjChess moveAjRepresents the board side.Anpath to polyglot openning bookAoReturns the argument unchanged.000000000000000000BaCalls <code>U::from(self)</code>.000000000000000000BjBitboard representation of the chess boardCaThis crate provides a library for chess board \xe2\x80\xa6")
