@@ -68,7 +68,7 @@
 <a href=#68 id=68 data-nosnippet>68</a>    <span class="kw">let </span>_engine_thread = thread::spawn(<span class="kw">move </span>|| {
 <a href=#69 id=69 data-nosnippet>69</a>        <span class="kw">let </span><span class="kw-2">mut </span>board =
 <a href=#70 id=70 data-nosnippet>70</a>            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1"</span>);
-<a href=#71 id=71 data-nosnippet>71</a>        <span class="kw">let </span>solver = Solver::new();
+<a href=#71 id=71 data-nosnippet>71</a>        <span class="kw">let </span><span class="kw-2">mut </span>solver = Solver::new();
 <a href=#72 id=72 data-nosnippet>72</a>        <span class="kw">loop </span>{
 <a href=#73 id=73 data-nosnippet>73</a>            <span class="kw">let </span>cmd = rx.recv().unwrap();
 <a href=#74 id=74 data-nosnippet>74</a>            <span class="kw">if </span>cmd == <span class="string">"startpos" </span>{
@@ -79,7 +79,7 @@
 <a href=#79 id=79 data-nosnippet>79</a>                <span class="kw">let </span>sp = cmd.split(<span class="string">':'</span>);
 <a href=#80 id=80 data-nosnippet>80</a>                <span class="kw">let </span>mov = sp.collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>str&gt;&gt;()[<span class="number">1</span>];
 <a href=#81 id=81 data-nosnippet>81</a>                board = board
-<a href=#82 id=82 data-nosnippet>82</a>                    .apply(Move::from_full_algebraic(mov).unwrap())
+<a href=#82 id=82 data-nosnippet>82</a>                    .apply(<span class="kw-2">&amp;</span>Move::from_full_algebraic(mov).unwrap())
 <a href=#83 id=83 data-nosnippet>83</a>                    .unwrap();
 <a href=#84 id=84 data-nosnippet>84</a>                <span class="macro">println!</span>(<span class="string">"board {board:?}"</span>);
 <a href=#85 id=85 data-nosnippet>85</a>            } <span class="kw">else if </span>cmd.starts_with(<span class="string">"go"</span>) {

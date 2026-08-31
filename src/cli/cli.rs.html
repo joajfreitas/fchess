@@ -27,7 +27,7 @@
 <a href=#27 id=27 data-nosnippet>27</a>    <span class="kw">let </span>book = args.book.map(|book| Book::from_filename(<span class="kw-2">&amp;</span>book));
 <a href=#28 id=28 data-nosnippet>28</a>
 <a href=#29 id=29 data-nosnippet>29</a>    <span class="kw">let </span><span class="kw-2">mut </span>board = Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0"</span>);
-<a href=#30 id=30 data-nosnippet>30</a>    <span class="kw">let </span>solver = Solver::new();
+<a href=#30 id=30 data-nosnippet>30</a>    <span class="kw">let </span><span class="kw-2">mut </span>solver = Solver::new();
 <a href=#31 id=31 data-nosnippet>31</a>    <span class="macro">println!</span>(<span class="string">"{board}"</span>);
 <a href=#32 id=32 data-nosnippet>32</a>
 <a href=#33 id=33 data-nosnippet>33</a>    <span class="kw">loop </span>{
@@ -60,7 +60,7 @@
 <a href=#60 id=60 data-nosnippet>60</a>        })
 <a href=#61 id=61 data-nosnippet>61</a>        .unwrap();
 <a href=#62 id=62 data-nosnippet>62</a>
-<a href=#63 id=63 data-nosnippet>63</a>        board = <span class="kw">match </span>board.apply(mov) {
+<a href=#63 id=63 data-nosnippet>63</a>        board = <span class="kw">match </span>board.apply(<span class="kw-2">&amp;</span>mov) {
 <a href=#64 id=64 data-nosnippet>64</a>            <span class="prelude-val">Some</span>(board) =&gt; board,
 <a href=#65 id=65 data-nosnippet>65</a>            <span class="prelude-val">None </span>=&gt; <span class="kw">continue</span>,
 <a href=#66 id=66 data-nosnippet>66</a>        };
