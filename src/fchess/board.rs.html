@@ -398,7 +398,7 @@
 <a href=#398 id=398 data-nosnippet>398</a>            | <span class="macro">matches!</span>(mov, (<span class="prelude-val">Some</span>(ColoredPieceType::BlackPawn), <span class="kw">_</span>))
 <a href=#399 id=399 data-nosnippet>399</a>            | <span class="macro">matches!</span>(mov, (<span class="kw">_</span>, <span class="prelude-val">Some</span>(ColoredPieceType::WhitePawn)))
 <a href=#400 id=400 data-nosnippet>400</a>            | <span class="macro">matches!</span>(mov, (<span class="kw">_</span>, <span class="prelude-val">Some</span>(ColoredPieceType::BlackPawn)))
-<a href=#401 id=401 data-nosnippet>401</a>            | (target_piece != <span class="prelude-val">None</span>);
+<a href=#401 id=401 data-nosnippet>401</a>            | Option::is_some(<span class="kw-2">&amp;</span>target_piece);
 <a href=#402 id=402 data-nosnippet>402</a>
 <a href=#403 id=403 data-nosnippet>403</a>        <span class="kw">if </span>halfmove_clock_reset {
 <a href=#404 id=404 data-nosnippet>404</a>            result.set_half_move_clock(<span class="number">0</span>);
