@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["main"],"mod":["test_common"],"struct":["BestMoveTestResult","TestCase"]};
