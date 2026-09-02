@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["main"],"struct":["Args"]};
+window.SIDEBAR_ITEMS = {"fn":["get_best_move","main","read_line"],"struct":["Args"]};
