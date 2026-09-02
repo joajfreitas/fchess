@@ -32,7 +32,7 @@
 <a href=#32 id=32 data-nosnippet>32</a>    <span class="macro">println!</span>(<span class="string">"{board}"</span>);
 <a href=#33 id=33 data-nosnippet>33</a>
 <a href=#34 id=34 data-nosnippet>34</a>    <span class="kw">loop </span>{
-<a href=#35 id=35 data-nosnippet>35</a>        <span class="kw">let </span>mov: Move = Move::from_algebraic(<span class="kw-2">&amp;</span><span class="kw">match </span>board.get_turn() {
+<a href=#35 id=35 data-nosnippet>35</a>        <span class="kw">let </span>mov: Move = Move::from_san(<span class="kw-2">&amp;</span><span class="kw">match </span>board.get_turn() {
 <a href=#36 id=36 data-nosnippet>36</a>            Side::White =&gt; {
 <a href=#37 id=37 data-nosnippet>37</a>                <span class="kw">let </span>line = rl.readline(<span class="string">"&gt; "</span>);
 <a href=#38 id=38 data-nosnippet>38</a>                <span class="kw">match </span>line {
@@ -58,7 +58,7 @@
 <a href=#58 id=58 data-nosnippet>58</a>                }
 <a href=#59 id=59 data-nosnippet>59</a>            }
 <a href=#60 id=60 data-nosnippet>60</a>            .to_algebraic(),
-<a href=#61 id=61 data-nosnippet>61</a>        })
+<a href=#61 id=61 data-nosnippet>61</a>        }, <span class="kw-2">&amp;</span>board)
 <a href=#62 id=62 data-nosnippet>62</a>        .unwrap();
 <a href=#63 id=63 data-nosnippet>63</a>
 <a href=#64 id=64 data-nosnippet>64</a>        board = <span class="kw">match </span>board.apply(<span class="kw-2">&amp;</span>mov) {
