@@ -1,7 +1,7 @@
-use std::fmt;
 use crate::board::print_board;
-use crate::piece::{Piece, ColoredPieceType};
+use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
+use std::fmt;
 
 struct PrintableBoard(u64);
 

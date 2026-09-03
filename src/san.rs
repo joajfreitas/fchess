@@ -5,7 +5,6 @@ use crate::board::Board;
 use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
 use crate::piece::ColoredPieceType;
-use crate::piece::PieceType;
 use crate::side::Side;
 use crate::square::Square;
 
@@ -71,8 +70,7 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     }
 
     let handle_piece_type = |m: Match| -> ColoredPieceType {
-        let piece_type =
-            ColoredPieceType::from_string(&m.as_str().chars().next().unwrap()).unwrap();
+        let piece_type = ColoredPieceType::from_char(&m.as_str().chars().next().unwrap()).unwrap();
         if board.get_turn() == Side::Black {
             !piece_type
         } else {
