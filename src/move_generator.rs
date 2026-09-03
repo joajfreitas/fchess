@@ -8,6 +8,8 @@ use crate::moves::Scope;
 use crate::moveset::MoveSet;
 use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
+use crate::utils::print_u64;
+use crate::moves::Move;
 
 pub fn generate_knight_moves() -> Vec<u64> {
     let mut vec: Vec<u64> = Vec::new();
@@ -336,6 +338,8 @@ impl MoveGenerator {
                 flood |= 1 << Square::from_rank_file(7, 6).get_index();
             }
         }
+
+        flood &= !(1 << from.get_index());
 
         MoveSet::new(from, piece, flood)
     }

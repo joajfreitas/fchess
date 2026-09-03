@@ -36,6 +36,7 @@ mod san;
 mod side;
 mod solver;
 mod square;
+mod utils;
 mod zobrist_hash;
 
 #[cfg(test)]
