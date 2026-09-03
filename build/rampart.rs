@@ -83,7 +83,7 @@ impl RampartSuites {
         for (test_id, test) in suite.test_cases.iter().enumerate() {
             for (expected_id, expected) in test.expected.iter().enumerate() {
                 let test_name = format!(
-                    "{}_{}_{}_{}_{}",
+                    "rampart_{}_{}_{}_{}_{}",
                     dir_entry.file_stem().unwrap().to_str().unwrap(),
                     Self::remove_invalid_function_name_chars(&test.start.description),
                     test_id,
