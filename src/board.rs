@@ -130,6 +130,20 @@ impl<'a> Iterator for BoardIterator<'a> {
     }
 }
 
+// U64 attacksBy0x88DiffAndPiece[7][256];  // 14KByte
+//
+// /* is square <to> attacked by <piece> from square <from> */
+// bool isAttacked(enumSquare from, enumSquare to, enumPiece piece, U64 occ) {
+//    int isBlackPawn = (piece ^ nBlackPawn) - 1;
+//    isBlackPawn >>= 31; /* -1 if black pawn, otherwise 0 */
+//    return (attacksBy0x88DiffAndPiece [piece/2 + isBlackPawn] [x88diff(from,to)]
+//            & rotateRight (occ, from) ) == 0;
+// }
+
+//fn is_attacked(from: &Piece, to: &Square) -> bool {
+//    let is_black_pawn = from.get_type() == ColoredPieceType::BlackPawn;
+//}
+
 impl Board {
     pub fn new() -> Self {
         Self {

@@ -125,6 +125,72 @@ impl MoveGenerator {
         }
     }
 
+    pub fn attacked_square(&self, board: &Board, square: Square) -> bool {
+        let opposite_side = dbg!(!board.get_turn()); // white
+
+        let occupied = board.occupied(Scope::from(board.get_turn()));
+        let enemy = board.occupied(Scope::from(!board.get_turn()));
+        let bitboard: Bitboard = 1u64 << square.get_index();
+
+        let mov = self.rook_attacks(
+            PieceType::Rook.with_color(opposite_side),
+            square,
+            !(occupied | enemy),
+        );
+
+        let mask = board.get_piece_mask(PieceType::Rook.with_color(opposite_side))
+            | board.get_piece_mask(PieceType::Queen.with_color(opposite_side));
+
+        let mut attacked = (mask & mov.mov) != 0;
+
+        let mov = self.bishop_attacks(
+            PieceType::Rook.with_color(opposite_side),
+            square,
+            !(occupied | enemy),
+        );
+
+        let mask = board.get_piece_mask(PieceType::Bishop.with_color(opposite_side))
+            | board.get_piece_mask(PieceType::Queen.with_color(opposite_side));
+
+        attacked |= (mask & mov.mov) != 0;
+
+        let mov = if board.get_turn() == Side::White {
+            bitboard.shift(NW) | bitboard.shift(NE)
+        } else {
+            bitboard.shift(SW) | bitboard.shift(SE)
+        };
+
+        let mask = board.get_piece_mask(PieceType::Pawn.with_color(opposite_side));
+
+        print_u64(mask);
+        print_u64(mov);
+
+        attacked |= (mask & mov) != 0;
+
+        let mov = self.knight_attacks(
+            PieceType::Knight.with_color(board.get_turn()),
+            square,
+            !occupied,
+        );
+
+        let mask = board.get_piece_mask(PieceType::Knight.with_color(opposite_side));
+
+        attacked |= (mask & mov.mov) != 0;
+
+        let mov = self.king_attacks(
+            PieceType::King.with_color(opposite_side),
+            square,
+            !occupied,
+            board,
+        );
+
+        let mask = board.get_piece_mask(PieceType::King.with_color(opposite_side));
+
+        attacked |= (mask & mov.mov) != 0;
+
+        attacked
+    }
+
     pub fn generate_moves(&self, board: &Board) -> Vec<MoveSet> {
         let turn = Scope::from(board.get_turn());
         let scoped_board = board.scoped(turn);
@@ -164,11 +230,8 @@ impl MoveGenerator {
                 !board.occupied(Scope::from(board.get_turn())),
                 board,
             ),
-            ColoredPieceType::BlackPawn => {
-                self.black_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
-            }
-            ColoredPieceType::WhitePawn => {
-                self.white_pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
+            ColoredPieceType::BlackPawn | ColoredPieceType::WhitePawn => {
+                self.pawn_attacks(piece, square, occupied, enemy, board.get_enpassant())
             }
             ColoredPieceType::BlackKnight | ColoredPieceType::WhiteKnight => self.knight_attacks(
                 piece,
@@ -228,6 +291,26 @@ impl MoveGenerator {
         let attacks = attack & enemy;
         MoveSet::new(from, piece, mov | attacks)
     }
+
+    pub fn pawn_attacks(
+        &self,
+        piece: ColoredPieceType,
+        from: Square,
+        friendlies: u64,
+        enemy: u64,
+        enpassant: Option<Square>,
+    ) -> MoveSet {
+        match piece {
+            ColoredPieceType::WhitePawn => {
+                self.white_pawn_attacks(piece, from, friendlies, enemy, enpassant)
+            }
+            ColoredPieceType::BlackPawn => {
+                self.black_pawn_attacks(piece, from, friendlies, enemy, enpassant)
+            }
+            _ => panic!("Invalid piece type for pawn attacks"),
+        }
+    }
+
     pub fn knight_attacks(&self, piece: ColoredPieceType, from: Square, free: u64) -> MoveSet {
         MoveSet::new(
             from,
@@ -347,8 +430,29 @@ impl MoveGenerator {
 
 #[cfg(test)]
 mod tests {
-    #[test]
-    fn test_something() {
-        assert_eq!(2 + 2, 4);
+    use rstest::rstest;
+
+    use super::*;
+    use crate::board_builder::BoardBuilder;
+    use crate::side::Side;
+
+    #[rstest]
+    #[case("d7", ColoredPieceType::WhiteRook)]
+    #[case("b7", ColoredPieceType::WhiteBishop)]
+    #[case("c4", ColoredPieceType::WhitePawn)]
+    #[case("c7", ColoredPieceType::WhiteKnight)]
+    fn test_attacked_square(#[case] square: &str, #[case] piece_type: ColoredPieceType) {
+        let board = BoardBuilder::new()
+            .with_piece("e1", ColoredPieceType::WhiteKing)
+            .with_piece("d5", ColoredPieceType::BlackKing)
+            .with_piece(square, piece_type)
+            .with_turn(Side::Black)
+            .build();
+
+        println!("Board:\n{}", board);
+
+        let mov_gen = MoveGenerator::new();
+
+        assert!(mov_gen.check(&board));
     }
 }
