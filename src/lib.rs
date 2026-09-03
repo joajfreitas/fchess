@@ -32,6 +32,7 @@ mod move_generator;
 mod moves;
 mod moveset;
 mod piece;
+mod san;
 mod side;
 mod solver;
 mod square;
