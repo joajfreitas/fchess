@@ -5,7 +5,7 @@ use crate::bitwise;
 use crate::fen::{read_fen, write_fen};
 use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
-use crate::piece::{ColoredPieceType, Piece};
+use crate::piece::{ColoredPieceType, Piece, PieceType};
 use crate::side::Side;
 use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
@@ -220,6 +220,19 @@ impl Board {
 
     pub fn get_piece_mask(&self, piece_type: ColoredPieceType) -> u64 {
         self.pieces[piece_type as usize]
+    }
+
+    pub fn king(&self, side: Side) -> Square {
+        let mut mask = self.get_piece_mask(PieceType::King.with_color(side));
+
+        let mut r = 0;
+
+        while mask >> 1 != 0 {
+            mask >>= 1;
+            r += 1;
+        }
+
+        Square::from_index(r as u8)
     }
 
     // Create board with scope
