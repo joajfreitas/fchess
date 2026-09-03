@@ -3,12 +3,12 @@ use std::fmt;
 use crate::bitwise;
 
 use crate::fen::{read_fen, write_fen};
+use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
 use crate::piece::{ColoredPieceType, Piece};
 use crate::side::Side;
 use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
-use crate::move_generator::MoveGenerator;
 use anyhow::Result;
 
 pub trait Mask {
@@ -427,10 +427,10 @@ impl Board {
 mod tests {
     use super::Board;
     use super::ColoredPieceType;
+    use super::MoveGenerator;
     use super::Piece;
     use super::Scope;
     use super::Square;
-    use super::MoveGenerator;
 
     #[test]
     fn test_board_iterator() {
