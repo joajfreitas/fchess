@@ -337,7 +337,7 @@ impl Board {
         Some(result)
     }
 
-    pub fn apply(self: &Board, mov: &Move) -> Option<Board> {
+    pub fn apply(&self, mov: &Move) -> Option<Board> {
         let mut result = if let Some(castle) = self.is_castle(mov.clone()) {
             let mut board = self.apply_single_move(castle.0)?;
             match castle.2 {
@@ -452,12 +452,16 @@ impl Board {
 
 #[cfg(test)]
 mod tests {
+    use rstest::rstest;
+
     use super::Board;
     use super::ColoredPieceType;
-    use super::MoveGenerator;
     use super::Piece;
+    use super::PieceType;
     use super::Scope;
+    use super::Side;
     use super::Square;
+    use crate::board_builder::BoardBuilder;
 
     #[test]
     fn test_board_iterator() {
@@ -556,12 +560,22 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_checkmate() {
-        let board = Board::from_fen("k7/1R6/2K5/8/8/8/8/8 b - - 0 1").unwrap();
-        println!("{}", board);
-        let move_generator = MoveGenerator::new();
+    #[rstest]
+    #[case("e1", Side::White)]
+    #[case("a4", Side::Black)]
+    fn test_king(#[case] square: &str, #[case] side: Side) {
+        let board = BoardBuilder::new()
+            .with_piece(square, PieceType::King.with_color(side))
+            .build();
 
-        assert!(dbg!(board.checkmate(&move_generator)))
+        assert_eq!(board.king(side).to_algebraic(), square);
     }
+
+    //#[test]
+    //fn test_checkmate() {
+    //    let board = Board::from_fen("k7/1R6/2K5/8/8/8/8/8 b - - 0 1").unwrap();
+    //    let move_generator = MoveGenerator::new();
+
+    //    assert!(board.checkmate(&move_generator));
+    //}
 }

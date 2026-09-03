@@ -6,10 +6,10 @@ use crate::common::*;
 use crate::dumb7fill::dumb7fill;
 use crate::moves::Scope;
 use crate::moveset::MoveSet;
-use crate::piece::{ColoredPieceType, Piece};
+use crate::piece::{ColoredPieceType, Piece, PieceType};
+use crate::side::Side;
 use crate::square::Square;
 use crate::utils::print_u64;
-use crate::moves::Move;
 
 pub fn generate_knight_moves() -> Vec<u64> {
     let mut vec: Vec<u64> = Vec::new();
@@ -426,6 +426,58 @@ impl MoveGenerator {
 
         MoveSet::new(from, piece, flood)
     }
+
+    pub fn check(&self, board: &Board) -> bool {
+        self.attacked_square(board, board.king(board.get_turn()))
+    }
+
+    pub fn checkmate(&self, board: &Board) -> bool {
+        if !self.check(board) {
+            println!("Not in check");
+            return false;
+        }
+
+        let moves = self.generate_moves(board);
+
+        let mut checkmate = true;
+
+        for moveset in moves {
+            println!("{}", moveset);
+            for mov in moveset.into_iter() {
+                let result = board.apply(&mov);
+                if result.is_none() {
+                    continue;
+                }
+
+                let mut result = result.unwrap();
+                result.set_turn(dbg!(!result.get_turn()));
+
+                println!("Checking move: {}", mov.to_algebraic());
+                println!("Resulting board:\n{}", result);
+                checkmate &= self.check(&result);
+            }
+        }
+
+        checkmate
+        //moves
+        //    .iter()
+        //    .map(|moveset| {
+        //        moveset
+        //            .into_iter()
+        //            .map(|mov| board.apply(&mov))
+        //            .any(|board| {
+        //                board
+        //                    .as_ref()
+        //                    .map(|board| {
+        //                        let mut board = board.clone();
+        //                        board.set_turn(!board.get_turn());
+        //                        self.check(&board)
+        //                    })
+        //                    .unwrap_or(false)
+        //            })
+        //    })
+        //    .any(|check| check) // board.apply(mov)).any(|board| !self.check(&board))
+    }
 }
 
 #[cfg(test)]
@@ -454,5 +506,22 @@ mod tests {
         let mov_gen = MoveGenerator::new();
 
         assert!(mov_gen.check(&board));
+    }
+
+    #[rstest]
+    #[case("1R3k2/2R5/8/8/8/1K6/8/8 b - - 0 1")]
+    #[case("8/8/1k6/8/8/8/2r5/1r3K2 w - - 0 1")]
+    #[case("8/6N1/3R4/6k1/5Pp1/1K2P3/8/4B1R1 b - f3 0 1")]
+    #[case("4b1r1/8/1k2p3/5pP1/6K1/3r4/6n1/8 w - f6 0 1")]
+    #[case("kr6/ppN5/8/8/8/8/2K5/8 b - - 0 1")]
+    #[case("8/2k5/8/8/8/8/PPn5/KR6 w - - 0 1")]
+    #[case("k1K5/p1N5/8/8/8/8/8/8 b - - 0 1")]
+    #[case("8/8/8/8/8/8/P1n5/K1k5 w - - 0 1")]
+    fn test_checkmate(#[case] fen: &str) {
+        let board = BoardBuilder::new().with_fen(fen).unwrap().build();
+
+        let mov_gen = MoveGenerator::new();
+
+        assert!(mov_gen.checkmate(&board));
     }
 }
