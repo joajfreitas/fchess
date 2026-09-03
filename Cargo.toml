@@ -3,6 +3,7 @@ name = "fchess"
 version = "0.1.0"
 authors = ["joajfreitas <joaj.freitas@gmail.com>"]
 edition = "2018"
+build = "build/main.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -35,6 +36,7 @@ googletest = "0.14"
 [build-dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+serde_yaml = "0.9"
 
 [lib]
 name = "fchess"
