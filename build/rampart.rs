@@ -68,6 +68,7 @@ impl RampartSuites {
     use fchess::Board;
     use fchess::MoveGenerator;
     use fchess::Move;
+    use googletest::prelude::*;
     "#
         )
         .unwrap();
@@ -76,30 +77,31 @@ impl RampartSuites {
     fn write_test(test_file: &mut File, dir_entry: DirEntry) {
         let dir_entry = dir_entry.path().canonicalize().unwrap();
 
-        println!("{:?}", dir_entry);
         let source = std::fs::read_to_string(&dir_entry).unwrap();
         let suite: RampartSuite = serde_json::from_str(&source).unwrap();
 
         for (test_id, test) in suite.test_cases.iter().enumerate() {
-            for (expected_id, expected) in test.expected.iter().enumerate() {
-                let test_name = format!(
-                    "rampart_{}_{}_{}_{}_{}",
-                    dir_entry.file_stem().unwrap().to_str().unwrap(),
-                    Self::remove_invalid_function_name_chars(&test.start.description),
-                    test_id,
-                    Self::remove_invalid_function_name_chars(&expected.mov),
-                    expected_id
-                );
+            let test_name = format!(
+                "rampart_{}_{}_{}",
+                dir_entry.file_stem().unwrap().to_str().unwrap(),
+                test.start.description,
+                test_id,
+            );
 
-                write!(
-                    test_file,
-                    include_str!("templates/rampart.rs"),
-                    name = test_name,
-                    starting_fen = test.start.fen,
-                    san = expected.mov,
-                )
-                .unwrap();
-            }
+            write!(
+                test_file,
+                include_str!("templates/rampart.rs"),
+                name = Self::remove_invalid_function_name_chars(&test_name),
+                starting_fen = test.start.fen,
+                expected_moves_san = format_args!(
+                    "{:?}",
+                    test.expected
+                        .iter()
+                        .map(|expected| expected.mov.clone())
+                        .collect::<Vec<String>>()
+                ),
+            )
+            .unwrap();
         }
     }
 
@@ -107,7 +109,6 @@ impl RampartSuites {
         let out_dir = env::var("OUT_DIR").unwrap();
         let mut test_file = File::create(Path::new(&out_dir).join("tests.rs")).unwrap();
 
-        // write test file header, put `use`, `const` etc there
         Self::write_header(&mut test_file);
 
         for directory in read_dir(&self.path).unwrap() {
