@@ -10,11 +10,7 @@ pub trait BitboardExt {
 impl BitboardExt for Bitboard {
     #[inline]
     fn shift(self, s: Shift) -> Bitboard {
-        if s > 0 {
-            self << s
-        } else {
-            self >> -s
-        }
+        if s > 0 { self << s } else { self >> -s }
     }
 
     fn shift_p(self, s: Shift, columns: u64) -> Bitboard {

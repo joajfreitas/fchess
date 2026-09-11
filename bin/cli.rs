@@ -1,6 +1,6 @@
 use clap::Parser;
 
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use fchess::Board;
 use fchess::Book;
 use fchess::Move;

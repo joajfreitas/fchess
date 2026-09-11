@@ -2,8 +2,8 @@ use anyhow::Result;
 use std::fmt;
 use std::ops::Not;
 
-use crate::board::print_board;
 use crate::board::Board;
+use crate::board::print_board;
 use crate::piece::{ColoredPieceType, Piece};
 use crate::san::read_san;
 use crate::side::Side;

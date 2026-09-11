@@ -9,7 +9,6 @@ use crate::moveset::MoveSet;
 use crate::piece::{ColoredPieceType, Piece, PieceType};
 use crate::side::Side;
 use crate::square::Square;
-use crate::utils::print_u64;
 
 pub fn generate_knight_moves() -> Vec<u64> {
     let mut vec: Vec<u64> = Vec::new();
@@ -161,9 +160,6 @@ impl MoveGenerator {
         };
 
         let mask = board.get_piece_mask(PieceType::Pawn.with_color(opposite_side));
-
-        print_u64(mask);
-        print_u64(mov);
 
         attacked |= (mask & mov) != 0;
 
@@ -383,13 +379,14 @@ impl MoveGenerator {
             let long_unoccupied = board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d1) == Some(ColoredPieceType::NoPiece)
-                && enemies >> b1.get_index() == 0
-                && enemies >> c1.get_index() == 0
-                && enemies >> d1.get_index() == 0;
+                && (enemies >> b1.get_index()) & 1 == 0
+                && (enemies >> c1.get_index()) & 1 == 0
+                && (enemies >> d1.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(g1) == Some(ColoredPieceType::NoPiece)
-                && enemies >> f1.get_index() == 0
-                && enemies >> g1.get_index() == 0;
+                && (enemies >> f1.get_index()) & 1 == 0
+                && (enemies >> g1.get_index()) & 1 == 0;
+
             if board.get_castling_white_long() && long_unoccupied {
                 flood |= 1 << Square::from_rank_file(0, 2).get_index();
             }
@@ -407,13 +404,13 @@ impl MoveGenerator {
             let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d8) == Some(ColoredPieceType::NoPiece)
-                && enemies >> b8.get_index() == 0
-                && enemies >> c8.get_index() == 0
-                && enemies >> d8.get_index() == 0;
+                && (enemies >> b8.get_index()) & 1 == 0
+                && (enemies >> c8.get_index()) & 1 == 0
+                && (enemies >> d8.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(g8) == Some(ColoredPieceType::NoPiece)
-                && enemies >> f8.get_index() == 0
-                && enemies >> g8.get_index() == 0;
+                && (enemies >> f8.get_index()) & 1 == 0
+                && (enemies >> g8.get_index()) & 1 == 0;
             if board.get_castling_black_long() && long_unoccupied {
                 flood |= 1 << Square::from_rank_file(7, 2).get_index();
             }
@@ -450,7 +447,7 @@ impl MoveGenerator {
                 }
 
                 let mut result = result.unwrap();
-                result.set_turn(dbg!(!result.get_turn()));
+                result.set_turn(!result.get_turn());
 
                 println!("Checking move: {}", mov.to_algebraic());
                 println!("Resulting board:\n{}", result);
@@ -482,10 +479,12 @@ impl MoveGenerator {
 
 #[cfg(test)]
 mod tests {
+    use googletest::prelude::*;
     use rstest::rstest;
 
     use super::*;
     use crate::board_builder::BoardBuilder;
+    use crate::moves::Move;
     use crate::side::Side;
 
     #[rstest]
@@ -523,5 +522,85 @@ mod tests {
         let mov_gen = MoveGenerator::new();
 
         assert!(mov_gen.checkmate(&board));
+    }
+
+    //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+    // 8 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 7 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 6 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 5 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 4 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 3 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 2 │ ♟︎ │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 1 │ ♜ │   │   │   │ ♚ │   │   │   │
+    //   └───┴───┴───┴───┴───┴───┴───┴───┘
+    //     a   b   c   d   e   f   g   h
+    #[gtest]
+    fn test_white_queen_side_castling() -> googletest::Result<()> {
+        let moves = MoveGenerator::new()
+            .generate_moves_for_piece(
+                &Board::from_fen("8/8/8/8/8/8/P7/R3K3 w Q 0 1").or_fail()?,
+                Square::from_algebraic("e1").or_fail()?,
+            )
+            .or_fail()?
+            .into_iter()
+            .collect::<Vec<Move>>();
+
+        expect_that!(
+            &moves,
+            contains(eq(&Move::new(
+                Square::from_algebraic("e1").or_fail()?,
+                Square::from_algebraic("c1").or_fail()?
+            )))
+        );
+
+        Ok(())
+    }
+
+    //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
+    // 8 │ ♖ │   │   │   │ ♔ │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 7 │ ♙ │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 6 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 5 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 4 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 3 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 2 │   │   │   │   │   │   │   │   │
+    //   ├───┼───┼───┼───┼───┼───┼───┼───┤
+    // 1 │   │   │   │   │   │   │   │   │
+    //   └───┴───┴───┴───┴───┴───┴───┴───┘
+    //     a   b   c   d   e   f   g   h
+    #[gtest]
+    fn test_black_queen_side_castling() -> googletest::Result<()> {
+        let moves = MoveGenerator::new()
+            .generate_moves_for_piece(
+                &Board::from_fen("r3k3/p7/8/8/8/8/8/8 b q 0 1").or_fail()?,
+                Square::from_algebraic("e8").or_fail()?,
+            )
+            .or_fail()?
+            .into_iter()
+            .collect::<Vec<Move>>();
+
+        expect_that!(
+            &moves,
+            contains(eq(&Move::new(
+                Square::from_algebraic("e8").or_fail()?,
+                Square::from_algebraic("c8").or_fail()?
+            )))
+        );
+
+        Ok(())
     }
 }
