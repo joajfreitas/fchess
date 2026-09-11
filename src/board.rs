@@ -269,15 +269,14 @@ impl Board {
 
     pub fn piece_at(self: &Board, square: Square) -> Option<ColoredPieceType> {
         for (index, piece) in self.pieces.iter().enumerate() {
-            let bit = (piece >> square.get_index()) & 1;
-            if bit == 1 {
+            if (piece >> square.get_index()) & 1 == 1 {
                 return Some(
                     num::FromPrimitive::from_usize(index)
                         .expect("Convertion from integer to piece type should never fail"),
                 );
             }
         }
-        None
+        Some(ColoredPieceType::NoPiece)
     }
 
     pub fn set_piece(&mut self, square: Square, piece_type: ColoredPieceType) {
@@ -426,7 +425,7 @@ impl Board {
             | matches!(mov, (Some(ColoredPieceType::BlackPawn), _))
             | matches!(mov, (_, Some(ColoredPieceType::WhitePawn)))
             | matches!(mov, (_, Some(ColoredPieceType::BlackPawn)))
-            | Option::is_some(&target_piece);
+            | (target_piece != Some(ColoredPieceType::NoPiece));
 
         if halfmove_clock_reset {
             result.set_half_move_clock(0);

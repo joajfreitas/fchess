@@ -2,7 +2,7 @@
 name = "fchess"
 version = "0.1.0"
 authors = ["joajfreitas <joaj.freitas@gmail.com>"]
-edition = "2018"
+edition = "2024"
 build = "build/main.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

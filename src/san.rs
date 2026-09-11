@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use regex::{Match, Regex};
 
 use crate::board::Board;
@@ -62,11 +62,7 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     }
 
     fn set_empty_string_to_none(m: Match) -> Option<Match> {
-        if m.as_str() == "" {
-            None
-        } else {
-            Some(m)
-        }
+        if m.as_str() == "" { None } else { Some(m) }
     }
 
     let handle_piece_type = |m: Match| -> ColoredPieceType {
@@ -152,8 +148,8 @@ mod tests {
 
     use crate::board_builder::BoardBuilder;
 
-    use super::read_san;
     use super::Board;
+    use super::read_san;
 
     // SAN
 

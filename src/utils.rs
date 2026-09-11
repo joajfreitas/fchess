@@ -3,8 +3,10 @@ use crate::piece::{ColoredPieceType, Piece};
 use crate::square::Square;
 use std::fmt;
 
+#[allow(dead_code)]
 struct PrintableBoard(u64);
 
+#[allow(dead_code)]
 impl fmt::Display for PrintableBoard {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut pieces: Vec<Piece> = Vec::new();
@@ -18,6 +20,7 @@ impl fmt::Display for PrintableBoard {
     }
 }
 
+#[allow(dead_code)]
 pub fn print_u64(board: u64) {
     println!("{}", PrintableBoard(board));
 }

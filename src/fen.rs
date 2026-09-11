@@ -2,7 +2,7 @@ use crate::board::Board;
 use crate::piece::ColoredPieceType;
 use crate::side::Side;
 use crate::square::Square;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use lazy_static::lazy_static;
 
 use regex::Regex;
@@ -107,7 +107,9 @@ fn write_piece_placement(board: &Board) -> Result<String> {
         let mut empty_count = 0;
         for file in 0..8 {
             let square = Square::from_rank_file(rank, file);
-            if let Some(piece) = board.piece_at(square) {
+            if let Some(piece) = board.piece_at(square)
+                && piece != ColoredPieceType::NoPiece
+            {
                 if empty_count > 0 {
                     fen.push_str(&empty_count.to_string());
                     empty_count = 0;
