@@ -5,8 +5,6 @@ authors = ["joajfreitas <joaj.freitas@gmail.com>"]
 edition = "2024"
 build = "build/main.rs"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 num = "0.4"
 num-derive = "0.5"

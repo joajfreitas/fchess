@@ -279,6 +279,10 @@ impl Board {
         Some(ColoredPieceType::NoPiece)
     }
 
+    pub fn get_piece(self: &Board, square: Square) -> Option<Piece> {
+        Some(Piece::new(square, self.piece_at(square)?))
+    }
+
     pub fn set_piece(&mut self, square: Square, piece_type: ColoredPieceType) {
         self.pieces[piece_type as usize] =
             bitwise::enable_bit(self.pieces[piece_type as usize], square.get_index());
@@ -441,7 +445,7 @@ impl Board {
     }
 
     pub fn checkmate(self: &Board, move_generator: &MoveGenerator) -> bool {
-        dbg!(move_generator.generate_moves(self)).is_empty()
+        move_generator.generate_moves(self).is_empty()
     }
 
     pub fn zobrist_hash(&self) -> u64 {

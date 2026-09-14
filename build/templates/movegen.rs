@@ -11,15 +11,27 @@ fn {name}() {{
         move_generator.generate_moves(&board)
     }}
     else {{
-        vec![move_generator.generate_moves_for_piece(&board, Square::from_algebraic(square.unwrap()).unwrap()).unwrap()]
+        vec![move_generator
+            .generate_moves_for_piece(
+                &board,
+                Square::from_algebraic(square.unwrap()).unwrap()
+            )
+            .unwrap()
+        ]
     }};
 
-    let mut moves: Vec<Move> = movesets.iter().flat_map(|moveset| moveset.into_iter()).collect::<Vec<Move>>();
+    let mut moves: Vec<Move> = movesets
+        .iter()
+        .flat_map(|moveset| moveset.into_iter())
+        .collect::<Vec<Move>>();
 
-    let mut expected_moves = expected_moves.into_iter().map(|mov| Move::from_full_algebraic(mov).unwrap()).collect::<Vec<Move>>();
+    let mut expected_moves = expected_moves
+        .into_iter()
+        .map(|mov| Move::from_full_algebraic(mov).unwrap())
+        .collect::<Vec<Move>>();
 
     moves.sort();
     expected_moves.sort();
 
-    assert!(moves == expected_moves);
+    assert_that!(moves, eq(&expected_moves));
 }}
