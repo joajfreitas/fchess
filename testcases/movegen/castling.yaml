@@ -153,10 +153,8 @@
   fen: 5q2/8/8/8/8/8/7P/4K2R w K 0 1
   moves:
     - e1d1
-    - e1f1
     - e1e2
     - e1d2
-    - e1f2
     - h1g1
     - h1f1
     - h2h3

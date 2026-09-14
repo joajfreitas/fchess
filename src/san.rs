@@ -112,6 +112,7 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     let moves = move_generator.generate_moves(board);
     for moveset in moves {
         for mov in moveset.into_iter() {
+            dbg!(&mov);
             let piece_type = board.piece_at(mov.get_src()).unwrap();
             if (src_rank.is_none() || Some(mov.get_src().get_rank()) == src_rank)
                 && (src_file.is_none() || Some(mov.get_src().get_file()) == src_file)
@@ -144,9 +145,11 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
 #[cfg(test)]
 mod tests {
     use anyhow::Result;
+    use googletest::prelude::*;
     use rstest::*;
 
     use crate::board_builder::BoardBuilder;
+    use crate::moves::Move;
 
     use super::Board;
     use super::read_san;
@@ -241,6 +244,18 @@ mod tests {
         let mov = read_san(san, &san_black_to_move)?;
 
         assert_eq!(mov.to_algebraic(), expected);
+
+        Ok(())
+    }
+
+    #[gtest]
+    fn test_delete_me() -> Result<()> {
+        let board = Board::from_fen("N1k4N/6p1/8/p2p1K2/8/8/8/NNNNNNNN w - - 0 1")?;
+
+        assert_that!(
+            Move::from_san("Kg5", &board)?,
+            eq(&Move::from_algebraic("f5g5").unwrap())
+        );
 
         Ok(())
     }

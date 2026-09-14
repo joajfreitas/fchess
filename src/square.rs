@@ -39,6 +39,10 @@ impl Square {
         Square { square }
     }
 
+    pub fn to_index(&self) -> u8 {
+        self.square
+    }
+
     pub fn from_algebraic(mov: &str) -> Option<Square> {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
