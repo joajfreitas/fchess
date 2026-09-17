@@ -8,7 +8,7 @@ const LAST_WHITE_OFFSET: u32 = 6;
 const LAST_BLACK_OFFSET: u32 = 12;
 
 #[allow(dead_code)]
-#[derive(FromPrimitive, ToPrimitive)]
+#[derive(FromPrimitive, ToPrimitive, Eq, PartialEq)]
 pub enum PieceType {
     Pawn = 0,
     Rook = 1,
@@ -27,6 +27,30 @@ impl PieceType {
 
         num::FromPrimitive::from_u32(num::ToPrimitive::to_u32(&self).unwrap() + side_offset)
             .unwrap()
+    }
+}
+
+impl TryFrom<ColoredPieceType> for PieceType {
+    type Error = &'static str;
+
+    fn try_from(value: ColoredPieceType) -> Result<Self, Self::Error> {
+        match value {
+            ColoredPieceType::WhitePawn => Ok(Self::Pawn),
+            ColoredPieceType::WhiteRook => Ok(Self::Rook),
+            ColoredPieceType::WhiteKnight => Ok(Self::Knight),
+            ColoredPieceType::WhiteBishop => Ok(Self::Bishop),
+            ColoredPieceType::WhiteQueen => Ok(Self::Queen),
+            ColoredPieceType::WhiteKing => Ok(Self::King),
+            ColoredPieceType::BlackPawn => Ok(Self::Pawn),
+            ColoredPieceType::BlackRook => Ok(Self::Rook),
+            ColoredPieceType::BlackKnight => Ok(Self::Knight),
+            ColoredPieceType::BlackBishop => Ok(Self::Bishop),
+            ColoredPieceType::BlackQueen => Ok(Self::Queen),
+            ColoredPieceType::BlackKing => Ok(Self::King),
+            ColoredPieceType::Marker => Err("Cannot convert Marker"),
+            ColoredPieceType::SourceMarker => Err("Cannot convert SourceMarker"),
+            ColoredPieceType::NoPiece => Err("Cannot convert NoPiece"),
+        }
     }
 }
 

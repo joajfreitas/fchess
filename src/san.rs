@@ -112,7 +112,6 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     let moves = move_generator.generate_moves(board);
     for moveset in moves {
         for mov in moveset.into_iter() {
-            dbg!(&mov);
             let piece_type = board.piece_at(mov.get_src()).unwrap();
             if (src_rank.is_none() || Some(mov.get_src().get_rank()) == src_rank)
                 && (src_file.is_none() || Some(mov.get_src().get_file()) == src_file)

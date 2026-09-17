@@ -260,6 +260,42 @@ impl MoveGenerator {
         MoveSet::new(mov.src, mov.piece, m)
     }
 
+    pub fn filter_discovered_check<'a>(
+        &self,
+        board: &Board,
+        moveset: &'a mut MoveSet,
+    ) -> Option<&'a MoveSet> {
+        let piece_type: PieceType = moveset.piece.try_into().ok()?;
+        if piece_type != PieceType::Pawn {
+            return Some(moveset);
+        }
+
+        let turn = board.get_turn();
+        let king_square = board.king(turn);
+        let king_mask = 1u64 << king_square.to_index();
+
+        for mov in moveset.clone().into_iter() {
+            let board = board.apply(&mov)?;
+            let occupied = board.occupied(Scope::from(board.get_turn()));
+            let enemy = board.occupied(Scope::from(!board.get_turn()));
+            let attacked = self.bishop_attacks(
+                PieceType::King.with_color(turn),
+                king_square,
+                !(occupied | enemy),
+            ) | self.rook_attacks(
+                PieceType::King.with_color(turn),
+                king_square,
+                !(occupied | enemy),
+            );
+
+            if attacked.mov & king_mask != 0 {
+                moveset.mov ^= 1u64 << mov.get_dst().to_index();
+            }
+        }
+
+        Some(moveset)
+    }
+
     pub fn moves(&self, board: &Board, piece: &Piece) -> MoveSet {
         let square = piece.get_square();
 
@@ -299,9 +335,7 @@ impl MoveGenerator {
             }
         };
 
-        // all except
-        let m = mov.mov ^ (mov.mov & occupied);
-        MoveSet::new(mov.src, mov.piece, m)
+        MoveSet::new(mov.src, mov.piece, mov.mov & !occupied) // all except occupied
     }
 
     pub fn black_pawn_attacks(&self, piece: ColoredPieceType, from: Square, enemy: u64) -> MoveSet {
@@ -849,7 +883,6 @@ mod tests {
             .get_piece(Square::from_algebraic("d2").unwrap())
             .unwrap();
 
-        println!("{}", board);
         let attacked_squares = MoveGenerator::new().attacked_space_for_piece(&board, &piece);
         let expected_squares = from_squares(&squares);
 
@@ -858,5 +891,10 @@ mod tests {
             eq(expected_squares),
             "Got:\n{attacked_squares}\nExpected:\n{expected_squares}"
         );
+    }
+
+    #[gtest]
+    fn test_filter_discovered_check() {
+        let board = &Board::from_fen("4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1").unwrap();
     }
 }
