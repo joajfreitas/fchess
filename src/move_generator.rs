@@ -260,6 +260,56 @@ impl MoveGenerator {
         MoveSet::new(mov.src, mov.piece, m)
     }
 
+    pub fn filter_discovered_check<'a>(
+        &self,
+        board: &Board,
+        moveset: &'a mut MoveSet,
+    ) -> Option<&'a MoveSet> {
+        let piece_type: PieceType = moveset.piece.try_into().ok()?;
+        if piece_type != PieceType::Pawn {
+            return Some(moveset);
+        }
+
+        let turn = board.get_turn();
+        let king_square = board.king(turn);
+
+        for mov in moveset.clone().into_iter() {
+            let board = board.apply(&mov)?;
+            let orthogonal_enemy_mask = board
+                .get_piece_mask(PieceType::Rook.with_color(board.get_turn()))
+                | board.get_piece_mask(PieceType::Queen.with_color(board.get_turn()));
+            let diagonal_enemy_mask = board
+                .get_piece_mask(PieceType::Bishop.with_color(board.get_turn()))
+                | board.get_piece_mask(PieceType::Queen.with_color(board.get_turn()));
+            let occupied = board.occupied(Scope::from(board.get_turn()));
+            let enemy = board.occupied(Scope::from(!board.get_turn()));
+
+            let diagonal_attacked = self.bishop_attacks(
+                PieceType::King.with_color(turn),
+                king_square,
+                !(occupied | enemy),
+            );
+
+            if diagonal_attacked.mov & diagonal_enemy_mask != 0 {
+                moveset.mov ^= 1u64 << mov.get_dst().to_index();
+                continue;
+            }
+
+            let orthogonal_attacked = self.rook_attacks(
+                PieceType::King.with_color(turn),
+                king_square,
+                !(occupied | enemy),
+            );
+
+            if orthogonal_attacked.mov & orthogonal_enemy_mask != 0 {
+                moveset.mov ^= 1u64 << mov.get_dst().to_index();
+                continue;
+            }
+        }
+
+        Some(moveset)
+    }
+
     pub fn moves(&self, board: &Board, piece: &Piece) -> MoveSet {
         let square = piece.get_square();
 
@@ -299,9 +349,10 @@ impl MoveGenerator {
             }
         };
 
-        // all except
-        let m = mov.mov ^ (mov.mov & occupied);
-        MoveSet::new(mov.src, mov.piece, m)
+        let mut moveset = MoveSet::new(mov.src, mov.piece, mov.mov & !occupied);
+        self.filter_discovered_check(board, &mut moveset)
+            .unwrap()
+            .clone()
     }
 
     pub fn black_pawn_attacks(&self, piece: ColoredPieceType, from: Square, enemy: u64) -> MoveSet {
@@ -849,7 +900,6 @@ mod tests {
             .get_piece(Square::from_algebraic("d2").unwrap())
             .unwrap();
 
-        println!("{}", board);
         let attacked_squares = MoveGenerator::new().attacked_space_for_piece(&board, &piece);
         let expected_squares = from_squares(&squares);
 
@@ -858,5 +908,23 @@ mod tests {
             eq(expected_squares),
             "Got:\n{attacked_squares}\nExpected:\n{expected_squares}"
         );
+    }
+
+    #[gtest]
+    fn test_filter_discovered_check() {
+        let board = &Board::from_fen("4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1").unwrap();
+        let move_generator = MoveGenerator::new();
+
+        let mut mov = move_generator
+            .generate_moves_for_piece(board, Square::from_algebraic("e5").unwrap())
+            .unwrap();
+
+        let moves = move_generator
+            .filter_discovered_check(board, &mut mov)
+            .unwrap()
+            .into_iter()
+            .collect::<Vec<Move>>();
+
+        assert_eq!(moves, vec![Move::from_algebraic("e5e6").unwrap()]);
     }
 }
