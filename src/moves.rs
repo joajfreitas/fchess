@@ -265,7 +265,7 @@ mod tests {
         let board = Board::from_fen("8/K7/8/8/8/8/8/8")?;
         let origin = Square::from_algebraic("a7").unwrap();
         let moveset = move_generator
-            .generate_moves_for_piece(&board, origin)
+            .generate_attacks_for_piece(&board, origin)
             .unwrap();
 
         assert_eq!(

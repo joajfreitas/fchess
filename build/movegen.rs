@@ -35,6 +35,7 @@ impl MoveGenSuites {
         use fchess::Board;
         use fchess::MoveGenerator;
         use fchess::MoveSet;
+        use googletest::prelude::*;
         "#
         )
         .unwrap();
