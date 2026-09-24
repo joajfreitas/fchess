@@ -47,7 +47,7 @@ impl Solver {
 
     fn generate_moves(&self, board: &Board) -> Vec<Move> {
         self.move_generator
-            .generate_moves(board)
+            .generate_attacks(board)
             .iter()
             .flat_map(|moveset| moveset.into_iter())
             .collect::<Vec<Move>>()
