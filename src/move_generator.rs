@@ -126,7 +126,7 @@ impl MoveGenerator {
     }
 
     pub fn attacked_square(&self, board: &Board, square: Square) -> bool {
-        let opposite_side = dbg!(!board.get_turn()); // white
+        let opposite_side = !board.get_turn(); // white
 
         let occupied = board.occupied(Scope::from(board.get_turn()));
         let enemy = board.occupied(Scope::from(!board.get_turn()));
@@ -498,7 +498,7 @@ impl MoveGenerator {
         aux.set_turn(!aux.get_turn());
         //aux.set_piece_type(!piece, 0);
 
-        let enemies = dbg!(self.attacked_space(&aux)).0;
+        let enemies = self.attacked_space(&aux).0;
 
         flood &= !enemies; // king cannot move into attacked spaces
 
@@ -512,7 +512,6 @@ impl MoveGenerator {
             let long_unoccupied = board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d1) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> b1.get_index()) & 1 == 0
                 && (enemies >> c1.get_index()) & 1 == 0
                 && (enemies >> d1.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f1) == Some(ColoredPieceType::NoPiece)
@@ -537,7 +536,6 @@ impl MoveGenerator {
             let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d8) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> b8.get_index()) & 1 == 0
                 && (enemies >> c8.get_index()) & 1 == 0
                 && (enemies >> d8.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f8) == Some(ColoredPieceType::NoPiece)
