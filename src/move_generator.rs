@@ -266,7 +266,7 @@ impl MoveGenerator {
         moveset: &'a mut MoveSet,
     ) -> Option<&'a MoveSet> {
         let piece_type: PieceType = moveset.piece.try_into().ok()?;
-        if piece_type != PieceType::Pawn {
+        if piece_type == PieceType::King {
             return Some(moveset);
         }
 
@@ -506,16 +506,20 @@ impl MoveGenerator {
             let b1 = Square::from_rank_file(0, 1);
             let c1 = Square::from_rank_file(0, 2);
             let d1 = Square::from_rank_file(0, 3);
+            let e1 = Square::from_rank_file(0, 3);
             let f1 = Square::from_rank_file(0, 5);
             let g1 = Square::from_rank_file(0, 6);
 
             let long_unoccupied = board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d1) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> e1.get_index()) & 1 == 0
                 && (enemies >> c1.get_index()) & 1 == 0
                 && (enemies >> d1.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f1) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(g1) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> e1.get_index()) & 1 == 0
                 && (enemies >> f1.get_index()) & 1 == 0
                 && (enemies >> g1.get_index()) & 1 == 0;
 
@@ -531,15 +535,19 @@ impl MoveGenerator {
             let b8 = Square::from_rank_file(7, 1);
             let c8 = Square::from_rank_file(7, 2);
             let d8 = Square::from_rank_file(7, 3);
+            let e8 = Square::from_rank_file(7, 3);
             let f8 = Square::from_rank_file(7, 5);
             let g8 = Square::from_rank_file(7, 6);
             let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(c8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(d8) == Some(ColoredPieceType::NoPiece)
                 && (enemies >> c8.get_index()) & 1 == 0
-                && (enemies >> d8.get_index()) & 1 == 0;
+                && (enemies >> d8.get_index()) & 1 == 0
+                && (enemies >> e8.get_index()) & 1 == 0;
             let short_unoccupied = board.piece_at(f8) == Some(ColoredPieceType::NoPiece)
                 && board.piece_at(g8) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> e8.get_index()) & 1 == 0
                 && (enemies >> f8.get_index()) & 1 == 0
                 && (enemies >> g8.get_index()) & 1 == 0;
             if board.get_castling_black_long() && long_unoccupied {

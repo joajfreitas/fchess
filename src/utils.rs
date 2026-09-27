@@ -39,7 +39,6 @@ impl fmt::Display for BitBoard {
 
 impl fmt::Debug for BitBoard {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        //print_u64(*self, f)
         write!(f, "{:?}", self.0)
     }
 }
