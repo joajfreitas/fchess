@@ -506,7 +506,7 @@ impl MoveGenerator {
             let b1 = Square::from_rank_file(0, 1);
             let c1 = Square::from_rank_file(0, 2);
             let d1 = Square::from_rank_file(0, 3);
-            let e1 = Square::from_rank_file(0, 3);
+            let e1 = Square::from_rank_file(0, 4);
             let f1 = Square::from_rank_file(0, 5);
             let g1 = Square::from_rank_file(0, 6);
 
@@ -535,7 +535,7 @@ impl MoveGenerator {
             let b8 = Square::from_rank_file(7, 1);
             let c8 = Square::from_rank_file(7, 2);
             let d8 = Square::from_rank_file(7, 3);
-            let e8 = Square::from_rank_file(7, 3);
+            let e8 = Square::from_rank_file(7, 4);
             let f8 = Square::from_rank_file(7, 5);
             let g8 = Square::from_rank_file(7, 6);
             let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
