@@ -384,12 +384,14 @@ impl MoveGenerator {
         enpassant: Option<Square>,
     ) -> MoveSet {
         let mut enemy = enemy;
+        let mut friendlies = friendlies;
         if let Some(enpassant) = enpassant {
             enemy |= 1 << enpassant.get_index()
         }
         let mov = self.black_pawn_moves[from.get_index() as usize];
 
         enemy |= ((1 << from.get_index()).shift(S) & enemy).shift(S);
+        friendlies |= ((1 << from.get_index()).shift(S) & friendlies).shift(S);
         let mov = mov & !friendlies & !enemy;
         let attack = self.black_pawn_attacks[from.get_index() as usize];
         let attacks = attack & enemy;
@@ -405,6 +407,7 @@ impl MoveGenerator {
         enpassant: Option<Square>,
     ) -> MoveSet {
         let mut enemy = enemy;
+        let mut friendlies = friendlies;
         if let Some(enpassant) = enpassant {
             enemy |= 1 << enpassant.get_index();
         }
@@ -414,6 +417,7 @@ impl MoveGenerator {
         // square advance square is not blocked, so we add a ficticious enemy
         // in that position
         enemy |= ((1 << from.get_index()).shift(N) & enemy).shift(N);
+        friendlies |= ((1 << from.get_index()).shift(N) & friendlies).shift(N);
 
         let mov = mov & !friendlies & !enemy;
         let attack = self.white_pawn_attacks[from.get_index() as usize];
@@ -916,4 +920,16 @@ mod tests {
 
         assert_eq!(moves, vec![Move::from_algebraic("e5e6").unwrap()]);
     }
+
+    // r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b - - 11 7
+    //
+    // rampart_standard_ruy_lopez_opening_1
+    //#[test]
+    //fn test_abcde() {
+    //    let board = Board::from_fen("r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b - - 11 7").unwrap();
+
+    //    println!("{}", board);
+
+    //    assert_eq!(1,2);
+    //}
 }
