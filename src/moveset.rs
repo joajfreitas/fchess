@@ -181,3 +181,6 @@ impl fmt::Display for MoveSet {
         print_board(v, f)
     }
 }
+
+#[cfg(test)]
+mod tests {}
