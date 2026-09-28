@@ -7,6 +7,7 @@ use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
 use crate::piece::{ColoredPieceType, Piece, PieceType};
 use crate::side::Side;
+use crate::square;
 use crate::square::Square;
 use crate::zobrist_hash::zobrist_hash;
 use anyhow::Result;
@@ -300,26 +301,18 @@ impl Board {
         let dst_file = mov.get_dst().get_file();
 
         match ((src_rank, src_file), (dst_rank, dst_file), piece_type) {
-            ((0, 4), (0, 2), ColoredPieceType::WhiteKing) => Some((
-                mov,
-                Move::new(Square::from_rank_file(0, 0), Square::from_rank_file(0, 3)),
-                Castling::WhiteLong,
-            )),
-            ((0, 4), (0, 6), ColoredPieceType::WhiteKing) => Some((
-                mov,
-                Move::new(Square::from_rank_file(0, 7), Square::from_rank_file(0, 5)),
-                Castling::WhiteShort,
-            )),
-            ((7, 4), (7, 2), ColoredPieceType::BlackKing) => Some((
-                mov,
-                Move::new(Square::from_rank_file(7, 0), Square::from_rank_file(7, 3)),
-                Castling::BlackLong,
-            )),
-            ((7, 4), (7, 6), ColoredPieceType::BlackKing) => Some((
-                mov,
-                Move::new(Square::from_rank_file(7, 7), Square::from_rank_file(7, 5)),
-                Castling::BlackShort,
-            )),
+            ((0, 4), (0, 2), ColoredPieceType::WhiteKing) => {
+                Some((mov, Move::new(square::A1, square::D1), Castling::WhiteLong))
+            }
+            ((0, 4), (0, 6), ColoredPieceType::WhiteKing) => {
+                Some((mov, Move::new(square::H1, square::F1), Castling::WhiteShort))
+            }
+            ((7, 4), (7, 2), ColoredPieceType::BlackKing) => {
+                Some((mov, Move::new(square::A8, square::D8), Castling::BlackLong))
+            }
+            ((7, 4), (7, 6), ColoredPieceType::BlackKing) => {
+                Some((mov, Move::new(square::H8, square::F8), Castling::BlackShort))
+            }
             _ => None,
         }
     }

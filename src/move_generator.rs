@@ -8,6 +8,7 @@ use crate::moves::Scope;
 use crate::moveset::MoveSet;
 use crate::piece::{ColoredPieceType, Piece, PieceType};
 use crate::side::Side;
+use crate::square;
 use crate::square::Square;
 use crate::utils::BitBoard;
 
@@ -503,58 +504,45 @@ impl MoveGenerator {
         flood &= !enemies; // king cannot move into attacked spaces
 
         if piece == ColoredPieceType::WhiteKing {
-            let b1 = Square::from_rank_file(0, 1);
-            let c1 = Square::from_rank_file(0, 2);
-            let d1 = Square::from_rank_file(0, 3);
-            let e1 = Square::from_rank_file(0, 4);
-            let f1 = Square::from_rank_file(0, 5);
-            let g1 = Square::from_rank_file(0, 6);
-
-            let long_unoccupied = board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(b1) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(c1) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(d1) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> e1.get_index()) & 1 == 0
-                && (enemies >> c1.get_index()) & 1 == 0
-                && (enemies >> d1.get_index()) & 1 == 0;
-            let short_unoccupied = board.piece_at(f1) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(g1) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> e1.get_index()) & 1 == 0
-                && (enemies >> f1.get_index()) & 1 == 0
-                && (enemies >> g1.get_index()) & 1 == 0;
+            let long_unoccupied = board.piece_at(square::B1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::B1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::C1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::D1) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> square::E1.get_index()) & 1 == 0
+                && (enemies >> square::C1.get_index()) & 1 == 0
+                && (enemies >> square::D1.get_index()) & 1 == 0;
+            let short_unoccupied = board.piece_at(square::F1) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::G1) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> square::E1.get_index()) & 1 == 0
+                && (enemies >> square::F1.get_index()) & 1 == 0
+                && (enemies >> square::G1.get_index()) & 1 == 0;
 
             if board.get_castling_white_long() && long_unoccupied {
-                flood |= 1 << Square::from_rank_file(0, 2).get_index();
+                flood |= 1 << square::C1.get_index();
             }
             if board.get_castling_white_short() && short_unoccupied {
-                flood |= 1 << Square::from_rank_file(0, 6).get_index();
+                flood |= 1 << square::G1.get_index();
             }
         }
 
         if piece == ColoredPieceType::BlackKing {
-            let b8 = Square::from_rank_file(7, 1);
-            let c8 = Square::from_rank_file(7, 2);
-            let d8 = Square::from_rank_file(7, 3);
-            let e8 = Square::from_rank_file(7, 4);
-            let f8 = Square::from_rank_file(7, 5);
-            let g8 = Square::from_rank_file(7, 6);
-            let long_unoccupied = board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(b8) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(c8) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(d8) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> c8.get_index()) & 1 == 0
-                && (enemies >> d8.get_index()) & 1 == 0
-                && (enemies >> e8.get_index()) & 1 == 0;
-            let short_unoccupied = board.piece_at(f8) == Some(ColoredPieceType::NoPiece)
-                && board.piece_at(g8) == Some(ColoredPieceType::NoPiece)
-                && (enemies >> e8.get_index()) & 1 == 0
-                && (enemies >> f8.get_index()) & 1 == 0
-                && (enemies >> g8.get_index()) & 1 == 0;
+            let long_unoccupied = board.piece_at(square::B8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::B8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::C8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::D8) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> square::C8.get_index()) & 1 == 0
+                && (enemies >> square::D8.get_index()) & 1 == 0
+                && (enemies >> square::E8.get_index()) & 1 == 0;
+            let short_unoccupied = board.piece_at(square::F8) == Some(ColoredPieceType::NoPiece)
+                && board.piece_at(square::G8) == Some(ColoredPieceType::NoPiece)
+                && (enemies >> square::E8.get_index()) & 1 == 0
+                && (enemies >> square::F8.get_index()) & 1 == 0
+                && (enemies >> square::G8.get_index()) & 1 == 0;
             if board.get_castling_black_long() && long_unoccupied {
-                flood |= 1 << Square::from_rank_file(7, 2).get_index();
+                flood |= 1 << square::C8.get_index();
             }
             if board.get_castling_black_short() && short_unoccupied {
-                flood |= 1 << Square::from_rank_file(7, 6).get_index();
+                flood |= 1 << square::G8.get_index();
             }
         }
 

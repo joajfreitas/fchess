@@ -4,6 +4,7 @@ use std::fs;
 use crate::board::Board;
 use crate::moves::Move;
 use crate::piece::ColoredPieceType;
+use crate::square;
 use crate::square::Square;
 
 #[derive(Clone, Copy)]
@@ -47,16 +48,16 @@ impl Entry {
                 board.piece_at(self.get_from()),
             ) {
                 ((0, 4), (0, 7), Some(ColoredPieceType::WhiteKing)) => {
-                    Move::new(self.get_from(), Square::from_rank_file(0, 6))
+                    Move::new(self.get_from(), square::G1)
                 }
                 ((0, 4), (0, 0), Some(ColoredPieceType::WhiteKing)) => {
-                    Move::new(self.get_from(), Square::from_rank_file(0, 2))
+                    Move::new(self.get_from(), square::C1)
                 }
                 ((7, 4), (7, 7), Some(ColoredPieceType::BlackKing)) => {
-                    Move::new(self.get_from(), Square::from_rank_file(7, 6))
+                    Move::new(self.get_from(), square::G8)
                 }
                 ((7, 4), (7, 0), Some(ColoredPieceType::BlackKing)) => {
-                    Move::new(self.get_from(), Square::from_rank_file(7, 2))
+                    Move::new(self.get_from(), square::C8)
                 }
                 _ => Move::new(self.get_from(), self.get_to()),
             },
