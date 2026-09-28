@@ -267,10 +267,10 @@ impl MoveGenerator {
         moveset: &'a mut MoveSet,
     ) -> Option<&'a MoveSet> {
         let turn = board.get_turn();
-        let king_square = board.king(turn);
 
         for mov in moveset.clone().into_iter() {
             let board = board.apply(&mov)?;
+            let king_square = board.king(turn);
             let orthogonal_enemy_mask = board
                 .get_piece_mask(PieceType::Rook.with_color(board.get_turn()))
                 | board.get_piece_mask(PieceType::Queen.with_color(board.get_turn()));
@@ -920,16 +920,4 @@ mod tests {
 
         assert_eq!(moves, vec![Move::from_algebraic("e5e6").unwrap()]);
     }
-
-    // r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b - - 11 7
-    //
-    // rampart_standard_ruy_lopez_opening_1
-    //#[test]
-    //fn test_abcde() {
-    //    let board = Board::from_fen("r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b - - 11 7").unwrap();
-
-    //    println!("{}", board);
-
-    //    assert_eq!(1,2);
-    //}
 }
