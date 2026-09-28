@@ -266,11 +266,6 @@ impl MoveGenerator {
         board: &Board,
         moveset: &'a mut MoveSet,
     ) -> Option<&'a MoveSet> {
-        let piece_type: PieceType = moveset.piece.try_into().ok()?;
-        if piece_type == PieceType::King {
-            return Some(moveset);
-        }
-
         let turn = board.get_turn();
         let king_square = board.king(turn);
 
@@ -303,7 +298,7 @@ impl MoveGenerator {
             );
 
             if orthogonal_attacked.mov & orthogonal_enemy_mask != 0 {
-                moveset.mov ^= 1u64 << mov.get_dst().to_index();
+                moveset.mov &= !(1u64 << mov.get_dst().to_index());
                 continue;
             }
         }
