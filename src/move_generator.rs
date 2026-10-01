@@ -301,6 +301,29 @@ impl MoveGenerator {
                 moveset.mov &= !(1u64 << mov.get_dst().to_index());
                 continue;
             }
+
+            let knight_enemy_mask =
+                board.get_piece_mask(PieceType::Knight.with_color(board.get_turn()));
+            let knight_attacked =
+                self.knight_attacks(PieceType::King.with_color(turn), king_square, occupied);
+
+            if knight_attacked.mov & knight_enemy_mask != 0 {
+                moveset.mov &= !(1u64 << mov.get_dst().to_index());
+                continue;
+            }
+
+            let pawn_enemy_mask =
+                board.get_piece_mask(PieceType::Pawn.with_color(board.get_turn()));
+            let pawn_attacked = self.pawn_attacks(
+                PieceType::Pawn.with_color(turn),
+                king_square,
+                occupied | enemy,
+            );
+
+            if pawn_attacked.mov & pawn_enemy_mask != 0 {
+                moveset.mov &= !(1u64 << mov.get_dst().to_index());
+                continue;
+            }
         }
 
         Some(moveset)
