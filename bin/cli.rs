@@ -37,12 +37,13 @@ fn read_line(rl: &mut rustyline::DefaultEditor) -> Result<String> {
 fn get_best_move(board: &Board, book: &Option<Book>, solver: &mut Solver) -> Result<String> {
     Ok(match book.as_ref().and_then(|b| b.get_best_move(board)) {
         Some(mov) => {
-            println!("=> Book move");
+            println!("=> Book move {}", mov.to_algebraic());
             mov
         }
         _ => {
-            println!("=> Search move");
-            solver.best_move(board).unwrap()
+            let mov = solver.best_move(board).unwrap();
+            println!("=> Search move {}", mov.to_algebraic());
+            mov
         }
     }
     .to_algebraic())
