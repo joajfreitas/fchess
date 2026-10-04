@@ -17,6 +17,9 @@ struct Args {
 
     #[arg(short, long)]
     side: Option<String>,
+
+    #[arg(short, long)]
+    fen: Option<String>,
 }
 
 fn read_line(rl: &mut rustyline::DefaultEditor) -> Result<String> {
@@ -71,7 +74,11 @@ fn main() -> Result<()> {
 
     let book = args.book.map(|book| Book::from_filename(&book));
 
-    let mut board = Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0")?;
+    let mut board = Board::from_fen(
+        &args
+            .fen
+            .unwrap_or("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0".to_string()),
+    )?;
     let mut solver = Solver::new();
     println!("{board}");
 
