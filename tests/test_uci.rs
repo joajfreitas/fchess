@@ -168,10 +168,10 @@ fn test_uci_non_standard_display() {
     uci.send("position startpos");
     uci.send("display");
     uci.recv().unwrap();
-    expect_that!(uci.recv(), ok(eq("8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │")));
+    expect_that!(uci.recv(), ok(eq("8 │ r │ k │ b │ q │ k │ b │ k │ r │")));
     uci.recv().unwrap();
-    expect_that!(uci.recv(), ok(eq("7 │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │")));
+    expect_that!(uci.recv(), ok(eq("7 │ p │ p │ p │ p │ p │ p │ p │ p │")));
     uci.recvn(11).unwrap();
-    expect_that!(uci.recv(), ok(eq("1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │")));
+    expect_that!(uci.recv(), ok(eq("1 │ R │ K │ B │ Q │ K │ B │ K │ R │")));
     uci.recvn(3).unwrap();
 }
