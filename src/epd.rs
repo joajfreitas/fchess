@@ -4,8 +4,8 @@ use std::collections::HashMap;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Epd {
-    board: Board,
-    properties: HashMap<String, String>,
+    pub board: Board,
+    pub properties: HashMap<String, String>,
 }
 
 #[allow(dead_code)]
@@ -15,14 +15,6 @@ impl Epd {
             board: board.clone(),
             properties,
         }
-    }
-
-    pub fn get_board(&self) -> Board {
-        self.board.clone()
-    }
-
-    pub fn get_properties(&self) -> HashMap<String, String> {
-        self.properties.clone()
     }
 
     pub fn from_string(s: &str) -> Result<Epd> {
@@ -36,7 +28,10 @@ impl Epd {
                 break;
             }
 
-            properties.insert(key.unwrap().to_string(), value.unwrap().to_string());
+            properties.insert(
+                key.unwrap().to_string().replace(";", ""),
+                value.unwrap().to_string().replace(";", ""),
+            );
         }
 
         Ok(Epd {
@@ -49,20 +44,28 @@ impl Epd {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use googletest::prelude::*;
 
-    #[test]
+    #[gtest]
     fn test_simple_epd() {
         let epd =
             Epd::from_string("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 bm g6g4")
                 .unwrap();
 
-        assert_eq!(
+        assert_that!(
             Epd::new(
                 &Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
                     .unwrap(),
                 HashMap::from([("bm".to_string(), "g6g4".to_string())])
             ),
-            epd
+            eq(&epd)
         );
+    }
+
+    #[gtest]
+    fn test_get_property() {
+        let epd = Epd::from_string("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1 ;D1 20 ;D2 400 ;D3 8902 ;D4 197281 ;D5 4865609 ;D6 119060324").unwrap();
+
+        assert_that!(epd.properties.get("D1").unwrap(), eq("20"));
     }
 }
