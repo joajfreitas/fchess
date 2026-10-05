@@ -35,8 +35,8 @@ impl TestResult for BestMoveTestResult {
         format!(
             "{}\n{}\nexpected: {}, got: {}",
             self.testcase.prompt,
-            self.testcase.epd.get_board(),
-            self.testcase.epd.get_properties().get("bm").unwrap(),
+            self.testcase.epd.board,
+            self.testcase.epd.properties.get("bm").unwrap(),
             self.resulting_move.to_algebraic()
         )
     }
@@ -59,10 +59,10 @@ fn main() -> Result<()> {
     for line in contents.lines() {
         println!("Processing line: {}", line);
         let epd = Epd::from_string(line)?;
-        let board = epd.get_board();
+        let board = epd.board.clone();
         let best_move = solver.best_move(&board).unwrap();
 
-        let expected_move = Move::from_algebraic(epd.get_properties().get("bm").unwrap()).unwrap();
+        let expected_move = Move::from_algebraic(epd.properties.get("bm").unwrap()).unwrap();
 
         testsuit_result.push_test(BestMoveTestResult::new(
             TestCase {
