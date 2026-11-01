@@ -36,6 +36,7 @@ mod san;
 mod side;
 mod solver;
 mod square;
+mod uci;
 mod utils;
 mod zobrist_hash;
 
