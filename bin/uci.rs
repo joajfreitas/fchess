@@ -1,8 +1,6 @@
 use std::fs::File;
 use std::io;
 use std::io::prelude::*;
-use std::sync::Arc;
-use std::sync::Mutex;
 
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
@@ -19,7 +17,7 @@ fn to_client(file: &mut File, output: &str) {
 
 fn main() -> Result<()> {
     let (gui_tx, engine_rx): (Sender<String>, Receiver<String>) = mpsc::channel();
-    let (engine_tx, gui_rx): (Sender<String>, Receiver<String>) = mpsc::channel();
+    let (engine_tx, _): (Sender<String>, Receiver<String>) = mpsc::channel();
 
     let t = thread::spawn(move || {
         let mut file = File::create("/home/joaj/sources/fchess/log1.txt").unwrap();
@@ -95,8 +93,9 @@ fn main() -> Result<()> {
                 to_client(&mut file, &format!("board {board:?}"));
             } else if cmd.starts_with("go") {
                 let info = "info_currmove 1";
-                to_client(&mut file, &format!("{info}"));
-                file.write_all(&format!("start: {board:?}\n").as_bytes());
+                to_client(&mut file, info);
+                file.write_all(format!("start: {board:?}\n").as_bytes())
+                    .unwrap();
                 to_client(
                     &mut file,
                     &format!(

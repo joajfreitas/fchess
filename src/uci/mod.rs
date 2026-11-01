@@ -17,11 +17,13 @@ struct GoSubCmd {
     perft: Option<u32>,
 }
 
+#[allow(dead_code)]
 #[derive(Clone)]
 struct GoSubCmdBuilder {
     go_sub_cmd: GoSubCmd,
 }
 
+#[allow(dead_code)]
 impl GoSubCmdBuilder {
     pub fn new() -> Self {
         Self {
@@ -29,9 +31,9 @@ impl GoSubCmdBuilder {
         }
     }
 
-    pub fn with_search_moves(&self, search_moves: &Vec<Move>) -> GoSubCmdBuilder {
+    pub fn with_search_moves(&self, search_moves: &[Move]) -> GoSubCmdBuilder {
         let mut this = self.clone();
-        this.go_sub_cmd.search_moves = search_moves.clone();
+        this.go_sub_cmd.search_moves = search_moves.to_vec();
         this
     }
 
@@ -112,6 +114,7 @@ enum PositionSubCmd {
     Fen(String),
 }
 
+#[allow(dead_code)]
 #[derive(PartialEq, Debug)]
 enum UciGuiCmd {
     Uci,
@@ -137,6 +140,7 @@ enum UciGuiCmd {
     Stop,
 }
 
+#[allow(dead_code)]
 #[derive(PartialEq, Debug)]
 enum IdSubCmd {
     Name(String),
@@ -158,6 +162,7 @@ struct ScoreSubCmdBuilder {
     score_sub_cmd: ScoreSubCmd,
 }
 
+#[allow(dead_code)]
 impl ScoreSubCmdBuilder {
     pub fn new() -> Self {
         Self {
@@ -232,6 +237,7 @@ struct InfoSubCmdBuilder {
     info_sub_cmd: InfoSubCmd,
 }
 
+#[allow(dead_code)]
 impl InfoSubCmdBuilder {
     pub fn new() -> Self {
         Self {
@@ -263,9 +269,9 @@ impl InfoSubCmdBuilder {
         this
     }
 
-    pub fn with_pv(&self, pv: &Vec<Move>) -> Self {
+    pub fn with_pv(&self, pv: &[Move]) -> Self {
         let mut this = self.clone();
-        this.info_sub_cmd.pv = Some(pv.clone());
+        this.info_sub_cmd.pv = Some(pv.to_vec());
         this
     }
 
@@ -329,7 +335,7 @@ impl InfoSubCmdBuilder {
         this
     }
 
-    pub fn with_refutation(&self, refutation: &Vec<Move>) -> Self {
+    pub fn with_refutation(&self, refutation: &[Move]) -> Self {
         let mut this = self.clone();
         this.info_sub_cmd.refutation = Some(refutation.to_vec());
         this
@@ -346,6 +352,7 @@ impl InfoSubCmdBuilder {
     }
 }
 
+#[allow(dead_code)]
 #[derive(PartialEq, Debug)]
 enum OptionTypes {
     Check {
@@ -369,6 +376,7 @@ enum OptionTypes {
     },
 }
 
+#[allow(dead_code)]
 #[derive(PartialEq, Debug)]
 enum UciEngineCmd {
     RegistrationChecking,
@@ -383,6 +391,7 @@ enum UciEngineCmd {
     UciOk,
 }
 
+#[allow(dead_code)]
 fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
     let debug_re = regex!(r"^debug\s?((on)|(off))?$");
     let setoption_re = regex!(r"^setoption name (\w+)( value (\w+))?$");
@@ -422,9 +431,8 @@ fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
             .and_then(|moves| {
                 moves
                     .as_str()
-                    .to_string()
                     .split(' ')
-                    .map(|cap| Move::from_full_algebraic(cap))
+                    .map(Move::from_full_algebraic)
                     .collect::<Option<Vec<Move>>>()
             })
             .unwrap_or(Vec::new());
@@ -457,16 +465,16 @@ fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
             .and_then(|mate| mate.as_str().to_string().parse::<u32>().ok());
 
         Ok(UciGuiCmd::Go(GoSubCmd {
-            search_moves: search_moves,
-            ponder: ponder,
-            wtime: wtime,
-            btime: btime,
-            winc: winc,
-            binc: binc,
-            movestogo: movestogo,
-            depth: depth,
-            nodes: nodes,
-            mate: mate,
+            search_moves,
+            ponder,
+            wtime,
+            btime,
+            winc,
+            binc,
+            movestogo,
+            depth,
+            nodes,
+            mate,
             infinite: None,
             perft: None,
         }))
@@ -486,16 +494,15 @@ fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
             .and_then(|moves| {
                 moves
                     .as_str()
-                    .to_string()
                     .split(" ")
-                    .map(|mov| Move::from_full_algebraic(mov))
+                    .map(Move::from_full_algebraic)
                     .collect::<Option<Vec<Move>>>()
             })
             .unwrap_or(Vec::new());
 
         Ok(UciGuiCmd::Position {
             pos: position_sub_cmd,
-            moves: moves,
+            moves,
         })
     } else if regex!("quit").is_match(command) {
         Ok(UciGuiCmd::Quit)
@@ -506,6 +513,7 @@ fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
     }
 }
 
+#[allow(dead_code)]
 fn write_engine_command(command: &UciEngineCmd) -> String {
     fn write_option<T: std::fmt::Display>(name: &str, value: Option<T>) -> String {
         if let Some(v) = value {
@@ -528,7 +536,7 @@ fn write_engine_command(command: &UciEngineCmd) -> String {
             IdSubCmd::Author(author) => format!("id author {author}"),
         },
         UciEngineCmd::Info(info) => {
-            format!("info") + &write_option("depth", info.depth) +
+            "info".to_string() + &write_option("depth", info.depth) +
             &write_option("seldepth", info.seldepth) +
             &write_option("time", info.time) +
             &write_option("nodes", info.nodes) +
