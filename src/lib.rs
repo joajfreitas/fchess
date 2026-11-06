@@ -18,6 +18,10 @@ pub use crate::moveset::MoveSet;
 pub use crate::side::Side;
 pub use crate::solver::Solver;
 pub use crate::square::Square;
+pub use crate::uci::{
+    GoSubCmd, InfoSubCmdBuilder, OptionTypes, PositionSubCmd, UciEngineCmd, UciGuiCmd,
+    write_engine_command,
+};
 
 mod bitboard;
 mod bitwise;
@@ -36,6 +40,7 @@ mod san;
 mod side;
 mod solver;
 mod square;
+mod uci;
 mod utils;
 mod zobrist_hash;
 

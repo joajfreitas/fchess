@@ -110,7 +110,7 @@ impl Solver {
                 m.unwrap()
             };
 
-            new_new_node.evaluation = Some(-board_evaluation);
+            new_new_node.evaluation = Some(board_evaluation);
 
             max = cmp::max(new_new_node.evaluation?, max);
             if max == new_new_node.evaluation? {
