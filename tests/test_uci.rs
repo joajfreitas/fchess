@@ -91,8 +91,9 @@ impl Drop for UciClient {
 fn test_uci_handshake() {
     let mut uci = UciClient::spawn();
     uci.send("uci");
-    expect_that!(uci.recv(), ok(contains_substring("id name FChess")));
-    expect_that!(uci.recv(), ok(contains_substring("id author joaj")));
+    expect_that!(uci.recv(), ok(eq("id name FChess")));
+    expect_that!(uci.recv(), ok(eq("id author João Freitas")));
+    expect_that!(uci.recv(), ok(eq("option name Opening book type string")));
     expect_that!(uci.recv(), ok(eq("uciok")));
 }
 
@@ -100,7 +101,7 @@ fn test_uci_handshake() {
 fn test_uci_initial_position_fen() {
     let mut uci = UciClient::spawn();
     uci.send("uci");
-    uci.recvn(3).unwrap();
+    uci.recvn(4).unwrap();
 
     uci.send("position startpos");
     uci.send("isready");
@@ -110,7 +111,40 @@ fn test_uci_initial_position_fen() {
     expect_that!(
         uci.recv(),
         ok(eq(
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+            "info string rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
         ))
     );
+}
+
+#[gtest]
+fn test_uci_position_fen() {
+    let mut uci = UciClient::spawn();
+    uci.send("uci");
+    uci.recvn(4).unwrap();
+
+    uci.send("position fen rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    uci.send("isready");
+    expect_that!(uci.recv(), ok(eq("readyok")));
+
+    uci.send("fen");
+    expect_that!(
+        uci.recv(),
+        ok(eq(
+            "info string rnbqkbn1/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+        ))
+    );
+}
+
+#[gtest]
+fn test_uci_go() {
+    let mut uci = UciClient::spawn();
+    uci.send("uci");
+    uci.recvn(4).unwrap();
+
+    uci.send("position startpos");
+    uci.send("isready");
+    expect_that!(uci.recv(), ok(eq("readyok")));
+
+    uci.send("go");
+    expect_that!(uci.recv(), ok(eq("bestmove g1h3")));
 }

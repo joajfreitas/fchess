@@ -2,7 +2,7 @@ use crate::Move;
 use lazy_regex::regex;
 
 #[derive(Clone, PartialEq, Debug, Default)]
-struct GoSubCmd {
+pub struct GoSubCmd {
     search_moves: Vec<Move>,
     ponder: bool,
     wtime: Option<u32>,
@@ -109,14 +109,14 @@ impl GoSubCmdBuilder {
 }
 
 #[derive(PartialEq, Debug)]
-enum PositionSubCmd {
+pub enum PositionSubCmd {
     StartPos,
     Fen(String),
 }
 
 #[allow(dead_code)]
 #[derive(PartialEq, Debug)]
-enum UciGuiCmd {
+pub enum UciGuiCmd {
     Uci,
     Debug(Option<bool>),
     IsReady,
@@ -138,13 +138,132 @@ enum UciGuiCmd {
         code: String,
     },
     Stop,
+    Fen,
 }
 
-#[allow(dead_code)]
-#[derive(PartialEq, Debug)]
-enum IdSubCmd {
-    Name(String),
-    Author(String),
+impl UciGuiCmd {
+    pub fn parse(command: &str) -> Result<Self, String> {
+        let debug_re = regex!(r"^debug\s?((on)|(off))?$");
+        let setoption_re = regex!(r"^setoption name (\w+)( value (\w+))?$");
+        let go_re = regex!(
+            r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?$"
+        );
+
+        let position_re = regex!(
+            r"^position\s((?<startpos>startpos)|(fen\s(?<fen>(?:(?:[pnbrqkPNBRQK1-8]+)\/){7}(?:[pnbrqkPNBRQK1-8]+)(\s([wb]))?(\s(-|[KQkq]{1,4}))?(\s(-|[a-h][36]))?(\s(\d+))?(\s(\d+))?)))(\smoves\s(?<moves>([a-h][1-8][a-h][1-8]\s)*([a-h][1-8][a-h][1-8])))?$"
+        );
+
+        if regex!("^uci$").is_match(command) {
+            Ok(UciGuiCmd::Uci)
+        } else if debug_re.is_match(command) {
+            let caps = debug_re.captures(command).unwrap();
+            match caps.get(1) {
+                None => Ok(UciGuiCmd::Debug(None)),
+                Some(arg) => match arg.as_str() {
+                    "on" => Ok(UciGuiCmd::Debug(Some(true))),
+                    "off" => Ok(UciGuiCmd::Debug(Some(false))),
+                    _ => unreachable!(),
+                },
+            }
+        } else if regex!("^isready$").is_match(command) {
+            Ok(UciGuiCmd::IsReady)
+        } else if setoption_re.is_match(command) {
+            let caps = setoption_re.captures(command).unwrap();
+            let name = caps.get(1).map(|x| x.as_str().to_string()).unwrap();
+            let value = caps.get(3).map(|x| x.as_str().to_string());
+            Ok(UciGuiCmd::SetOption { name, value })
+        } else if regex!("^ucinewgame$").is_match(command) {
+            Ok(UciGuiCmd::UciNewGame)
+        } else if go_re.is_match(command) {
+            let caps = go_re.captures(command).unwrap();
+            let search_moves = caps
+                .name("moves")
+                .and_then(|moves| {
+                    moves
+                        .as_str()
+                        .split(' ')
+                        .map(Move::from_full_algebraic)
+                        .collect::<Option<Vec<Move>>>()
+                })
+                .unwrap_or(Vec::new());
+
+            let ponder = caps.name("ponder").is_some();
+
+            let wtime = caps
+                .name("wtime")
+                .and_then(|wtime| wtime.as_str().to_string().parse::<u32>().ok());
+            let btime = caps
+                .name("btime")
+                .and_then(|btime| btime.as_str().to_string().parse::<u32>().ok());
+            let winc = caps
+                .name("winc")
+                .and_then(|winc| winc.as_str().to_string().parse::<u32>().ok());
+            let binc = caps
+                .name("winc")
+                .and_then(|binc| binc.as_str().to_string().parse::<u32>().ok());
+            let movestogo = caps
+                .name("movestogo")
+                .and_then(|movestogo| movestogo.as_str().to_string().parse::<u32>().ok());
+            let depth = caps
+                .name("depth")
+                .and_then(|depth| depth.as_str().to_string().parse::<u32>().ok());
+            let nodes = caps
+                .name("nodes")
+                .and_then(|nodes| nodes.as_str().to_string().parse::<u32>().ok());
+            let mate = caps
+                .name("mate")
+                .and_then(|mate| mate.as_str().to_string().parse::<u32>().ok());
+
+            Ok(UciGuiCmd::Go(GoSubCmd {
+                search_moves,
+                ponder,
+                wtime,
+                btime,
+                winc,
+                binc,
+                movestogo,
+                depth,
+                nodes,
+                mate,
+                infinite: None,
+                perft: None,
+            }))
+        } else if regex!("^ponderhit$").is_match(command) {
+            Ok(UciGuiCmd::PonderHit)
+        } else if position_re.is_match(command) {
+            let caps = position_re.captures(command).unwrap();
+
+            let position_sub_cmd = if caps.name("startpos").is_some() {
+                PositionSubCmd::StartPos
+            } else {
+                PositionSubCmd::Fen(caps.name("fen").unwrap().as_str().to_string())
+            };
+
+            let moves = caps
+                .name("moves")
+                .and_then(|moves| {
+                    moves
+                        .as_str()
+                        .split(" ")
+                        .map(Move::from_full_algebraic)
+                        .collect::<Option<Vec<Move>>>()
+                })
+                .unwrap_or(Vec::new());
+
+            Ok(UciGuiCmd::Position {
+                pos: position_sub_cmd,
+                moves,
+            })
+        } else if regex!("^quit$").is_match(command) {
+            Ok(UciGuiCmd::Quit)
+        } else if regex!("^stop$").is_match(command) {
+            Ok(UciGuiCmd::Stop)
+        } else if regex!("^fen$").is_match(command) {
+            Ok(UciGuiCmd::Fen)
+        } else {
+            Err(String::from("Unimplemented"))
+        }
+    }
 }
 
 #[derive(PartialEq, Debug, Clone, Default)]
@@ -212,7 +331,7 @@ impl ScoreSubCmdBuilder {
 }
 
 #[derive(PartialEq, Debug, Default, Clone)]
-struct InfoSubCmd {
+pub struct InfoSubCmd {
     depth: Option<u32>,
     seldepth: Option<u32>,
     time: Option<u32>,
@@ -233,7 +352,7 @@ struct InfoSubCmd {
 }
 
 #[derive(Clone)]
-struct InfoSubCmdBuilder {
+pub struct InfoSubCmdBuilder {
     info_sub_cmd: InfoSubCmd,
 }
 
@@ -354,7 +473,7 @@ impl InfoSubCmdBuilder {
 
 #[allow(dead_code)]
 #[derive(PartialEq, Debug)]
-enum OptionTypes {
+pub enum OptionTypes {
     Check {
         name: String,
         default: Option<bool>,
@@ -366,6 +485,7 @@ enum OptionTypes {
         max: Option<i32>,
     },
     Combo {
+        name: String,
         default: String,
         vars: Vec<String>,
     },
@@ -378,13 +498,14 @@ enum OptionTypes {
 
 #[allow(dead_code)]
 #[derive(PartialEq, Debug)]
-enum UciEngineCmd {
+pub enum UciEngineCmd {
     RegistrationChecking,
     CopyProtectionChecking,
     RegistrationOk,
     CopyProtectionError,
     BestMove { mov: Move, ponder: Option<Move> },
-    Id(IdSubCmd),
+    IdName(String),
+    IdAuthor(String),
     Info(InfoSubCmd),
     Option(OptionTypes),
     ReadyOk,
@@ -392,129 +513,7 @@ enum UciEngineCmd {
 }
 
 #[allow(dead_code)]
-fn parse_gui_command(command: &str) -> Result<UciGuiCmd, String> {
-    let debug_re = regex!(r"^debug\s?((on)|(off))?$");
-    let setoption_re = regex!(r"^setoption name (\w+)( value (\w+))?$");
-    let go_re = regex!(
-        r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?$"
-    );
-
-    let position_re = regex!(
-        r"^position\s((?<startpos>startpos)|(fen\s(?<fen>(?:(?:[pnbrqkPNBRQK]+|[1-8])\/){7}(?:[pnbrqkPNBRQK]+|[1-8])\s([wb])\s(-|[KQkq]{1,4})\s(-|[a-h][36])\s(\d+)\s(\d+))))(\smoves\s(?<moves>([a-h][1-8][a-h][1-8]\s)*([a-h][1-8][a-h][1-8])))?$"
-    );
-
-    if regex!("^uci$").is_match(command) {
-        Ok(UciGuiCmd::Uci)
-    } else if debug_re.is_match(command) {
-        let caps = debug_re.captures(command).unwrap();
-        match caps.get(1) {
-            None => Ok(UciGuiCmd::Debug(None)),
-            Some(arg) => match arg.as_str() {
-                "on" => Ok(UciGuiCmd::Debug(Some(true))),
-                "off" => Ok(UciGuiCmd::Debug(Some(false))),
-                _ => unreachable!(),
-            },
-        }
-    } else if regex!("^isready$").is_match(command) {
-        Ok(UciGuiCmd::IsReady)
-    } else if setoption_re.is_match(command) {
-        let caps = setoption_re.captures(command).unwrap();
-        let name = caps.get(1).map(|x| x.as_str().to_string()).unwrap();
-        let value = caps.get(3).map(|x| x.as_str().to_string());
-        Ok(UciGuiCmd::SetOption { name, value })
-    } else if regex!("^ucinewgame$").is_match(command) {
-        Ok(UciGuiCmd::UciNewGame)
-    } else if go_re.is_match(command) {
-        let caps = go_re.captures(command).unwrap();
-        let search_moves = caps
-            .name("moves")
-            .and_then(|moves| {
-                moves
-                    .as_str()
-                    .split(' ')
-                    .map(Move::from_full_algebraic)
-                    .collect::<Option<Vec<Move>>>()
-            })
-            .unwrap_or(Vec::new());
-
-        let ponder = caps.name("ponder").is_some();
-
-        let wtime = caps
-            .name("wtime")
-            .and_then(|wtime| wtime.as_str().to_string().parse::<u32>().ok());
-        let btime = caps
-            .name("btime")
-            .and_then(|btime| btime.as_str().to_string().parse::<u32>().ok());
-        let winc = caps
-            .name("winc")
-            .and_then(|winc| winc.as_str().to_string().parse::<u32>().ok());
-        let binc = caps
-            .name("winc")
-            .and_then(|binc| binc.as_str().to_string().parse::<u32>().ok());
-        let movestogo = caps
-            .name("movestogo")
-            .and_then(|movestogo| movestogo.as_str().to_string().parse::<u32>().ok());
-        let depth = caps
-            .name("depth")
-            .and_then(|depth| depth.as_str().to_string().parse::<u32>().ok());
-        let nodes = caps
-            .name("nodes")
-            .and_then(|nodes| nodes.as_str().to_string().parse::<u32>().ok());
-        let mate = caps
-            .name("mate")
-            .and_then(|mate| mate.as_str().to_string().parse::<u32>().ok());
-
-        Ok(UciGuiCmd::Go(GoSubCmd {
-            search_moves,
-            ponder,
-            wtime,
-            btime,
-            winc,
-            binc,
-            movestogo,
-            depth,
-            nodes,
-            mate,
-            infinite: None,
-            perft: None,
-        }))
-    } else if regex!("^ponderhit$").is_match(command) {
-        Ok(UciGuiCmd::PonderHit)
-    } else if position_re.is_match(command) {
-        let caps = position_re.captures(command).unwrap();
-
-        let position_sub_cmd = if caps.name("startpos").is_some() {
-            PositionSubCmd::StartPos
-        } else {
-            PositionSubCmd::Fen(caps.name("fen").unwrap().as_str().to_string())
-        };
-
-        let moves = caps
-            .name("moves")
-            .and_then(|moves| {
-                moves
-                    .as_str()
-                    .split(" ")
-                    .map(Move::from_full_algebraic)
-                    .collect::<Option<Vec<Move>>>()
-            })
-            .unwrap_or(Vec::new());
-
-        Ok(UciGuiCmd::Position {
-            pos: position_sub_cmd,
-            moves,
-        })
-    } else if regex!("quit").is_match(command) {
-        Ok(UciGuiCmd::Quit)
-    } else if regex!("stop").is_match(command) {
-        Ok(UciGuiCmd::Stop)
-    } else {
-        Err(String::from("Unimplemented"))
-    }
-}
-
-#[allow(dead_code)]
-fn write_engine_command(command: &UciEngineCmd) -> String {
+pub fn write_engine_command(command: &UciEngineCmd) -> String {
     fn write_option<T: std::fmt::Display>(name: &str, value: Option<T>) -> String {
         if let Some(v) = value {
             format!(" {name} {v}")
@@ -531,10 +530,8 @@ fn write_engine_command(command: &UciEngineCmd) -> String {
                     "".to_string()
                 })
         }
-        UciEngineCmd::Id(id) => match id {
-            IdSubCmd::Name(name) => format!("id name {name}"),
-            IdSubCmd::Author(author) => format!("id author {author}"),
-        },
+        UciEngineCmd::IdName(name) => format!("id name {name}"),
+        UciEngineCmd::IdAuthor(name) => format!("id author {name}"),
         UciEngineCmd::Info(info) => {
             "info".to_string() + &write_option("depth", info.depth) +
             &write_option("seldepth", info.seldepth) +
@@ -561,52 +558,86 @@ fn write_engine_command(command: &UciEngineCmd) -> String {
         }
         UciEngineCmd::ReadyOk => "readyok".to_string(),
         UciEngineCmd::UciOk => "uciok".to_string(),
-        _ => unimplemented!(),
+        UciEngineCmd::RegistrationChecking => unimplemented!(),
+        UciEngineCmd::CopyProtectionChecking => unimplemented!(),
+        UciEngineCmd::RegistrationOk => unimplemented!(),
+        UciEngineCmd::CopyProtectionError => unimplemented!(),
+        UciEngineCmd::Option(option_type) => match option_type {
+            OptionTypes::Check { name, default } => {
+                format!("option name {name} type check") + &write_option("default", *default)
+            }
+            OptionTypes::Spin {
+                name,
+                default,
+                min,
+                max,
+            } => {
+                format!("option name {name} type spin default {default}")
+                    + &write_option("min", *min)
+                    + &write_option("max", *max)
+            }
+            OptionTypes::Combo {
+                name,
+                default,
+                vars,
+            } => {
+                format!("option name {name} type combo default {default}")
+                    + &vars
+                        .iter()
+                        .map(|v| format!("var {v}"))
+                        .collect::<Vec<String>>()
+                        .join(" ")
+            }
+            OptionTypes::Button(name) => {
+                format!("option name {name} type button")
+            }
+            OptionTypes::String { name, default } => {
+                format!("option name {name} type string")
+                    + &write_option("default", default.clone())
+            }
+        },
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::{
-        GoSubCmdBuilder, IdSubCmd, InfoSubCmd, InfoSubCmdBuilder, Move, PositionSubCmd,
-        ScoreSubCmdBuilder, UciEngineCmd, UciGuiCmd, parse_gui_command, write_engine_command,
+        GoSubCmdBuilder, InfoSubCmd, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder,
+        UciEngineCmd, UciGuiCmd, write_engine_command,
     };
 
     #[test]
     fn test_erroneous_command_fails_to_parse() {
-        assert_eq!(
-            parse_gui_command("test"),
-            Err(String::from("Unimplemented"))
-        );
+        assert_eq!(UciGuiCmd::parse("test"), Err(String::from("Unimplemented")));
     }
 
     #[test]
     fn test_parse_gui_command_uci() {
-        assert_eq!(parse_gui_command("uci"), Ok(UciGuiCmd::Uci));
+        assert_eq!(UciGuiCmd::parse("uci"), Ok(UciGuiCmd::Uci));
     }
 
     #[test]
     fn test_parse_gui_command_debug() {
-        assert_eq!(parse_gui_command("debug"), Ok(UciGuiCmd::Debug(None)));
+        assert_eq!(UciGuiCmd::parse("debug"), Ok(UciGuiCmd::Debug(None)));
         assert_eq!(
-            parse_gui_command("debug on"),
+            UciGuiCmd::parse("debug on"),
             Ok(UciGuiCmd::Debug(Some(true)))
         );
         assert_eq!(
-            parse_gui_command("debug off"),
+            UciGuiCmd::parse("debug off"),
             Ok(UciGuiCmd::Debug(Some(false)))
         );
     }
 
     #[test]
     fn test_parse_gui_command_isready() {
-        assert_eq!(parse_gui_command("isready"), Ok(UciGuiCmd::IsReady));
+        assert_eq!(UciGuiCmd::parse("isready"), Ok(UciGuiCmd::IsReady));
     }
 
     #[test]
     fn test_parse_gui_command_set_option() {
         assert_eq!(
-            parse_gui_command("setoption name Nullmove value true"),
+            UciGuiCmd::parse("setoption name Nullmove value true"),
             Ok(UciGuiCmd::SetOption {
                 name: String::from("Nullmove"),
                 value: Some(String::from("true"))
@@ -616,13 +647,13 @@ mod tests {
 
     #[test]
     fn test_parse_gui_command_ucinewgame() {
-        assert_eq!(parse_gui_command("ucinewgame"), Ok(UciGuiCmd::UciNewGame))
+        assert_eq!(UciGuiCmd::parse("ucinewgame"), Ok(UciGuiCmd::UciNewGame))
     }
 
     #[test]
     fn test_parse_gui_command_go_searchmoves() {
         assert_eq!(
-            parse_gui_command("go searchmoves e2e4 d2d4"),
+            UciGuiCmd::parse("go searchmoves e2e4 d2d4"),
             Ok(UciGuiCmd::Go(
                 GoSubCmdBuilder::new()
                     .with_search_moves(&vec![
@@ -637,14 +668,14 @@ mod tests {
     #[test]
     fn test_parse_gui_command_go_ponder() {
         assert_eq!(
-            parse_gui_command("go"),
+            UciGuiCmd::parse("go"),
             Ok(UciGuiCmd::Go(
                 GoSubCmdBuilder::new().with_ponder(false).build()
             ))
         );
 
         assert_eq!(
-            parse_gui_command("go ponder"),
+            UciGuiCmd::parse("go ponder"),
             Ok(UciGuiCmd::Go(
                 GoSubCmdBuilder::new().with_ponder(true).build()
             ))
@@ -654,7 +685,7 @@ mod tests {
     #[test]
     fn test_parse_gui_command_go_time_commands() {
         assert_eq!(
-            parse_gui_command("go wtime 600000 btime 600000 winc 30000 binc 30000 movestogo 40"),
+            UciGuiCmd::parse("go wtime 600000 btime 600000 winc 30000 binc 30000 movestogo 40"),
             Ok(UciGuiCmd::Go(
                 GoSubCmdBuilder::new()
                     .with_wtime(600000)
@@ -670,7 +701,7 @@ mod tests {
     #[test]
     fn test_parse_gui_command_go_tree_commands() {
         assert_eq!(
-            parse_gui_command("go depth 3 nodes 10000 mate 5"),
+            UciGuiCmd::parse("go depth 3 nodes 10000 mate 5"),
             Ok(UciGuiCmd::Go(
                 GoSubCmdBuilder::new()
                     .with_depth(3)
@@ -683,13 +714,13 @@ mod tests {
 
     #[test]
     fn test_parse_gui_command_ponderhit() {
-        assert_eq!(parse_gui_command("ponderhit"), Ok(UciGuiCmd::PonderHit));
+        assert_eq!(UciGuiCmd::parse("ponderhit"), Ok(UciGuiCmd::PonderHit));
     }
 
     #[test]
     fn test_parse_gui_command_position_startpos() {
         assert_eq!(
-            parse_gui_command("position startpos"),
+            UciGuiCmd::parse("position startpos"),
             Ok(UciGuiCmd::Position {
                 pos: PositionSubCmd::StartPos,
                 moves: Vec::new()
@@ -700,7 +731,7 @@ mod tests {
     #[test]
     fn test_parse_gui_command_position_startpos_with_moves() {
         assert_eq!(
-            parse_gui_command("position startpos moves e2e3 d2d3"),
+            UciGuiCmd::parse("position startpos moves e2e3 d2d3"),
             Ok(UciGuiCmd::Position {
                 pos: PositionSubCmd::StartPos,
                 moves: vec![
@@ -714,7 +745,7 @@ mod tests {
     #[test]
     fn test_parse_gui_command_position_fen() {
         assert_eq!(
-            parse_gui_command(
+            UciGuiCmd::parse(
                 "position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1"
             ),
             Ok(UciGuiCmd::Position {
@@ -727,9 +758,20 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_gui_command_position_partial_fen_only_pieces() {
+        assert_eq!(
+            UciGuiCmd::parse("position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"),
+            Ok(UciGuiCmd::Position {
+                pos: PositionSubCmd::Fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR".to_string()),
+                moves: Vec::new()
+            })
+        );
+    }
+
+    #[test]
     fn test_parse_gui_command_position_fen_with_moves() {
         assert_eq!(
-            parse_gui_command(
+            UciGuiCmd::parse(
                 "position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1 moves e2e3 d2d3"
             ),
             Ok(UciGuiCmd::Position {
@@ -746,12 +788,12 @@ mod tests {
 
     #[test]
     fn test_parse_gui_command_quit() {
-        assert_eq!(parse_gui_command("quit"), Ok(UciGuiCmd::Quit));
+        assert_eq!(UciGuiCmd::parse("quit"), Ok(UciGuiCmd::Quit));
     }
 
     #[test]
     fn test_parse_gui_command_stop() {
-        assert_eq!(parse_gui_command("stop"), Ok(UciGuiCmd::Stop));
+        assert_eq!(UciGuiCmd::parse("stop"), Ok(UciGuiCmd::Stop));
     }
 
     #[test]
@@ -779,7 +821,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_id_name() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Id(IdSubCmd::Name("engine name".to_string()))),
+            write_engine_command(&UciEngineCmd::IdName("engine name".to_string())),
             "id name engine name".to_string()
         );
     }
@@ -787,9 +829,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_id_author() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Id(IdSubCmd::Author(
-                "author name".to_string()
-            ))),
+            write_engine_command(&UciEngineCmd::IdAuthor("author name".to_string())),
             "id author author name".to_string()
         );
     }
