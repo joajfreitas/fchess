@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["main","to_client"]};
+window.SIDEBAR_ITEMS = {"enum":["EngineCmd","GuiCmd"],"fn":["main","to_client"]};
