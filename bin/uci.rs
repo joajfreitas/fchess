@@ -7,7 +7,10 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use anyhow::Result;
-use fchess::{Board, Move, Solver};
+use fchess::{
+    Board, InfoSubCmdBuilder, Move, OptionTypes, PositionSubCmd, Solver, UciEngineCmd, UciGuiCmd,
+    write_engine_command,
+};
 
 fn to_client(file: &mut File, output: &str) {
     file.write_all(format!("engine - {}\n", output).as_bytes())
@@ -15,9 +18,23 @@ fn to_client(file: &mut File, output: &str) {
     println!("{}", output);
 }
 
+enum GuiCmd {
+    Fen,
+    Position {
+        pos: PositionSubCmd,
+        moves: Vec<Move>,
+    },
+    Go,
+}
+
+enum EngineCmd {
+    Fen(String),
+    BestMove(Move),
+}
+
 fn main() -> Result<()> {
-    let (gui_tx, engine_rx): (Sender<String>, Receiver<String>) = mpsc::channel();
-    let (engine_tx, _): (Sender<String>, Receiver<String>) = mpsc::channel();
+    let (gui_tx, engine_rx): (Sender<GuiCmd>, Receiver<GuiCmd>) = mpsc::channel();
+    let (engine_tx, gui_rx): (Sender<EngineCmd>, Receiver<EngineCmd>) = mpsc::channel();
 
     let t = thread::spawn(move || {
         let mut file = File::create("/home/joaj/sources/fchess/log1.txt").unwrap();
@@ -25,52 +42,57 @@ fn main() -> Result<()> {
             let mut buffer = String::new();
             io::stdin().read_line(&mut buffer).unwrap();
             let buffer = buffer.replace('\n', "");
+
+            let commands = match dbg!(UciGuiCmd::parse(dbg!(&buffer))).unwrap() {
+                UciGuiCmd::Uci => vec![
+                    UciEngineCmd::IdName("FChess".to_string()),
+                    UciEngineCmd::IdAuthor("João Freitas".to_string()),
+                    UciEngineCmd::Option(OptionTypes::String {
+                        name: "Opening book".to_string(),
+                        default: None,
+                    }),
+                    UciEngineCmd::UciOk,
+                ],
+                UciGuiCmd::UciNewGame => vec![],
+                UciGuiCmd::IsReady => vec![UciEngineCmd::ReadyOk],
+                UciGuiCmd::Quit => std::process::exit(0),
+                UciGuiCmd::Stop => vec![],
+                UciGuiCmd::Position { pos, moves } => {
+                    gui_tx.send(GuiCmd::Position { pos, moves }).unwrap();
+                    vec![]
+                }
+                UciGuiCmd::Go(go_sub_cmd) => {
+                    gui_tx.send(GuiCmd::Go).unwrap();
+                    if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
+                        vec![UciEngineCmd::BestMove {
+                            mov: mov,
+                            ponder: None,
+                        }]
+                    } else {
+                        panic!()
+                    }
+                }
+                UciGuiCmd::SetOption { name, value } => vec![],
+                UciGuiCmd::Fen => {
+                    gui_tx.send(GuiCmd::Fen).unwrap();
+                    let cmd = gui_rx.recv().unwrap();
+                    if let EngineCmd::Fen(fen) = cmd {
+                        vec![UciEngineCmd::Info(
+                            InfoSubCmdBuilder::new().with_string(&fen).build(),
+                        )]
+                    } else {
+                        panic!()
+                    }
+                }
+                _ => panic!(),
+            };
+
+            for command in commands {
+                to_client(&mut file, &write_engine_command(&command));
+            }
+
             file.write_all(format!("client - {buffer}\n").as_bytes())
                 .unwrap();
-
-            match &buffer[..] {
-                "uci" => {
-                    to_client(&mut file, "id name FChess");
-                    to_client(&mut file, "id author joaj");
-                    to_client(&mut file, "uciok");
-                    to_client(&mut file, "option");
-                }
-                "ucinewgame" => {}
-                "isready" => {
-                    to_client(&mut file, "readyok");
-                }
-                "quit" => {
-                    std::process::exit(0);
-                }
-                "stop" => {}
-                _ => {
-                    if buffer.starts_with("position") {
-                        let sp = &buffer.split(' ').collect::<Vec<&str>>()[1..];
-                        let mut moves = false;
-                        for s in sp.iter() {
-                            if moves {
-                                gui_tx.send(format!("move:{s}")).unwrap();
-                            }
-                            if *s == "startpos" {
-                                gui_tx.send("startpos".to_string()).unwrap();
-                            }
-                            if *s == "moves" {
-                                moves = true;
-                            }
-                        }
-                        //let j = sp.collect::<Vec<&str>>()[1..3].join(" ");
-                        //file.write_all(j.as_bytes());
-
-                        //file.write_all(b"starting pos\n");
-                    }
-                    if buffer.starts_with("go") {
-                        gui_tx.send("go".to_string()).unwrap();
-                    }
-                    if buffer.starts_with("setoption") {
-                        continue;
-                    }
-                }
-            }
         }
     });
 
@@ -78,34 +100,32 @@ fn main() -> Result<()> {
         let mut board =
             Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1").unwrap();
         let mut solver = Solver::new();
-        let mut file = File::create("/home/joaj/sources/fchess/log2.txt").unwrap();
         loop {
             let cmd = engine_rx.recv().unwrap();
-            if cmd == "startpos" {
-                board = Board::from_basic_board();
-            } else if cmd.starts_with("move") {
-                //to_client(&mut file, "cmd: {cmd}");
-                let sp = cmd.split(':');
-                let mov = sp.collect::<Vec<&str>>()[1];
-                board = board
-                    .apply(&Move::from_full_algebraic(mov).unwrap())
-                    .unwrap();
-                to_client(&mut file, &format!("board {board:?}"));
-            } else if cmd.starts_with("go") {
-                let info = "info_currmove 1";
-                to_client(&mut file, info);
-                file.write_all(format!("start: {board:?}\n").as_bytes())
-                    .unwrap();
-                to_client(
-                    &mut file,
-                    &format!(
-                        "bestmove {}",
-                        solver.best_move(&board).unwrap().to_algebraic()
-                    ),
-                );
-            } else if cmd == "fen" {
-                engine_tx.send(board.to_fen().unwrap()).unwrap();
-            }
+            match cmd {
+                GuiCmd::Fen => engine_tx
+                    .send(EngineCmd::Fen(board.to_fen().unwrap()))
+                    .unwrap(),
+                GuiCmd::Position { pos, moves } => {
+                    match pos {
+                        PositionSubCmd::StartPos => {
+                            board = Board::from_basic_board();
+                        }
+                        PositionSubCmd::Fen(fen) => {
+                            board = Board::from_fen(&fen).unwrap();
+                        }
+                    };
+
+                    for mov in moves {
+                        board = board.apply(&mov).unwrap();
+                    }
+                }
+                GuiCmd::Go => {
+                    engine_tx
+                        .send(EngineCmd::BestMove(solver.best_move(&board).unwrap()))
+                        .unwrap();
+                }
+            };
         }
     });
 
