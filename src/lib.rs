@@ -19,7 +19,7 @@ pub use crate::side::Side;
 pub use crate::solver::Solver;
 pub use crate::square::Square;
 pub use crate::uci::{
-    GoSubCmd, InfoSubCmdBuilder, OptionTypes, PositionSubCmd, UciEngineCmd, UciGuiCmd,
+    GoSubCmd, InfoSubCmdBuilder, OptionType, PositionSubCmd, UciEngineCmd, UciGuiCmd,
     write_engine_command,
 };
 
