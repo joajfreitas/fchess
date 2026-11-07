@@ -7,7 +7,6 @@ use std::thread;
 use anyhow::Result;
 use fchess::{
     Board, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd, UciGuiCmd,
-    write_engine_command,
 };
 use log::error;
 
@@ -116,8 +115,7 @@ impl Registry {
             "OpeningBookFile",
             Kind::String,
             Value::String("".to_string()),
-        )
-            );
+        ));
 
         Self { opts, extra }
     }
@@ -144,7 +142,7 @@ impl Registry {
                 Kind::Button => OptionType::Button(opt.name.to_string()),
                 Kind::String => OptionType::String {
                     name: opt.name.to_string(),
-                    default: opt.default.string(),
+                    default: Some(opt.default.string().unwrap_or("<empty>".to_string())),
                 },
             })
             .collect()
@@ -182,29 +180,26 @@ impl Registry {
                         } else {
                             error!("No value provided for option of type Check {name}")
                         }
-                    },
+                    }
                     Kind::String => {
                         if let Some(value) = value {
                             opt.value = Value::String(value.clone());
-                        }
-                        else {
+                        } else {
                             error!("No value provided for option of type String {name}")
                         }
-                    },
+                    }
                     Kind::Button => {
                         unimplemented!();
-                    },
+                    }
                     Kind::Combo(_) => {
                         if let Some(value) = value {
                             opt.value = Value::Combo(value.clone());
-                        }
-                        else {
+                        } else {
                             error!("No value provided for option of type String {name}")
                         }
-
-                    },
+                    }
                 }
-                return ;
+                return;
             }
         }
 
@@ -275,7 +270,7 @@ fn main() -> Result<()> {
             };
 
             for command in commands {
-                to_client(dbg!(&write_engine_command(&command)));
+                to_client(dbg!(&command.write()));
             }
         }
     });

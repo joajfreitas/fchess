@@ -94,7 +94,10 @@ fn test_uci_handshake() {
     uci.send("uci");
     expect_that!(uci.recv(), ok(eq("id name FChess")));
     expect_that!(uci.recv(), ok(eq("id author João Freitas")));
-    expect_that!(uci.recv(), ok(eq("option name Opening book type string")));
+    expect_that!(
+        uci.recv(),
+        ok(eq("option name OpeningBookFile type string default "))
+    );
     expect_that!(uci.recv(), ok(eq("uciok")));
 }
 

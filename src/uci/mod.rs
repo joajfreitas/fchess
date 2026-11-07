@@ -518,90 +518,91 @@ pub enum UciEngineCmd {
     UciOk,
 }
 
-#[allow(dead_code)]
-pub fn write_engine_command(command: &UciEngineCmd) -> String {
-    fn write_option<T: std::fmt::Display>(name: &str, value: Option<T>) -> String {
-        if let Some(v) = value {
-            format!(" {name} {v}")
-        } else {
-            "".to_string()
+impl UciEngineCmd {
+    pub fn write(&self) -> String {
+        fn write_option<T: std::fmt::Display>(name: &str, value: Option<T>) -> String {
+            if let Some(v) = value {
+                format!(" {name} {v}")
+            } else {
+                "".to_string()
+            }
         }
-    }
-    match command {
-        UciEngineCmd::BestMove { mov, ponder } => {
-            format!("bestmove {}", mov.to_algebraic())
-                + &(if let Some(ponder) = ponder {
-                    format!(" ponder {}", ponder.to_algebraic())
-                } else {
-                    "".to_string()
-                })
+        match self {
+            UciEngineCmd::BestMove { mov, ponder } => {
+                format!("bestmove {}", mov.to_algebraic())
+                    + &(if let Some(ponder) = ponder {
+                        format!(" ponder {}", ponder.to_algebraic())
+                    } else {
+                        "".to_string()
+                    })
+            }
+            UciEngineCmd::IdName(name) => format!("id name {name}"),
+            UciEngineCmd::IdAuthor(name) => format!("id author {name}"),
+            UciEngineCmd::Info(info) => {
+                "info".to_string() + &write_option("depth", info.depth) +
+                &write_option("seldepth", info.seldepth) +
+                &write_option("time", info.time) +
+                &write_option("nodes", info.nodes) +
+                &write_option("pv", info.pv.as_ref().map(|v| v.iter().map(|mov| mov.to_algebraic()).collect::<Vec<String>>().join(" "))) +
+                &write_option("multipv", info.multipv) +
+                &write_option("score cp", info.score.as_ref().and_then(|x| x.cp)) +
+                &write_option("score mate", info.score.as_ref().and_then(|x| x.mate)) +
+                &write_option("score upperbound cp", info.score.as_ref().and_then(|x| x.upperbound_cp)) +
+                &write_option("score upperbound mate", info.score.as_ref().and_then(|x| x.upperbound_mate)) +
+                &write_option("score lowerbound cp", info.score.as_ref().and_then(|x| x.lowerbound_cp)) +
+                &write_option("score lowerbound mate", info.score.as_ref().and_then(|x| x.lowerbound_mate)) +
+                &write_option("currmove", info.currmove.as_ref().map(|m| m.to_algebraic())) +
+                &write_option("currmovenumber", info.currmovenumber) +
+                &write_option("hashfull", info.hashfull) +
+                &write_option("nps", info.nps) +
+                &write_option("tbhits", info.tbhits) +
+                &write_option("sbhits", info.sbhits) +
+                &write_option("cpuload", info.cpuload) +
+                &write_option("string", info.string.clone()) +
+                //&write_option("refutation", info.refutation) +
+                &write_option("currline", info.currline.as_ref().map(|currline| currline.0.map(|cpunumber| cpunumber.to_string() + " ").unwrap_or("".to_string()) + &currline.1.clone().into_iter().map(|v| v.to_algebraic()).collect::<Vec<String>>().join(" ")))
+            }
+            UciEngineCmd::ReadyOk => "readyok".to_string(),
+            UciEngineCmd::UciOk => "uciok".to_string(),
+            UciEngineCmd::RegistrationChecking => unimplemented!(),
+            UciEngineCmd::CopyProtectionChecking => unimplemented!(),
+            UciEngineCmd::RegistrationOk => unimplemented!(),
+            UciEngineCmd::CopyProtectionError => unimplemented!(),
+            UciEngineCmd::Option(option_type) => match option_type {
+                OptionType::Check { name, default } => {
+                    format!("option name {name} type check") + &write_option("default", *default)
+                }
+                OptionType::Spin {
+                    name,
+                    default,
+                    min,
+                    max,
+                } => {
+                    format!("option name {name} type spin default {default}")
+                        + &write_option("min", *min)
+                        + &write_option("max", *max)
+                }
+                OptionType::Combo {
+                    name,
+                    default,
+                    vars,
+                } => {
+                    format!("option name {name} type combo default {default}")
+                        + &vars
+                            .iter()
+                            .map(|v| format!("var {v}"))
+                            .collect::<Vec<String>>()
+                            .join(" ")
+                }
+                OptionType::Button(name) => {
+                    format!("option name {name} type button")
+                }
+                OptionType::String { name, default } => {
+                    format!("option name {name} type string")
+                        + &write_option("default", default.clone())
+                }
+            },
         }
-        UciEngineCmd::IdName(name) => format!("id name {name}"),
-        UciEngineCmd::IdAuthor(name) => format!("id author {name}"),
-        UciEngineCmd::Info(info) => {
-            "info".to_string() + &write_option("depth", info.depth) +
-            &write_option("seldepth", info.seldepth) +
-            &write_option("time", info.time) +
-            &write_option("nodes", info.nodes) +
-            &write_option("pv", info.pv.as_ref().map(|v| v.iter().map(|mov| mov.to_algebraic()).collect::<Vec<String>>().join(" "))) +
-            &write_option("multipv", info.multipv) +
-            &write_option("score cp", info.score.as_ref().and_then(|x| x.cp)) +
-            &write_option("score mate", info.score.as_ref().and_then(|x| x.mate)) +
-            &write_option("score upperbound cp", info.score.as_ref().and_then(|x| x.upperbound_cp)) +
-            &write_option("score upperbound mate", info.score.as_ref().and_then(|x| x.upperbound_mate)) +
-            &write_option("score lowerbound cp", info.score.as_ref().and_then(|x| x.lowerbound_cp)) +
-            &write_option("score lowerbound mate", info.score.as_ref().and_then(|x| x.lowerbound_mate)) +
-            &write_option("currmove", info.currmove.as_ref().map(|m| m.to_algebraic())) +
-            &write_option("currmovenumber", info.currmovenumber) +
-            &write_option("hashfull", info.hashfull) +
-            &write_option("nps", info.nps) +
-            &write_option("tbhits", info.tbhits) +
-            &write_option("sbhits", info.sbhits) +
-            &write_option("cpuload", info.cpuload) +
-            &write_option("string", info.string.clone()) +
-            //&write_option("refutation", info.refutation) +
-            &write_option("currline", info.currline.as_ref().map(|currline| currline.0.map(|cpunumber| cpunumber.to_string() + " ").unwrap_or("".to_string()) + &currline.1.clone().into_iter().map(|v| v.to_algebraic()).collect::<Vec<String>>().join(" ")))
-        }
-        UciEngineCmd::ReadyOk => "readyok".to_string(),
-        UciEngineCmd::UciOk => "uciok".to_string(),
-        UciEngineCmd::RegistrationChecking => unimplemented!(),
-        UciEngineCmd::CopyProtectionChecking => unimplemented!(),
-        UciEngineCmd::RegistrationOk => unimplemented!(),
-        UciEngineCmd::CopyProtectionError => unimplemented!(),
-        UciEngineCmd::Option(option_type) => match option_type {
-            OptionType::Check { name, default } => {
-                format!("option name {name} type check") + &write_option("default", *default)
-            }
-            OptionType::Spin {
-                name,
-                default,
-                min,
-                max,
-            } => {
-                format!("option name {name} type spin default {default}")
-                    + &write_option("min", *min)
-                    + &write_option("max", *max)
-            }
-            OptionType::Combo {
-                name,
-                default,
-                vars,
-            } => {
-                format!("option name {name} type combo default {default}")
-                    + &vars
-                        .iter()
-                        .map(|v| format!("var {v}"))
-                        .collect::<Vec<String>>()
-                        .join(" ")
-            }
-            OptionType::Button(name) => {
-                format!("option name {name} type button")
-            }
-            OptionType::String { name, default } => {
-                format!("option name {name} type string")
-                    + &write_option("default", default.clone())
-            }
-        },
     }
 }
 
@@ -609,7 +610,7 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
 mod tests {
     use super::{
         GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder, UciEngineCmd,
-        UciGuiCmd, write_engine_command,
+        UciGuiCmd,
     };
 
     #[test]
@@ -805,10 +806,11 @@ mod tests {
     #[test]
     fn test_write_engine_command_bestmove() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::BestMove {
+            UciEngineCmd::BestMove {
                 mov: Move::from_full_algebraic("e3e4").unwrap(),
                 ponder: None
-            }),
+            }
+            .write(),
             String::from("bestmove e3e4")
         );
     }
@@ -816,10 +818,11 @@ mod tests {
     #[test]
     fn test_write_engine_command_bestmove_with_ponder() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::BestMove {
+            UciEngineCmd::BestMove {
                 mov: Move::from_full_algebraic("e3e4").unwrap(),
                 ponder: Move::from_full_algebraic("e4e5")
-            }),
+            }
+            .write(),
             String::from("bestmove e3e4 ponder e4e5")
         );
     }
@@ -827,7 +830,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_id_name() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::IdName("engine name".to_string())),
+            UciEngineCmd::IdName("engine name".to_string()).write(),
             "id name engine name".to_string()
         );
     }
@@ -835,7 +838,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_id_author() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::IdAuthor("author name".to_string())),
+            UciEngineCmd::IdAuthor("author name".to_string()).write(),
             "id author author name".to_string()
         );
     }
@@ -843,9 +846,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_depth() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_depth(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_depth(42).build()).write(),
             "info depth 42"
         );
     }
@@ -853,9 +854,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_seldepth() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_seldepth(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_seldepth(42).build()).write(),
             "info seldepth 42"
         );
     }
@@ -863,9 +862,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_time() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_time(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_time(42).build()).write(),
             "info time 42"
         );
     }
@@ -873,9 +870,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_nodes() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_nodes(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_nodes(42).build()).write(),
             "info nodes 42"
         );
     }
@@ -883,7 +878,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_pv() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_pv(&vec![
                         Move::from_full_algebraic("e2e4").unwrap(),
@@ -891,7 +886,8 @@ mod tests {
                         Move::from_full_algebraic("d3e5").unwrap(),
                     ])
                     .build()
-            )),
+            )
+            .write(),
             "info pv e2e4 c5c6 d3e5"
         );
     }
@@ -899,9 +895,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_multipv() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_multipv(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_multipv(42).build()).write(),
             "info multipv 42"
         );
     }
@@ -909,11 +903,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_cp() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_cp(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score cp 42"
         );
     }
@@ -921,11 +916,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_mate() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_mate(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score mate 42"
         );
     }
@@ -933,11 +929,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_upperbound_cp() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_upperbound_cp(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score upperbound cp 42"
         );
     }
@@ -945,11 +942,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_upperbound_mate() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_upperbound_mate(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score upperbound mate 42"
         );
     }
@@ -957,11 +955,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_lowerbound_cp() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_lowerbound_cp(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score lowerbound cp 42"
         );
     }
@@ -969,11 +968,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_score_lowerbound_mate() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_score(&ScoreSubCmdBuilder::new().with_lowerbound_mate(42))
                     .build()
-            )),
+            )
+            .write(),
             "info score lowerbound mate 42"
         );
     }
@@ -981,11 +981,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_currmove() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_currmove(&Move::from_full_algebraic("e2e4").unwrap())
                     .build()
-            )),
+            )
+            .write(),
             "info currmove e2e4"
         );
     }
@@ -993,9 +994,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_currmovenumber() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_currmovenumber(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_currmovenumber(42).build()).write(),
             "info currmovenumber 42"
         );
     }
@@ -1003,9 +1002,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_hashfull() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_hashfull(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_hashfull(42).build()).write(),
             "info hashfull 42"
         );
     }
@@ -1013,9 +1010,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_nps() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_nps(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_nps(42).build()).write(),
             "info nps 42"
         );
     }
@@ -1023,9 +1018,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_tbhits() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_tbhits(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_tbhits(42).build()).write(),
             "info tbhits 42"
         );
     }
@@ -1033,9 +1026,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_sbhits() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_sbhits(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_sbhits(42).build()).write(),
             "info sbhits 42"
         );
     }
@@ -1043,9 +1034,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_cpuload() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
-                InfoSubCmdBuilder::new().with_cpuload(42).build()
-            )),
+            &UciEngineCmd::Info(InfoSubCmdBuilder::new().with_cpuload(42).build()).write(),
             "info cpuload 42"
         );
     }
@@ -1053,11 +1042,12 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_string() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_string("the quick brown fox jumps over the lazy fox")
                     .build()
-            )),
+            )
+            .write(),
             "info string the quick brown fox jumps over the lazy fox"
         );
     }
@@ -1065,7 +1055,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_currline_with_cpunumber() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_currline((
                         Some(42),
@@ -1075,7 +1065,8 @@ mod tests {
                         ]
                     ))
                     .build()
-            )),
+            )
+            .write(),
             "info currline 42 e2e4 c5c6"
         );
     }
@@ -1083,7 +1074,7 @@ mod tests {
     #[test]
     fn test_write_engine_command_info_currline_without_cpunumber() {
         assert_eq!(
-            write_engine_command(&UciEngineCmd::Info(
+            &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
                     .with_currline((
                         None,
@@ -1093,18 +1084,19 @@ mod tests {
                         ]
                     ))
                     .build()
-            )),
+            )
+            .write(),
             "info currline e2e4 c5c6"
         );
     }
 
     #[test]
     fn test_write_engine_command_readyok() {
-        assert_eq!(write_engine_command(&UciEngineCmd::ReadyOk), "readyok")
+        assert_eq!(&UciEngineCmd::ReadyOk.write(), "readyok")
     }
 
     #[test]
     fn test_write_engine_command_uciok() {
-        assert_eq!(write_engine_command(&UciEngineCmd::UciOk), "uciok")
+        assert_eq!(&UciEngineCmd::UciOk.write(), "uciok")
     }
 }
