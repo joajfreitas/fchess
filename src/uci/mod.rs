@@ -267,7 +267,7 @@ impl UciGuiCmd {
 }
 
 #[derive(PartialEq, Debug, Clone, Default)]
-struct ScoreSubCmd {
+pub struct ScoreSubCmd {
     cp: Option<u32>,
     mate: Option<u32>,
     upperbound_cp: Option<u32>,
@@ -277,7 +277,7 @@ struct ScoreSubCmd {
 }
 
 #[derive(PartialEq, Debug, Clone)]
-struct ScoreSubCmdBuilder {
+pub struct ScoreSubCmdBuilder {
     score_sub_cmd: ScoreSubCmd,
 }
 
@@ -471,6 +471,12 @@ impl InfoSubCmdBuilder {
     }
 }
 
+impl Default for InfoSubCmdBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[allow(dead_code)]
 #[derive(PartialEq, Debug)]
 pub enum OptionTypes {
@@ -602,7 +608,7 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
-        GoSubCmdBuilder, InfoSubCmd, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder,
+        GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder,
         UciEngineCmd, UciGuiCmd, write_engine_command,
     };
 

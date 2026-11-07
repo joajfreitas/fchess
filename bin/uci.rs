@@ -1,6 +1,4 @@
-use std::fs::File;
 use std::io;
-use std::io::prelude::*;
 
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
@@ -12,9 +10,7 @@ use fchess::{
     write_engine_command,
 };
 
-fn to_client(file: &mut File, output: &str) {
-    file.write_all(format!("engine - {}\n", output).as_bytes())
-        .unwrap();
+fn to_client(output: &str) {
     println!("{}", output);
 }
 
@@ -37,7 +33,6 @@ fn main() -> Result<()> {
     let (engine_tx, gui_rx): (Sender<EngineCmd>, Receiver<EngineCmd>) = mpsc::channel();
 
     let t = thread::spawn(move || {
-        let mut file = File::create("/home/joaj/sources/fchess/log1.txt").unwrap();
         loop {
             let mut buffer = String::new();
             io::stdin().read_line(&mut buffer).unwrap();
@@ -61,18 +56,18 @@ fn main() -> Result<()> {
                     gui_tx.send(GuiCmd::Position { pos, moves }).unwrap();
                     vec![]
                 }
-                UciGuiCmd::Go(go_sub_cmd) => {
+                UciGuiCmd::Go(_) => {
                     gui_tx.send(GuiCmd::Go).unwrap();
                     if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
                         vec![UciEngineCmd::BestMove {
-                            mov: mov,
+                            mov,
                             ponder: None,
                         }]
                     } else {
                         panic!()
                     }
                 }
-                UciGuiCmd::SetOption { name, value } => vec![],
+                UciGuiCmd::SetOption { name: _, value: _ } => unimplemented!(),
                 UciGuiCmd::Fen => {
                     gui_tx.send(GuiCmd::Fen).unwrap();
                     let cmd = gui_rx.recv().unwrap();
@@ -88,11 +83,8 @@ fn main() -> Result<()> {
             };
 
             for command in commands {
-                to_client(&mut file, &write_engine_command(&command));
+                to_client(&write_engine_command(&command));
             }
-
-            file.write_all(format!("client - {buffer}\n").as_bytes())
-                .unwrap();
         }
     });
 
