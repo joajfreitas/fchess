@@ -479,16 +479,16 @@ impl Default for InfoSubCmdBuilder {
 
 #[allow(dead_code)]
 #[derive(PartialEq, Debug)]
-pub enum OptionTypes {
+pub enum OptionType {
     Check {
         name: String,
         default: Option<bool>,
     },
     Spin {
         name: String,
-        default: i32,
-        min: Option<i32>,
-        max: Option<i32>,
+        default: i64,
+        min: Option<i64>,
+        max: Option<i64>,
     },
     Combo {
         name: String,
@@ -513,7 +513,7 @@ pub enum UciEngineCmd {
     IdName(String),
     IdAuthor(String),
     Info(InfoSubCmd),
-    Option(OptionTypes),
+    Option(OptionType),
     ReadyOk,
     UciOk,
 }
@@ -569,10 +569,10 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
         UciEngineCmd::RegistrationOk => unimplemented!(),
         UciEngineCmd::CopyProtectionError => unimplemented!(),
         UciEngineCmd::Option(option_type) => match option_type {
-            OptionTypes::Check { name, default } => {
+            OptionType::Check { name, default } => {
                 format!("option name {name} type check") + &write_option("default", *default)
             }
-            OptionTypes::Spin {
+            OptionType::Spin {
                 name,
                 default,
                 min,
@@ -582,7 +582,7 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
                     + &write_option("min", *min)
                     + &write_option("max", *max)
             }
-            OptionTypes::Combo {
+            OptionType::Combo {
                 name,
                 default,
                 vars,
@@ -594,10 +594,10 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
                         .collect::<Vec<String>>()
                         .join(" ")
             }
-            OptionTypes::Button(name) => {
+            OptionType::Button(name) => {
                 format!("option name {name} type button")
             }
-            OptionTypes::String { name, default } => {
+            OptionType::String { name, default } => {
                 format!("option name {name} type string")
                     + &write_option("default", default.clone())
             }
@@ -608,8 +608,8 @@ pub fn write_engine_command(command: &UciEngineCmd) -> String {
 #[cfg(test)]
 mod tests {
     use super::{
-        GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder,
-        UciEngineCmd, UciGuiCmd, write_engine_command,
+        GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder, UciEngineCmd,
+        UciGuiCmd, write_engine_command,
     };
 
     #[test]
