@@ -20,7 +20,6 @@ pub use crate::solver::Solver;
 pub use crate::square::Square;
 pub use crate::uci::{
     GoSubCmd, InfoSubCmdBuilder, OptionType, PositionSubCmd, UciEngineCmd, UciGuiCmd,
-    write_engine_command,
 };
 
 mod bitboard;
