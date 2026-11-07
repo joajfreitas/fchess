@@ -75,11 +75,12 @@ impl fmt::Debug for Entry {
 }
 
 /// Representation of a PolyGlot book
+#[derive(Clone, Debug)]
 pub struct Book(Vec<Entry>);
 
 impl Book {
     pub fn from_filename(filename: &str) -> Book {
-        let bytes = fs::read(filename).unwrap();
+        let bytes = fs::read(dbg!(filename)).unwrap();
         let struct_size = 8 + 2 + 2 + 4;
         let mut book: Book = Book(vec![]);
         for i in 0..(bytes.len() / struct_size) {
