@@ -144,7 +144,7 @@ pub enum UciGuiCmd {
 impl UciGuiCmd {
     pub fn parse(command: &str) -> Result<Self, String> {
         let debug_re = regex!(r"^debug\s?((on)|(off))?$");
-        let setoption_re = regex!(r"^setoption name (\w+)( value (\w+))?$");
+        let setoption_re = regex!(r"^setoption name (?<name>\S+?)(?: value (?<value>.+))?$");
         let go_re = regex!(
             r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?$"
         );
@@ -169,8 +169,8 @@ impl UciGuiCmd {
             Ok(UciGuiCmd::IsReady)
         } else if setoption_re.is_match(command) {
             let caps = setoption_re.captures(command).unwrap();
-            let name = caps.get(1).map(|x| x.as_str().to_string()).unwrap();
-            let value = caps.get(3).map(|x| x.as_str().to_string());
+            let name = caps["name"].to_string();
+            let value = caps.name("value").map(|x| x.as_str().to_string());
             Ok(UciGuiCmd::SetOption { name, value })
         } else if regex!("^ucinewgame$").is_match(command) {
             Ok(UciGuiCmd::UciNewGame)

@@ -6,7 +6,8 @@ use std::thread;
 
 use anyhow::Result;
 use fchess::{
-    Board, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd, UciGuiCmd,
+    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd,
+    UciGuiCmd,
 };
 use log::error;
 
@@ -21,6 +22,7 @@ enum GuiCmd {
         moves: Vec<Move>,
     },
     Go,
+    OpeningBook(String),
 }
 
 enum EngineCmd {
@@ -82,21 +84,25 @@ enum Kind {
     String,
 }
 
+type HookFn = fn(&Option<Value>) -> Option<GuiCmd>;
+
 #[derive(Clone)]
 struct Opt {
     pub name: &'static str,
     pub kind: Kind,
     pub value: Value,
     pub default: Value,
+    pub hook: Option<HookFn>,
 }
 
 impl Opt {
-    pub fn new(name: &'static str, kind: Kind, value: Value) -> Self {
+    pub fn new(name: &'static str, kind: Kind, value: Value, hook: Option<HookFn>) -> Self {
         Self {
             name,
             kind,
             value: value.clone(),
             default: value,
+            hook,
         }
     }
 }
@@ -108,16 +114,14 @@ struct Registry {
 
 impl Registry {
     pub fn new() -> Self {
-        let mut opts: Vec<Opt> = Vec::new();
-        let extra: HashMap<String, Option<String>> = HashMap::default();
+        Self {
+            opts: Vec::new(),
+            extra: HashMap::default(),
+        }
+    }
 
-        opts.push(Opt::new(
-            "OpeningBookFile",
-            Kind::String,
-            Value::String("".to_string()),
-        ));
-
-        Self { opts, extra }
+    pub fn define(&mut self, name: &'static str, kind: Kind, value: Value, hook: Option<HookFn>) {
+        self.opts.push(Opt::new(name, kind, value, hook));
     }
 
     fn option_definitions(&self) -> Vec<OptionType> {
@@ -148,7 +152,7 @@ impl Registry {
             .collect()
     }
 
-    pub fn set(&mut self, name: &String, value: &Option<String>) {
+    pub fn set(&mut self, name: &String, value: &Option<String>) -> Option<GuiCmd> {
         for opt in self.opts.iter_mut() {
             if opt.name == name {
                 match opt.kind {
@@ -199,21 +203,32 @@ impl Registry {
                         }
                     }
                 }
-                return;
+                return opt.hook.and_then(|f| f(&Some(opt.value.clone())));
             }
         }
 
         self.extra.insert(name.to_string(), value.clone());
+        None
     }
 }
 
 fn main() -> Result<()> {
     env_logger::init();
 
-    let mut registry = Registry::new();
-
     let (gui_tx, engine_rx): (Sender<GuiCmd>, Receiver<GuiCmd>) = mpsc::channel();
     let (engine_tx, gui_rx): (Sender<EngineCmd>, Receiver<EngineCmd>) = mpsc::channel();
+
+    let mut registry = Registry::new();
+    registry.define(
+        "OpeningBookFile",
+        Kind::String,
+        Value::String("".to_string()),
+        Some(|value| {
+            Some(GuiCmd::OpeningBook(
+                value.clone().unwrap().string().unwrap(),
+            ))
+        }),
+    );
 
     let t = thread::spawn(move || {
         loop {
@@ -221,7 +236,7 @@ fn main() -> Result<()> {
             io::stdin().read_line(&mut buffer).unwrap();
             let buffer = buffer.replace('\n', "");
 
-            let commands = match dbg!(UciGuiCmd::parse(dbg!(&buffer))).unwrap() {
+            let commands = match dbg!(UciGuiCmd::parse(dbg!(&buffer)).unwrap()) {
                 UciGuiCmd::Uci => {
                     let mut cmds = vec![
                         UciEngineCmd::IdName("FChess".to_string()),
@@ -252,7 +267,10 @@ fn main() -> Result<()> {
                     }
                 }
                 UciGuiCmd::SetOption { name, value } => {
-                    registry.set(&name, &value);
+                    let cmd = registry.set(&name, &value);
+                    if let Some(cmd) = cmd {
+                        gui_tx.send(cmd).unwrap();
+                    }
                     vec![]
                 }
                 UciGuiCmd::Fen => {
@@ -303,6 +321,9 @@ fn main() -> Result<()> {
                     engine_tx
                         .send(EngineCmd::BestMove(solver.best_move(&board).unwrap()))
                         .unwrap();
+                }
+                GuiCmd::OpeningBook(filename) => {
+                    solver.set_opening_book(Book::from_filename(&filename));
                 }
             };
         }

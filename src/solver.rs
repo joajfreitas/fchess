@@ -3,6 +3,7 @@ use std::cmp;
 use std::collections::HashMap;
 
 use crate::board::Board;
+use crate::book::Book;
 use crate::move_generator::MoveGenerator;
 use crate::moves::Move;
 use crate::side::Side;
@@ -13,6 +14,7 @@ pub struct Solver {
     move_generator: MoveGenerator,
     transposition_table: HashMap<u64, f32>,
     search_queue: PriorityQueue<Board, u32>,
+    opening_book: Option<Book>,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
@@ -42,7 +44,12 @@ impl Solver {
             move_generator: MoveGenerator::new(),
             transposition_table: HashMap::default(),
             search_queue: PriorityQueue::new(),
+            opening_book: None,
         }
+    }
+
+    pub fn set_opening_book(&mut self, book: Book) {
+        self.opening_book = Some(book);
     }
 
     fn generate_moves(&self, board: &Board) -> Vec<Move> {
@@ -53,7 +60,7 @@ impl Solver {
             .collect::<Vec<Move>>()
     }
 
-    pub fn best_move(&mut self, board: &Board) -> Option<Move> {
+    fn search(&mut self, board: &Board) -> Option<Move> {
         let mut best: Option<Move> = None;
         let mut best_evaluation = -1000000000;
         let mut best_node: Option<Node> = None;
@@ -83,6 +90,16 @@ impl Solver {
         }
 
         best
+    }
+
+    pub fn best_move(&mut self, board: &Board) -> Option<Move> {
+        if let Some(ref opening_book) = self.opening_book {
+            opening_book
+                .get_best_move(board)
+                .or_else(|| self.search(board))
+        } else {
+            self.search(board)
+        }
     }
 
     fn min_max(&mut self, node: &Node, max_depth: u32, max_min: bool) -> Option<(Node, i32)> {
