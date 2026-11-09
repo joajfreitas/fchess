@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["EngineCmd","GuiCmd","Kind","Value"],"fn":["main","to_client"],"struct":["Opt","Registry"]};
+window.SIDEBAR_ITEMS = {"enum":["EngineCmd","GuiCmd","Kind","Value"],"fn":["main","to_client"],"struct":["Opt","Registry"],"type":["HookFn"]};
