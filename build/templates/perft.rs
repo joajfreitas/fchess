@@ -4,7 +4,7 @@ fn {test_name}_d1() -> Result<()> {{
 
     let epd = Epd::from_string(epd).unwrap();
 
-    let d1 = epd.properties.get("D1").unwrap().parse::<i32>().unwrap();
+    let d1 = epd.properties.get("D1").unwrap().parse::<u32>().unwrap();
 
     let _ = dbg!(epd.board.to_fen());
 
