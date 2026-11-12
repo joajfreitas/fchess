@@ -258,12 +258,16 @@ fn main() -> Result<()> {
                     gui_tx.send(GuiCmd::Position { pos, moves }).unwrap();
                     vec![]
                 }
-                UciGuiCmd::Go(_) => {
-                    gui_tx.send(GuiCmd::Go).unwrap();
-                    if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
-                        vec![UciEngineCmd::BestMove { mov, ponder: None }]
+                UciGuiCmd::Go(go_sub_cmd) => {
+                    if go_sub_cmd.perft.is_some() {
+                        vec![]
                     } else {
-                        panic!()
+                        gui_tx.send(GuiCmd::Go).unwrap();
+                        if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
+                            vec![UciEngineCmd::BestMove { mov, ponder: None }]
+                        } else {
+                            panic!()
+                        }
                     }
                 }
                 UciGuiCmd::SetOption { name, value } => {
