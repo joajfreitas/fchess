@@ -65,7 +65,6 @@ impl MoveGenSuites {
 
     pub fn generate(&self) {
         let out_dir = env::var("OUT_DIR").unwrap();
-
         let mut test_file = File::create(Path::new(&out_dir).join("movegen_tests.rs")).unwrap();
 
         Self::write_header(&mut test_file);

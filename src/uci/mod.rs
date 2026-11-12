@@ -3,18 +3,18 @@ use lazy_regex::regex;
 
 #[derive(Clone, PartialEq, Debug, Default)]
 pub struct GoSubCmd {
-    search_moves: Vec<Move>,
-    ponder: bool,
-    wtime: Option<u32>,
-    btime: Option<u32>,
-    winc: Option<u32>,
-    binc: Option<u32>,
-    movestogo: Option<u32>,
-    depth: Option<u32>,
-    nodes: Option<u32>,
-    mate: Option<u32>,
-    infinite: Option<bool>,
-    perft: Option<u32>,
+    pub search_moves: Vec<Move>,
+    pub ponder: bool,
+    pub wtime: Option<u32>,
+    pub btime: Option<u32>,
+    pub winc: Option<u32>,
+    pub binc: Option<u32>,
+    pub movestogo: Option<u32>,
+    pub depth: Option<u32>,
+    pub nodes: Option<u32>,
+    pub mate: Option<u32>,
+    pub infinite: Option<bool>,
+    pub perft: Option<u32>,
 }
 
 #[allow(dead_code)]
@@ -146,7 +146,7 @@ impl UciGuiCmd {
         let debug_re = regex!(r"^debug\s?((on)|(off))?$");
         let setoption_re = regex!(r"^setoption name (?<name>\S+?)(?: value (?<value>.+))?$");
         let go_re = regex!(
-            r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?$"
+            r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?(\sperft (?<perft>\d+))?$"
         );
 
         let position_re = regex!(
@@ -213,6 +213,9 @@ impl UciGuiCmd {
             let mate = caps
                 .name("mate")
                 .and_then(|mate| mate.as_str().to_string().parse::<u32>().ok());
+            let perft = caps
+                .name("perft")
+                .and_then(|perft| perft.as_str().to_string().parse::<u32>().ok());
 
             Ok(UciGuiCmd::Go(GoSubCmd {
                 search_moves,
@@ -226,7 +229,7 @@ impl UciGuiCmd {
                 nodes,
                 mate,
                 infinite: None,
-                perft: None,
+                perft,
             }))
         } else if regex!("^ponderhit$").is_match(command) {
             Ok(UciGuiCmd::PonderHit)
@@ -716,6 +719,14 @@ mod tests {
                     .with_mate(5)
                     .build()
             ))
+        );
+    }
+
+    #[test]
+    fn test_parse_gui_command_go_perft() {
+        assert_eq!(
+            UciGuiCmd::parse("go perft 1"),
+            Ok(UciGuiCmd::Go(GoSubCmdBuilder::new().with_perft(1).build()))
         );
     }
 

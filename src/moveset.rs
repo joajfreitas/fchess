@@ -29,6 +29,10 @@ impl MoveSet {
     pub fn contains(&self, mov: &Move) -> bool {
         (self.mov >> mov.get_dst().get_index()) & 1 == 1
     }
+
+    pub fn count(&self) -> u32 {
+        self.mov.count_ones()
+    }
 }
 
 impl<'a> IntoIterator for &'a MoveSet {
