@@ -258,79 +258,83 @@
 <a href=#258 id=258 data-nosnippet>258</a>                    gui_tx.send(GuiCmd::Position { pos, moves }).unwrap();
 <a href=#259 id=259 data-nosnippet>259</a>                    <span class="macro">vec!</span>[]
 <a href=#260 id=260 data-nosnippet>260</a>                }
-<a href=#261 id=261 data-nosnippet>261</a>                UciGuiCmd::Go(<span class="kw">_</span>) =&gt; {
-<a href=#262 id=262 data-nosnippet>262</a>                    gui_tx.send(GuiCmd::Go).unwrap();
-<a href=#263 id=263 data-nosnippet>263</a>                    <span class="kw">if let </span>EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
-<a href=#264 id=264 data-nosnippet>264</a>                        <span class="macro">vec!</span>[UciEngineCmd::BestMove { mov, ponder: <span class="prelude-val">None </span>}]
-<a href=#265 id=265 data-nosnippet>265</a>                    } <span class="kw">else </span>{
-<a href=#266 id=266 data-nosnippet>266</a>                        <span class="macro">panic!</span>()
-<a href=#267 id=267 data-nosnippet>267</a>                    }
-<a href=#268 id=268 data-nosnippet>268</a>                }
-<a href=#269 id=269 data-nosnippet>269</a>                UciGuiCmd::SetOption { name, value } =&gt; {
-<a href=#270 id=270 data-nosnippet>270</a>                    <span class="kw">let </span>cmd = registry.set(<span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;</span>value);
-<a href=#271 id=271 data-nosnippet>271</a>                    <span class="kw">if let </span><span class="prelude-val">Some</span>(cmd) = cmd {
-<a href=#272 id=272 data-nosnippet>272</a>                        gui_tx.send(cmd).unwrap();
-<a href=#273 id=273 data-nosnippet>273</a>                    }
-<a href=#274 id=274 data-nosnippet>274</a>                    <span class="macro">vec!</span>[]
-<a href=#275 id=275 data-nosnippet>275</a>                }
-<a href=#276 id=276 data-nosnippet>276</a>                UciGuiCmd::Fen =&gt; {
-<a href=#277 id=277 data-nosnippet>277</a>                    gui_tx.send(GuiCmd::Fen).unwrap();
-<a href=#278 id=278 data-nosnippet>278</a>                    <span class="kw">let </span>cmd = gui_rx.recv().unwrap();
-<a href=#279 id=279 data-nosnippet>279</a>                    <span class="kw">if let </span>EngineCmd::Fen(fen) = cmd {
-<a href=#280 id=280 data-nosnippet>280</a>                        <span class="macro">vec!</span>[UciEngineCmd::Info(
-<a href=#281 id=281 data-nosnippet>281</a>                            InfoSubCmdBuilder::new().with_string(<span class="kw-2">&amp;</span>fen).build(),
-<a href=#282 id=282 data-nosnippet>282</a>                        )]
-<a href=#283 id=283 data-nosnippet>283</a>                    } <span class="kw">else </span>{
-<a href=#284 id=284 data-nosnippet>284</a>                        <span class="macro">panic!</span>()
-<a href=#285 id=285 data-nosnippet>285</a>                    }
-<a href=#286 id=286 data-nosnippet>286</a>                }
-<a href=#287 id=287 data-nosnippet>287</a>                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
-<a href=#288 id=288 data-nosnippet>288</a>            };
-<a href=#289 id=289 data-nosnippet>289</a>
-<a href=#290 id=290 data-nosnippet>290</a>            <span class="kw">for </span>command <span class="kw">in </span>commands {
-<a href=#291 id=291 data-nosnippet>291</a>                to_client(<span class="macro">dbg!</span>(<span class="kw-2">&amp;</span>command.write()));
-<a href=#292 id=292 data-nosnippet>292</a>            }
-<a href=#293 id=293 data-nosnippet>293</a>        }
-<a href=#294 id=294 data-nosnippet>294</a>    });
-<a href=#295 id=295 data-nosnippet>295</a>
-<a href=#296 id=296 data-nosnippet>296</a>    <span class="kw">let </span>_engine_thread = thread::spawn(<span class="kw">move </span>|| {
-<a href=#297 id=297 data-nosnippet>297</a>        <span class="kw">let </span><span class="kw-2">mut </span>board =
-<a href=#298 id=298 data-nosnippet>298</a>            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1"</span>).unwrap();
-<a href=#299 id=299 data-nosnippet>299</a>        <span class="kw">let </span><span class="kw-2">mut </span>solver = Solver::new();
-<a href=#300 id=300 data-nosnippet>300</a>        <span class="kw">loop </span>{
-<a href=#301 id=301 data-nosnippet>301</a>            <span class="kw">let </span>cmd = engine_rx.recv().unwrap();
-<a href=#302 id=302 data-nosnippet>302</a>            <span class="kw">match </span>cmd {
-<a href=#303 id=303 data-nosnippet>303</a>                GuiCmd::Fen =&gt; engine_tx
-<a href=#304 id=304 data-nosnippet>304</a>                    .send(EngineCmd::Fen(board.to_fen().unwrap()))
-<a href=#305 id=305 data-nosnippet>305</a>                    .unwrap(),
-<a href=#306 id=306 data-nosnippet>306</a>                GuiCmd::Position { pos, moves } =&gt; {
-<a href=#307 id=307 data-nosnippet>307</a>                    <span class="kw">match </span>pos {
-<a href=#308 id=308 data-nosnippet>308</a>                        PositionSubCmd::StartPos =&gt; {
-<a href=#309 id=309 data-nosnippet>309</a>                            board = Board::from_basic_board();
-<a href=#310 id=310 data-nosnippet>310</a>                        }
-<a href=#311 id=311 data-nosnippet>311</a>                        PositionSubCmd::Fen(fen) =&gt; {
-<a href=#312 id=312 data-nosnippet>312</a>                            board = Board::from_fen(<span class="kw-2">&amp;</span>fen).unwrap();
-<a href=#313 id=313 data-nosnippet>313</a>                        }
-<a href=#314 id=314 data-nosnippet>314</a>                    };
-<a href=#315 id=315 data-nosnippet>315</a>
-<a href=#316 id=316 data-nosnippet>316</a>                    <span class="kw">for </span>mov <span class="kw">in </span>moves {
-<a href=#317 id=317 data-nosnippet>317</a>                        board = board.apply(<span class="kw-2">&amp;</span>mov).unwrap();
-<a href=#318 id=318 data-nosnippet>318</a>                    }
-<a href=#319 id=319 data-nosnippet>319</a>                }
-<a href=#320 id=320 data-nosnippet>320</a>                GuiCmd::Go =&gt; {
-<a href=#321 id=321 data-nosnippet>321</a>                    engine_tx
-<a href=#322 id=322 data-nosnippet>322</a>                        .send(EngineCmd::BestMove(solver.best_move(<span class="kw-2">&amp;</span>board).unwrap()))
-<a href=#323 id=323 data-nosnippet>323</a>                        .unwrap();
-<a href=#324 id=324 data-nosnippet>324</a>                }
-<a href=#325 id=325 data-nosnippet>325</a>                GuiCmd::OpeningBook(filename) =&gt; {
-<a href=#326 id=326 data-nosnippet>326</a>                    solver.set_opening_book(Book::from_filename(<span class="kw-2">&amp;</span>filename));
-<a href=#327 id=327 data-nosnippet>327</a>                }
-<a href=#328 id=328 data-nosnippet>328</a>            };
-<a href=#329 id=329 data-nosnippet>329</a>        }
-<a href=#330 id=330 data-nosnippet>330</a>    });
-<a href=#331 id=331 data-nosnippet>331</a>
-<a href=#332 id=332 data-nosnippet>332</a>    t.join().unwrap();
-<a href=#333 id=333 data-nosnippet>333</a>    _engine_thread.join().unwrap();
-<a href=#334 id=334 data-nosnippet>334</a>    <span class="prelude-val">Ok</span>(())
-<a href=#335 id=335 data-nosnippet>335</a>}
+<a href=#261 id=261 data-nosnippet>261</a>                UciGuiCmd::Go(go_sub_cmd) =&gt; {
+<a href=#262 id=262 data-nosnippet>262</a>                    <span class="kw">if </span>go_sub_cmd.perft.is_some() {
+<a href=#263 id=263 data-nosnippet>263</a>                        <span class="macro">vec!</span>[]
+<a href=#264 id=264 data-nosnippet>264</a>                    } <span class="kw">else </span>{
+<a href=#265 id=265 data-nosnippet>265</a>                        gui_tx.send(GuiCmd::Go).unwrap();
+<a href=#266 id=266 data-nosnippet>266</a>                        <span class="kw">if let </span>EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
+<a href=#267 id=267 data-nosnippet>267</a>                            <span class="macro">vec!</span>[UciEngineCmd::BestMove { mov, ponder: <span class="prelude-val">None </span>}]
+<a href=#268 id=268 data-nosnippet>268</a>                        } <span class="kw">else </span>{
+<a href=#269 id=269 data-nosnippet>269</a>                            <span class="macro">panic!</span>()
+<a href=#270 id=270 data-nosnippet>270</a>                        }
+<a href=#271 id=271 data-nosnippet>271</a>                    }
+<a href=#272 id=272 data-nosnippet>272</a>                }
+<a href=#273 id=273 data-nosnippet>273</a>                UciGuiCmd::SetOption { name, value } =&gt; {
+<a href=#274 id=274 data-nosnippet>274</a>                    <span class="kw">let </span>cmd = registry.set(<span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;</span>value);
+<a href=#275 id=275 data-nosnippet>275</a>                    <span class="kw">if let </span><span class="prelude-val">Some</span>(cmd) = cmd {
+<a href=#276 id=276 data-nosnippet>276</a>                        gui_tx.send(cmd).unwrap();
+<a href=#277 id=277 data-nosnippet>277</a>                    }
+<a href=#278 id=278 data-nosnippet>278</a>                    <span class="macro">vec!</span>[]
+<a href=#279 id=279 data-nosnippet>279</a>                }
+<a href=#280 id=280 data-nosnippet>280</a>                UciGuiCmd::Fen =&gt; {
+<a href=#281 id=281 data-nosnippet>281</a>                    gui_tx.send(GuiCmd::Fen).unwrap();
+<a href=#282 id=282 data-nosnippet>282</a>                    <span class="kw">let </span>cmd = gui_rx.recv().unwrap();
+<a href=#283 id=283 data-nosnippet>283</a>                    <span class="kw">if let </span>EngineCmd::Fen(fen) = cmd {
+<a href=#284 id=284 data-nosnippet>284</a>                        <span class="macro">vec!</span>[UciEngineCmd::Info(
+<a href=#285 id=285 data-nosnippet>285</a>                            InfoSubCmdBuilder::new().with_string(<span class="kw-2">&amp;</span>fen).build(),
+<a href=#286 id=286 data-nosnippet>286</a>                        )]
+<a href=#287 id=287 data-nosnippet>287</a>                    } <span class="kw">else </span>{
+<a href=#288 id=288 data-nosnippet>288</a>                        <span class="macro">panic!</span>()
+<a href=#289 id=289 data-nosnippet>289</a>                    }
+<a href=#290 id=290 data-nosnippet>290</a>                }
+<a href=#291 id=291 data-nosnippet>291</a>                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(),
+<a href=#292 id=292 data-nosnippet>292</a>            };
+<a href=#293 id=293 data-nosnippet>293</a>
+<a href=#294 id=294 data-nosnippet>294</a>            <span class="kw">for </span>command <span class="kw">in </span>commands {
+<a href=#295 id=295 data-nosnippet>295</a>                to_client(<span class="macro">dbg!</span>(<span class="kw-2">&amp;</span>command.write()));
+<a href=#296 id=296 data-nosnippet>296</a>            }
+<a href=#297 id=297 data-nosnippet>297</a>        }
+<a href=#298 id=298 data-nosnippet>298</a>    });
+<a href=#299 id=299 data-nosnippet>299</a>
+<a href=#300 id=300 data-nosnippet>300</a>    <span class="kw">let </span>_engine_thread = thread::spawn(<span class="kw">move </span>|| {
+<a href=#301 id=301 data-nosnippet>301</a>        <span class="kw">let </span><span class="kw-2">mut </span>board =
+<a href=#302 id=302 data-nosnippet>302</a>            Board::from_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1"</span>).unwrap();
+<a href=#303 id=303 data-nosnippet>303</a>        <span class="kw">let </span><span class="kw-2">mut </span>solver = Solver::new();
+<a href=#304 id=304 data-nosnippet>304</a>        <span class="kw">loop </span>{
+<a href=#305 id=305 data-nosnippet>305</a>            <span class="kw">let </span>cmd = engine_rx.recv().unwrap();
+<a href=#306 id=306 data-nosnippet>306</a>            <span class="kw">match </span>cmd {
+<a href=#307 id=307 data-nosnippet>307</a>                GuiCmd::Fen =&gt; engine_tx
+<a href=#308 id=308 data-nosnippet>308</a>                    .send(EngineCmd::Fen(board.to_fen().unwrap()))
+<a href=#309 id=309 data-nosnippet>309</a>                    .unwrap(),
+<a href=#310 id=310 data-nosnippet>310</a>                GuiCmd::Position { pos, moves } =&gt; {
+<a href=#311 id=311 data-nosnippet>311</a>                    <span class="kw">match </span>pos {
+<a href=#312 id=312 data-nosnippet>312</a>                        PositionSubCmd::StartPos =&gt; {
+<a href=#313 id=313 data-nosnippet>313</a>                            board = Board::from_basic_board();
+<a href=#314 id=314 data-nosnippet>314</a>                        }
+<a href=#315 id=315 data-nosnippet>315</a>                        PositionSubCmd::Fen(fen) =&gt; {
+<a href=#316 id=316 data-nosnippet>316</a>                            board = Board::from_fen(<span class="kw-2">&amp;</span>fen).unwrap();
+<a href=#317 id=317 data-nosnippet>317</a>                        }
+<a href=#318 id=318 data-nosnippet>318</a>                    };
+<a href=#319 id=319 data-nosnippet>319</a>
+<a href=#320 id=320 data-nosnippet>320</a>                    <span class="kw">for </span>mov <span class="kw">in </span>moves {
+<a href=#321 id=321 data-nosnippet>321</a>                        board = board.apply(<span class="kw-2">&amp;</span>mov).unwrap();
+<a href=#322 id=322 data-nosnippet>322</a>                    }
+<a href=#323 id=323 data-nosnippet>323</a>                }
+<a href=#324 id=324 data-nosnippet>324</a>                GuiCmd::Go =&gt; {
+<a href=#325 id=325 data-nosnippet>325</a>                    engine_tx
+<a href=#326 id=326 data-nosnippet>326</a>                        .send(EngineCmd::BestMove(solver.best_move(<span class="kw-2">&amp;</span>board).unwrap()))
+<a href=#327 id=327 data-nosnippet>327</a>                        .unwrap();
+<a href=#328 id=328 data-nosnippet>328</a>                }
+<a href=#329 id=329 data-nosnippet>329</a>                GuiCmd::OpeningBook(filename) =&gt; {
+<a href=#330 id=330 data-nosnippet>330</a>                    solver.set_opening_book(Book::from_filename(<span class="kw-2">&amp;</span>filename));
+<a href=#331 id=331 data-nosnippet>331</a>                }
+<a href=#332 id=332 data-nosnippet>332</a>            };
+<a href=#333 id=333 data-nosnippet>333</a>        }
+<a href=#334 id=334 data-nosnippet>334</a>    });
+<a href=#335 id=335 data-nosnippet>335</a>
+<a href=#336 id=336 data-nosnippet>336</a>    t.join().unwrap();
+<a href=#337 id=337 data-nosnippet>337</a>    _engine_thread.join().unwrap();
+<a href=#338 id=338 data-nosnippet>338</a>    <span class="prelude-val">Ok</span>(())
+<a href=#339 id=339 data-nosnippet>339</a>}
 </code></pre></div></section></main></body></html>
