@@ -91,8 +91,9 @@ impl BoardBuilder {
     }
 
     #[allow(dead_code)]
-    pub fn with_basic_board(&self) -> Result<BoardBuilder> {
+    pub fn with_basic_board(&self) -> BoardBuilder {
         self.with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+            .unwrap()
     }
 
     #[allow(dead_code)]
