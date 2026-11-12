@@ -19,6 +19,7 @@ impl PerftSuites {
             test_file,
             r#"
             use fchess::Epd;
+            use fchess::perft::perft;
             "#
         )
         .unwrap();

@@ -1,7 +1,7 @@
 use crate::board::Board;
 use crate::move_generator::MoveGenerator;
 
-fn perft(board: &Board, search_depth: u32) -> Option<u32> {
+pub fn perft(board: &Board, search_depth: u32) -> Option<u32> {
     let move_gen = MoveGenerator::new();
 
     let mut stack = Vec::<(Board, u32)>::new();
