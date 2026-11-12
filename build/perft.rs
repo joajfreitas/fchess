@@ -21,6 +21,7 @@ impl PerftSuites {
             use anyhow::Result;
 
             use fchess::Epd;
+            use fchess::perft::perft;
             "#
         )
         .unwrap();
