@@ -139,6 +139,7 @@ pub enum UciGuiCmd {
     },
     Stop,
     Fen,
+    Display,
 }
 
 impl UciGuiCmd {
@@ -260,6 +261,8 @@ impl UciGuiCmd {
             Ok(UciGuiCmd::Stop)
         } else if regex!("^fen$").is_match(command) {
             Ok(UciGuiCmd::Fen)
+        } else if regex!("^display$").is_match(command) {
+            Ok(UciGuiCmd::Display)
         } else {
             Err(String::from("Unimplemented"))
         }
@@ -801,6 +804,11 @@ mod tests {
     #[test]
     fn test_parse_gui_command_stop() {
         assert_eq!(UciGuiCmd::parse("stop"), Ok(UciGuiCmd::Stop));
+    }
+
+    #[test]
+    fn test_parse_gui_command_display() {
+        assert_eq!(UciGuiCmd::parse("display"), Ok(UciGuiCmd::Display));
     }
 
     #[test]

@@ -152,3 +152,19 @@ fn test_uci_go() {
     uci.send("go");
     expect_that!(uci.recv(), ok(eq("bestmove g1h3")));
 }
+
+#[gtest]
+fn test_uci_non_standard_display() {
+    let mut uci = UciClient::spawn();
+    uci.send("uci");
+    uci.recvn(4).unwrap();
+    uci.send("position startpos");
+    uci.send("display");
+    uci.recv().unwrap();
+    expect_that!(uci.recv(), ok(eq("8 │ ♖ │ ♘ │ ♗ │ ♕ │ ♔ │ ♗ │ ♘ │ ♖ │")));
+    uci.recv().unwrap();
+    expect_that!(uci.recv(), ok(eq("7 │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │ ♙ │")));
+    uci.recvn(11).unwrap();
+    expect_that!(uci.recv(), ok(eq("1 │ ♜ │ ♞ │ ♝ │ ♛ │ ♚ │ ♝ │ ♞ │ ♜ │")));
+    uci.recvn(3).unwrap();
+}
