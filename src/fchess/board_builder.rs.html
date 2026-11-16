@@ -91,13 +91,14 @@
 <a href=#91 id=91 data-nosnippet>91</a>    }
 <a href=#92 id=92 data-nosnippet>92</a>
 <a href=#93 id=93 data-nosnippet>93</a>    <span class="attr">#[allow(dead_code)]
-<a href=#94 id=94 data-nosnippet>94</a>    </span><span class="kw">pub fn </span>with_basic_board(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;BoardBuilder&gt; {
+<a href=#94 id=94 data-nosnippet>94</a>    </span><span class="kw">pub fn </span>with_basic_board(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BoardBuilder {
 <a href=#95 id=95 data-nosnippet>95</a>        <span class="self">self</span>.with_fen(<span class="string">"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"</span>)
-<a href=#96 id=96 data-nosnippet>96</a>    }
-<a href=#97 id=97 data-nosnippet>97</a>
-<a href=#98 id=98 data-nosnippet>98</a>    <span class="attr">#[allow(dead_code)]
-<a href=#99 id=99 data-nosnippet>99</a>    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Board {
-<a href=#100 id=100 data-nosnippet>100</a>        <span class="self">self</span>.board
-<a href=#101 id=101 data-nosnippet>101</a>    }
-<a href=#102 id=102 data-nosnippet>102</a>}
+<a href=#96 id=96 data-nosnippet>96</a>            .unwrap()
+<a href=#97 id=97 data-nosnippet>97</a>    }
+<a href=#98 id=98 data-nosnippet>98</a>
+<a href=#99 id=99 data-nosnippet>99</a>    <span class="attr">#[allow(dead_code)]
+<a href=#100 id=100 data-nosnippet>100</a>    </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; Board {
+<a href=#101 id=101 data-nosnippet>101</a>        <span class="self">self</span>.board
+<a href=#102 id=102 data-nosnippet>102</a>    }
+<a href=#103 id=103 data-nosnippet>103</a>}
 </code></pre></div></section></main></body></html>
