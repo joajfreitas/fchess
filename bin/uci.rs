@@ -23,11 +23,13 @@ enum GuiCmd {
     },
     Go,
     OpeningBook(String),
+    Display,
 }
 
 enum EngineCmd {
     Fen(String),
     BestMove(Move),
+    String(String),
 }
 
 #[allow(dead_code)]
@@ -236,7 +238,7 @@ fn main() -> Result<()> {
             io::stdin().read_line(&mut buffer).unwrap();
             let buffer = buffer.replace('\n', "");
 
-            let commands = match dbg!(UciGuiCmd::parse(dbg!(&buffer)).unwrap()) {
+            let commands = match UciGuiCmd::parse(&buffer).unwrap() {
                 UciGuiCmd::Uci => {
                     let mut cmds = vec![
                         UciEngineCmd::IdName("FChess".to_string()),
@@ -284,11 +286,21 @@ fn main() -> Result<()> {
                         panic!()
                     }
                 }
+                UciGuiCmd::Display => {
+                    gui_tx.send(GuiCmd::Display).unwrap();
+                    let response = gui_rx.recv().unwrap();
+                    if let EngineCmd::String(display) = response {
+                        println!("{}", display);
+                    } else {
+                        panic!();
+                    }
+                    vec![]
+                }
                 _ => panic!(),
             };
 
             for command in commands {
-                to_client(dbg!(&command.write()));
+                to_client(&command.write());
             }
         }
     });
@@ -324,6 +336,11 @@ fn main() -> Result<()> {
                 }
                 GuiCmd::OpeningBook(filename) => {
                     solver.set_opening_book(Book::from_filename(&filename));
+                }
+                GuiCmd::Display => {
+                    engine_tx
+                        .send(EngineCmd::String(format!("{}", board)))
+                        .unwrap();
                 }
             };
         }
