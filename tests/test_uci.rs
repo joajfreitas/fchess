@@ -102,6 +102,13 @@ fn test_uci_handshake() {
 }
 
 #[gtest]
+fn test_uci_unknown_command() {
+    let mut uci = UciClient::spawn();
+    uci.send("some command");
+    expect_that!(uci.recv(), ok(eq("Unknown command: 'some command'.")));
+}
+
+#[gtest]
 fn test_uci_initial_position_fen() {
     let mut uci = UciClient::spawn();
     uci.send("uci");
