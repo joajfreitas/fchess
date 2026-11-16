@@ -237,8 +237,13 @@ fn main() -> Result<()> {
             let mut buffer = String::new();
             io::stdin().read_line(&mut buffer).unwrap();
             let buffer = buffer.replace('\n', "");
-
-            let commands = match UciGuiCmd::parse(&buffer).unwrap() {
+            let command = if let Ok(command) = UciGuiCmd::parse(&buffer) {
+                command
+            } else {
+                println!("Unknown command: '{}'.", buffer);
+                continue;
+            };
+            let commands = match command {
                 UciGuiCmd::Uci => {
                     let mut cmds = vec![
                         UciEngineCmd::IdName("FChess".to_string()),
