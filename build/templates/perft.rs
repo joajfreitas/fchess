@@ -8,7 +8,7 @@ fn {test_name}_d1() {{
 
     dbg!(epd.board.to_fen());
 
-    assert_eq!(perft(&epd.board, 1), Some(d1));
+    assert_eq!(perft(&epd.board, 1).unwrap().0, d1);
 }}
 
 #[test]
@@ -21,7 +21,7 @@ fn {test_name}_d2() {{
 
     dbg!(epd.board.to_fen());
 
-    assert_eq!(perft(&epd.board, 2), Some(d2));
+    assert_eq!(perft(&epd.board, 2).unwrap().0, d2);
 }}
 
 #[test]
@@ -34,5 +34,5 @@ fn {test_name}_d3() {{
 
     dbg!(epd.board.to_fen());
 
-    assert_eq!(perft(&epd.board, 3), Some(d3));
+    assert_eq!(perft(&epd.board, 3).unwrap().0, d3);
 }}
