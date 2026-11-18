@@ -76,7 +76,7 @@
 <a href=#76 id=76 data-nosnippet>76</a><span class="kw">impl </span>fmt::Display <span class="kw">for </span>ColoredPieceType {
 <a href=#77 id=77 data-nosnippet>77</a>    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
 <a href=#78 id=78 data-nosnippet>78</a>        <span class="kw">let </span>pieces = [
-<a href=#79 id=79 data-nosnippet>79</a>            <span class="string">"♟︎"</span>, <span class="string">"♜"</span>, <span class="string">"♞"</span>, <span class="string">"♝"</span>, <span class="string">"♛"</span>, <span class="string">"♚"</span>, <span class="string">"♙"</span>, <span class="string">"♖"</span>, <span class="string">"♘"</span>, <span class="string">"♗"</span>, <span class="string">"♕"</span>, <span class="string">"♔"</span>, <span class="string">"*"</span>, <span class="string">"+"</span>, <span class="string">" "</span>,
+<a href=#79 id=79 data-nosnippet>79</a>            <span class="string">"P"</span>, <span class="string">"R"</span>, <span class="string">"K"</span>, <span class="string">"B"</span>, <span class="string">"Q"</span>, <span class="string">"K"</span>, <span class="string">"p"</span>, <span class="string">"r"</span>, <span class="string">"k"</span>, <span class="string">"b"</span>, <span class="string">"q"</span>, <span class="string">"k"</span>, <span class="string">"*"</span>, <span class="string">"+"</span>, <span class="string">" "</span>,
 <a href=#80 id=80 data-nosnippet>80</a>        ];
 <a href=#81 id=81 data-nosnippet>81</a>        f.write_str(pieces[<span class="kw-2">*</span><span class="self">self </span><span class="kw">as </span>usize])
 <a href=#82 id=82 data-nosnippet>82</a>    }
