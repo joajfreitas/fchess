@@ -34,6 +34,7 @@ mod fen;
 mod move_generator;
 mod moves;
 mod moveset;
+pub mod perft;
 mod piece;
 mod san;
 mod side;

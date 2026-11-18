@@ -5,10 +5,12 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use anyhow::Result;
+use fchess::perft::perft;
 use fchess::{
     Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd,
     UciGuiCmd,
 };
+
 use log::error;
 
 fn to_client(output: &str) {
@@ -22,14 +24,17 @@ enum GuiCmd {
         moves: Vec<Move>,
     },
     Go,
+    Perft(u32),
     OpeningBook(String),
     Display,
+    Move(Move),
 }
 
 enum EngineCmd {
     Fen(String),
     BestMove(Move),
     String(String),
+    Perft((u32, Vec<(Move, u32)>)),
 }
 
 #[allow(dead_code)]
@@ -265,12 +270,27 @@ fn main() -> Result<()> {
                     gui_tx.send(GuiCmd::Position { pos, moves }).unwrap();
                     vec![]
                 }
-                UciGuiCmd::Go(_) => {
-                    gui_tx.send(GuiCmd::Go).unwrap();
-                    if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
-                        vec![UciEngineCmd::BestMove { mov, ponder: None }]
+                UciGuiCmd::Go(go_sub_cmd) => {
+                    if let Some(perft_cmd) = go_sub_cmd.perft {
+                        gui_tx.send(GuiCmd::Perft(perft_cmd)).unwrap();
+                        if let EngineCmd::Perft((count, moves)) = gui_rx.recv().unwrap() {
+                            for (mov, count) in moves {
+                                println!("{}: {}", mov.to_algebraic(), count);
+                            }
+
+                            println!("Nodes searched: {}", count);
+                        } else {
+                            panic!()
+                        }
+
+                        vec![]
                     } else {
-                        panic!()
+                        gui_tx.send(GuiCmd::Go).unwrap();
+                        if let EngineCmd::BestMove(mov) = gui_rx.recv().unwrap() {
+                            vec![UciEngineCmd::BestMove { mov, ponder: None }]
+                        } else {
+                            panic!()
+                        }
                     }
                 }
                 UciGuiCmd::SetOption { name, value } => {
@@ -301,7 +321,17 @@ fn main() -> Result<()> {
                     }
                     vec![]
                 }
-                _ => panic!(),
+                UciGuiCmd::Debug(_) => unimplemented!(),
+                UciGuiCmd::PonderHit => unimplemented!(),
+                UciGuiCmd::Register {
+                    later: _,
+                    name: _,
+                    code: _,
+                } => unimplemented!(),
+                UciGuiCmd::Move(mov) => {
+                    gui_tx.send(GuiCmd::Move(mov)).unwrap();
+                    vec![]
+                }
             };
 
             for command in commands {
@@ -339,6 +369,10 @@ fn main() -> Result<()> {
                         .send(EngineCmd::BestMove(solver.best_move(&board).unwrap()))
                         .unwrap();
                 }
+                GuiCmd::Perft(depth) => {
+                    let (count, moves) = perft(&board, depth).unwrap();
+                    engine_tx.send(EngineCmd::Perft((count, moves))).unwrap();
+                }
                 GuiCmd::OpeningBook(filename) => {
                     solver.set_opening_book(Book::from_filename(&filename));
                 }
@@ -346,6 +380,9 @@ fn main() -> Result<()> {
                     engine_tx
                         .send(EngineCmd::String(format!("{}", board)))
                         .unwrap();
+                }
+                GuiCmd::Move(mov) => {
+                    board = board.apply(&mov).unwrap();
                 }
             };
         }

@@ -76,7 +76,7 @@ pub enum ColoredPieceType {
 impl fmt::Display for ColoredPieceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let pieces = [
-            "♟︎", "♜", "♞", "♝", "♛", "♚", "♙", "♖", "♘", "♗", "♕", "♔", "*", "+", " ",
+            "P", "R", "K", "B", "Q", "K", "p", "r", "k", "b", "q", "k", "*", "+", " ",
         ];
         f.write_str(pieces[*self as usize])
     }

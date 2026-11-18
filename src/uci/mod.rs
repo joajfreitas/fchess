@@ -3,18 +3,18 @@ use lazy_regex::regex;
 
 #[derive(Clone, PartialEq, Debug, Default)]
 pub struct GoSubCmd {
-    search_moves: Vec<Move>,
-    ponder: bool,
-    wtime: Option<u32>,
-    btime: Option<u32>,
-    winc: Option<u32>,
-    binc: Option<u32>,
-    movestogo: Option<u32>,
-    depth: Option<u32>,
-    nodes: Option<u32>,
-    mate: Option<u32>,
-    infinite: Option<bool>,
-    perft: Option<u32>,
+    pub search_moves: Vec<Move>,
+    pub ponder: bool,
+    pub wtime: Option<u32>,
+    pub btime: Option<u32>,
+    pub winc: Option<u32>,
+    pub binc: Option<u32>,
+    pub movestogo: Option<u32>,
+    pub depth: Option<u32>,
+    pub nodes: Option<u32>,
+    pub mate: Option<u32>,
+    pub infinite: Option<bool>,
+    pub perft: Option<u32>,
 }
 
 #[allow(dead_code)]
@@ -140,6 +140,7 @@ pub enum UciGuiCmd {
     Stop,
     Fen,
     Display,
+    Move(Move),
 }
 
 impl UciGuiCmd {
@@ -147,12 +148,14 @@ impl UciGuiCmd {
         let debug_re = regex!(r"^debug\s?((on)|(off))?$");
         let setoption_re = regex!(r"^setoption name (?<name>\S+?)(?: value (?<value>.+))?$");
         let go_re = regex!(
-            r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?$"
+            r"^go(\ssearchmoves\s(?<moves>([a-h][1-8][a-h][1-8]\s?)+))?(?<ponder>\sponder)?(\swtime (?<wtime>\d+))?(\sbtime (?<btime>\d+))?(\swinc (?<winc>\d+))?(\sbinc (?<binc>\d+))?(\smovestogo (?<movestogo>\d+))?(\sdepth (?<depth>\d+))?(\snodes (?<nodes>\d+))?(\smate (?<mate>\d+))?(\sperft (?<perft>\d+))?$"
         );
 
         let position_re = regex!(
             r"^position\s((?<startpos>startpos)|(fen\s(?<fen>(?:(?:[pnbrqkPNBRQK1-8]+)\/){7}(?:[pnbrqkPNBRQK1-8]+)(\s([wb]))?(\s(-|[KQkq]{1,4}))?(\s(-|[a-h][36]))?(\s(\d+))?(\s(\d+))?)))(\smoves\s(?<moves>([a-h][1-8][a-h][1-8]\s)*([a-h][1-8][a-h][1-8])))?$"
         );
+
+        let move_re = regex!("^move (?<move>[a-h][1-8][a-h][1-8])$");
 
         if regex!("^uci$").is_match(command) {
             Ok(UciGuiCmd::Uci)
@@ -214,6 +217,9 @@ impl UciGuiCmd {
             let mate = caps
                 .name("mate")
                 .and_then(|mate| mate.as_str().to_string().parse::<u32>().ok());
+            let perft = caps
+                .name("perft")
+                .and_then(|perft| perft.as_str().to_string().parse::<u32>().ok());
 
             Ok(UciGuiCmd::Go(GoSubCmd {
                 search_moves,
@@ -227,7 +233,7 @@ impl UciGuiCmd {
                 nodes,
                 mate,
                 infinite: None,
-                perft: None,
+                perft,
             }))
         } else if regex!("^ponderhit$").is_match(command) {
             Ok(UciGuiCmd::PonderHit)
@@ -263,6 +269,12 @@ impl UciGuiCmd {
             Ok(UciGuiCmd::Fen)
         } else if regex!("^display$").is_match(command) {
             Ok(UciGuiCmd::Display)
+        } else if move_re.is_match(command) {
+            let caps = move_re.captures(command).unwrap();
+            let mov = caps
+                .name("move")
+                .and_then(|mov| Move::from_full_algebraic(mov.as_str()));
+            Ok(UciGuiCmd::Move(mov.unwrap()))
         } else {
             Err(String::from("Unimplemented"))
         }
@@ -723,6 +735,14 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_gui_command_go_perft() {
+        assert_eq!(
+            UciGuiCmd::parse("go perft 1"),
+            Ok(UciGuiCmd::Go(GoSubCmdBuilder::new().with_perft(1).build()))
+        );
+    }
+
+    #[test]
     fn test_parse_gui_command_ponderhit() {
         assert_eq!(UciGuiCmd::parse("ponderhit"), Ok(UciGuiCmd::PonderHit));
     }
@@ -809,6 +829,14 @@ mod tests {
     #[test]
     fn test_parse_gui_command_display() {
         assert_eq!(UciGuiCmd::parse("display"), Ok(UciGuiCmd::Display));
+    }
+
+    #[test]
+    fn test_parse_gui_command_move() {
+        assert_eq!(
+            UciGuiCmd::parse("move e2e4"),
+            Ok(UciGuiCmd::Move(Move::from_full_algebraic("e2e4").unwrap()))
+        );
     }
 
     #[test]
