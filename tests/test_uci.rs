@@ -161,6 +161,22 @@ fn test_uci_go() {
 }
 
 #[gtest]
+fn test_uci_non_standard_go_perft() {
+    let mut uci = UciClient::spawn();
+    uci.send("uci");
+    uci.recvn(4).unwrap();
+
+    uci.send("position startpos");
+    uci.send("isready");
+    expect_that!(uci.recv(), ok(eq("readyok")));
+
+    uci.send("go perft 1");
+    //expect_that!(uci.recv(), ok(eq("bestmove g1h3")));
+    uci.recvn(20).unwrap();
+    expect_that!(uci.recv(), ok(eq("Nodes searched: 20")));
+}
+
+#[gtest]
 fn test_uci_non_standard_display() {
     let mut uci = UciClient::spawn();
     uci.send("uci");
