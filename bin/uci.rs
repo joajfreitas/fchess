@@ -321,11 +321,17 @@ fn main() -> Result<()> {
                     }
                     vec![]
                 }
+                UciGuiCmd::Debug(_) => unimplemented!(),
+                UciGuiCmd::PonderHit => unimplemented!(),
+                UciGuiCmd::Register {
+                    later: _,
+                    name: _,
+                    code: _,
+                } => unimplemented!(),
                 UciGuiCmd::Move(mov) => {
                     gui_tx.send(GuiCmd::Move(mov)).unwrap();
                     vec![]
-                },
-                _ => panic!()
+                }
             };
 
             for command in commands {
