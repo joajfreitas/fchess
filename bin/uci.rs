@@ -5,10 +5,12 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 use anyhow::Result;
+use fchess::perft::perft;
 use fchess::{
     Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd,
     UciGuiCmd,
 };
+
 use log::error;
 
 fn to_client(output: &str) {
@@ -22,6 +24,7 @@ enum GuiCmd {
         moves: Vec<Move>,
     },
     Go,
+    Perft(u32),
     OpeningBook(String),
     Display,
 }
@@ -29,7 +32,11 @@ enum GuiCmd {
 enum EngineCmd {
     Fen(String),
     BestMove(Move),
+<<<<<<< HEAD
     String(String),
+=======
+    Perft((u32, Vec<(Move, u32)>)),
+>>>>>>> 9af9437 (Uci go perft)
 }
 
 #[allow(dead_code)]
@@ -266,7 +273,18 @@ fn main() -> Result<()> {
                     vec![]
                 }
                 UciGuiCmd::Go(go_sub_cmd) => {
-                    if go_sub_cmd.perft.is_some() {
+                    if let Some(perft_cmd) = go_sub_cmd.perft {
+                        gui_tx.send(GuiCmd::Perft(perft_cmd)).unwrap();
+                        if let EngineCmd::Perft((count, moves)) = gui_rx.recv().unwrap() {
+                            for (mov, count) in moves {
+                                println!("{}: {}", mov.to_algebraic(), count);
+                            }
+
+                            println!("Nodes searched: {}", count);
+                        } else {
+                            panic!()
+                        }
+
                         vec![]
                     } else {
                         gui_tx.send(GuiCmd::Go).unwrap();
@@ -342,6 +360,10 @@ fn main() -> Result<()> {
                     engine_tx
                         .send(EngineCmd::BestMove(solver.best_move(&board).unwrap()))
                         .unwrap();
+                }
+                GuiCmd::Perft(depth) => {
+                    let (count, moves) = perft(&board, depth).unwrap();
+                    engine_tx.send(EngineCmd::Perft((count, moves))).unwrap();
                 }
                 GuiCmd::OpeningBook(filename) => {
                     solver.set_opening_book(Book::from_filename(&filename));
