@@ -27,16 +27,14 @@ enum GuiCmd {
     Perft(u32),
     OpeningBook(String),
     Display,
+    Move(Move),
 }
 
 enum EngineCmd {
     Fen(String),
     BestMove(Move),
-<<<<<<< HEAD
     String(String),
-=======
     Perft((u32, Vec<(Move, u32)>)),
->>>>>>> 9af9437 (Uci go perft)
 }
 
 #[allow(dead_code)]
@@ -323,7 +321,11 @@ fn main() -> Result<()> {
                     }
                     vec![]
                 }
-                _ => panic!(),
+                UciGuiCmd::Move(mov) => {
+                    gui_tx.send(GuiCmd::Move(mov)).unwrap();
+                    vec![]
+                },
+                _ => panic!()
             };
 
             for command in commands {
@@ -372,6 +374,9 @@ fn main() -> Result<()> {
                     engine_tx
                         .send(EngineCmd::String(format!("{}", board)))
                         .unwrap();
+                }
+                GuiCmd::Move(mov) => {
+                    board = board.apply(&mov).unwrap();
                 }
             };
         }

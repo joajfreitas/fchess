@@ -140,6 +140,7 @@ pub enum UciGuiCmd {
     Stop,
     Fen,
     Display,
+    Move(Move),
 }
 
 impl UciGuiCmd {
@@ -153,6 +154,8 @@ impl UciGuiCmd {
         let position_re = regex!(
             r"^position\s((?<startpos>startpos)|(fen\s(?<fen>(?:(?:[pnbrqkPNBRQK1-8]+)\/){7}(?:[pnbrqkPNBRQK1-8]+)(\s([wb]))?(\s(-|[KQkq]{1,4}))?(\s(-|[a-h][36]))?(\s(\d+))?(\s(\d+))?)))(\smoves\s(?<moves>([a-h][1-8][a-h][1-8]\s)*([a-h][1-8][a-h][1-8])))?$"
         );
+
+        let move_re = regex!("^move (?<move>[a-h][1-8][a-h][1-8])$");
 
         if regex!("^uci$").is_match(command) {
             Ok(UciGuiCmd::Uci)
@@ -266,6 +269,12 @@ impl UciGuiCmd {
             Ok(UciGuiCmd::Fen)
         } else if regex!("^display$").is_match(command) {
             Ok(UciGuiCmd::Display)
+        } else if move_re.is_match(command) {
+            let caps = move_re.captures(command).unwrap();
+            let mov = caps
+                .name("move")
+                .and_then(|mov| Move::from_full_algebraic(mov.as_str()));
+            Ok(UciGuiCmd::Move(mov.unwrap()))
         } else {
             Err(String::from("Unimplemented"))
         }
@@ -820,6 +829,14 @@ mod tests {
     #[test]
     fn test_parse_gui_command_display() {
         assert_eq!(UciGuiCmd::parse("display"), Ok(UciGuiCmd::Display));
+    }
+
+    #[test]
+    fn test_parse_gui_command_move() {
+        assert_eq!(
+            UciGuiCmd::parse("move e2e4"),
+            Ok(UciGuiCmd::Move(Move::from_full_algebraic("e2e4").unwrap()))
+        );
     }
 
     #[test]
