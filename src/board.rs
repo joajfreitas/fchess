@@ -368,6 +368,17 @@ impl Board {
             }
             _ => {}
         }
+
+        if let Some(piece_type) = self.piece_at(mov.get_dst()) {
+            match (piece_type, mov.get_dst()) {
+                (ColoredPieceType::WhiteRook, square::A1) => result.set_castling_white_long(false),
+                (ColoredPieceType::WhiteRook, square::H1) => result.set_castling_white_short(false),
+                (ColoredPieceType::BlackRook, square::A8) => result.set_castling_black_long(false),
+                (ColoredPieceType::BlackRook, square::H8) => result.set_castling_black_short(false),
+                _ => {}
+            }
+        }
+
         result.set_enpassant(None);
 
         let piece_type = self.piece_at(mov.get_src()).unwrap();
