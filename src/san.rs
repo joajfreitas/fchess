@@ -78,7 +78,9 @@ pub fn read_san(algebra: &str, board: &Board) -> Result<Move> {
     let handle_file = |file: Match| file.as_str().chars().next().unwrap() as u8 - b'1';
 
     let re = Regex::new(r"([BNRQK]?)([a-h]?)([1-8]?)x?([a-h])([1-8])=?([BNRQK]?)").unwrap();
-    let captures = re.captures(algebra).unwrap();
+    let captures = re
+        .captures(algebra)
+        .ok_or(anyhow!(format!("Invalid move '{algebra}'")))?;
     let scope = captures
         .get(1)
         .and_then(set_empty_string_to_none)

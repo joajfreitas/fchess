@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Result, anyhow};
 use std::fmt;
 use std::ops::Not;
 
@@ -176,7 +176,7 @@ impl Move {
         self.promotion
     }
 
-    pub fn from_full_algebraic(algebra: &str) -> Option<Move> {
+    pub fn from_full_algebraic(algebra: &str) -> Result<Move> {
         let mov: Vec<char> = algebra.chars().collect();
         if mov.len() == 4 {
             let src_rank = (mov[1] as u8) - b'1';
@@ -184,7 +184,7 @@ impl Move {
             let dst_rank = (mov[3] as u8) - b'1';
             let dst_file = (mov[2] as u8) - b'a';
 
-            Some(Move::new(
+            Ok(Move::new(
                 Square::from_rank_file(src_rank, src_file),
                 Square::from_rank_file(dst_rank, dst_file),
             ))
@@ -200,9 +200,9 @@ impl Move {
                 Square::from_rank_file(dst_rank, dst_file),
             );
             mov.set_promotion(promotion);
-            Some(mov)
+            Ok(mov)
         } else {
-            None
+            Err(anyhow!("Unsupported algebraic format"))
         }
     }
 

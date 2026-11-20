@@ -88,11 +88,13 @@ fn main() -> Result<()> {
         } else {
             get_best_move(&board, &book, &mut solver)
         }?;
-        let mov: Move = Move::from_san(algebra, &board).unwrap();
 
-        board = match board.apply(&mov) {
-            Some(board) => board,
-            None => continue,
+        board = match Move::from_san(algebra, &board).and_then(|mov| board.apply(&mov)) {
+            Ok(board) => board,
+            Err(err) => {
+                println!("Error: {}", err);
+                continue;
+            }
         };
         println!("{board}");
     }

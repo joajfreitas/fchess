@@ -317,7 +317,7 @@ impl Board {
         }
     }
 
-    fn apply_single_move(self: &Board, mov: Move) -> Option<Board> {
+    fn apply_single_move(self: &Board, mov: Move) -> Result<Board> {
         let mut result = self.clone();
 
         let piece_type = self.piece_at(mov.get_src()).unwrap() as usize;
@@ -330,10 +330,10 @@ impl Board {
 
         result.pieces[piece_type] |= 1 << mov.get_dst().get_index();
 
-        Some(result)
+        Ok(result)
     }
 
-    pub fn apply(&self, mov: &Move) -> Option<Board> {
+    pub fn apply(&self, mov: &Move) -> Result<Board> {
         let mut result = if let Some(castle) = self.is_castle(mov.clone()) {
             let mut board = self.apply_single_move(castle.0)?;
             match castle.2 {
@@ -434,7 +434,7 @@ impl Board {
             result.set_enpassant(None);
         }
 
-        Some(result)
+        Ok(result)
     }
 
     pub fn checkmate(self: &Board, move_generator: &MoveGenerator) -> bool {
