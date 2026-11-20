@@ -269,7 +269,7 @@ impl MoveGenerator {
         let turn = board.get_turn();
 
         for mov in moveset.clone().into_iter() {
-            let board = board.apply(&mov)?;
+            let board = board.apply(&mov).ok()?;
             let king_square = board.king(turn);
             let orthogonal_enemy_mask = board
                 .get_piece_mask(PieceType::Rook.with_color(board.get_turn()))
@@ -647,7 +647,7 @@ impl MoveGenerator {
             println!("{}", moveset);
             for mov in moveset.into_iter() {
                 let result = board.apply(&mov);
-                if result.is_none() {
+                if result.is_err() {
                     continue;
                 }
 

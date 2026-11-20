@@ -1,4 +1,5 @@
 use crate::Move;
+use anyhow::Result;
 use lazy_regex::regex;
 
 #[derive(Clone, PartialEq, Debug, Default)]
@@ -184,7 +185,8 @@ impl UciGuiCmd {
                         .as_str()
                         .split(' ')
                         .map(Move::from_full_algebraic)
-                        .collect::<Option<Vec<Move>>>()
+                        .collect::<Result<Vec<Move>>>()
+                        .ok()
                 })
                 .unwrap_or(Vec::new());
 
@@ -247,7 +249,8 @@ impl UciGuiCmd {
                         .as_str()
                         .split(" ")
                         .map(Move::from_full_algebraic)
-                        .collect::<Option<Vec<Move>>>()
+                        .collect::<Result<Vec<Move>>>()
+                        .ok()
                 })
                 .unwrap_or(Vec::new());
 
@@ -828,7 +831,7 @@ mod tests {
         assert_eq!(
             UciEngineCmd::BestMove {
                 mov: Move::from_full_algebraic("e3e4").unwrap(),
-                ponder: Move::from_full_algebraic("e4e5")
+                ponder: Move::from_full_algebraic("e4e5").ok()
             }
             .write(),
             String::from("bestmove e3e4 ponder e4e5")
