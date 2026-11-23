@@ -441,10 +441,6 @@ impl Board {
             result.set_half_move_clock(self.get_half_move_clock() + 1);
         }
 
-        if self.get_enpassant().is_some() {
-            result.set_enpassant(None);
-        }
-
         Ok(result)
     }
 
