@@ -287,7 +287,7 @@ impl MoveGenerator {
             );
 
             if diagonal_attacked.mov & diagonal_enemy_mask != 0 {
-                moveset.mov ^= 1u64 << mov.get_dst().to_index();
+                moveset.mov &= !(1u64 << mov.get_dst().to_index());
                 continue;
             }
 
