@@ -156,7 +156,7 @@ impl UciGuiCmd {
             r"^position\s((?<startpos>startpos)|(fen\s(?<fen>(?:(?:[pnbrqkPNBRQK1-8]+)\/){7}(?:[pnbrqkPNBRQK1-8]+)(\s([wb]))?(\s(-|[KQkq]{1,4}))?(\s(-|[a-h][36]))?(\s(\d+))?(\s(\d+))?)))(\smoves\s(?<moves>([a-h][1-8][a-h][1-8]\s)*([a-h][1-8][a-h][1-8])))?$"
         );
 
-        let move_re = regex!("^move (?<move>[a-h][1-8][a-h][1-8])$");
+        let move_re = regex!("^move (?<move>[a-h][1-8][a-h][1-8][qbrnQBRN]?)$");
 
         if regex!("^uci$").is_match(command) {
             Ok(UciGuiCmd::Uci)
