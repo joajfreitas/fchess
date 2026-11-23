@@ -241,7 +241,7 @@ impl Move {
         let src_file = (self.src.get_rank() + b'1') as char;
 
         let promotion = if let Some(promotion) = self.promotion {
-            promotion.to_char().unwrap().to_string().to_uppercase()
+            promotion.to_char().unwrap().to_string().to_lowercase()
         } else {
             "".to_string()
         };
