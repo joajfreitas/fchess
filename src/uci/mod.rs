@@ -1,5 +1,5 @@
 use crate::Move;
-use anyhow::Result;
+use anyhow::{Result, anyhow};
 use lazy_regex::regex;
 
 #[derive(Clone, PartialEq, Debug, Default)]
@@ -276,6 +276,7 @@ impl UciGuiCmd {
             let caps = move_re.captures(command).unwrap();
             let mov = caps
                 .name("move")
+                .ok_or(anyhow!("expected move capture"))
                 .and_then(|mov| Move::from_full_algebraic(mov.as_str()));
             Ok(UciGuiCmd::Move(mov.unwrap()))
         } else {
