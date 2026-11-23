@@ -15,7 +15,7 @@ fn test_castling_capture_black_long_queen_revokes_rights() -> Result<()> {
 
 #[test]
 fn test_castling_capture_black_short_queen_revokes_rights() -> Result<()> {
-    let board = Board::from_fen("4k2r/6P1/8/8/8/8/8/4K3 b k - 0 1")?
+    let board = Board::from_fen("4k2r/6P1/8/8/8/8/8/4K3 w k - 0 1")?
         .apply(&Move::from_full_algebraic("g7h8")?)?;
 
     assert_that!(board.get_castling_black_short(), eq(false));
