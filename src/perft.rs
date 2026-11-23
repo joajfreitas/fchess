@@ -21,7 +21,7 @@ fn _perft(board: &Board, search_depth: u32) -> Result<u32> {
             acc += move_gen
                 .generate_moves(&board)
                 .iter()
-                .map(|mov| mov.count())
+                .map(|mov| mov.into_iter().count() as u32)
                 .sum::<u32>();
         } else if depth < search_depth - 1 {
             for mov in move_gen
