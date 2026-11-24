@@ -4,26 +4,26 @@ use crate::board::Board;
 use crate::move_generator::MoveGenerator;
 use crate::moves::Move;
 
-fn _perft(board: &Board, search_depth: u32) -> Result<u32> {
+fn _perft(board: &Board, search_depth: u32) -> Result<u64> {
     if search_depth == 0 {
         return Ok(1);
     }
 
     let move_gen = MoveGenerator::new();
 
-    let mut stack = Vec::<(Board, u32)>::new();
-    let mut acc: u32 = 0;
+    let mut stack = Vec::<(Board, u64)>::new();
+    let mut acc: u64 = 0;
 
     stack.push((board.clone(), 0));
 
     while let Some((board, depth)) = stack.pop() {
-        if depth == search_depth - 1 {
+        if depth == (search_depth - 1) as u64 {
             acc += move_gen
                 .generate_moves(&board)
                 .iter()
-                .map(|mov| mov.into_iter().count() as u32)
-                .sum::<u32>();
-        } else if depth < search_depth - 1 {
+                .map(|mov| mov.into_iter().count() as u64)
+                .sum::<u64>();
+        } else if depth < (search_depth - 1) as u64 {
             for mov in move_gen
                 .generate_moves(&board)
                 .iter()
@@ -39,7 +39,7 @@ fn _perft(board: &Board, search_depth: u32) -> Result<u32> {
     Ok(acc)
 }
 
-pub fn perft(board: &Board, search_depth: u32) -> Result<(u32, Vec<(Move, u32)>)> {
+pub fn perft(board: &Board, search_depth: u32) -> Result<(u64, Vec<(Move, u64)>)> {
     if search_depth == 0 {
         return Err(anyhow!("0 depth doesn't make sense for perft"));
     }
@@ -56,7 +56,7 @@ pub fn perft(board: &Board, search_depth: u32) -> Result<(u32, Vec<(Move, u32)>)
         .map(|mov| {
             _perft(&board.apply(mov).unwrap(), search_depth - 1).map(|count| (mov.clone(), count))
         })
-        .collect::<Result<Vec<(Move, u32)>>>();
+        .collect::<Result<Vec<(Move, u64)>>>();
 
     counts.map(|counts| (counts.iter().map(|(_, count)| count).sum(), counts))
 }

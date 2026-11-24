@@ -34,7 +34,7 @@ enum EngineCmd {
     Fen(String),
     BestMove(Move),
     String(String),
-    Perft((u32, Vec<(Move, u32)>)),
+    Perft((u64, Vec<(Move, u64)>)),
 }
 
 #[allow(dead_code)]
