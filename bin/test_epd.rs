@@ -5,7 +5,7 @@ mod test_common;
 use crate::test_common::{TestResult, TestSuit};
 
 use anyhow::Result;
-use fchess::{Epd, Move, Solver};
+use fchess::{Epd, Move, Search};
 
 #[derive(Clone)]
 struct TestCase {
@@ -52,7 +52,7 @@ fn main() -> Result<()> {
     let contents =
         fs::read_to_string(args.get(1).unwrap()).expect("Should have been able to read the file");
 
-    let mut solver = Solver::new();
+    let mut search = Search::new();
 
     let mut testsuit_result: TestSuit<BestMoveTestResult> = TestSuit::new();
 
@@ -60,7 +60,7 @@ fn main() -> Result<()> {
         println!("Processing line: {}", line);
         let epd = Epd::from_string(line)?;
         let board = epd.board.clone();
-        let best_move = solver.best_move(&board).unwrap();
+        let best_move = search.best_move(&board).unwrap();
 
         let expected_move = Move::from_algebraic(epd.properties.get("bm").unwrap()).unwrap();
 

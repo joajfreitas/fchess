@@ -7,7 +7,7 @@ use std::thread;
 use anyhow::Result;
 use fchess::perft::perft;
 use fchess::{
-    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Solver, UciEngineCmd,
+    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Search, UciEngineCmd,
     UciGuiCmd,
 };
 
@@ -343,7 +343,7 @@ fn main() -> Result<()> {
     let _engine_thread = thread::spawn(move || {
         let mut board =
             Board::from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1").unwrap();
-        let mut solver = Solver::new();
+        let mut search = Search::new();
         loop {
             let cmd = engine_rx.recv().unwrap();
             match cmd {
@@ -366,7 +366,7 @@ fn main() -> Result<()> {
                 }
                 GuiCmd::Go => {
                     engine_tx
-                        .send(EngineCmd::BestMove(solver.best_move(&board).unwrap()))
+                        .send(EngineCmd::BestMove(search.best_move(&board).unwrap()))
                         .unwrap();
                 }
                 GuiCmd::Perft(depth) => {
@@ -374,7 +374,7 @@ fn main() -> Result<()> {
                     engine_tx.send(EngineCmd::Perft((count, moves))).unwrap();
                 }
                 GuiCmd::OpeningBook(filename) => {
-                    solver.set_opening_book(Book::from_filename(&filename));
+                    search.set_opening_book(Book::from_filename(&filename));
                 }
                 GuiCmd::Display => {
                     engine_tx

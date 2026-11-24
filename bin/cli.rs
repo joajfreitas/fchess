@@ -4,8 +4,8 @@ use anyhow::{Result, anyhow};
 use fchess::Board;
 use fchess::Book;
 use fchess::Move;
+use fchess::Search;
 use fchess::Side;
-use fchess::Solver;
 
 /// fchess cli interface
 #[derive(Parser, Debug)]
@@ -37,14 +37,14 @@ fn read_line(rl: &mut rustyline::DefaultEditor) -> Result<String> {
     }
 }
 
-fn get_best_move(board: &Board, book: &Option<Book>, solver: &mut Solver) -> Result<String> {
+fn get_best_move(board: &Board, book: &Option<Book>, search: &mut Search) -> Result<String> {
     Ok(match book.as_ref().and_then(|b| b.get_best_move(board)) {
         Some(mov) => {
             println!("=> Book move {}", mov.to_algebraic());
             mov
         }
         _ => {
-            let mov = solver.best_move(board).unwrap();
+            let mov = search.best_move(board).unwrap();
             println!("=> Search move {}", mov.to_algebraic());
             mov
         }
@@ -79,14 +79,14 @@ fn main() -> Result<()> {
             .fen
             .unwrap_or("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0".to_string()),
     )?;
-    let mut solver = Solver::new();
+    let mut search = Search::new();
     println!("{board}");
 
     loop {
         let algebra = &if board.get_turn() == side {
             read_line(&mut rl)
         } else {
-            get_best_move(&board, &book, &mut solver)
+            get_best_move(&board, &book, &mut search)
         }?;
 
         board = match Move::from_san(algebra, &board).and_then(|mov| board.apply(&mov)) {
