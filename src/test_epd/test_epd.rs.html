@@ -5,7 +5,7 @@
 <a href=#5 id=5 data-nosnippet>5</a><span class="kw">use </span><span class="kw">crate</span>::test_common::{TestResult, TestSuit};
 <a href=#6 id=6 data-nosnippet>6</a>
 <a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span>anyhow::Result;
-<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>fchess::{Epd, Move, Solver};
+<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>fchess::{Epd, Move, Search};
 <a href=#9 id=9 data-nosnippet>9</a>
 <a href=#10 id=10 data-nosnippet>10</a><span class="attr">#[derive(Clone)]
 <a href=#11 id=11 data-nosnippet>11</a></span><span class="kw">struct </span>TestCase {
@@ -52,7 +52,7 @@
 <a href=#52 id=52 data-nosnippet>52</a>    <span class="kw">let </span>contents =
 <a href=#53 id=53 data-nosnippet>53</a>        fs::read_to_string(args.get(<span class="number">1</span>).unwrap()).expect(<span class="string">"Should have been able to read the file"</span>);
 <a href=#54 id=54 data-nosnippet>54</a>
-<a href=#55 id=55 data-nosnippet>55</a>    <span class="kw">let </span><span class="kw-2">mut </span>solver = Solver::new();
+<a href=#55 id=55 data-nosnippet>55</a>    <span class="kw">let </span><span class="kw-2">mut </span>search = Search::new();
 <a href=#56 id=56 data-nosnippet>56</a>
 <a href=#57 id=57 data-nosnippet>57</a>    <span class="kw">let </span><span class="kw-2">mut </span>testsuit_result: TestSuit&lt;BestMoveTestResult&gt; = TestSuit::new();
 <a href=#58 id=58 data-nosnippet>58</a>
@@ -60,7 +60,7 @@
 <a href=#60 id=60 data-nosnippet>60</a>        <span class="macro">println!</span>(<span class="string">"Processing line: {}"</span>, line);
 <a href=#61 id=61 data-nosnippet>61</a>        <span class="kw">let </span>epd = Epd::from_string(line)<span class="question-mark">?</span>;
 <a href=#62 id=62 data-nosnippet>62</a>        <span class="kw">let </span>board = epd.board.clone();
-<a href=#63 id=63 data-nosnippet>63</a>        <span class="kw">let </span>best_move = solver.best_move(<span class="kw-2">&amp;</span>board).unwrap();
+<a href=#63 id=63 data-nosnippet>63</a>        <span class="kw">let </span>best_move = search.best_move(<span class="kw-2">&amp;</span>board).unwrap();
 <a href=#64 id=64 data-nosnippet>64</a>
 <a href=#65 id=65 data-nosnippet>65</a>        <span class="kw">let </span>expected_move = Move::from_algebraic(epd.properties.get(<span class="string">"bm"</span>).unwrap()).unwrap();
 <a href=#66 id=66 data-nosnippet>66</a>
