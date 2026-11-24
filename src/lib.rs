@@ -15,8 +15,8 @@ pub use crate::epd::Epd;
 pub use crate::move_generator::MoveGenerator;
 pub use crate::moves::Move;
 pub use crate::moveset::MoveSet;
+pub use crate::search::Search;
 pub use crate::side::Side;
-pub use crate::solver::Solver;
 pub use crate::square::Square;
 pub use crate::uci::{
     GoSubCmd, InfoSubCmdBuilder, OptionType, PositionSubCmd, UciEngineCmd, UciGuiCmd,
@@ -37,8 +37,8 @@ mod moveset;
 pub mod perft;
 mod piece;
 mod san;
+mod search;
 mod side;
-mod solver;
 mod square;
 mod uci;
 mod utils;

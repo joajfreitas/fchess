@@ -10,7 +10,7 @@ use crate::side::Side;
 
 #[allow(unused)]
 #[derive(Clone, Debug, Default)]
-pub struct Solver {
+pub struct Search {
     move_generator: MoveGenerator,
     transposition_table: HashMap<u64, f32>,
     search_queue: PriorityQueue<Board, u32>,
@@ -38,9 +38,9 @@ impl Node {
     }
 }
 
-impl Solver {
-    pub fn new() -> Solver {
-        Solver {
+impl Search {
+    pub fn new() -> Self {
+        Self {
             move_generator: MoveGenerator::new(),
             transposition_table: HashMap::default(),
             search_queue: PriorityQueue::new(),
