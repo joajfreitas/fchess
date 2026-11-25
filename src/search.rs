@@ -8,6 +8,43 @@ use crate::move_generator::MoveGenerator;
 use crate::moves::Move;
 use crate::side::Side;
 
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct Metrics {
+    pub node_count: u64,
+}
+
+impl Metrics {
+    pub fn new(node_count: u64) -> Self {
+        Self { node_count }
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct SearchLimits {
+    depth: u32,
+}
+
+impl SearchLimits {
+    pub fn new(depth: u32) -> Self {
+        Self { depth }
+    }
+}
+
+#[derive(Clone, Debug, Default, PartialEq)]
+pub struct SearchConfig {
+    depth: Option<u32>,
+}
+
+impl SearchConfig {
+    pub fn new(depth: Option<u32>) -> Self {
+        Self { depth }
+    }
+
+    pub fn resolve(&self) -> SearchLimits {
+        SearchLimits::new(self.depth.unwrap_or(3))
+    }
+}
+
 #[allow(unused)]
 #[derive(Clone, Debug, Default)]
 pub struct Search {
@@ -15,6 +52,7 @@ pub struct Search {
     transposition_table: HashMap<u64, f32>,
     search_queue: PriorityQueue<Board, u32>,
     opening_book: Option<Book>,
+    metrics: Metrics,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
@@ -45,6 +83,7 @@ impl Search {
             transposition_table: HashMap::default(),
             search_queue: PriorityQueue::new(),
             opening_book: None,
+            metrics: Metrics::default(),
         }
     }
 
@@ -60,13 +99,17 @@ impl Search {
             .collect::<Vec<Move>>()
     }
 
-    fn search(&mut self, board: &Board) -> Option<Move> {
+    fn search(&mut self, board: &Board, search_limits: &SearchLimits) -> Option<(Move, Metrics)> {
         let mut best: Option<Move> = None;
         let mut best_evaluation = -1000000000;
         let mut best_node: Option<Node> = None;
         for mov in self.generate_moves(board) {
             let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
-            let r = self.min_max(&node, 3, node.board.get_turn() == Side::White);
+            let r = self.min_max(
+                &node,
+                search_limits.depth,
+                node.board.get_turn() == Side::White,
+            );
             if r.is_none() {
                 continue;
             }
@@ -89,20 +132,28 @@ impl Search {
             best_node = *best_node.parent.unwrap();
         }
 
-        best
+        best.map(|mov| (mov, self.metrics.clone()))
     }
 
-    pub fn best_move(&mut self, board: &Board) -> Option<Move> {
+    pub fn best_move(
+        &mut self,
+        board: &Board,
+        search_limits: &SearchLimits,
+    ) -> Option<(Move, Metrics)> {
+        self.metrics = Metrics::default();
         if let Some(ref opening_book) = self.opening_book {
             opening_book
                 .get_best_move(board)
-                .or_else(|| self.search(board))
+                .map(|book| (book, Metrics::default()))
+                .or_else(|| self.search(board, search_limits))
         } else {
-            self.search(board)
+            self.search(board, search_limits)
         }
     }
 
     fn min_max(&mut self, node: &Node, max_depth: u32, max_min: bool) -> Option<(Node, i32)> {
+        self.metrics.node_count += 1;
+
         let mut max: i32 = -10000000;
         let mut best_node: Option<Node> = None;
         for mov in self.generate_moves(&node.board) {
@@ -150,5 +201,23 @@ impl Search {
         }
 
         s.clamp(-1000, 1000)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use anyhow::Result;
+    use googletest::prelude::*;
+
+    #[gtest]
+    fn test_metrics_node_count() -> Result<()> {
+        let mut search = Search::new();
+
+        let best_move = search.best_move(&Board::from_basic_board(), &SearchLimits::new(2));
+
+        assert_that!(best_move, some((anything(), eq(&Metrics::new(4)))));
+
+        Ok(())
     }
 }

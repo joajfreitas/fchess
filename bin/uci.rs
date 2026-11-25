@@ -7,8 +7,8 @@ use std::thread;
 use anyhow::Result;
 use fchess::perft::perft;
 use fchess::{
-    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Search, UciEngineCmd,
-    UciGuiCmd,
+    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Search, SearchConfig,
+    UciEngineCmd, UciGuiCmd,
 };
 
 use log::error;
@@ -366,7 +366,12 @@ fn main() -> Result<()> {
                 }
                 GuiCmd::Go => {
                     engine_tx
-                        .send(EngineCmd::BestMove(search.best_move(&board).unwrap()))
+                        .send(EngineCmd::BestMove(
+                            search
+                                .best_move(&board, &SearchConfig::default().resolve())
+                                .unwrap()
+                                .0,
+                        ))
                         .unwrap();
                 }
                 GuiCmd::Perft(depth) => {
