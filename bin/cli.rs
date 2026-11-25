@@ -44,11 +44,14 @@ fn get_best_move(board: &Board, book: &Option<Book>, search: &mut Search) -> Res
             mov
         }
         _ => {
-            let (mov, _) = search
+            let result = search
                 .best_move(board, &SearchConfig::default().resolve())
                 .unwrap();
-            println!("=> Search move {}", mov.to_algebraic());
-            mov
+            println!(
+                "=> Search move {}",
+                result.best_move.as_ref().unwrap().to_algebraic()
+            );
+            result.best_move.unwrap()
         }
     }
     .to_algebraic())
