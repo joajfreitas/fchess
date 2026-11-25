@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `bin/uci.rs`."><title>uci.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1e18a8e7.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="uci" data-themes="" data-resource-suffix="" data-rustdoc-version="1.102.0-nightly (20fe935d5 2026-11-23)" data-channel="nightly" data-search-js="search-085293d4.js" data-stringdex-js="stringdex-b5109af9.js" data-settings-js="settings-9b351432.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-419f3a3f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-101b5a15.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">uci/</div>uci.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::collections::HashMap;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `bin/uci.rs`."><title>uci.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1e18a8e7.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="uci" data-themes="" data-resource-suffix="" data-rustdoc-version="1.102.0-nightly (739adecd4 2026-11-24)" data-channel="nightly" data-search-js="search-085293d4.js" data-stringdex-js="stringdex-b5109af9.js" data-settings-js="settings-9b351432.js" ><script src="../../static.files/storage-41dd4d93.js"></script><script defer src="../../static.files/src-script-813739b1.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-419f3a3f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-101b5a15.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">uci/</div>uci.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="kw">use </span>std::collections::HashMap;
 <a href=#2 id=2 data-nosnippet>2</a><span class="kw">use </span>std::io;
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span>std::sync::mpsc;
 <a href=#4 id=4 data-nosnippet>4</a><span class="kw">use </span>std::sync::mpsc::{Receiver, Sender};
@@ -7,8 +7,8 @@
 <a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span>anyhow::Result;
 <a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>fchess::perft::perft;
 <a href=#9 id=9 data-nosnippet>9</a><span class="kw">use </span>fchess::{
-<a href=#10 id=10 data-nosnippet>10</a>    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Search, UciEngineCmd,
-<a href=#11 id=11 data-nosnippet>11</a>    UciGuiCmd,
+<a href=#10 id=10 data-nosnippet>10</a>    Board, Book, InfoSubCmdBuilder, Move, OptionType, PositionSubCmd, Search, SearchConfig,
+<a href=#11 id=11 data-nosnippet>11</a>    UciEngineCmd, UciGuiCmd,
 <a href=#12 id=12 data-nosnippet>12</a>};
 <a href=#13 id=13 data-nosnippet>13</a>
 <a href=#14 id=14 data-nosnippet>14</a><span class="kw">use </span>log::error;
@@ -366,30 +366,36 @@
 <a href=#366 id=366 data-nosnippet>366</a>                }
 <a href=#367 id=367 data-nosnippet>367</a>                GuiCmd::Go =&gt; {
 <a href=#368 id=368 data-nosnippet>368</a>                    engine_tx
-<a href=#369 id=369 data-nosnippet>369</a>                        .send(EngineCmd::BestMove(search.best_move(<span class="kw-2">&amp;</span>board).unwrap()))
-<a href=#370 id=370 data-nosnippet>370</a>                        .unwrap();
-<a href=#371 id=371 data-nosnippet>371</a>                }
-<a href=#372 id=372 data-nosnippet>372</a>                GuiCmd::Perft(depth) =&gt; {
-<a href=#373 id=373 data-nosnippet>373</a>                    <span class="kw">let </span>(count, moves) = perft(<span class="kw-2">&amp;</span>board, depth).unwrap();
-<a href=#374 id=374 data-nosnippet>374</a>                    engine_tx.send(EngineCmd::Perft((count, moves))).unwrap();
-<a href=#375 id=375 data-nosnippet>375</a>                }
-<a href=#376 id=376 data-nosnippet>376</a>                GuiCmd::OpeningBook(filename) =&gt; {
-<a href=#377 id=377 data-nosnippet>377</a>                    search.set_opening_book(Book::from_filename(<span class="kw-2">&amp;</span>filename));
-<a href=#378 id=378 data-nosnippet>378</a>                }
-<a href=#379 id=379 data-nosnippet>379</a>                GuiCmd::Display =&gt; {
-<a href=#380 id=380 data-nosnippet>380</a>                    engine_tx
-<a href=#381 id=381 data-nosnippet>381</a>                        .send(EngineCmd::String(<span class="macro">format!</span>(<span class="string">"{}"</span>, board)))
-<a href=#382 id=382 data-nosnippet>382</a>                        .unwrap();
-<a href=#383 id=383 data-nosnippet>383</a>                }
-<a href=#384 id=384 data-nosnippet>384</a>                GuiCmd::Move(mov) =&gt; {
-<a href=#385 id=385 data-nosnippet>385</a>                    board = board.apply(<span class="kw-2">&amp;</span>mov).unwrap();
-<a href=#386 id=386 data-nosnippet>386</a>                }
-<a href=#387 id=387 data-nosnippet>387</a>            };
-<a href=#388 id=388 data-nosnippet>388</a>        }
-<a href=#389 id=389 data-nosnippet>389</a>    });
-<a href=#390 id=390 data-nosnippet>390</a>
-<a href=#391 id=391 data-nosnippet>391</a>    t.join().unwrap();
-<a href=#392 id=392 data-nosnippet>392</a>    _engine_thread.join().unwrap();
-<a href=#393 id=393 data-nosnippet>393</a>    <span class="prelude-val">Ok</span>(())
-<a href=#394 id=394 data-nosnippet>394</a>}
+<a href=#369 id=369 data-nosnippet>369</a>                        .send(EngineCmd::BestMove(
+<a href=#370 id=370 data-nosnippet>370</a>                            search
+<a href=#371 id=371 data-nosnippet>371</a>                                .best_move(<span class="kw-2">&amp;</span>board, <span class="kw-2">&amp;</span>SearchConfig::default().resolve())
+<a href=#372 id=372 data-nosnippet>372</a>                                .unwrap()
+<a href=#373 id=373 data-nosnippet>373</a>                                .best_move
+<a href=#374 id=374 data-nosnippet>374</a>                                .unwrap(),
+<a href=#375 id=375 data-nosnippet>375</a>                        ))
+<a href=#376 id=376 data-nosnippet>376</a>                        .unwrap();
+<a href=#377 id=377 data-nosnippet>377</a>                }
+<a href=#378 id=378 data-nosnippet>378</a>                GuiCmd::Perft(depth) =&gt; {
+<a href=#379 id=379 data-nosnippet>379</a>                    <span class="kw">let </span>(count, moves) = perft(<span class="kw-2">&amp;</span>board, depth).unwrap();
+<a href=#380 id=380 data-nosnippet>380</a>                    engine_tx.send(EngineCmd::Perft((count, moves))).unwrap();
+<a href=#381 id=381 data-nosnippet>381</a>                }
+<a href=#382 id=382 data-nosnippet>382</a>                GuiCmd::OpeningBook(filename) =&gt; {
+<a href=#383 id=383 data-nosnippet>383</a>                    search.set_opening_book(Book::from_filename(<span class="kw-2">&amp;</span>filename));
+<a href=#384 id=384 data-nosnippet>384</a>                }
+<a href=#385 id=385 data-nosnippet>385</a>                GuiCmd::Display =&gt; {
+<a href=#386 id=386 data-nosnippet>386</a>                    engine_tx
+<a href=#387 id=387 data-nosnippet>387</a>                        .send(EngineCmd::String(<span class="macro">format!</span>(<span class="string">"{}"</span>, board)))
+<a href=#388 id=388 data-nosnippet>388</a>                        .unwrap();
+<a href=#389 id=389 data-nosnippet>389</a>                }
+<a href=#390 id=390 data-nosnippet>390</a>                GuiCmd::Move(mov) =&gt; {
+<a href=#391 id=391 data-nosnippet>391</a>                    board = board.apply(<span class="kw-2">&amp;</span>mov).unwrap();
+<a href=#392 id=392 data-nosnippet>392</a>                }
+<a href=#393 id=393 data-nosnippet>393</a>            };
+<a href=#394 id=394 data-nosnippet>394</a>        }
+<a href=#395 id=395 data-nosnippet>395</a>    });
+<a href=#396 id=396 data-nosnippet>396</a>
+<a href=#397 id=397 data-nosnippet>397</a>    t.join().unwrap();
+<a href=#398 id=398 data-nosnippet>398</a>    _engine_thread.join().unwrap();
+<a href=#399 id=399 data-nosnippet>399</a>    <span class="prelude-val">Ok</span>(())
+<a href=#400 id=400 data-nosnippet>400</a>}
 </code></pre></div></section></main></body></html>

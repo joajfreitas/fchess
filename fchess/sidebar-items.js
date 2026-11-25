@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["OptionType","PositionSubCmd","Side","UciEngineCmd","UciGuiCmd"],"mod":["perft"],"struct":["Board","Book","Epd","GoSubCmd","InfoSubCmdBuilder","Move","MoveGenerator","MoveSet","Search","Square"]};
+window.SIDEBAR_ITEMS = {"enum":["OptionType","PositionSubCmd","Side","UciEngineCmd","UciGuiCmd"],"mod":["perft"],"struct":["Board","Book","Epd","GoSubCmd","InfoSubCmdBuilder","Move","MoveGenerator","MoveSet","Search","SearchConfig","Square"]};
