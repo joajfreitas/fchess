@@ -157,7 +157,7 @@ fn test_uci_go() {
     expect_that!(uci.recv(), ok(eq("readyok")));
 
     uci.send("go");
-    expect_that!(uci.recv(), ok(eq("bestmove g1h3")));
+    expect_that!(uci.recv(), ok(eq("bestmove e2e4")));
 }
 
 #[gtest]

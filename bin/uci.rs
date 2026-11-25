@@ -370,7 +370,8 @@ fn main() -> Result<()> {
                             search
                                 .best_move(&board, &SearchConfig::default().resolve())
                                 .unwrap()
-                                .0,
+                                .best_move
+                                .unwrap(),
                         ))
                         .unwrap();
                 }

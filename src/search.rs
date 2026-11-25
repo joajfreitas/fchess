@@ -1,6 +1,7 @@
 use priority_queue::PriorityQueue;
 use std::cmp;
 use std::collections::HashMap;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use crate::board::Board;
 use crate::book::Book;
@@ -9,13 +10,32 @@ use crate::moves::Move;
 use crate::side::Side;
 
 #[derive(Clone, Debug, Default, PartialEq)]
-pub struct Metrics {
+pub struct SearchResult {
     pub node_count: u64,
+    pub time: Duration,
+    pub nps: f32,
+    pub best_move: Option<Move>,
+    pub eval: i32,
+    pub pv: Vec<Move>,
 }
 
-impl Metrics {
-    pub fn new(node_count: u64) -> Self {
-        Self { node_count }
+impl SearchResult {
+    pub fn new(
+        node_count: u64,
+        time: Duration,
+        nps: f32,
+        best_move: Option<Move>,
+        eval: i32,
+        pv: &[Move],
+    ) -> Self {
+        Self {
+            node_count,
+            time,
+            nps,
+            best_move,
+            eval,
+            pv: pv.to_vec(),
+        }
     }
 }
 
@@ -52,7 +72,7 @@ pub struct Search {
     transposition_table: HashMap<u64, f32>,
     search_queue: PriorityQueue<Board, u32>,
     opening_book: Option<Book>,
-    metrics: Metrics,
+    search_result: SearchResult,
 }
 
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
@@ -83,7 +103,7 @@ impl Search {
             transposition_table: HashMap::default(),
             search_queue: PriorityQueue::new(),
             opening_book: None,
-            metrics: Metrics::default(),
+            search_result: SearchResult::default(),
         }
     }
 
@@ -91,72 +111,29 @@ impl Search {
         self.opening_book = Some(book);
     }
 
-    fn generate_moves(&self, board: &Board) -> Vec<Move> {
-        self.move_generator
-            .generate_attacks(board)
-            .iter()
-            .flat_map(|moveset| moveset.into_iter())
-            .collect::<Vec<Move>>()
-    }
+    fn eval(&self, board: &Board) -> i32 {
+        let pieces_values: [i32; 14] = [
+            10, 50, 30, 30, 90, 1000, -10, -50, -30, -30, -90, -1000, 0, 0,
+        ];
 
-    fn search(&mut self, board: &Board, search_limits: &SearchLimits) -> Option<(Move, Metrics)> {
-        let mut best: Option<Move> = None;
-        let mut best_evaluation = -1000000000;
-        let mut best_node: Option<Node> = None;
-        for mov in self.generate_moves(board) {
-            let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
-            let r = self.min_max(
-                &node,
-                search_limits.depth,
-                node.board.get_turn() == Side::White,
-            );
-            if r.is_none() {
-                continue;
-            }
-
-            let (node, evaluation) = r.unwrap();
-            best_evaluation = cmp::max(best_evaluation, evaluation);
-            if best_evaluation == evaluation {
-                best = Some(mov);
-                best_node = Some(node);
-            }
+        let mut s: i32 = 0;
+        for piece in board {
+            s += pieces_values[piece.get_type() as usize];
         }
 
-        let mut best_node = best_node.unwrap();
-        loop {
-            //println!("{} {:?}", best_node.mov.to_algebraic(), best_node.evaluation);
-            if best_node.parent.is_none() {
-                break;
-            }
-
-            best_node = *best_node.parent.unwrap();
-        }
-
-        best.map(|mov| (mov, self.metrics.clone()))
-    }
-
-    pub fn best_move(
-        &mut self,
-        board: &Board,
-        search_limits: &SearchLimits,
-    ) -> Option<(Move, Metrics)> {
-        self.metrics = Metrics::default();
-        if let Some(ref opening_book) = self.opening_book {
-            opening_book
-                .get_best_move(board)
-                .map(|book| (book, Metrics::default()))
-                .or_else(|| self.search(board, search_limits))
-        } else {
-            self.search(board, search_limits)
-        }
+        s.clamp(-1000, 1000)
     }
 
     fn min_max(&mut self, node: &Node, max_depth: u32, max_min: bool) -> Option<(Node, i32)> {
-        self.metrics.node_count += 1;
-
         let mut max: i32 = -10000000;
         let mut best_node: Option<Node> = None;
-        for mov in self.generate_moves(&node.board) {
+        for mov in self
+            .move_generator
+            .generate_moves(&node.board)
+            .iter()
+            .flat_map(|moveset| moveset.into_iter())
+        {
+            self.search_result.node_count += 1;
             let board_result: Board = node.board.apply(&mov).unwrap();
             let new_node = Node::new(
                 board_result.clone(),
@@ -182,7 +159,6 @@ impl Search {
 
             max = cmp::max(new_new_node.evaluation?, max);
             if max == new_new_node.evaluation? {
-                //println!("{:?} {:?}", new_new_node.mov, new_new_node.evaluation);
                 best_node = Some(new_new_node);
             }
         }
@@ -190,17 +166,75 @@ impl Search {
         Some((best_node?, max))
     }
 
-    fn eval(&self, board: &Board) -> i32 {
-        let pieces_values: [i32; 14] = [
-            10, 50, 30, 30, 90, 1000, -10, -50, -30, -30, -90, -1000, 0, 0,
-        ];
+    fn search(&mut self, board: &Board, search_limits: &SearchLimits) -> Option<SearchResult> {
+        let start = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
 
-        let mut s: i32 = 0;
-        for piece in board {
-            s += pieces_values[piece.get_type() as usize];
+        let mut best: Option<Move> = None;
+        let mut best_evaluation = -1000000000;
+        let mut best_node: Option<Node> = None;
+        for mov in self
+            .move_generator
+            .generate_moves(board)
+            .iter()
+            .flat_map(|moveset| moveset.into_iter())
+        {
+            let node = Node::new(board.apply(&mov).unwrap(), mov.clone(), 1, None);
+            let r = self.min_max(
+                &node,
+                search_limits.depth,
+                node.board.get_turn() == Side::White,
+            );
+            if r.is_none() {
+                continue;
+            }
+
+            let (node, evaluation) = r.unwrap();
+            best_evaluation = cmp::max(best_evaluation, evaluation);
+            if best_evaluation == evaluation {
+                best = Some(mov);
+                best_node = Some(node);
+            }
         }
 
-        s.clamp(-1000, 1000)
+        let mut best_node = best_node.unwrap();
+        let mut pv: Vec<Move> = Vec::new();
+        let evaluation = best_node.evaluation;
+        loop {
+            pv.insert(0, best_node.mov);
+            //println!("{} {:?}", best_node.mov.to_algebraic(), best_node.evaluation);
+            if best_node.parent.is_none() {
+                break;
+            }
+
+            best_node = *best_node.parent.unwrap();
+        }
+        let end = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+
+        self.search_result.time = end - start;
+        self.search_result.nps =
+            ((self.search_result.node_count as f64) / self.search_result.time.as_secs_f64()) as f32;
+        self.search_result.best_move = best;
+        self.search_result.pv = pv;
+        self.search_result.eval = evaluation.unwrap();
+        Some(self.search_result.clone())
+    }
+
+    pub fn best_move(
+        &mut self,
+        board: &Board,
+        search_limits: &SearchLimits,
+    ) -> Option<SearchResult> {
+        self.search_result = SearchResult::default();
+        if let Some(ref opening_book) = self.opening_book {
+            opening_book
+                .get_best_move(board)
+                .map(|best_move| {
+                    SearchResult::new(1, Duration::new(0, 0), 0.0, Some(best_move), 0, &Vec::new())
+                })
+                .or_else(|| self.search(board, search_limits))
+        } else {
+            self.search(board, search_limits)
+        }
     }
 }
 
@@ -211,12 +245,15 @@ mod tests {
     use googletest::prelude::*;
 
     #[gtest]
-    fn test_metrics_node_count() -> Result<()> {
+    fn test_metrics_node_count_at_depth_2() -> Result<()> {
         let mut search = Search::new();
 
-        let best_move = search.best_move(&Board::from_basic_board(), &SearchLimits::new(2));
+        let result = search.best_move(&Board::from_basic_board(), &SearchLimits::new(2));
 
-        assert_that!(best_move, some((anything(), eq(&Metrics::new(4)))));
+        assert_that!(
+            dbg!(result),
+            some(field!(&SearchResult.node_count, eq(400)))
+        );
 
         Ok(())
     }

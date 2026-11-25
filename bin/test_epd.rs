@@ -71,8 +71,8 @@ fn main() -> Result<()> {
                 prompt: line.to_string(),
                 epd,
             },
-            best_move.0.clone(),
-            best_move.0 == expected_move,
+            best_move.best_move.as_ref().unwrap().clone(),
+            best_move.best_move.as_ref().unwrap() == &expected_move,
         ));
     }
 
