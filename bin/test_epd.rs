@@ -5,7 +5,7 @@ mod test_common;
 use crate::test_common::{TestResult, TestSuit};
 
 use anyhow::Result;
-use fchess::{Epd, Move, Search};
+use fchess::{Epd, Move, Search, SearchConfig};
 
 #[derive(Clone)]
 struct TestCase {
@@ -60,7 +60,9 @@ fn main() -> Result<()> {
         println!("Processing line: {}", line);
         let epd = Epd::from_string(line)?;
         let board = epd.board.clone();
-        let best_move = search.best_move(&board).unwrap();
+        let best_move = search
+            .best_move(&board, &SearchConfig::default().resolve())
+            .unwrap();
 
         let expected_move = Move::from_algebraic(epd.properties.get("bm").unwrap()).unwrap();
 
@@ -69,8 +71,8 @@ fn main() -> Result<()> {
                 prompt: line.to_string(),
                 epd,
             },
-            best_move.clone(),
-            best_move == expected_move,
+            best_move.0.clone(),
+            best_move.0 == expected_move,
         ));
     }
 

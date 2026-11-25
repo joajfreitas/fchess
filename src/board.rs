@@ -438,7 +438,7 @@ impl Board {
         if halfmove_clock_reset {
             result.set_half_move_clock(0);
         } else {
-            result.set_half_move_clock(self.get_half_move_clock() + 1);
+            result.set_half_move_clock(dbg!(self.get_half_move_clock()) + 1);
         }
 
         Ok(result)

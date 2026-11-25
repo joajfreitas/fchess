@@ -4,8 +4,8 @@ use anyhow::{Result, anyhow};
 use fchess::Board;
 use fchess::Book;
 use fchess::Move;
-use fchess::Search;
 use fchess::Side;
+use fchess::{Search, SearchConfig};
 
 /// fchess cli interface
 #[derive(Parser, Debug)]
@@ -44,7 +44,9 @@ fn get_best_move(board: &Board, book: &Option<Book>, search: &mut Search) -> Res
             mov
         }
         _ => {
-            let mov = search.best_move(board).unwrap();
+            let (mov, _) = search
+                .best_move(board, &SearchConfig::default().resolve())
+                .unwrap();
             println!("=> Search move {}", mov.to_algebraic());
             mov
         }
