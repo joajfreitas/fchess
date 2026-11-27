@@ -691,8 +691,8 @@
 <a href=#691 id=691 data-nosnippet>691</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
 <a href=#692 id=692 data-nosnippet>692</a>    <span class="kw">use </span><span class="kw">crate</span>::board_builder::BoardBuilder;
 <a href=#693 id=693 data-nosnippet>693</a>    <span class="kw">use </span><span class="kw">crate</span>::moves::Move;
-<a href=#694 id=694 data-nosnippet>694</a>    <span class="kw">use </span><span class="kw">crate</span>::mv;
-<a href=#695 id=695 data-nosnippet>695</a>    <span class="kw">use </span><span class="kw">crate</span>::side::Side;
+<a href=#694 id=694 data-nosnippet>694</a>    <span class="kw">use </span><span class="kw">crate</span>::side::Side;
+<a href=#695 id=695 data-nosnippet>695</a>    <span class="kw">use crate</span>::{mv, sq};
 <a href=#696 id=696 data-nosnippet>696</a>
 <a href=#697 id=697 data-nosnippet>697</a>    <span class="attr">#[rstest]
 <a href=#698 id=698 data-nosnippet>698</a>    #[case(<span class="string">"d7"</span>, ColoredPieceType::WhiteRook)]
@@ -901,7 +901,7 @@
 <a href=#901 id=901 data-nosnippet>901</a>
 <a href=#902 id=902 data-nosnippet>902</a>        <span class="kw">let </span>piece = board.get_piece(<span class="macro">sq!</span>(<span class="string">"d2"</span>).unwrap()).unwrap();
 <a href=#903 id=903 data-nosnippet>903</a>
-<a href=#904 id=904 data-nosnippet>904</a>        <span class="kw">let </span>attacked_squares = MoveGenerator::new().attacked_space_for_piece(<span class="kw-2">&amp;</span>board, <span class="kw-2">&amp;</span>piece);
+<a href=#904 id=904 data-nosnippet>904</a>        <span class="kw">let </span>attacked_squares = MoveGenerator::new().attacked_space_for_piece(board, <span class="kw-2">&amp;</span>piece);
 <a href=#905 id=905 data-nosnippet>905</a>        <span class="kw">let </span>expected_squares = from_squares(<span class="kw-2">&amp;</span>squares);
 <a href=#906 id=906 data-nosnippet>906</a>
 <a href=#907 id=907 data-nosnippet>907</a>        <span class="macro">expect_that!</span>(
