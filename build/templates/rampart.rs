@@ -6,7 +6,7 @@ fn {name}() {{
     let mut expected_moves = expected_moves
         .into_iter()
         .map(|mov| Move::from_san(mov,&board)
-            .expect(&format!("Can't read expected SAN {{}}", mov)))
+            .expect("Can't read expected SAN"))
         .collect::<Vec<Move>>();
 
     let mut moves = MoveGenerator::new()

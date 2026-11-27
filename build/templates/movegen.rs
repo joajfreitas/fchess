@@ -1,3 +1,4 @@
+#[allow(clippy::all)]
 #[test]
 fn {name}() {{
     let starting_fen: &str = "{starting_fen}";

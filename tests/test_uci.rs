@@ -45,6 +45,7 @@ impl UciClient {
         }
     }
 
+    #[allow(dead_code)]
     fn with_deadline(mut self, t: Duration) -> Self {
         self.deadline = Instant::now() + t;
         self

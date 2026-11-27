@@ -5,6 +5,7 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use crate::board::Board;
 use crate::book::Book;
+use crate::eval::Eval;
 use crate::move_generator::MoveGenerator;
 use crate::moves::Move;
 use crate::side::Side;
@@ -68,6 +69,7 @@ impl SearchConfig {
 #[allow(unused)]
 #[derive(Clone, Debug, Default)]
 pub struct Search {
+    eval: Eval,
     move_generator: MoveGenerator,
     transposition_table: HashMap<u64, f32>,
     search_queue: PriorityQueue<Board, u32>,
@@ -99,6 +101,7 @@ impl Node {
 impl Search {
     pub fn new() -> Self {
         Self {
+            eval: Eval::new(),
             move_generator: MoveGenerator::new(),
             transposition_table: HashMap::default(),
             search_queue: PriorityQueue::new(),
@@ -111,20 +114,13 @@ impl Search {
         self.opening_book = Some(book);
     }
 
-    fn eval(&self, board: &Board) -> i32 {
-        let pieces_values: [i32; 14] = [
-            10, 50, 30, 30, 90, 1000, -10, -50, -30, -30, -90, -1000, 0, 0,
-        ];
-
-        let mut s: i32 = 0;
-        for piece in board {
-            s += pieces_values[piece.get_type() as usize];
-        }
-
-        s.clamp(-1000, 1000)
-    }
-
-    fn min_max(&mut self, node: &Node, max_depth: u32, max_min: bool) -> Option<(Node, i32)> {
+    fn min_max(
+        &mut self,
+        node: &Node,
+        max_depth: u32,
+        side: &Side,
+        max_min: bool,
+    ) -> Option<(Node, i32)> {
         let mut max: i32 = -10000000;
         let mut best_node: Option<Node> = None;
         for mov in self
@@ -145,10 +141,10 @@ impl Search {
             let (mut new_new_node, board_evaluation) = if node.depth + 1 == max_depth {
                 (
                     new_node,
-                    self.eval(&board_result) * if max_min { 1 } else { -1 },
+                    self.eval.eval(&board_result, side) * if max_min { 1 } else { -1 },
                 )
             } else {
-                let m = self.min_max(&new_node, max_depth, !max_min);
+                let m = self.min_max(&new_node, max_depth, side, !max_min);
                 if m.is_none() {
                     continue;
                 }
@@ -182,6 +178,7 @@ impl Search {
             let r = self.min_max(
                 &node,
                 search_limits.depth,
+                &board.get_turn(),
                 node.board.get_turn() == Side::White,
             );
             if r.is_none() {

@@ -684,6 +684,7 @@ impl MoveGenerator {
 
 #[cfg(test)]
 mod tests {
+    use anyhow::Result;
     use googletest::prelude::*;
     use rstest::rstest;
 
@@ -691,6 +692,7 @@ mod tests {
     use crate::board_builder::BoardBuilder;
     use crate::moves::Move;
     use crate::side::Side;
+    use crate::{mv, sq};
 
     #[rstest]
     #[case("d7", ColoredPieceType::WhiteRook)]
@@ -716,7 +718,7 @@ mod tests {
     fn test_attack_patterns() {
         let board = Board::from_fen("8/8/8/3p4/3R4/8/8/8 w - - 0 1").unwrap();
         let moves = MoveGenerator::new()
-            .generate_moves_for_piece(&board, Square::from_algebraic("d4").unwrap())
+            .generate_moves_for_piece(&board, sq!("d4").unwrap())
             .unwrap();
 
         println!("{}", BitBoard(moves.mov));
@@ -762,7 +764,7 @@ mod tests {
         let moves = MoveGenerator::new()
             .generate_attacks_for_piece(
                 &Board::from_fen("8/8/8/8/8/8/P7/R3K3 w Q 0 1").or_fail()?,
-                Square::from_algebraic("e1").or_fail()?,
+                sq!("e1").or_fail()?,
             )
             .or_fail()?
             .into_iter()
@@ -770,10 +772,7 @@ mod tests {
 
         expect_that!(
             &moves,
-            contains(eq(&Move::new(
-                Square::from_algebraic("e1").or_fail()?,
-                Square::from_algebraic("c1").or_fail()?
-            )))
+            contains(eq(&Move::new(sq!("e1").or_fail()?, sq!("c1").or_fail()?)))
         );
 
         Ok(())
@@ -802,7 +801,7 @@ mod tests {
         let moves = MoveGenerator::new()
             .generate_attacks_for_piece(
                 &Board::from_fen("r3k3/p7/8/8/8/8/8/8 b q 0 1").or_fail()?,
-                Square::from_algebraic("e8").or_fail()?,
+                sq!("e8").or_fail()?,
             )
             .or_fail()?
             .into_iter()
@@ -810,10 +809,7 @@ mod tests {
 
         expect_that!(
             &moves,
-            contains(eq(&Move::new(
-                Square::from_algebraic("e8").or_fail()?,
-                Square::from_algebraic("c8").or_fail()?
-            )))
+            contains(eq(&Move::new(sq!("e8").or_fail()?, sq!("c8").or_fail()?)))
         );
 
         Ok(())
@@ -824,7 +820,7 @@ mod tests {
         let moves = MoveGenerator::new()
             .generate_attacks_for_piece(
                 &Board::from_fen("8/8/8/8/8/3p1p2/4P3/8 w - - 0 1").or_fail()?,
-                Square::from_algebraic("e2").or_fail()?,
+                sq!("e2").or_fail()?,
             )
             .or_fail()?
             .into_iter()
@@ -833,14 +829,8 @@ mod tests {
         expect_that!(
             moves,
             unordered_elements_are!(
-                eq(&Move::new(
-                    Square::from_algebraic("e2").unwrap(),
-                    Square::from_algebraic("d3").unwrap()
-                )),
-                eq(&Move::new(
-                    Square::from_algebraic("e2").unwrap(),
-                    Square::from_algebraic("f3").unwrap()
-                ),)
+                eq(&Move::new(sq!("e2").unwrap(), sq!("d3").unwrap())),
+                eq(&Move::new(sq!("e2").unwrap(), sq!("f3").unwrap()),)
             )
         );
 
@@ -852,7 +842,7 @@ mod tests {
         let moves = MoveGenerator::new()
             .generate_moves_for_piece(
                 &Board::from_fen("8/8/8/2p3p1/8/3PKP2/3PPP2/8 w - - 0 1").or_fail()?,
-                Square::from_algebraic("e3").or_fail()?,
+                sq!("e3").or_fail()?,
             )
             .or_fail()?
             .into_iter()
@@ -860,10 +850,7 @@ mod tests {
 
         expect_that!(
             moves,
-            unordered_elements_are!(eq(&Move::new(
-                Square::from_algebraic("e3").unwrap(),
-                Square::from_algebraic("e4").unwrap()
-            )))
+            unordered_elements_are!(eq(&Move::new(sq!("e3").unwrap(), sq!("e4").unwrap())))
         );
 
         Ok(())
@@ -874,7 +861,7 @@ mod tests {
         let moves = MoveGenerator::new()
             .generate_moves_for_piece(
                 &Board::from_fen("8/8/8/3k4/8/4K3/8/8 w - - 0 1").or_fail()?,
-                Square::from_algebraic("e3").or_fail()?,
+                sq!("e3").or_fail()?,
             )
             .or_fail()?
             .into_iter()
@@ -883,8 +870,8 @@ mod tests {
         expect_that!(
             moves,
             not(contains(eq(&Move::new(
-                Square::from_algebraic("e3").unwrap(),
-                Square::from_algebraic("d4").unwrap()
+                sq!("e3").unwrap(),
+                sq!("d4").unwrap()
             ))))
         );
 
@@ -912,11 +899,9 @@ mod tests {
     fn test_attacked_space(#[case] fen: &str, #[case] squares: Vec<&str>) {
         let board = &Board::from_fen(fen).unwrap();
 
-        let piece = board
-            .get_piece(Square::from_algebraic("d2").unwrap())
-            .unwrap();
+        let piece = board.get_piece(sq!("d2").unwrap()).unwrap();
 
-        let attacked_squares = MoveGenerator::new().attacked_space_for_piece(&board, &piece);
+        let attacked_squares = MoveGenerator::new().attacked_space_for_piece(board, &piece);
         let expected_squares = from_squares(&squares);
 
         expect_that!(
@@ -927,12 +912,12 @@ mod tests {
     }
 
     #[gtest]
-    fn test_filter_discovered_check() {
+    fn test_filter_discovered_check() -> Result<()> {
         let board = &Board::from_fen("4k3/8/8/p1K1Pp1r/Pp5p/6pP/6P1/8 w - f6 0 1").unwrap();
         let move_generator = MoveGenerator::new();
 
         let mut mov = move_generator
-            .generate_moves_for_piece(board, Square::from_algebraic("e5").unwrap())
+            .generate_moves_for_piece(board, sq!("e5")?)
             .unwrap();
 
         let moves = move_generator
@@ -941,6 +926,8 @@ mod tests {
             .into_iter()
             .collect::<Vec<Move>>();
 
-        assert_eq!(moves, vec![Move::from_algebraic("e5e6").unwrap()]);
+        assert_eq!(moves, vec![mv!("e5e6")?]);
+
+        Ok(())
     }
 }

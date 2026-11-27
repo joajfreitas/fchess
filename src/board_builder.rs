@@ -1,4 +1,5 @@
 use crate::board::Board;
+use crate::moves::Move;
 use crate::piece::ColoredPieceType;
 use crate::side::Side;
 use crate::square::Square;
@@ -94,6 +95,13 @@ impl BoardBuilder {
     pub fn with_basic_board(&self) -> BoardBuilder {
         self.with_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
             .unwrap()
+    }
+
+    #[allow(dead_code)]
+    pub fn with_move(&self, mov: &Move) -> Result<BoardBuilder> {
+        let mut builder = self.clone();
+        builder.board = builder.board.apply(mov)?;
+        Ok(builder)
     }
 
     #[allow(dead_code)]

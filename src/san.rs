@@ -6,6 +6,7 @@ use crate::move_generator::MoveGenerator;
 use crate::moves::{Move, Scope};
 use crate::piece::ColoredPieceType;
 use crate::side::Side;
+use crate::sq;
 use crate::square::Square;
 
 fn san_match_type(piece_type: ColoredPieceType, scope: Scope) -> bool {
@@ -28,29 +29,17 @@ fn san_match_type(piece_type: ColoredPieceType, scope: Scope) -> bool {
 }
 fn from_san_queen_side_castle(board: &Board) -> Result<Move> {
     if board.get_turn() == Side::White {
-        Ok(Move::new(
-            Square::from_algebraic("e1").unwrap(),
-            Square::from_algebraic("c1").unwrap(),
-        ))
+        Ok(Move::new(sq!("e1")?, sq!("c1")?))
     } else {
-        Ok(Move::new(
-            Square::from_algebraic("e8").unwrap(),
-            Square::from_algebraic("c8").unwrap(),
-        ))
+        Ok(Move::new(sq!("e8")?, sq!("c8")?))
     }
 }
 
 fn from_san_king_side_castle(board: &Board) -> Result<Move> {
     if board.get_turn() == Side::White {
-        Ok(Move::new(
-            Square::from_algebraic("e1").unwrap(),
-            Square::from_algebraic("g1").unwrap(),
-        ))
+        Ok(Move::new(sq!("e1")?, sq!("g1")?))
     } else {
-        Ok(Move::new(
-            Square::from_algebraic("e8").unwrap(),
-            Square::from_algebraic("g8").unwrap(),
-        ))
+        Ok(Move::new(sq!("e8")?, sq!("g8")?))
     }
 }
 
