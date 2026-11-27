@@ -10,6 +10,7 @@ extern crate test;
 extern crate num_derive;
 
 pub use crate::board::Board;
+pub use crate::board_builder::BoardBuilder;
 pub use crate::book::Book;
 pub use crate::epd::Epd;
 pub use crate::move_generator::MoveGenerator;
