@@ -22,6 +22,8 @@
 #![allow(dead_code)]
 use std::fmt;
 
+use anyhow::{Result, anyhow};
+
 #[derive(Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash)]
 pub struct Square {
     square: u8,
@@ -44,15 +46,15 @@ impl Square {
         self.square
     }
 
-    pub fn from_algebraic(mov: &str) -> Option<Square> {
+    pub fn from_algebraic(mov: &str) -> Result<Square> {
         let mov: Vec<char> = mov.chars().collect();
         if mov.len() == 2 {
             let src_rank = (mov[1] as u8) - b'1';
             let src_file = (mov[0] as u8) - b'a';
 
-            Some(Square::from_rank_file(src_rank, src_file))
+            Ok(Square::from_rank_file(src_rank, src_file))
         } else {
-            None
+            Err(anyhow!("Failed to parse square"))
         }
     }
 
@@ -88,6 +90,13 @@ impl Square {
     pub fn get_mask(&self) -> u64 {
         1 << self.square
     }
+}
+
+#[macro_export]
+macro_rules! sq {
+    ($s: literal) => {
+        $crate::Square::from_algebraic($s)
+    };
 }
 
 impl fmt::Debug for Square {
@@ -171,6 +180,7 @@ pub const H8: Square = Square::from_rank_file(7, 7);
 #[cfg(test)]
 mod tests {
     use super::*;
+    use anyhow::Result;
     use rstest::rstest;
 
     #[rstest]
@@ -182,9 +192,8 @@ mod tests {
         #[case] algebraic: &str,
         #[case] rank: u8,
         #[case] file: u8,
-    ) -> Result<(), String> {
-        let square = Square::from_algebraic(algebraic)
-            .ok_or("Failed to convert algebraic notation to Square")?;
+    ) -> Result<()> {
+        let square = Square::from_algebraic(algebraic)?;
         assert_eq!(square.get_rank(), rank);
         assert_eq!(square.get_file(), file);
 
@@ -202,22 +211,24 @@ mod tests {
     }
 
     #[test]
-    fn test_constants() {
-        assert_eq!(A1, Square::from_algebraic("a1").unwrap());
-        assert_eq!(A8, Square::from_algebraic("a8").unwrap());
-        assert_eq!(B1, Square::from_algebraic("b1").unwrap());
-        assert_eq!(B8, Square::from_algebraic("b8").unwrap());
-        assert_eq!(C1, Square::from_algebraic("c1").unwrap());
-        assert_eq!(C8, Square::from_algebraic("c8").unwrap());
-        assert_eq!(D1, Square::from_algebraic("d1").unwrap());
-        assert_eq!(D8, Square::from_algebraic("d8").unwrap());
-        assert_eq!(E1, Square::from_algebraic("e1").unwrap());
-        assert_eq!(E8, Square::from_algebraic("e8").unwrap());
-        assert_eq!(F1, Square::from_algebraic("f1").unwrap());
-        assert_eq!(F8, Square::from_algebraic("f8").unwrap());
-        assert_eq!(G1, Square::from_algebraic("g1").unwrap());
-        assert_eq!(G8, Square::from_algebraic("g8").unwrap());
-        assert_eq!(H1, Square::from_algebraic("h1").unwrap());
-        assert_eq!(H8, Square::from_algebraic("h8").unwrap());
+    fn test_constants() -> Result<()> {
+        assert_eq!(A1, sq!("a1")?);
+        assert_eq!(A8, sq!("a8")?);
+        assert_eq!(B1, sq!("b1")?);
+        assert_eq!(B8, sq!("b8")?);
+        assert_eq!(C1, sq!("c1")?);
+        assert_eq!(C8, sq!("c8")?);
+        assert_eq!(D1, sq!("d1")?);
+        assert_eq!(D8, sq!("d8")?);
+        assert_eq!(E1, sq!("e1")?);
+        assert_eq!(E8, sq!("e8")?);
+        assert_eq!(F1, sq!("f1")?);
+        assert_eq!(F8, sq!("f8")?);
+        assert_eq!(G1, sq!("g1")?);
+        assert_eq!(G8, sq!("g8")?);
+        assert_eq!(H1, sq!("h1")?);
+        assert_eq!(H8, sq!("h8")?);
+
+        Ok(())
     }
 }

@@ -90,7 +90,7 @@ pub fn read_fen(fen: &str) -> Result<Board> {
     board.set_enpassant(
         captures
             .name("en_passant")
-            .and_then(|key| Square::from_algebraic(key.as_str())),
+            .and_then(|key| Square::from_algebraic(key.as_str()).ok()),
     );
 
     let parse_int = |key: regex::Match| key.as_str().parse::<u8>();
@@ -204,7 +204,7 @@ mod tests {
     use crate::board_builder::BoardBuilder;
     use crate::piece::ColoredPieceType;
     use crate::side::Side;
-    use crate::square::Square;
+    use crate::sq;
 
     use anyhow::Result;
     use googletest::prelude::*;
@@ -324,8 +324,10 @@ mod tests {
     #[test]
     fn test_read_fen_with_enpassant() -> Result<()> {
         assert_eq!(
-            read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w e3 0 1")?.get_enpassant(),
-            Square::from_algebraic("e3")
+            read_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w e3 0 1")?
+                .get_enpassant()
+                .unwrap(),
+            sq!("e3")?
         );
 
         Ok(())
@@ -498,7 +500,7 @@ mod tests {
     fn test_write_fen_with_enpassant() -> Result<()> {
         assert_that!(
             BoardBuilder::new()
-                .with_enpassant(Square::from_algebraic("e4").unwrap())
+                .with_enpassant(sq!("e4").unwrap())
                 .build()
                 .to_fen(),
             ok(eq("8/8/8/8/8/8/8/8 w - e4 0 0"))

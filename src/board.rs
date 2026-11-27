@@ -455,6 +455,7 @@ impl Board {
 
 #[cfg(test)]
 mod tests {
+    use anyhow::Result;
     use rstest::rstest;
 
     use super::Board;
@@ -465,9 +466,10 @@ mod tests {
     use super::Side;
     use super::Square;
     use crate::board_builder::BoardBuilder;
+    use crate::sq;
 
     #[test]
-    fn test_board_iterator() {
+    fn test_board_iterator() -> Result<()> {
         //   ┌───┬───┬───┬───┬───┬───┬───┬───┐
         // 8 │   │   │   │   │   │   │   │   │
         //   ├───┼───┼───┼───┼───┼───┼───┼───┤
@@ -491,20 +493,13 @@ mod tests {
         assert_eq!(
             board.into_iter().collect::<Vec<Piece>>(),
             vec![
-                Piece::new(
-                    Square::from_algebraic("a5").unwrap(),
-                    ColoredPieceType::WhiteQueen
-                ),
-                Piece::new(
-                    Square::from_algebraic("e7").unwrap(),
-                    ColoredPieceType::BlackPawn
-                ),
-                Piece::new(
-                    Square::from_algebraic("d6").unwrap(),
-                    ColoredPieceType::BlackRook
-                ),
+                Piece::new(sq!("a5")?, ColoredPieceType::WhiteQueen),
+                Piece::new(sq!("e7")?, ColoredPieceType::BlackPawn),
+                Piece::new(sq!("d6")?, ColoredPieceType::BlackRook),
             ]
         );
+
+        Ok(())
     }
 
     #[test]

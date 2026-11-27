@@ -254,7 +254,7 @@ mod tests {
     use anyhow::Result;
 
     use crate::move_generator::MoveGenerator;
-    use crate::square::Square;
+    use crate::sq;
 
     use super::Board;
     use super::Move;
@@ -263,7 +263,7 @@ mod tests {
     fn test_king_move() -> Result<()> {
         let move_generator = MoveGenerator::new();
         let board = Board::from_fen("8/K7/8/8/8/8/8/8")?;
-        let origin = Square::from_algebraic("a7").unwrap();
+        let origin = sq!("a7").unwrap();
         let moveset = move_generator
             .generate_attacks_for_piece(&board, origin)
             .unwrap();
@@ -271,11 +271,11 @@ mod tests {
         assert_eq!(
             moveset.into_iter().collect::<Vec<Move>>(),
             vec![
-                Move::new(origin, Square::from_algebraic("a6").unwrap()),
-                Move::new(origin, Square::from_algebraic("b6").unwrap()),
-                Move::new(origin, Square::from_algebraic("b7").unwrap()),
-                Move::new(origin, Square::from_algebraic("a8").unwrap()),
-                Move::new(origin, Square::from_algebraic("b8").unwrap()),
+                Move::new(origin, sq!("a6")?),
+                Move::new(origin, sq!("b6")?),
+                Move::new(origin, sq!("b7")?),
+                Move::new(origin, sq!("a8")?),
+                Move::new(origin, sq!("b8")?),
             ]
         );
 
