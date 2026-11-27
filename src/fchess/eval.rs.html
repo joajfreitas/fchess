@@ -13,8 +13,8 @@
 <a href=#13 id=13 data-nosnippet>13</a>    rook_table: [i32; <span class="number">64</span>],
 <a href=#14 id=14 data-nosnippet>14</a>    queen_table: [i32; <span class="number">64</span>],
 <a href=#15 id=15 data-nosnippet>15</a>    king_middle_table: [i32; <span class="number">64</span>],
-<a href=#16 id=16 data-nosnippet>16</a>    king_end_table: [i32; <span class="number">64</span>],
-<a href=#17 id=17 data-nosnippet>17</a>}
+<a href=#16 id=16 data-nosnippet>16</a>    <span class="comment">//king_end_table: [i32; 64],
+<a href=#17 id=17 data-nosnippet>17</a></span>}
 <a href=#18 id=18 data-nosnippet>18</a>
 <a href=#19 id=19 data-nosnippet>19</a><span class="kw">impl </span>Eval {
 <a href=#20 id=20 data-nosnippet>20</a>    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
@@ -60,13 +60,13 @@
 <a href=#60 id=60 data-nosnippet>60</a>                -<span class="number">20</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">40</span>, -<span class="number">40</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">20</span>, -<span class="number">10</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">10</span>, <span class="number">20</span>,
 <a href=#61 id=61 data-nosnippet>61</a>                <span class="number">20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">20</span>, <span class="number">20</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">30</span>, <span class="number">20</span>,
 <a href=#62 id=62 data-nosnippet>62</a>            ],
-<a href=#63 id=63 data-nosnippet>63</a>            king_end_table: [
-<a href=#64 id=64 data-nosnippet>64</a>                -<span class="number">50</span>, -<span class="number">40</span>, -<span class="number">30</span>, -<span class="number">20</span>, -<span class="number">20</span>, -<span class="number">30</span>, -<span class="number">40</span>, -<span class="number">50</span>, -<span class="number">30</span>, -<span class="number">20</span>, -<span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">10</span>, -<span class="number">20</span>, -<span class="number">30</span>, -<span class="number">30</span>,
-<a href=#65 id=65 data-nosnippet>65</a>                -<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">20</span>, -<span class="number">10</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">10</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">40</span>, <span class="number">30</span>, -<span class="number">10</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">10</span>, <span class="number">30</span>,
-<a href=#66 id=66 data-nosnippet>66</a>                <span class="number">40</span>, <span class="number">40</span>, <span class="number">30</span>, -<span class="number">10</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">30</span>, <span class="number">20</span>, -<span class="number">10</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">30</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
-<a href=#67 id=67 data-nosnippet>67</a>                -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">50</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">30</span>, -<span class="number">50</span>,
-<a href=#68 id=68 data-nosnippet>68</a>            ],
-<a href=#69 id=69 data-nosnippet>69</a>        }
+<a href=#63 id=63 data-nosnippet>63</a>            <span class="comment">//king_end_table: [
+<a href=#64 id=64 data-nosnippet>64</a>            //    -50, -40, -30, -20, -20, -30, -40, -50, -30, -20, -10, 0, 0, -10, -20, -30, -30,
+<a href=#65 id=65 data-nosnippet>65</a>            //    -10, 20, 30, 30, 20, -10, -30, -30, -10, 30, 40, 40, 30, -10, -30, -30, -10, 30,
+<a href=#66 id=66 data-nosnippet>66</a>            //    40, 40, 30, -10, -30, -30, -10, 20, 30, 30, 20, -10, -30, -30, -30, 0, 0, 0, 0,
+<a href=#67 id=67 data-nosnippet>67</a>            //    -30, -30, -50, -30, -30, -30, -30, -30, -30, -50,
+<a href=#68 id=68 data-nosnippet>68</a>            //],
+<a href=#69 id=69 data-nosnippet>69</a>        </span>}
 <a href=#70 id=70 data-nosnippet>70</a>    }
 <a href=#71 id=71 data-nosnippet>71</a>
 <a href=#72 id=72 data-nosnippet>72</a>    <span class="kw">fn </span>piece_value(<span class="kw-2">&amp;</span><span class="self">self</span>, piece_type: <span class="kw-2">&amp;</span>ColoredPieceType, side: <span class="kw-2">&amp;</span>Side) -&gt; i32 {
