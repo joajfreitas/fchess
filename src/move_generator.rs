@@ -691,8 +691,8 @@ mod tests {
     use super::*;
     use crate::board_builder::BoardBuilder;
     use crate::moves::Move;
-    use crate::mv;
     use crate::side::Side;
+    use crate::{mv, sq};
 
     #[rstest]
     #[case("d7", ColoredPieceType::WhiteRook)]
@@ -901,7 +901,7 @@ mod tests {
 
         let piece = board.get_piece(sq!("d2").unwrap()).unwrap();
 
-        let attacked_squares = MoveGenerator::new().attacked_space_for_piece(&board, &piece);
+        let attacked_squares = MoveGenerator::new().attacked_space_for_piece(board, &piece);
         let expected_squares = from_squares(&squares);
 
         expect_that!(

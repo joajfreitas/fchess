@@ -1,7 +1,7 @@
 use anyhow::Result;
 use googletest::prelude::*;
 
-use fchess::{Board, Move, mv};
+use fchess::{Board, mv};
 
 #[test]
 fn test_castling_capture_black_long_queen_revokes_rights() -> Result<()> {

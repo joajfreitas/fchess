@@ -628,7 +628,7 @@ impl UciEngineCmd {
 #[cfg(test)]
 mod tests {
     use super::{
-        GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder, UciEngineCmd,
+        GoSubCmdBuilder, InfoSubCmdBuilder, PositionSubCmd, ScoreSubCmdBuilder, UciEngineCmd,
         UciGuiCmd,
     };
     use anyhow::Result;

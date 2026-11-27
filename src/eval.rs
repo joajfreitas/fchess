@@ -116,7 +116,6 @@ mod tests {
     use googletest::prelude::*;
 
     use crate::board_builder::BoardBuilder;
-    use crate::moves::Move;
     use crate::mv;
 
     #[gtest]
