@@ -684,12 +684,14 @@ impl MoveGenerator {
 
 #[cfg(test)]
 mod tests {
+    use anyhow::Result;
     use googletest::prelude::*;
     use rstest::rstest;
 
     use super::*;
     use crate::board_builder::BoardBuilder;
     use crate::moves::Move;
+    use crate::mv;
     use crate::side::Side;
 
     #[rstest]
@@ -924,6 +926,8 @@ mod tests {
             .into_iter()
             .collect::<Vec<Move>>();
 
-        assert_eq!(moves, vec![Move::from_algebraic("e5e6").unwrap()]);
+        assert_eq!(moves, vec![mv!("e5e6")?]);
+
+        Ok(())
     }
 }

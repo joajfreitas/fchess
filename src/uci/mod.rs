@@ -631,6 +631,10 @@ mod tests {
         GoSubCmdBuilder, InfoSubCmdBuilder, Move, PositionSubCmd, ScoreSubCmdBuilder, UciEngineCmd,
         UciGuiCmd,
     };
+    use anyhow::Result;
+    use googletest::prelude::*;
+
+    use crate::mv;
 
     #[test]
     fn test_erroneous_command_fails_to_parse() {
@@ -676,19 +680,18 @@ mod tests {
         assert_eq!(UciGuiCmd::parse("ucinewgame"), Ok(UciGuiCmd::UciNewGame))
     }
 
-    #[test]
-    fn test_parse_gui_command_go_searchmoves() {
-        assert_eq!(
+    #[gtest]
+    fn test_parse_gui_command_go_searchmoves() -> Result<()> {
+        assert_that!(
             UciGuiCmd::parse("go searchmoves e2e4 d2d4"),
-            Ok(UciGuiCmd::Go(
+            ok(eq(&UciGuiCmd::Go(
                 GoSubCmdBuilder::new()
-                    .with_search_moves(&vec![
-                        Move::from_full_algebraic("e2e4").unwrap(),
-                        Move::from_full_algebraic("d2d4").unwrap()
-                    ])
+                    .with_search_moves(&[mv!("e2e4")?, mv!("d2d4")?])
                     .build()
-            ))
+            )))
         );
+
+        Ok(())
     }
 
     #[test]
@@ -768,10 +771,7 @@ mod tests {
             UciGuiCmd::parse("position startpos moves e2e3 d2d3"),
             Ok(UciGuiCmd::Position {
                 pos: PositionSubCmd::StartPos,
-                moves: vec![
-                    Move::from_full_algebraic("e2e3").unwrap(),
-                    Move::from_full_algebraic("d2d3").unwrap()
-                ]
+                moves: vec![mv!("e2e3").unwrap(), mv!("d2d3").unwrap()]
             })
         );
     }
@@ -812,10 +812,7 @@ mod tests {
                 pos: PositionSubCmd::Fen(
                     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq e3 0 1".to_string()
                 ),
-                moves: vec![
-                    Move::from_full_algebraic("e2e3").unwrap(),
-                    Move::from_full_algebraic("d2d3").unwrap()
-                ]
+                moves: vec![mv!("e2e3").unwrap(), mv!("d2d3").unwrap()]
             })
         );
     }
@@ -839,7 +836,7 @@ mod tests {
     fn test_parse_gui_command_move() {
         assert_eq!(
             UciGuiCmd::parse("move e2e4"),
-            Ok(UciGuiCmd::Move(Move::from_full_algebraic("e2e4").unwrap()))
+            Ok(UciGuiCmd::Move(mv!("e2e4").unwrap()))
         );
     }
 
@@ -847,7 +844,7 @@ mod tests {
     fn test_write_engine_command_bestmove() {
         assert_eq!(
             UciEngineCmd::BestMove {
-                mov: Move::from_full_algebraic("e3e4").unwrap(),
+                mov: mv!("e3e4").unwrap(),
                 ponder: None
             }
             .write(),
@@ -859,8 +856,8 @@ mod tests {
     fn test_write_engine_command_bestmove_with_ponder() {
         assert_eq!(
             UciEngineCmd::BestMove {
-                mov: Move::from_full_algebraic("e3e4").unwrap(),
-                ponder: Move::from_full_algebraic("e4e5").ok()
+                mov: mv!("e3e4").unwrap(),
+                ponder: mv!("e4e5").ok()
             }
             .write(),
             String::from("bestmove e3e4 ponder e4e5")
@@ -920,10 +917,10 @@ mod tests {
         assert_eq!(
             &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
-                    .with_pv(&vec![
-                        Move::from_full_algebraic("e2e4").unwrap(),
-                        Move::from_full_algebraic("c5c6").unwrap(),
-                        Move::from_full_algebraic("d3e5").unwrap(),
+                    .with_pv(&[
+                        mv!("e2e4").unwrap(),
+                        mv!("c5c6").unwrap(),
+                        mv!("d3e5").unwrap(),
                     ])
                     .build()
             )
@@ -1023,7 +1020,7 @@ mod tests {
         assert_eq!(
             &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
-                    .with_currmove(&Move::from_full_algebraic("e2e4").unwrap())
+                    .with_currmove(&mv!("e2e4").unwrap())
                     .build()
             )
             .write(),
@@ -1097,13 +1094,7 @@ mod tests {
         assert_eq!(
             &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
-                    .with_currline((
-                        Some(42),
-                        vec![
-                            Move::from_full_algebraic("e2e4").unwrap(),
-                            Move::from_full_algebraic("c5c6").unwrap()
-                        ]
-                    ))
+                    .with_currline((Some(42), vec![mv!("e2e4").unwrap(), mv!("c5c6").unwrap()]))
                     .build()
             )
             .write(),
@@ -1116,13 +1107,7 @@ mod tests {
         assert_eq!(
             &UciEngineCmd::Info(
                 InfoSubCmdBuilder::new()
-                    .with_currline((
-                        None,
-                        vec![
-                            Move::from_full_algebraic("e2e4").unwrap(),
-                            Move::from_full_algebraic("c5c6").unwrap()
-                        ]
-                    ))
+                    .with_currline((None, vec![mv!("e2e4").unwrap(), mv!("c5c6").unwrap()]))
                     .build()
             )
             .write(),

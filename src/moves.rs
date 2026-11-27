@@ -1,6 +1,7 @@
 use anyhow::{Result, anyhow};
 use std::fmt;
 use std::ops::Not;
+use std::str::FromStr;
 
 use crate::board::Board;
 use crate::board::print_board;
@@ -247,6 +248,26 @@ impl Move {
         };
         format!("{src_rank}{src_file}{dst_rank}{dst_file}{promotion}")
     }
+}
+
+impl FromStr for Move {
+    type Err = anyhow::Error;
+    fn from_str(s: &str) -> Result<Self> {
+        Self::from_full_algebraic(s)
+    }
+}
+
+impl From<&str> for Move {
+    fn from(s: &str) -> Self {
+        Self::from_full_algebraic(s).expect("invalid move literal")
+    }
+}
+
+#[macro_export]
+macro_rules! mv {
+    ($s: literal) => {
+        $crate::Move::from_full_algebraic($s)
+    };
 }
 
 #[cfg(test)]
