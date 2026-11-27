@@ -83,16 +83,24 @@ impl fmt::Display for ColoredPieceType {
 }
 
 impl ColoredPieceType {
-    pub fn is_black(self: &ColoredPieceType) -> bool {
+    pub fn is_black(&self) -> bool {
         let offset = num::ToPrimitive::to_u32(self).unwrap();
 
         (LAST_WHITE_OFFSET..LAST_BLACK_OFFSET).contains(&offset)
     }
 
-    pub fn is_white(self: &ColoredPieceType) -> bool {
+    pub fn is_white(&self) -> bool {
         let offset = num::ToPrimitive::to_u32(self).unwrap();
 
         offset < LAST_WHITE_OFFSET
+    }
+
+    pub fn side(&self) -> Side {
+        if self.is_white() {
+            Side::White
+        } else {
+            Side::Black
+        }
     }
 
     pub fn from_char(c: &char) -> Option<ColoredPieceType> {
@@ -172,3 +180,18 @@ impl Piece {
         self.piece_type
     }
 }
+
+pub const COLORED_PIECE_TYPES: [ColoredPieceType; 12] = [
+    ColoredPieceType::WhitePawn,
+    ColoredPieceType::WhiteRook,
+    ColoredPieceType::WhiteKnight,
+    ColoredPieceType::WhiteBishop,
+    ColoredPieceType::WhiteQueen,
+    ColoredPieceType::WhiteKing,
+    ColoredPieceType::BlackPawn,
+    ColoredPieceType::BlackRook,
+    ColoredPieceType::BlackKnight,
+    ColoredPieceType::BlackBishop,
+    ColoredPieceType::BlackQueen,
+    ColoredPieceType::BlackKing,
+];

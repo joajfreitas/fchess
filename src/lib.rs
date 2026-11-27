@@ -31,6 +31,7 @@ mod book;
 mod common;
 mod dumb7fill;
 mod epd;
+mod eval;
 mod fen;
 mod move_generator;
 mod moves;
